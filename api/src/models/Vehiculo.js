@@ -13,6 +13,10 @@ module.exports = (sequelize) => {
     modelo: {
       type: DataTypes.STRING,
       allowNull: false
+    }, 
+    usuario: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
   });
 };
