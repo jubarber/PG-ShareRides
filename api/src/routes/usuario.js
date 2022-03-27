@@ -15,7 +15,7 @@ router.get("/", async (req, res, next) => {
           ? res.send(dbUsuario)
           : res.send("contraseña incorrecta");
       } else {
-        res.send('usuario no encontrado')
+        res.send("usuario no encontrado");
       }
     } //aca termina el if dni
   } catch (err) {
@@ -41,8 +41,5 @@ router.post("/", async (req, res, next) => {
     next(err);
   }
 });
-
-
-
 
 module.exports = router;
