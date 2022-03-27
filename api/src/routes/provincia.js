@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const router = Router();
+
 const { Provincia } = require("../db.js");
 
 router.get("/", async (req, res, next) => {
@@ -44,3 +45,4 @@ router.get("/", async (req, res, next) => {
 });
 
 module.exports = router;
+
