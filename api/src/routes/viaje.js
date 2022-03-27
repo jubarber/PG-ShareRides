@@ -39,7 +39,6 @@ router.post("/", async (req, res, next) => {
       await nuevoViaje.addUsuario(dni);
       usuarioConductor.update({ conductor: true });
       usuarioConductor.save();
-      
       res.json(nuevoViaje);
     }
   } catch (error) {
@@ -59,7 +58,7 @@ router.get("/", async (req, res, next) => {
 router.get("/:viajeId", async (req, re, next) => {
   const { viajeId } = req.params;
   try {
-    let viajeEncontrado = await Viaje.findByPk({ include: Usuario });
+    let viajeEncontrado = await Viaje.findByPk(viajeId, { include: Usuario })ñ
     re.send(viajeEncontrado);
   } catch (err) {
     next(err);
