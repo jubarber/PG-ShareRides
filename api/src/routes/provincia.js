@@ -37,12 +37,11 @@ router.get("/", async (req, res, next) => {
           where: { nombre: e, id: index + 1 }
         });
     });
-  const provincias = await Provincia.findAll({});
-  res.send(provincias);
+    const provincias = await Provincia.findAll({});
+    res.send(provincias);
   } catch (err) {
     next(err);
   }
 });
 
 module.exports = router;
-
