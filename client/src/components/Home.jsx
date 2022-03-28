@@ -1,9 +1,9 @@
-import { DetalleViaje } from "./DetalleViaje"
+import { DetalleViaje } from "./DetalleViaje";
 
-export const Home = ()=>{
+export const Home = () => {
   return (
     <div>
-      <DetalleViaje/>
+      <DetalleViaje />
     </div>
-  )
-}
+  );
+};
