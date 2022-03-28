@@ -18,7 +18,7 @@ router.post("/conductor", async (req, res, next) => {
       usaBarbijo,
       aceptaEquipaje,
       viajeDisponible,
-      dni,
+      dni
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
@@ -35,7 +35,7 @@ router.post("/conductor", async (req, res, next) => {
         aceptaFumador,
         aceptaMascota,
         usaBarbijo,
-        viajeDisponible,
+        viajeDisponible
       });
       await nuevoViaje.addUsuario(dni);
       usuarioConductor.update({ conductor: true });
@@ -62,7 +62,7 @@ router.post("/pasajero", async (req, res, next) => {
       usaBarbijo,
       aceptaEquipaje,
       viajeDisponible,
-      dni,
+      dni
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
@@ -78,7 +78,7 @@ router.post("/pasajero", async (req, res, next) => {
         aceptaFumador,
         aceptaMascota,
         usaBarbijo,
-        viajeDisponible,
+        viajeDisponible
       });
       await nuevoViaje.addUsuario(dni);
       res.json(nuevoViaje);
@@ -113,7 +113,7 @@ router.get("/asientos/:asientos", async (req, res, next) => {
     let viajesTotal;
     if (asientos) {
       viajesTotal = await Viaje.findAll({
-        where: { asientosAOcupar: asientos },
+        where: { asientosAOcupar: asientos }
       });
     }
     res.status(200).send(viajesTotal);
