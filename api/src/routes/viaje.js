@@ -19,10 +19,10 @@ router.post("/conductor", async (req, res, next) => {
       viajeDisponible,
       dni
     } = req.body;
-
+    let nuevoViaje;
     if (fecha && origen && destino) {
       const usuarioConductor = await Usuario.findByPk(dni);
-      var nuevoViaje = await Viaje.create({
+      nuevoViaje = await Viaje.create({
         fecha,
         hora,
         origen,
@@ -63,9 +63,9 @@ router.post("/pasajero", async (req, res, next) => {
       viajeDisponible,
       dni
     } = req.body;
-
+    let nuevoViaje;
     if (fecha && origen && destino) {
-      var nuevoViaje = await Viaje.create({
+      nuevoViaje = await Viaje.create({
         fecha,
         hora,
         origen,
@@ -100,8 +100,8 @@ router.get("/", async (req, res, next) => {
 router.get("/:viajeId", async (req, re, next) => {
   const { viajeId } = req.params;
   try {
-    let viajeEncontrado = await Viaje.findByPk(viajeId, { include: Usuario })ñ
-    re.send(viajeEncontrado);
+    let viajeEncontrado = await Viaje.findByPk(viajeId, { include: Usuario });
+    res.send(viajeEncontrado);
   } catch (err) {
     next(err);
   }
