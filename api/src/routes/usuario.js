@@ -42,4 +42,16 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.put("/:dni", async (req, res, next) => {
+  const { password, dni } = req.body;
+  try {
+    let usuario = await Usuario.findByPk(dni);
+    usuario.update({password: password});
+    usuario.save();
+    res.send("contraseña cambiada")
+  } catch(err) {
+    next (err);
+  }
+})
+
 module.exports = router;
