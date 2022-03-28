@@ -17,7 +17,7 @@ router.post("/conductor", async (req, res, next) => {
       usaBarbijo,
       aceptaEquipaje,
       viajeDisponible,
-      dni
+      dni,
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
@@ -34,7 +34,7 @@ router.post("/conductor", async (req, res, next) => {
         aceptaFumador,
         aceptaMascota,
         usaBarbijo,
-        viajeDisponible
+        viajeDisponible,
       });
       await nuevoViaje.addUsuario(dni);
       usuarioConductor.update({ conductor: true });
@@ -80,7 +80,6 @@ router.post("/pasajero", async (req, res, next) => {
         viajeDisponible
       });
       await nuevoViaje.addUsuario(dni);
-
       res.json(nuevoViaje);
     }
   } catch (error) {
