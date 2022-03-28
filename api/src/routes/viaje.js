@@ -17,7 +17,7 @@ router.post("/", async (req, res, next) => {
       usaBarbijo,
       aceptaEquipaje,
       viajeDisponible,
-      dni
+      dni,
     } = req.body;
 
     if (fecha && origen && destino) {
@@ -34,7 +34,7 @@ router.post("/", async (req, res, next) => {
         aceptaFumador,
         aceptaMascota,
         usaBarbijo,
-        viajeDisponible
+        viajeDisponible,
       });
       await nuevoViaje.addUsuario(dni);
       usuarioConductor.update({ conductor: true });
@@ -58,7 +58,7 @@ router.get("/", async (req, res, next) => {
 router.get("/:viajeId", async (req, re, next) => {
   const { viajeId } = req.params;
   try {
-    let viajeEncontrado = await Viaje.findByPk(viajeId, { include: Usuario })ñ
+    let viajeEncontrado = await Viaje.findByPk(viajeId, { include: Usuario });
     re.send(viajeEncontrado);
   } catch (err) {
     next(err);
