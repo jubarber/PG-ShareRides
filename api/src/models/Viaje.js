@@ -24,7 +24,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       // allowNull: false
     },
-    asientosDisponibles: {
+    asientosAOcupar: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
