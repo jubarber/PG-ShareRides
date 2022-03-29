@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login";
 import { Link } from "react-router-dom";
-import "./Landing.css";
+import "./LandingPage.css";
 
 export default function LandingPage() {
   const [menu, SetMenu] = useState(false);
