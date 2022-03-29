@@ -1,3 +1,4 @@
+const e = require("express");
 const { Router } = require("express");
 const router = Router();
 const { Viaje, Usuario } = require("../db.js");
@@ -17,7 +18,7 @@ router.post("/conductor", async (req, res, next) => {
       usaBarbijo,
       aceptaEquipaje,
       viajeDisponible,
-      dni,
+      dni
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
@@ -34,7 +35,7 @@ router.post("/conductor", async (req, res, next) => {
         aceptaFumador,
         aceptaMascota,
         usaBarbijo,
-        viajeDisponible,
+        viajeDisponible
       });
       await nuevoViaje.addUsuario(dni);
       usuarioConductor.update({ conductor: true });
@@ -96,13 +97,28 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/:viajeId", async (req, re, next) => {
+router.get("/:viajeId", async (req, res, next) => {
   const { viajeId } = req.params;
   try {
     let viajeEncontrado = await Viaje.findByPk(viajeId, { include: Usuario });
     res.send(viajeEncontrado);
   } catch (err) {
     next(err);
+  }
+});
+
+router.get("/asientos/:asientos", async (req, res, next) => {
+  const { asientos } = req.params;
+  try {
+    let viajesTotal;
+    if (asientos) {
+      viajesTotal = await Viaje.findAll({
+        where: { asientosAOcupar: asientos }
+      });
+    }
+    res.status(200).send(viajesTotal);
+  } catch (error) {
+    next(error);
   }
 });
 

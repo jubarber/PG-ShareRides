@@ -22,7 +22,7 @@ module.exports = (sequelize) => {
     },
     destino: {
       type: DataTypes.STRING,
-      // allowNull: false
+      allowNull: false
     },
     asientosAOcupar: {
       type: DataTypes.INTEGER,
