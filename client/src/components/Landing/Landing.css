@@ -1,0 +1,202 @@
+@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,600,800");
+
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.page {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f1f1f1;
+  margin-top: 3rem;
+}
+
+.card {
+  width: 1000px;
+  height: 540px;
+  background-color: white;
+  box-shadow: 0px 50px 100px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  height: 100%;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.menu {
+  width: 100%;
+  height: 20%;
+}
+
+.menu h3 {
+  font-size: 1em;
+  margin-left: 25px;
+  font-weight: 800;
+  float: left;
+}
+
+.btn-menu {
+  float: right;
+  height: 1.9rem;
+  font-size: 0.8em;
+  margin-top: 1rem;
+  margin-right: 1rem;
+  transition: font-size 0.2s;
+  background: none;
+  border: none;
+  background-color: #9252ff;
+  padding: 0.5rem;
+}
+
+nav {
+  position: relative;
+  margin-top: 1rem;
+  width: 19.4rem;
+  height: 1.9rem;
+  float: right;
+  background-color: #34495e;
+  transition: 1s ease-out;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+nav a {
+  font-size: 1.1rem;
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+}
+nav .animation {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  z-index: 0;
+  transition: all 0.5s ease 0s;
+  border-radius: 8px;
+}
+a:nth-child(1) {
+  width: 100px;
+}
+a:nth-child(2) {
+  width: 110px;
+}
+a:nth-child(3) {
+  width: 100px;
+}
+
+nav .start-home,
+a:nth-child(1):hover ~ .animation {
+  width: 100px;
+  left: 0;
+  background-color: #9252ff;
+}
+nav .start-about,
+a:nth-child(2):hover ~ .animation {
+  width: 110px;
+  left: 102px;
+  background-color: #9252ff;
+}
+nav .start-blog,
+a:nth-child(3):hover ~ .animation {
+  width: 100px;
+  left: 211px;
+  background-color: #9252ff;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content .text {
+  width: 20rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 0;
+}
+
+.text .btn {
+  display: flex;
+  flex-direction: column;
+  width: 9rem;
+  align-items: center;
+  padding-bottom: 1rem;
+}
+
+.text h1 {
+  margin-top: 0;
+  font-size: 2.5em;
+  line-height: 1;
+}
+
+.text p {
+  color: rgb(0, 0, 0, 0.5);
+  margin-bottom: 40px;
+  line-height: 1;
+  padding-bottom: 1rem;
+}
+
+.btn a {
+  width: 6.1rem;
+  color: white;
+  text-decoration: none;
+  background-color: #9252ff;
+  transition: background-color 0.2s;
+  transition: color 0.2s;
+  padding: 10px 20px;
+  border: 2px solid #9252ff;
+  margin-bottom: 0.5em;
+}
+
+.btn a:hover,
+.btn a:active {
+  background-color: white;
+  color: #3ce84f;
+}
+
+.fb {
+  width: 9rem;
+  color: white;
+  text-decoration: none;
+  background-color: rgb(22, 111, 229);
+  transition: background-color 0.2s;
+  transition: color 0.2s;
+  padding: 10px 20px;
+  border: 2px solid rgb(22, 111, 229);
+  margin-bottom: 0.5em;
+  margin-top: 0.5rem;
+}
+
+.photo {
+  height: 100%;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-image: url("https://res.cloudinary.com/dtioqvhiz/image/upload/v1648488548/Diseno_2_vfymvy.jpg");
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}

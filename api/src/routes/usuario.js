@@ -15,7 +15,7 @@ router.get("/", async (req, res, next) => {
           ? res.send(dbUsuario)
           : res.send("contraseña incorrecta");
       } else {
-        res.send('usuario no encontrado')
+        res.send("usuario no encontrado");
       }
     } //aca termina el if dni
   } catch (err) {
@@ -41,4 +41,17 @@ router.post("/", async (req, res, next) => {
     next(err);
   }
 });
+
+router.put("/:dni", async (req, res, next) => {
+  const { password, dni } = req.body;
+  try {
+    let usuario = await Usuario.findByPk(dni);
+    usuario.update({ password: password });
+    usuario.save();
+    res.send("contraseña cambiada");
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;

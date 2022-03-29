@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
       primaryKey: true
     },
     fecha: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING,
       allowNull: false
     },
     hora: {
@@ -24,7 +24,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    asientosDisponibles: {
+    asientosAOcupar: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
