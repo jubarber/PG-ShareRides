@@ -1,4 +1,5 @@
-import "./App.css";
+
+import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "./components/Landing/LandingPage";
 import { Home } from "./components/Home";
@@ -6,6 +7,7 @@ import Perfil from "./components/Perfil/Perfil";
 import FormPerfil from "./components/FormPerfil/FormPerfil.jsx";
 
 function App() {
+
   return (
     <div className="App">
       <BrowserRouter>
