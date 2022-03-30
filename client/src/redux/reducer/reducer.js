@@ -1,8 +1,9 @@
-import { GET_DETALLE_VIAJE } from "../actions/actions.js";
+import { GET_DETALLE_VIAJE, REGISTRO_USUARIO } from "../actions/actions.js";
 
 const initialState = {
   viajes: [],
-  viajePorId: []
+  viajePorId: [],
+  usuarios: []
 };
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -10,6 +11,10 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         viajePorId: action.payload
+      };
+    case REGISTRO_USUARIO:
+      return {
+        ...state,
       };
     default:
       return { ...state };
