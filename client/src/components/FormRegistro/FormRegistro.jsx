@@ -23,6 +23,7 @@ export default function FormRegistro() {
     contraseña: /^.{4,12}$/, // acepta cualquier digito - longitud de 4 a 12 digitos.
     /* dni: /^\d{7,8}\s/, */
   };
+
   function validacion(input) {
     let errors = {};
 
@@ -38,9 +39,7 @@ export default function FormRegistro() {
     }
     if (!input.dni) {
       errors.dni = " Dede ingesar su DNI/Pasaporte";
-    } /* else if (input.dni.length <7 && input.dni.length >8) {
-      errors.dni = "Ingrese un DNI /Pasaporte valido." */;
-    }
+    } 
     if (!input.contraseña) {
       errors.contraseña = "Debe ingresar una contraseña";
     } else if (!expresiones.contraseña.test(input.contraseña)) {
@@ -51,6 +50,7 @@ export default function FormRegistro() {
     }
     return errors;
   }
+  
 
   function handleChange(e) {
     setInput({
@@ -64,6 +64,7 @@ export default function FormRegistro() {
       })
     );
   }
+
   function handleConfirmar(e) {
     e.preventDefault();
     alert(
@@ -108,15 +109,16 @@ export default function FormRegistro() {
     }
     //history.push('/') //quiero q me envie a la seccion completar mi perfil?
   }
+
   return (
-    <div className="container  ">
+    <div className="contenedorRegistro">
       
       <h1>Registrarse</h1>
 
-      <form onSubmit={handleSubmit} className="grid-cols-2" >
+      <form onSubmit={handleSubmit} className="formularioRegistro" >
         {/* grupo nombre */}
-        <div>
-          <label htmlFor="nombre"> Nombre:</label>
+        <div className="grupo">
+          <label htmlFor="nombre" className="formulario_label"> Nombre:</label>
           <div className="grupo_input">
             <input
               type="text"
