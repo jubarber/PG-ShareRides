@@ -111,11 +111,10 @@ export default function FormRegistro() {
   }
 
   return (
+
     <div className="font-mono">
     <div className="contenedorRegistro" >
-      
       <h1>Registrarse</h1>
-
       <form onSubmit={handleSubmit} className="formularioRegistro" >
         {/* grupo nombre */}
         <div className="grupo">
