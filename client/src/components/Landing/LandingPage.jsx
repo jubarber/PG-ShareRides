@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login";
 import { Link } from "react-router-dom";
-import "./Landing.css";
+import "./LandingPage.css";
+
 
 export default function LandingPage() {
+ 
   const [menu, SetMenu] = useState(false);
   const responseGoogle = (response) => {
     console.log(response);
@@ -50,11 +52,12 @@ export default function LandingPage() {
                   <Link to="#">Inciar Sesion</Link>
                   <Link to="#">Registrarse</Link>
                   <GoogleLogin
-                    clientId="217227520954-k6ikmp0j3ksrgf2r0s1vtg0aifpn5e0p.apps.googleusercontent.com"
+                     clientId="217227520954-k6ikmp0j3ksrgf2r0s1vtg0aifpn5e0p.apps.googleusercontent.com"
                     buttonText="Iniciar sesion"
                     onSuccess={responseGoogle}
-                    onFailure={responseGoogle}
+                   onFailure={responseGoogle}
                     cookiePolicy={"single_host_origin"}
+                 
                   />
                   <FacebookLogin
                     cssClass="fb"
