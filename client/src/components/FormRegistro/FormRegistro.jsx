@@ -15,7 +15,6 @@ export default function FormRegistro() {
     terminos: ""
   });
 
-  //validaciones
   const [errors, setErrors] = useState({});
 
   const expresiones = {
@@ -38,9 +37,9 @@ export default function FormRegistro() {
         errors.apellido = "ingrese un apellido valido";
     }
     if (!input.dni) {
-      errors.dni = " Dede ingesar su DNI";
-    } else if (input.dni.length <7 && input.dni.length >8) {
-      errors.dni = "Ingrese un DNI /Pasaporte valido.";
+      errors.dni = " Dede ingesar su DNI/Pasaporte";
+    } /* else if (input.dni.length <7 && input.dni.length >8) {
+      errors.dni = "Ingrese un DNI /Pasaporte valido." */;
     }
     if (!input.contraseña) {
       errors.contraseña = "Debe ingresar una contraseña";
@@ -50,7 +49,6 @@ export default function FormRegistro() {
     if (!input.terminos) {
       errors.terminos = "Para avanzar debes aceptar los terminos de uso";
     }
-
     return errors;
   }
 
