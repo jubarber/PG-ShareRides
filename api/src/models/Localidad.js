@@ -13,11 +13,11 @@ module.exports = (sequelize) => {
     },
     provincia:{
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     municipio:{
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     }
   });
 };
