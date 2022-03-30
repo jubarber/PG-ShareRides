@@ -5,6 +5,7 @@ import LandingPage from "./components/Landing/LandingPage";
 import { Home } from "./components/Home";
 import Perfil from "./components/Perfil/Perfil";
 import FormPerfil from "./components/FormPerfil/FormPerfil.jsx";
+import FormRegistro from './components/FormRegistro/FormRegistro';
 
 function App() {
 
@@ -16,6 +17,9 @@ function App() {
           <Route exact path="/home" element={<Home />} />
           <Route exact path="/perfil" element={<Perfil />} />
           <Route exact path="/perfil/editar" element={<FormPerfil />} />
+          <Route exact path="/registro" element={<FormRegistro />} />
+
+
         </Routes>
       </BrowserRouter>
     </div>
