@@ -88,7 +88,7 @@ router.post("/pasajero", async (req, res, next) => {
   }
 });
 
-router.get("/", async (req, res, next) => {
+router.get("/viajestotal", async (req, res, next) => {
   try {
     let viajesTotal = await Viaje.findAll({ include: Usuario });
     res.send(viajesTotal);
