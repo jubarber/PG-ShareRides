@@ -23,6 +23,7 @@ export default function FormRegistro() {
     contraseña: /^.{4,12}$/, // acepta cualquier digito - longitud de 4 a 12 digitos.
     /* dni: /^\d{7,8}\s/, */
   };
+
   function validacion(input) {
     let errors = {};
 
@@ -38,9 +39,7 @@ export default function FormRegistro() {
     }
     if (!input.dni) {
       errors.dni = " Dede ingesar su DNI/Pasaporte";
-    } /* else if (input.dni.length <7 && input.dni.length >8) {
-      errors.dni = "Ingrese un DNI /Pasaporte valido." */;
-    }
+    } 
     if (!input.contraseña) {
       errors.contraseña = "Debe ingresar una contraseña";
     } else if (!expresiones.contraseña.test(input.contraseña)) {
@@ -51,6 +50,7 @@ export default function FormRegistro() {
     }
     return errors;
   }
+  
 
   function handleChange(e) {
     setInput({
@@ -64,6 +64,7 @@ export default function FormRegistro() {
       })
     );
   }
+
   function handleConfirmar(e) {
     e.preventDefault();
     alert(
@@ -108,15 +109,16 @@ export default function FormRegistro() {
     }
     //history.push('/') //quiero q me envie a la seccion completar mi perfil?
   }
-  return (
-    <div className="container  ">
-      
-      <h1>Registrarse</h1>
 
-      <form onSubmit={handleSubmit} className="grid-cols-2" >
+  return (
+
+    <div className="font-mono">
+    <div className="contenedorRegistro" >
+      <h1>Registrarse</h1>
+      <form onSubmit={handleSubmit} className="formularioRegistro" >
         {/* grupo nombre */}
-        <div>
-          <label htmlFor="nombre"> Nombre:</label>
+        <div className="grupo">
+          <label htmlFor="nombre" className="formulario_label"> Nombre:</label>
           <div className="grupo_input">
             <input
               type="text"
@@ -125,15 +127,16 @@ export default function FormRegistro() {
               value={input.nombre}
               placeholder="Nombre"
               onChange={handleChange}
+              className="input_Registro"
             />
-            {errors.nombre && (<span>{errors.nombre}</span>)}
+            {errors.nombre && (<span className="error_registro">{errors.nombre}</span>)}
           </div>
         </div>
 
         {/* apellido */}
         <div>
-          <label htmlFor="apellido">Apellido:</label>
-          <div>
+          <label htmlFor="apellido" className="formulario_label">Apellido:</label>
+          <div className="grupo_input">
             <input
               type="text"
               name="apellido"
@@ -141,14 +144,15 @@ export default function FormRegistro() {
               value={input.apellido}
               placeholder="Apellido"
               onChange={handleChange}
+              className="input_Registro"
             />
-            {errors.apellido && (<span>{errors.apellido}</span>)}
+            {errors.apellido && (<span className="error_registro">{errors.apellido}</span>)}
           </div>
         </div>
         {/* grupo dni*/}
         <div>
-          <label htmlFor="dni"> DNI/PASAPORTE:</label>
-          <div>
+          <label htmlFor="dni" className="formulario_label"> DNI/PASAPORTE:</label>
+          <div className="grupo_input">
             <input
               type="number"
               name="dni"
@@ -156,14 +160,15 @@ export default function FormRegistro() {
               value={input.dni}
               placeholder="numero de documento"
               onChange={handleChange}
+              className="input_Registro"
             />
-            {errors.dni && <span>{errors.dni}</span>}
+            {errors.dni && <span className="error_registro">{errors.dni}</span>}
           </div>
         </div>
         {/* grupo  contraseña */}
         <div>
-          <label htmlFor="contraseña">Contraseña:</label>
-          <div>
+          <label htmlFor="contraseña" className="formulario_label">Contraseña:</label>
+          <div className="grupo_input">
             <input
               type="password"
               name="contraseña"
@@ -171,14 +176,15 @@ export default function FormRegistro() {
               value={input.contraseña}
               placeholder="ingresar contraseña"
               onChange={handleChange}
+              className="input_Registro"
             />
-            {errors.contraseña && (<span>{errors.contraseña}</span>)}
+            {errors.contraseña && (<span className="error_registro">{errors.contraseña}</span>)}
           </div>
         </div>
         {/* grupo confirmar contraseña*/}
         <div>
-          <label htmlFor="contraseña2">Confirmar Contraseña:</label>
-          <div>
+          <label htmlFor="contraseña2" className="formulario_label">Confirmar Contraseña:</label>
+          <div className="grupo_input">
             <input
               type="password"
               name="contraseña2"
@@ -186,26 +192,28 @@ export default function FormRegistro() {
               value={input.contraseña2}
               placeholder="confirmar contraseña"
               onChange={handleChange}
+              className="input_Registro"
             />
             {input.contraseña === input.contraseña2? "" : 
-            <p>No coincide con su contraseña</p>
+            <p className="error_registro">No coincide con su contraseña</p>
             }
           </div>
         </div>
         {/* grupo terminos y condiciones */}
-        <div>
-          <label>
-            <input type="checkbox"  name="terminos" onChange={handleCheck}/>
+        <div className="grupo_terminos">
+          <label className="formulario_label">
+            <input type="checkbox"  name="terminos" className="checkbox_registro" onChange={handleCheck}/>
             Acepto los terminos y condiciones.
             {/* <a href="#terminosYCondiciones">ver</a> */}
             <p onClick={handleConfirmar}>ver mas</p>
           </label>
           {errors.terminos && (<span>{errors.terminos}</span>)}
         </div>
-        <div>
-          <button type="submit">Registrarme</button>
+        <div className="grupo_btn">
+          <button type="submit" className="btn_registro">Registrarme</button>
         </div>
       </form>
+    </div>
     </div>
   );
 }
