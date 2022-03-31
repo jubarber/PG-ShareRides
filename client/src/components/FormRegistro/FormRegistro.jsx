@@ -2,16 +2,20 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { registroUsuario } from "../../redux/actions/actions";
 import "./FormRegistro.css"
+import { BsEyeSlash, BsEye } from "react-icons/bs"
 
 
 export default function FormRegistro() {
+
   const dispatch = useDispatch();
+  const [stateContraseña, setStateContraseña] = useState(false)
   const [input, setInput] = useState({
     nombre: "",
     apellido: "",
     dni: "",
+    email: "",
     contraseña: "",
-    contraseña2: "",
+    confirmar_contraseña: "",
     terminos: ""
   });
 
@@ -22,23 +26,29 @@ export default function FormRegistro() {
     apellido:/^[a-zA-ZÀ-ÿ\s]{4,15}$/,
     contraseña: /^.{4,12}$/, // acepta cualquier digito - longitud de 4 a 12 digitos.
     /* dni: /^\d{7,8}\s/, */
+    email: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i
   };
 
   function validacion(input) {
     let errors = {};
-
+    
+    if (!input.email) {
+      errors.email = "Debes completar el email";
+    } else if (!expresiones.email.test(input.email)){
+      errors.email = "El email no es valido";
+    }
     if (!input.nombre) {
-      errors.nombre = "debes ingresar tu nombre";
+      errors.nombre = "Debes ingresar tu nombre";
     } else if (!expresiones.nombre.test(input.nombre)) {
-      errors.nombre = "ingresa un nombre valido";
+      errors.nombre = "Ingresa un nombre valido";
     }
     if (!input.apellido) {
      errors.apellido = "Debes ingresar tu apellido";
     } else if (!expresiones.apellido.test(input.apellido)) {
-        errors.apellido = "ingrese un apellido valido";
+        errors.apellido = "Ingrese un apellido valido";
     }
     if (!input.dni) {
-      errors.dni = " Dede ingesar su DNI/Pasaporte";
+      errors.dni = "Debes ingesar DNI/Pasaporte";
     } 
     if (!input.contraseña) {
       errors.contraseña = "Debe ingresar una contraseña";
@@ -46,11 +56,15 @@ export default function FormRegistro() {
       errors.contraseña = "La contraseña debe ser de 4 a 12 digitos";
     }
     if (!input.terminos) {
-      errors.terminos = "Para avanzar debes aceptar los terminos de uso";
+      errors.terminos = "Para continuar debes aceptar los terminos de uso";
     }
     return errors;
   }
-  
+
+  function handleEye(e) {
+    e.preventDefault();
+    setStateContraseña(prevStateContraseña => !prevStateContraseña)
+  }
 
   function handleChange(e) {
     setInput({
@@ -73,7 +87,6 @@ export default function FormRegistro() {
   }
   
   function handleCheck(e){
-      e.preventDefault()
       if(e.target.checked){
         setInput({
             ...input,
@@ -96,13 +109,13 @@ export default function FormRegistro() {
       alert("Por favor, completa todos los campos solicitados");
     } else {
       dispatch(registroUsuario(input));
-      alert("ya estas registrado");
+      alert("Registro exitoso");
       setInput({
         nombre: "",
         apellido:"",
         dni: "",
         contraseña: "",
-        contraseña2: "",
+        confirmar_contraseña: "",
         terminos: ""
 
       });
@@ -154,15 +167,31 @@ export default function FormRegistro() {
           <label htmlFor="dni" className="formulario_label"> DNI/PASAPORTE:</label>
           <div className="grupo_input">
             <input
-              type="number"
+              type="string"
               name="dni"
               id="dni"
               value={input.dni}
-              placeholder="numero de documento"
+              placeholder="DNI/Pasaporte"
               onChange={handleChange}
               className="input_Registro"
             />
             {errors.dni && <span className="error_registro">{errors.dni}</span>}
+          </div>
+        </div>
+        {/* grupo email*/}
+        <div>
+          <label htmlFor="email" className="formulario_label"> E-mail:</label>
+          <div className="grupo_input">
+            <input
+              type="string"
+              name="email"
+              id="email"
+              value={input.email}
+              placeholder="E-mail"
+              onChange={handleChange}
+              className="input_Registro"
+            />
+            {errors.email && <span className="error_registro">{errors.email}</span>}
           </div>
         </div>
         {/* grupo  contraseña */}
@@ -170,31 +199,37 @@ export default function FormRegistro() {
           <label htmlFor="contraseña" className="formulario_label">Contraseña:</label>
           <div className="grupo_input">
             <input
-              type="password"
+              type={stateContraseña ? "text" : "password"}
               name="contraseña"
               id="contraseña"
               value={input.contraseña}
-              placeholder="ingresar contraseña"
+              placeholder="Ingresar contraseña"
               onChange={handleChange}
               className="input_Registro"
             />
+            <button onClick={handleEye}>
+              {stateContraseña ? <BsEye /> : <BsEyeSlash />}
+            </button>
             {errors.contraseña && (<span className="error_registro">{errors.contraseña}</span>)}
           </div>
         </div>
         {/* grupo confirmar contraseña*/}
         <div>
-          <label htmlFor="contraseña2" className="formulario_label">Confirmar Contraseña:</label>
+          <label htmlFor="confirmar_contraseña" className="formulario_label">Confirmar Contraseña:</label>
           <div className="grupo_input">
             <input
-              type="password"
-              name="contraseña2"
-              id="contraseña2"
-              value={input.contraseña2}
-              placeholder="confirmar contraseña"
+              type={stateContraseña ? "text" : "password"}
+              name="confirmar_contraseña"
+              id="confirmar_contraseña"
+              value={input.nueva_contraseña}
+              placeholder="Confirmar contraseña"
               onChange={handleChange}
               className="input_Registro"
             />
-            {input.contraseña === input.contraseña2? "" : 
+            <button onClick={handleEye}>
+              {stateContraseña ? <BsEye /> : <BsEyeSlash />}
+            </button>
+            {input.contraseña === input.nueva_contraseña ? "" : 
             <p className="error_registro">No coincide con su contraseña</p>
             }
           </div>
@@ -207,10 +242,19 @@ export default function FormRegistro() {
             {/* <a href="#terminosYCondiciones">ver</a> */}
             <p onClick={handleConfirmar}>ver mas</p>
           </label>
-          {errors.terminos && (<span>{errors.terminos}</span>)}
+          {errors.terminos && (<span className="error_registro">{errors.terminos}</span>)}
         </div>
         <div className="grupo_btn">
-          <button type="submit" className="btn_registro">Registrarme</button>
+          {!errors.nombre &&
+          !errors.apellido &&
+          !errors.dni &&
+          !errors.contraseña &&
+          !errors.terminos ? (
+            <button type="submit" className="btn_registro">Registrarme</button>
+          ) : (
+            <button type="submit" disabled className="disabled" >Registrarme</button>
+          )}
+          
         </div>
       </form>
     </div>

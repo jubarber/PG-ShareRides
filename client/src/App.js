@@ -17,6 +17,7 @@ function App() {
           <Route exact path="/filtros" element={<Filtros />} />
           <Route exact path="/perfil" element={<Perfil />} />
           <Route exact path="/perfil/editar" element={<FormPerfil />} />
+          <Route exact path="/registro" element = {<FormRegistro />} />
         </Routes>
       </BrowserRouter>
     </div>
