@@ -59,15 +59,6 @@ export default function LandingPage() {
                     cookiePolicy={"single_host_origin"}
                  
                   />
-                  <FacebookLogin
-                    cssClass="fb"
-                    appId="3238709213026460"
-                    autoLoad={false}
-                    fields="name,email,picture"
-                    textButton="   Iniciar Sesion"
-                    icon="fa-brands fa-facebook"
-                    callback={responseFacebook}
-                  />
                 </div>
               </div>
             </div>
