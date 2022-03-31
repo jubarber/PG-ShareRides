@@ -2,7 +2,7 @@ const { Router } = require("express");
 const router = Router();
 const { Usuario, Viaje } = require("../db.js");
 
-router.get("/", async (req, res, next) => {
+router.get("/iniciarsesion", async (req, res, next) => {
   try {
     const { dni, password } = req.body;
     if (dni) {
@@ -23,7 +23,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/registro", async (req, res, next) => {
   try {
     const { dni, nombre, apellido, password, vehiculo } = req.body;
     let nuevoUsuario;
