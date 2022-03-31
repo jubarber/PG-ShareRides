@@ -15,10 +15,7 @@ import {
 const initialState = {
   viajePorId: [],
   viajes: [],
-
-  viajesFiltrados: []
-
-  viajePorId: [],
+  viajesFiltrados: [],
   usuarios: []
 
 };
