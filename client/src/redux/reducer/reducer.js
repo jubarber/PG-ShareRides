@@ -1,3 +1,4 @@
+
 import {
   GET_DETALLE_VIAJE,
   GET_VIAJES_TOTAL,
@@ -10,10 +11,16 @@ import {
   FILTRO_CHECKS_BARBIJO
 } from "../actions/actions.js";
 
+
 const initialState = {
   viajePorId: [],
   viajes: [],
+
   viajesFiltrados: []
+
+  viajePorId: [],
+  usuarios: []
+
 };
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -22,6 +29,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         viajePorId: action.payload
       };
+
 
     case GET_VIAJES_TOTAL:
       return {
@@ -105,6 +113,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         viajesFiltrados: filtradoEquipaje
+      };
+
+    case REGISTRO_USUARIO:
+      return {
+        ...state,
       };
 
     default:

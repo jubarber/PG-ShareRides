@@ -10,6 +10,7 @@ export const FILTRO_CHECKS_FUMADOR = "FILTRO_CHECKS_FUMADOR";
 export const FILTRO_CHECKS_EQUIPAJE = "FILTRO_CHECKS_EQUIPAJE";
 export const FILTRO_CHECKS_MASCOTA = "FILTRO_CHECKS_MASCOTA";
 export const FILTRO_CHECKS_BARBIJO = "FILTRO_CHECKS_BARBIJO";
+export const REGISTRO_USUARIO = "REGISTRO_USUARIO";
 
 export function getDetalleViaje(viajeId) {
   return function (dispatch) {
@@ -95,3 +96,18 @@ export function filtroChecksBarbijo(payload) {
     payload
   };
 }
+//registro usuario nuevo
+export function registroUsuario(payload) {
+  return async function (dispatch) {
+    try {
+      const nuevoUsuario = await axios.post("http://localhost:3001/", payload);
+      return dispatch({
+        type: "REGISTRO_USUARIO",
+        nuevoUsuario,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
