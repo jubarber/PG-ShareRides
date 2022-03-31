@@ -88,14 +88,51 @@ router.post("/pasajero", async (req, res, next) => {
   }
 });
 
-router.get("/", async (req, res, next) => {
+router.get("/totalviajes", async (req, res, next) => {
   try {
-    let viajesTotal = await Viaje.findAll({ include: Usuario });
-    res.send(viajesTotal);
-  } catch (err) {
-    next(err);
+    let totalViajes = await Viaje.findAll({ include: Usuario });
+    res.send(totalViajes);
+  } catch (error) {
+    next(error);
   }
 });
+
+router.get(
+  "/filtro/:aceptaFumador/:aceptaMascota/:aceptaEquipaje/:usaBarbijo",
+  async (req, res, next) => {
+    const { aceptaFumador, aceptaMascota, aceptaEquipaje, usaBarbijo } =
+      req.params;
+    const { asientosAOcupar } = req.query;
+    try {
+      let viajesTotal;
+      if (asientosAOcupar) {
+        viajesTotal = await Viaje.findAll({
+          where: {
+            aceptaFumador: aceptaFumador,
+            aceptaMascota: aceptaMascota,
+            aceptaEquipaje: aceptaEquipaje,
+            usaBarbijo: usaBarbijo,
+            asientosAOcupar: asientosAOcupar
+          },
+          include: Usuario
+        });
+      } else {
+        viajesTotal = await Viaje.findAll({
+          where: {
+            aceptaFumador: aceptaFumador,
+            aceptaMascota: aceptaMascota,
+            aceptaEquipaje: aceptaEquipaje,
+            usaBarbijo: usaBarbijo
+          },
+          include: Usuario
+        });
+      }
+      res.send(viajesTotal);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
 
 router.get("/:viajeId", async (req, res, next) => {
   const { viajeId } = req.params;
@@ -107,6 +144,9 @@ router.get("/:viajeId", async (req, res, next) => {
   }
 });
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> develop
 module.exports = router;
