@@ -62,7 +62,7 @@ router.post("/pasajero", async (req, res, next) => {
       usaBarbijo,
       aceptaEquipaje,
       viajeDisponible,
-      dni,
+      dni
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
@@ -78,7 +78,7 @@ router.post("/pasajero", async (req, res, next) => {
         aceptaFumador,
         aceptaMascota,
         usaBarbijo,
-        viajeDisponible,
+        viajeDisponible
       });
       await nuevoViaje.addUsuario(dni);
       res.json(nuevoViaje);
@@ -88,14 +88,51 @@ router.post("/pasajero", async (req, res, next) => {
   }
 });
 
-router.get("/viajestotal", async (req, res, next) => {
+router.get("/totalviajes", async (req, res, next) => {
   try {
-    let viajesTotal = await Viaje.findAll({ include: Usuario });
-    res.send(viajesTotal);
-  } catch (err) {
-    next(err);
+    let totalViajes = await Viaje.findAll({ include: Usuario });
+    res.send(totalViajes);
+  } catch (error) {
+    next(error);
   }
 });
+
+router.get(
+  "/filtro/:aceptaFumador/:aceptaMascota/:aceptaEquipaje/:usaBarbijo",
+  async (req, res, next) => {
+    const { aceptaFumador, aceptaMascota, aceptaEquipaje, usaBarbijo } =
+      req.params;
+    const { asientosAOcupar } = req.query;
+    try {
+      let viajesTotal;
+      if (asientosAOcupar) {
+        viajesTotal = await Viaje.findAll({
+          where: {
+            aceptaFumador: aceptaFumador,
+            aceptaMascota: aceptaMascota,
+            aceptaEquipaje: aceptaEquipaje,
+            usaBarbijo: usaBarbijo,
+            asientosAOcupar: asientosAOcupar
+          },
+          include: Usuario
+        });
+      } else {
+        viajesTotal = await Viaje.findAll({
+          where: {
+            aceptaFumador: aceptaFumador,
+            aceptaMascota: aceptaMascota,
+            aceptaEquipaje: aceptaEquipaje,
+            usaBarbijo: usaBarbijo
+          },
+          include: Usuario
+        });
+      }
+      res.send(viajesTotal);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
 
 router.get("/:viajeId", async (req, res, next) => {
   const { viajeId } = req.params;
@@ -106,7 +143,5 @@ router.get("/:viajeId", async (req, res, next) => {
     next(err);
   }
 });
-
-
 
 module.exports = router;

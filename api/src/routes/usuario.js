@@ -23,6 +23,15 @@ router.get("/iniciarsesion", async (req, res, next) => {
   }
 });
 
+router.get("/usuarios", async (req, res, next) => {
+  try {
+    let usuarios = await Usuario.findAll();
+    res.send(usuarios);
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.post("/registro", async (req, res, next) => {
   try {
     const { dni, nombre, apellido, password, vehiculo } = req.body;
