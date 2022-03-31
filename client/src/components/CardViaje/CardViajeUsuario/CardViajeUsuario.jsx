@@ -6,6 +6,7 @@ import { MdSmokeFree, MdMasks, MdPets } from "react-icons/md";
 import { FaSuitcaseRolling } from "react-icons/fa";
 import { ImStarEmpty, ImStarHalf, ImStarFull } from "react-icons/im";
 
+
 export default function Card({
   origen,
   destino,
@@ -21,6 +22,7 @@ export default function Card({
   apellido,
 }) {
   //get de usuario (nombre, apellido y valoracion). foto usuario. Provincias/localidades como llegan y si se puede mostras cada una independiente de la otra. Iniciar sesion con aut 0 y con las cuquis trabajar con la info.
+
   return (
     <div className="container-card-total font-mono italic">
       <div className="perfil-card">
@@ -50,6 +52,7 @@ export default function Card({
               <VscLocation className="icono text-purple-600" />
               origen
             </i>
+
             <i className="text-base w-full">{origen}</i>
           </div>
           <i className="text-right w-full text-sm	">{origen}</i>
@@ -58,6 +61,7 @@ export default function Card({
               <VscLocation className="icono text-purple-600" />
               destino
             </i>
+
             <i className="text-base w-full">{destino}</i>
           </div>
           <i className="text-right w-full text-sm	">{destino}</i>
