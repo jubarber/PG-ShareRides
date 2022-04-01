@@ -1,6 +1,7 @@
 import {
   GET_DETALLE_VIAJE,
   GET_VIAJES_TOTAL,
+<<<<<<< HEAD
   FILTRO_ORIGEN,
   FILTRO_DESTINO,
   FILTRO_ASIENTOS,
@@ -9,13 +10,21 @@ import {
   FILTRO_CHECKS_MASCOTA,
   FILTRO_CHECKS_BARBIJO,
   REGISTRO_USUARIO,
+=======
+  FILTRO_CHECKS,
+  REGISTRO_USUARIO
+>>>>>>> develop
 } from "../actions/actions.js";
 
 const initialState = {
   viajePorId: [],
   viajes: [],
   viajesFiltrados: [],
+<<<<<<< HEAD
   usuarios: [],
+=======
+  usuarios: []
+>>>>>>> develop
 };
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -30,6 +39,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         viajes: action.payload,
         viajesFiltrados: action.payload,
+<<<<<<< HEAD
       };
 
     case FILTRO_ORIGEN:
@@ -50,15 +60,13 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         viajesFiltrados: filtradoDestino,
+=======
+>>>>>>> develop
       };
-    case FILTRO_ASIENTOS:
-      const viajeAsientos = state.viajes;
-      const filtradoAsientos = viajeAsientos?.filter(
-        (v) => v.asientosAOcupar == action.payload
-      );
-
+    case FILTRO_CHECKS:
       return {
         ...state,
+<<<<<<< HEAD
         viajesFiltrados: filtradoAsientos,
       };
     case FILTRO_CHECKS_FUMADOR:
@@ -108,13 +116,16 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         viajesFiltrados: filtradoEquipaje,
+=======
+        viajesFiltrados: action.payload
+>>>>>>> develop
       };
 
     case REGISTRO_USUARIO:
       return {
-        ...state,
+        ...state
       };
-
+  
     default:
       return { ...state };
   }

@@ -67,11 +67,24 @@
     box-shadow: 3px 0px 30px rgba(163, 163, 163, 1);
 }
 
+.disabled {
+  height: 45x;
+	line-height: 45px;
+  width: 30%;
+	background: rgb(154, 153, 153);
+	color: #fff;
+	font-weight: bold;
+	border: none;
+	border-radius: 3px;
+	transition:  .1s easy all;
+}
+
 .error_registro{
   display: flex;
-  justify-content: center;
+  text-align: left;
+  justify-content: left;
   font-size: 0.8rem;
   font-weight: 600;
-  color: rgb(248, 16, 16);
+  color: rgb(201, 25, 25);
   
 }
