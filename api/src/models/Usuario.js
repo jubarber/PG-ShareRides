@@ -7,6 +7,11 @@ module.exports = (sequelize) => {
     dni: {
       type: DataTypes.INTEGER,
       unique: true,
+      // allowNull: false
+    },
+    email: {
+      type: DataTypes.TEXT,
+      unique: true,
       allowNull: false,
       primaryKey: true
     },
@@ -26,9 +31,22 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     },
+    acercaDeMi: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    avatar: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
     vehiculo: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    logueado:{
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     }
   });
 };

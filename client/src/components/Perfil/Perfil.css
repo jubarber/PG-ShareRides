@@ -12,6 +12,14 @@
   padding-bottom: 3em;
 }
 
+.bio-perfil input {
+  height: 8rem;
+  width: 12rem;
+  text-align: center;
+  border: 1px solid black;
+  border-radius: 20px;
+}
+
 .contenedor-imagen {
   display: flex;
   flex-direction: column;
@@ -28,8 +36,16 @@
 }
 .contenedor-imagen .img-perfil {
   border: 1px solid black;
-  padding: 4em;
+
   border-radius: 50%;
+}
+.img-perfil img {
+  position: relative;
+  border-radius: 50%;
+  display: block;
+  height: 10rem;
+  width: 10rem;
+  object-fit: cover;
 }
 .contenedor-imagen .bio-perfil h1 {
   font-size: 2rem;
@@ -64,18 +80,22 @@
   padding: 0.5em;
 }
 
+.input-perfil {
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
 .resenas {
   display: flex;
   flex-direction: row;
-  width: 74rem;
+  width: 55rem;
   height: 20rem;
   border-radius: 20px;
   margin-bottom: 3em;
-  margin-left: 3em;
 }
 
 .resenas-card {
-  width: 20rem;
+  width: 18rem;
   display: flex;
   flex-direction: column;
   border: 1px solid black;
@@ -105,19 +125,74 @@
   font-size: 2rem;
 }
 
-.resenas-card p {
+.texto {
   width: 15rem;
-  height: 20rem;
-  font-size: 1rem;
   display: flex;
   margin: auto;
-  justify-content: center;
-  align-items: center;
+}
+
+.texto p {
+  width: 10rem;
+  margin: auto;
+  word-break: break-word;
 }
 
 .pag {
   display: flex;
   flex-direction: column;
+  margin-left: 20em;
+}
+
+.comentarios {
+  width: 20rem;
+  height: 23rem;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  border-radius: 20px;
+  background-color: #fdf4ff;
+  margin-right: 8em;
+  box-shadow: 0.5em 0.5em 0.5em 0 black;
+  margin-left: 3em;
+}
+
+.comentarios h1 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.comentarios-card {
+  width: 18rem;
+  margin-top: 1em;
+  margin-bottom: 2em;
+  display: flex;
+  justify-content: center;
+}
+
+.comentarios-card input {
+  width: 3rem;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding-left: 1.2rem;
+  margin-left: 1em;
+  word-wrap: break-word;
+}
+
+.comentario input {
+  height: 8rem;
+  width: 16rem;
+  margin-left: 1em;
+  margin-top: 1em;
+  border-radius: 10px;
+  border: 1px solid black;
+  padding-bottom: 6rem;
+  margin-right: 1em;
+}
+
+.comentarios Button {
+  display: flex;
+  justify-content: center;
+  margin-top: 1em;
 }
 
 .wallpaper {

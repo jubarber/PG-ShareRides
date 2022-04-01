@@ -18,11 +18,11 @@ router.post("/conductor", async (req, res, next) => {
       usaBarbijo,
       aceptaEquipaje,
       viajeDisponible,
-      dni
+      email
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
-      const usuarioConductor = await Usuario.findByPk(dni);
+      const usuarioConductor = await Usuario.findByPk(email);
       nuevoViaje = await Viaje.create({
         fecha,
         hora,
@@ -37,7 +37,7 @@ router.post("/conductor", async (req, res, next) => {
         usaBarbijo,
         viajeDisponible
       });
-      await nuevoViaje.addUsuario(dni);
+      await nuevoViaje.addUsuario(email);
       usuarioConductor.update({ conductor: true });
       usuarioConductor.save();
       res.json(nuevoViaje);
@@ -62,7 +62,7 @@ router.post("/pasajero", async (req, res, next) => {
       usaBarbijo,
       aceptaEquipaje,
       viajeDisponible,
-      dni
+      email
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
@@ -80,7 +80,7 @@ router.post("/pasajero", async (req, res, next) => {
         usaBarbijo,
         viajeDisponible
       });
-      await nuevoViaje.addUsuario(dni);
+      await nuevoViaje.addUsuario(email);
       res.json(nuevoViaje);
     }
   } catch (error) {
