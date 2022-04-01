@@ -6,6 +6,7 @@ import { FaEdit } from "react-icons/fa";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import PaginacionComentarios from "./PaginacionComentarios";
+import foto from "../../assets/foto perfil.jfif";
 
 export default function Perfil() {
   const [usuario, setUsuario] = useState({
@@ -14,6 +15,8 @@ export default function Perfil() {
     Email: "",
     Telefono: "",
     DNI: "",
+    AcercaDeMi: "",
+    Imagen: "",
     Patente: "",
     Modelo: "",
   });
@@ -21,104 +24,55 @@ export default function Perfil() {
   const [check, setCheck] = useState(false);
   const [habilitarTelefono, setHabilitarTelefono] = useState(true);
   const [habilitarDNI, setHabilitarDNI] = useState(true);
+  const [habilitarAcercaDeMi, setHabilitarAcercaDeMi] = useState(true);
+  const [habilitarImagen, setHabilitarImagen] = useState(true);
+  const [habilitarMarca, setHabilitarMarca] = useState(true);
   const [habilitarPatente, setHabilitarPatente] = useState(true);
   const [habilitarModelo, setHabilitarModelo] = useState(true);
 
   let array = [
     {
       Nombre: "Julio",
-      Estrellas: "3️⃣",
-      Comentario: `ipsum dolor sit, amet consectetur adipisicing elit. Non
-        pariatur atque praesentium a doloribus hic incidunt reprehenderit.
-        Oditp
-        `,
-      Foto: "https://static.vecteezy.com/system/resources/thumbnails/000/550/980/small/user_icon_001.jpg",
+      Puntuacion: 4,
+      Comentario: "sfsofsifisfhsfihsifoshfoshfsofhsofhs",
     },
     {
-      Nombre: "Camila",
-      Estrellas: "9️⃣",
-      Comentario: `ipsum dolor sit, amet consectetur adipisicing elit. Non
-        pariatur atque praesentium a doloribus hic incidunt reprehenderit.
-        Oditp
-        `,
-      Foto: "https://static.vecteezy.com/system/resources/thumbnails/000/550/980/small/user_icon_001.jpg",
+      Nombre: "Julio",
+      Puntuacion: 4,
+      Comentario: "sfsofsifisfhsfihsifoshfoshfsofhsofhs",
     },
     {
-      Nombre: "Juana",
-      Estrellas: "6️⃣",
-      Comentario: `ipsum dolor sit, amet consectetur adipisicing elit. Non
-        pariatur atque praesentium a doloribus hic incidunt reprehenderit.
-        Oditp
-        `,
-      Foto: "https://static.vecteezy.com/system/resources/thumbnails/000/550/980/small/user_icon_001.jpg",
+      Nombre: "Julio",
+      Puntuacion: 4,
+      Comentario:
+        "Holaaaa no me voy a arreglar, sufri aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     },
     {
-      Nombre: "Carlos",
-      Estrellas: "1️⃣",
-      Comentario: `ipsum dolor sit, amet consectetur adipisicing elit. Non
-        pariatur atque praesentium a doloribus hic incidunt reprehenderit.
-        Oditp
-        `,
-      Foto: "https://static.vecteezy.com/system/resources/thumbnails/000/550/980/small/user_icon_001.jpg",
+      Nombre: "Julio",
+      Puntuacion: 4,
+      Comentario: "sfsofsifisfhsfihsifoshfoshfsofhsofhs",
     },
     {
-      Nombre: "Carolina",
-      Estrellas: "1️⃣",
-      Comentario: `ipsum dolor sit, amet consectetur adipisicing elit. Non
-        pariatur atque praesentium a doloribus hic incidunt reprehenderit.
-        Oditp
-        `,
-      Foto: "https://static.vecteezy.com/system/resources/thumbnails/000/550/980/small/user_icon_001.jpg",
+      Nombre: "Julio",
+      Puntuacion: 4,
+      Comentario: "sfsofsifisfhsfihsifoshfoshfsofhsofhs",
     },
     {
-      Nombre: "Marcela",
-      Estrellas: "1️⃣",
-      Comentario: `ipsum dolor sit, amet consectetur adipisicing elit. Non
-        pariatur atque praesentium a doloribus hic incidunt reprehenderit.
-        Oditp
-        `,
-      Foto: "https://static.vecteezy.com/system/resources/thumbnails/000/550/980/small/user_icon_001.jpg",
+      Nombre: "Julio",
+      Puntuacion: 4,
+      Comentario: `sfsofsifis
+      fhsfihsifoshfoshfsofhsofhs`,
     },
     {
-      Nombre: "Enrique",
-      Estrellas: "1️⃣",
-      Comentario: `ipsum dolor sit, amet consectetur adipisicing elit. Non
-        pariatur atque praesentium a doloribus hic incidunt reprehenderit.
-        Oditp
-        `,
-      Foto: "https://static.vecteezy.com/system/resources/thumbnails/000/550/980/small/user_icon_001.jpg",
-    },
-    {
-      Nombre: "Enrique",
-      Estrellas: "1️⃣",
-      Comentario: `ipsum dolor sit, amet consectetur adipisicing elit. Non
-        pariatur atque praesentium a doloribus hic incidunt reprehenderit.
-        Oditp
-        `,
-      Foto: "https://static.vecteezy.com/system/resources/thumbnails/000/550/980/small/user_icon_001.jpg",
-    },
-    {
-      Nombre: "Enrique",
-      Estrellas: "1️⃣",
-      Comentario: `ipsum dolor sit, amet consectetur adipisicing elit. Non
-        pariatur atque praesentium a doloribus hic incidunt reprehenderit.
-        Oditp
-        `,
-      Foto: "https://static.vecteezy.com/system/resources/thumbnails/000/550/980/small/user_icon_001.jpg",
-    },
-    {
-      Nombre: "Enrique",
-      Estrellas: "1️⃣",
-      Comentario: `ipsum dolor sit, amet consectetur adipisicing elit. Non
-        pariatur atque praesentium a doloribus hic incidunt reprehenderit.
-        Oditp
-        `,
-      Foto: "https://static.vecteezy.com/system/resources/thumbnails/000/550/980/small/user_icon_001.jpg",
+      Nombre: "Julio",
+      Puntuacion: 4,
+      Comentario: `sfsofsifisfhsfihsifoshfo
+      shfsofhsofhs`,
     },
   ];
 
   const [pagina, setPagina] = useState(1);
-  const [comentariosPorPagina, setComentariosPorPagina] = useState(4);
+  const [comentariosPorPagina, setComentariosPorPagina] = useState(3);
   const ultimoComentario = pagina * comentariosPorPagina;
   const primerComentario = ultimoComentario - comentariosPorPagina;
   const personitas = array?.slice(primerComentario, ultimoComentario);
@@ -130,12 +84,7 @@ export default function Perfil() {
   };
 
   const handleCheck = (e) => {
-    e.preventDefault();
-    if (check === false) {
-      setCheck(true);
-    } else {
-      setCheck(false);
-    }
+    setCheck(!check);
   };
 
   const clickTelefono = (e) => {
@@ -145,6 +94,18 @@ export default function Perfil() {
   const clickDNI = (e) => {
     e.preventDefault();
     setHabilitarDNI(!habilitarDNI);
+  };
+  const clickAcercaDeMi = (e) => {
+    e.preventDefault();
+    setHabilitarAcercaDeMi(!habilitarAcercaDeMi);
+  };
+  const clickImagen = (e) => {
+    e.preventDefault();
+    setHabilitarImagen(!habilitarImagen);
+  };
+  const clickMarca = (e) => {
+    e.preventDefault();
+    setHabilitarMarca(!habilitarMarca);
   };
   const clickPatente = (e) => {
     e.preventDefault();
@@ -163,26 +124,25 @@ export default function Perfil() {
     });
   };
 
-  console.log(usuario);
   return (
     <div className="perfil" class="font-mono">
       <div className="contenedor-perfil">
         <div className="contenedor-imagen">
           <div className="img-perfil">
-            <img
-              src="https://cdn.pixabay.com/photo/2017/01/25/17/35/picture-2008484_960_720.png"
-              alt=""
-              width="30"
-              height="30"
-            />
+            <img src={foto} alt="" />
           </div>
           <div className="bio-perfil">
             <h1>Julio Humere</h1>
-            <p>
-              {" "}
-              ipsum dolor sit, amet consectetur adipisicing elit. Non pariatur
-              atque praesentium a doloribus hic incidunt reprehenderit. Oditp
-            </p>
+            <input
+              type="text"
+              onChange={handleChange}
+              name="AcercaDeMi"
+              value={usuario.AcercaDeMi}
+              disabled={habilitarAcercaDeMi}
+            />{" "}
+            <button onClick={clickAcercaDeMi}>
+              <FaEdit />
+            </button>
             <div className="btn-perfil">
               <Button color="secondary" size="medium">
                 Seguir
@@ -194,6 +154,7 @@ export default function Perfil() {
             </div>
           </div>
         </div>
+
         <div>
           <form className="contenedor-form">
             <div className="nombre">
@@ -206,7 +167,7 @@ export default function Perfil() {
                 value={usuario.Nombre}
                 disabled
               />
-              <button>
+              <button disabled>
                 <FaEdit />
               </button>
             </div>
@@ -220,7 +181,7 @@ export default function Perfil() {
                 value={usuario.Apellido}
                 disabled
               />
-              <button>
+              <button disabled>
                 <FaEdit />
               </button>
             </div>
@@ -234,7 +195,7 @@ export default function Perfil() {
                 value={usuario.Email}
                 disabled
               />
-              <button>
+              <button disabled>
                 <FaEdit />
               </button>
             </div>
@@ -280,6 +241,20 @@ export default function Perfil() {
               <>
                 {" "}
                 <div className="nombre">
+                  <h5>Marca___</h5>
+                  <input
+                    type="text"
+                    className="input-perfil"
+                    onChange={handleChange}
+                    name="Patente"
+                    value={usuario.Patente}
+                    disabled={habilitarPatente}
+                  />
+                  <button onClick={clickPatente}>
+                    <FaEdit />
+                  </button>
+                </div>
+                <div className="nombre">
                   <h5>Patente_</h5>
                   <input
                     type="text"
@@ -313,6 +288,29 @@ export default function Perfil() {
         </div>
       </div>
       <div className="resenas">
+        <form>
+          <div className="comentarios">
+            <h1>Comentarios</h1>
+            <div className="comentarios-card">
+              <label>
+                Punturacion:
+                <input
+                  type="number"
+                  min="1"
+                  max="10"
+                  classname="input-number"
+                />{" "}
+              </label>
+            </div>
+            <div className="comentario">
+              <label>Deja tu comentario</label>
+              <input type="text" />
+            </div>
+            <Button color="secondary" size="medium" className="btn-enviar">
+              Enviar
+            </Button>
+          </div>
+        </form>
         {personitas &&
           personitas.map((e) => (
             <div className="resenas-card">
@@ -321,7 +319,9 @@ export default function Perfil() {
                 <h1>{e.Nombre}</h1>
               </div>
               <h3>Punturacion: {e.Estrellas}</h3>
-              <p>{e.Comentario}</p>
+              <div className="texto">
+                <p>{e.Comentario}</p>
+              </div>
             </div>
           ))}
       </div>

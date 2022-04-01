@@ -16,16 +16,15 @@ function rootReducer(state = initialState, action) {
     case GET_DETALLE_VIAJE:
       return {
         ...state,
-        viajePorId: action.payload
+        viajePorId: action.payload,
       };
 
     case GET_VIAJES_TOTAL:
       return {
         ...state,
         viajes: action.payload,
-        viajesFiltrados: action.payload
+        viajesFiltrados: action.payload,
       };
-
     case FILTRO_CHECKS:
       return {
         ...state,

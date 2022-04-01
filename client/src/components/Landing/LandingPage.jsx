@@ -3,9 +3,7 @@ import GoogleLogin from "react-google-login";
 import { Link } from "react-router-dom";
 import "./LandingPage.css";
 
-
 export default function LandingPage() {
- 
   const [menu, SetMenu] = useState(false);
   const responseGoogle = (response) => {
     console.log("Este es el nombre: " + response.profileObj.name);
@@ -48,12 +46,11 @@ export default function LandingPage() {
                   <Link to="#">Inciar Sesion</Link>
                   <Link to="#">Registrarse</Link>
                   <GoogleLogin
-                     clientId="217227520954-k6ikmp0j3ksrgf2r0s1vtg0aifpn5e0p.apps.googleusercontent.com"
+                    clientId="217227520954-k6ikmp0j3ksrgf2r0s1vtg0aifpn5e0p.apps.googleusercontent.com"
                     buttonText="Iniciar sesion"
                     onSuccess={responseGoogle}
-                   onFailure={responseGoogle}
+                    onFailure={responseGoogle}
                     cookiePolicy={"single_host_origin"}
-                 
                   />
                 </div>
               </div>
