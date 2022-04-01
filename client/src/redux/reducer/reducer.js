@@ -1,4 +1,3 @@
-
 import {
   GET_DETALLE_VIAJE,
   GET_VIAJES_TOTAL,
@@ -8,31 +7,29 @@ import {
   FILTRO_CHECKS_FUMADOR,
   FILTRO_CHECKS_EQUIPAJE,
   FILTRO_CHECKS_MASCOTA,
-  FILTRO_CHECKS_BARBIJO
+  FILTRO_CHECKS_BARBIJO,
+  REGISTRO_USUARIO,
 } from "../actions/actions.js";
-
 
 const initialState = {
   viajePorId: [],
   viajes: [],
   viajesFiltrados: [],
-  usuarios: []
-
+  usuarios: [],
 };
 function rootReducer(state = initialState, action) {
   switch (action.type) {
     case GET_DETALLE_VIAJE:
       return {
         ...state,
-        viajePorId: action.payload
+        viajePorId: action.payload,
       };
-
 
     case GET_VIAJES_TOTAL:
       return {
         ...state,
         viajes: action.payload,
-        viajesFiltrados: action.payload
+        viajesFiltrados: action.payload,
       };
 
     case FILTRO_ORIGEN:
@@ -42,7 +39,7 @@ function rootReducer(state = initialState, action) {
       );
       return {
         ...state,
-        viajesFiltrados: filtradoOrigen
+        viajesFiltrados: filtradoOrigen,
       };
 
     case FILTRO_DESTINO:
@@ -52,7 +49,7 @@ function rootReducer(state = initialState, action) {
       );
       return {
         ...state,
-        viajesFiltrados: filtradoDestino
+        viajesFiltrados: filtradoDestino,
       };
     case FILTRO_ASIENTOS:
       const viajeAsientos = state.viajes;
@@ -62,7 +59,7 @@ function rootReducer(state = initialState, action) {
 
       return {
         ...state,
-        viajesFiltrados: filtradoAsientos
+        viajesFiltrados: filtradoAsientos,
       };
     case FILTRO_CHECKS_FUMADOR:
       // console.log(action.payload)
@@ -77,19 +74,20 @@ function rootReducer(state = initialState, action) {
       // console.log(filtradoFumador);
       return {
         ...state,
-        viajesFiltrados: filtradoFumador
+        viajesFiltrados: filtradoFumador,
       };
-      
+
     case FILTRO_CHECKS_MASCOTA:
-      console.log(action.payload)
+      console.log(action.payload);
       let viajeMascota = state.viajesFiltrados;
       let filtradoMascota = viajeMascota?.filter(
-        (v) => v.aceptaMascota == action.payload);
-      console.log(viajeMascota)
-      console.log(filtradoMascota)
+        (v) => v.aceptaMascota == action.payload
+      );
+      console.log(viajeMascota);
+      console.log(filtradoMascota);
       return {
         ...state,
-        viajesFiltrados: filtradoMascota
+        viajesFiltrados: filtradoMascota,
       };
 
     case FILTRO_CHECKS_BARBIJO:
@@ -99,7 +97,7 @@ function rootReducer(state = initialState, action) {
       );
       return {
         ...state,
-        viajesFiltrados: filtradoBarbijo
+        viajesFiltrados: filtradoBarbijo,
       };
 
     case FILTRO_CHECKS_EQUIPAJE:
@@ -109,7 +107,7 @@ function rootReducer(state = initialState, action) {
       );
       return {
         ...state,
-        viajesFiltrados: filtradoEquipaje
+        viajesFiltrados: filtradoEquipaje,
       };
 
     case REGISTRO_USUARIO:

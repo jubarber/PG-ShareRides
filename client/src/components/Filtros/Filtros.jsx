@@ -8,8 +8,8 @@ import {
   filtroChecksFumador,
   filtroChecksEquipaje,
   filtroChecksMascota,
-  filtroChecksBarbijo
-} from "../redux/actions/actions";
+  filtroChecksBarbijo,
+} from "../../redux/actions/actions";
 
 export function Filtros() {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ export function Filtros() {
     fumador: false,
     mascota: false,
     equipaje: false,
-    barbijo: false
+    barbijo: false,
   });
   const [isCheckedFumador, setIsCheckedFumador] = useState(false);
   const [isCheckedMascota, setIsCheckedMascota] = useState(false);
@@ -28,7 +28,7 @@ export function Filtros() {
   const [selects, setSelects] = useState({
     origen: "",
     destino: "",
-    asientos: ""
+    asientos: "",
   });
 
   function handleOnChangeFumador(e) {
@@ -101,7 +101,7 @@ export function Filtros() {
     setSelects({
       origen: "",
       destino: "",
-      asientos: ""
+      asientos: "",
     });
   }
 
@@ -112,12 +112,12 @@ export function Filtros() {
     setIsCheckedMascota(false);
     setIsCheckedEquipaje(false);
     setIsCheckedBarbijo(false);
-    
+
     setCheckedArray({
       fumador: false,
       mascota: false,
       equipaje: false,
-      barbijo: false
+      barbijo: false,
     });
   }
 
