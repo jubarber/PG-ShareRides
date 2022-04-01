@@ -6,8 +6,23 @@ import { MdSmokeFree, MdMasks, MdPets } from "react-icons/md";
 import { FaSuitcaseRolling } from "react-icons/fa";
 import { ImStarEmpty, ImStarHalf, ImStarFull } from "react-icons/im";
 
-export default function Card() {
-  const handleClick = (e) => {};
+
+export default function Card({
+  origen,
+  destino,
+  fecha,
+  hora,
+  asientosAOcupar,
+  aceptaEquipaje,
+  aceptaFumador,
+  aceptaMascota,
+  usaBarbijo,
+  viajeDisponible,
+  nombre,
+  apellido,
+}) {
+  //get de usuario (nombre, apellido y valoracion). foto usuario. Provincias/localidades como llegan y si se puede mostras cada una independiente de la otra. Iniciar sesion con aut 0 y con las cuquis trabajar con la info.
+
   return (
     <div className="container-card-total font-mono italic">
       <div className="perfil-card">
@@ -18,7 +33,9 @@ export default function Card() {
           />
         </div>
         <div className="perfil-card-usuario">
-          <i className="">nombre apellido</i>
+          <i className="">
+            {nombre} {apellido}
+          </i>
           <div className="puntuacion">
             <ImStarFull className="text-yellow-50" />
             <ImStarFull className="text-yellow-50" />
@@ -35,34 +52,48 @@ export default function Card() {
               <VscLocation className="icono text-purple-600" />
               origen
             </i>
-            <i className="text-base w-full">CABA </i>
+
+            <i className="text-base w-full">{origen}</i>
           </div>
-          <i className="text-right w-full text-sm	">Buenos Aires</i>
+          <i className="text-right w-full text-sm	">{origen}</i>
           <div className="prueba">
             <i className="text-sky-400 text-xs text-left w-full flex flex-col-reverse w-4/12">
               <VscLocation className="icono text-purple-600" />
               destino
             </i>
-            <i className="text-base w-full">Mar del Plata </i>
+
+            <i className="text-base w-full">{destino}</i>
           </div>
-          <i className="text-right w-full text-sm	">Buenos Aires</i>
+          <i className="text-right w-full text-sm	">{destino}</i>
           <h5 className="text-center text-xs">
-            14:00 hs <p className="text-right text-xs">28-12-2022</p>
+            {hora} <p className="text-right text-xs">{fecha}</p>
           </h5>
-          <div className="dos"><h5 className="text-left">x lugares libre</h5></div>
+          <div className="dos">
+            <h5 className="text-left">
+              {asientosAOcupar > 1
+                ? `${asientosAOcupar} lugares libres`
+                : asientosAOcupar === 1
+                ? `${asientosAOcupar} lugar libre`
+                : ""}
+            </h5>
+          </div>
         </div>
         <div className="icon-card">
           <div className="iconos">
-            <MdPets />
-            <MdSmokeFree />
-            <FaSuitcaseRolling />
-            <MdMasks />
+            {aceptaMascota ? <MdPets /> : <></>}
+            {aceptaFumador ? <MdSmokeFree /> : <></>}
+            {aceptaEquipaje ? <FaSuitcaseRolling /> : <></>}
+            {usaBarbijo ? <MdMasks /> : <></>}
           </div>
-          <Link to={"/"} id="ver">
-            <div>
-              <button className="ver-button">Ver</button>
-            </div>
-          </Link>
+          {viajeDisponible ? (
+            <Link to={"/viajes/"} id="ver">
+              <div>
+                <button className="ver-button">Ver</button>
+              </div>
+            </Link>
+          ) : (
+            <h5>Lleno</h5>
+          )}
         </div>
       </div>
     </div>

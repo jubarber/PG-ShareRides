@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import GoogleLogin from "react-google-login";
-import FacebookLogin from "react-facebook-login";
 import { Link } from "react-router-dom";
 import "./LandingPage.css";
 
@@ -9,12 +8,9 @@ export default function LandingPage() {
  
   const [menu, SetMenu] = useState(false);
   const responseGoogle = (response) => {
-    console.log(response);
-  };
-  const responseFacebook = (response) => {
-    console.log("Este es el nombre: " + response.name);
-    console.log("Este es el email: " + response.email);
-    console.log("Esta es la foto: " + response.picture.data.url);
+    console.log("Este es el nombre: " + response.profileObj.name);
+    console.log("Este es el email: " + response.profileObj.email);
+    console.log("Esta es la foto: " + response.profileObj.imageUrl);
   };
 
   const handleMenu = () => {
