@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,8 +7,6 @@ import { DetalleViaje } from "../DetalleViaje";
 import CardViajeUsuario from "../CardViaje/CardViajeUsuario/CardViajeUsuario";
 import "./Home.css";
 
-
-//cambio inutil, fui yo gabriel!
 export default function Home() {
   const dispatch = useDispatch();
   const viajes = useSelector(
@@ -48,7 +45,6 @@ export default function Home() {
           ))}
         </div>
       </div>
-
     </div>
   );
 }
