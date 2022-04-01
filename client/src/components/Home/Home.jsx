@@ -24,10 +24,8 @@ export default function Home() {
         <NavBar />
       </div>
       <div className="container-cards">
-
-        {viajes.map((e) => (
-          <div className="card-unica">
-
+        <div className="card-home">
+          {viajes.map((e) => (
             <CardViajeUsuario
               origen={e.origen}
               destino={e.destino}
@@ -44,10 +42,9 @@ export default function Home() {
               nombre={e.usuarios[0].nombre}
               apellido={e.usuarios[0].apellido}
             />
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-
     </div>
   );
 }
