@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,6 +7,7 @@ import NavBar from "../NavBar";
 import { DetalleViaje } from "../DetalleViaje";
 import CardViajeUsuario from "../CardViaje/CardViajeUsuario/CardViajeUsuario";
 import "./Home.css";
+
 
 //cambio inutil, fui yo gabriel!
 export default function Home() {
@@ -46,6 +48,7 @@ export default function Home() {
           ))}
         </div>
       </div>
+
     </div>
   );
 }

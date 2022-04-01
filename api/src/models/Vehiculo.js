@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false
     }, 
-    usuario: {
+    dni: {
       type: DataTypes.INTEGER,
       allowNull: false
     }
