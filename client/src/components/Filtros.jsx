@@ -1,62 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-<<<<<<< HEAD
-import {
-  getViajesTotal,
-  filtroOrigen,
-  filtroDestino,
-  filtroAsientos,
-  filtroChecksFumador,
-  filtroChecksEquipaje,
-  filtroChecksMascota,
-  filtroChecksBarbijo,
-} from "../redux/actions/actions";
-=======
 import { getViajesTotal, filtroChecks } from "../redux/actions/actions";
->>>>>>> develop
 
 export function Filtros() {
   const dispatch = useDispatch();
   const viajesFiltrados = useSelector((state) => state.viajesFiltrados?.flat());
   const viajesTotal = useSelector((state) => state.viajes);
-<<<<<<< HEAD
-  const [checkedArray, setCheckedArray] = useState({
-    fumador: false,
-    mascota: false,
-    equipaje: false,
-    barbijo: false,
-  });
-  const [isCheckedFumador, setIsCheckedFumador] = useState(false);
-  const [isCheckedMascota, setIsCheckedMascota] = useState(false);
-  const [isCheckedEquipaje, setIsCheckedEquipaje] = useState(false);
-  const [isCheckedBarbijo, setIsCheckedBarbijo] = useState(false);
-  const [selects, setSelects] = useState({
-    origen: "",
-    destino: "",
-    asientos: "",
-  });
-=======
   const [isChecked, setIsChecked] = useState(new Array(4).fill(false));
   const [asiento, setAsiento] = useState("");
->>>>>>> develop
 
   const filtrosArray = [
     {
       id: 1,
-      name: "fumador"
+      name: "fumador",
     },
     {
       id: 2,
-      name: "mascota"
+      name: "mascota",
     },
     {
       id: 3,
-      name: "equipaje"
+      name: "equipaje",
     },
     {
       id: 4,
-      name: "barbijo"
-    }
+      name: "barbijo",
+    },
   ];
 
   useEffect(() => {
@@ -81,49 +50,15 @@ export function Filtros() {
 
   function handleSubmit(e) {
     e.preventDefault();
-<<<<<<< HEAD
-    dispatch(filtroOrigen(selects.origen));
-    dispatch(filtroDestino(selects.destino));
-    dispatch(filtroAsientos(selects.asientos));
-    dispatch(filtroChecksFumador(checkedArray.fumador));
-    dispatch(filtroChecksMascota(checkedArray.mascota));
-    dispatch(filtroChecksEquipaje(checkedArray.equipaje));
-    dispatch(filtroChecksBarbijo(checkedArray.barbijo));
-    // console.log(viajesFiltrados);
-    // setIsCheckedFumador(false);
-    // setIsCheckedMascota(false);
-    // setIsCheckedEquipaje(false);
-    // setIsCheckedBarbijo(false);
-    setSelects({
-      origen: "",
-      destino: "",
-      asientos: "",
-    });
-=======
     dispatch(filtroChecks(isChecked, asiento));
->>>>>>> develop
   }
 
   function handleLimpiarFiltros(e) {
     e.preventDefault();
     dispatch(getViajesTotal());
-<<<<<<< HEAD
-    setIsCheckedFumador(false);
-    setIsCheckedMascota(false);
-    setIsCheckedEquipaje(false);
-    setIsCheckedBarbijo(false);
-
-    setCheckedArray({
-      fumador: false,
-      mascota: false,
-      equipaje: false,
-      barbijo: false,
-    });
-=======
     let estadoLimpio = [false, false, false, false];
     setIsChecked(estadoLimpio);
     setAsiento("");
->>>>>>> develop
   }
 
   return (
