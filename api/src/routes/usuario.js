@@ -4,10 +4,10 @@ const { Usuario, Viaje } = require("../db.js");
 
 router.get("/iniciarsesion", async (req, res, next) => {
   try {
-    const { dni, password } = req.body;
-    if (dni) {
+    const { email, password } = req.body;
+    if (email) {
       var dbUsuario = await Usuario.findOne(
-        { where: { dni: dni } },
+        { where: { email: email } },
         { include: Viaje }
       );
       if (dbUsuario) {
@@ -34,15 +34,15 @@ router.get("/usuarios", async (req, res, next) => {
 
 router.post("/registro", async (req, res, next) => {
   try {
-    const { dni, nombre, apellido, password, vehiculo } = req.body;
+    const { email, nombre, apellido, password, vehiculo } = req.body;
     let nuevoUsuario;
     if (vehiculo) {
       nuevoUsuario = await Usuario.findOrCreate({
-        where: { dni: dni, nombre, apellido, password, vehiculo } //vehiculo = patente del auto
+        where: { email, nombre, apellido, password, vehiculo } //vehiculo = patente del auto
       });
     } else {
       nuevoUsuario = await Usuario.findOrCreate({
-        where: { dni: dni, nombre, apellido, password }
+        where: { email, nombre, apellido, password }
       });
     }
     res.json(nuevoUsuario);
