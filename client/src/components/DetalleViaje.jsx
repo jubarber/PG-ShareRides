@@ -12,10 +12,10 @@ export const DetalleViaje = () => {
   // console.log(viaje);
 
   useEffect(() => {
-    //para que sea dinamico, cambiar el id que despacha la acción por "params.viajeId" y descomentar linea 8.
+    //para que sea dinamico, descomentar linea 8 y linea 18
     //hacerlo SOLO cuando el componente de la tarjeta del viaje YA TENGA el Link to hecho que redireccione a este componente.
     //sino no funcionará jeje
-    dispatch(getDetalleViaje("6e3a2294-9ddb-468c-b7eb-4734ab7d9661"));
+    // dispatch(getDetalleViaje(params.viajeId));
   }, [dispatch]);
 
   return (

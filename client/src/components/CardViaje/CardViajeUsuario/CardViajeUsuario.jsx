@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./CardViajeUsuario.css";
 import { VscLocation } from "react-icons/vsc";
@@ -86,7 +86,7 @@ export default function Card({
             {usaBarbijo ? <MdMasks /> : <></>}
           </div>
           {viajeDisponible ? (
-            <Link to={"/viajes/"} id="ver">
+            <Link to={"/viajes/detalle"} id="ver">
               <div>
                 <button className="ver-button">Ver</button>
               </div>

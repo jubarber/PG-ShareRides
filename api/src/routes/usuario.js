@@ -2,9 +2,9 @@ const { Router } = require("express");
 const router = Router();
 const { Usuario, Viaje } = require("../db.js");
 
-router.get("/iniciarsesion", async (req, res, next) => {
+router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { email, password } = req.params;
     if (email) {
       var dbUsuario = await Usuario.findOne(
         { where: { email: email } },
@@ -12,7 +12,7 @@ router.get("/iniciarsesion", async (req, res, next) => {
       );
       if (dbUsuario) {
         dbUsuario.password === password
-          ? res.send(dbUsuario)
+          ? res.send("ok")
           : res.send("contraseña incorrecta");
       } else {
         res.send("usuario no encontrado");
@@ -52,13 +52,24 @@ router.post("/registro", async (req, res, next) => {
 });
 
 router.put("/cambiopassword", async (req, res, next) => {
-  const { password, dni } = req.body;
+  const { password, email } = req.body;
   try {
-    let usuario = await Usuario.findByPk(dni);
+    let usuario = await Usuario.findByPk(email);
     usuario.update({ password: password });
     usuario.save();
     res.send("contraseña cambiada");
   } catch (err) {
+    next(err);
+  }
+});
+
+router.put("/logueado", async (req, res, next) => {
+  const { email } = req.body;
+  try{
+    let usuario = await Usuario.findByPk(email);
+    usuario.update({logueado: true});
+    usuario.save();
+  }catch(err){
     next(err);
   }
 });
