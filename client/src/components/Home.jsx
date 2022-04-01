@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,8 +7,6 @@ import { DetalleViaje } from "../DetalleViaje";
 import CardViajeUsuario from "../CardViaje/CardViajeUsuario/CardViajeUsuario";
 import "./Home.css";
 
-
-//cambio inutil, fui yo gabriel!
 export default function Home() {
   const dispatch = useDispatch();
   const viajes = useSelector(
@@ -27,8 +24,10 @@ export default function Home() {
         <NavBar />
       </div>
       <div className="container-cards">
-        <div className="card-home">
-          {viajes.map((e) => (
+
+        {viajes.map((e) => (
+          <div className="card-unica">
+
             <CardViajeUsuario
               origen={e.origen}
               destino={e.destino}
@@ -45,8 +44,8 @@ export default function Home() {
               nombre={e.usuarios[0].nombre}
               apellido={e.usuarios[0].apellido}
             />
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
 
     </div>
