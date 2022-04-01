@@ -9,7 +9,7 @@ import {
   filtroChecksEquipaje,
   filtroChecksMascota,
   filtroChecksBarbijo,
-} from "../../redux/actions/actions";
+} from "../redux/actions/actions";
 
 export function Filtros() {
   const dispatch = useDispatch();
