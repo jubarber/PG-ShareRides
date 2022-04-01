@@ -7,6 +7,7 @@ import { DetalleViaje } from "../DetalleViaje";
 import CardViajeUsuario from "../CardViaje/CardViajeUsuario/CardViajeUsuario";
 import "./Home.css";
 
+//cambio inutil, fui yo gabriel!
 export default function Home() {
   const dispatch = useDispatch();
   const viajes = useSelector(
