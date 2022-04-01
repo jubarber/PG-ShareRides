@@ -51,7 +51,7 @@ router.post("/registro", async (req, res, next) => {
   }
 });
 
-router.put("/:dni", async (req, res, next) => {
+router.put("/cambiopassword", async (req, res, next) => {
   const { password, dni } = req.body;
   try {
     let usuario = await Usuario.findByPk(dni);
