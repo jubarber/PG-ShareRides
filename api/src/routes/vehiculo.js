@@ -4,14 +4,15 @@ const { Vehiculo, Usuario } = require("../db.js");
 
 router.post("/", async (req, res, next) => {
   try {
-    const { patente, marca, modelo, usuario } = req.body;
+    const { patente, marca, modelo, dni, email } = req.body; 
     let nuevoVehiculo;
     if (patente) {
-      const usuarioAuto = await Usuario.findByPk(usuario);
+      const usuarioAuto = await Usuario.findByPk(email);
       nuevoVehiculo = await Vehiculo.findOrCreate({
-        where: { patente, marca, modelo, usuario }
+        where: { patente, marca, modelo, dni }
       });
       usuarioAuto.update({vehiculo: patente});
+      usuarioAuto.update({dni: dni})
       usuarioAuto.save();
     }
 
