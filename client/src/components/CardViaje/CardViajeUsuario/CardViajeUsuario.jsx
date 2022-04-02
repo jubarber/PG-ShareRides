@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./CardViajeUsuario.css";
 import { VscLocation } from "react-icons/vsc";
-import { MdSmokeFree, MdMasks, MdPets } from "react-icons/md";
+import { MdSmokeFree, MdSmokingRooms, MdMasks, MdPets } from "react-icons/md";
 import { FaSuitcaseRolling } from "react-icons/fa";
 import { ImStarEmpty, ImStarHalf, ImStarFull } from "react-icons/im";
 import link from "../Links";
@@ -76,7 +76,7 @@ export default function Card({
         <div className="icon-card">
           <div className="iconos">
             {aceptaMascota ? <MdPets /> : <></>}
-            {aceptaFumador ? <MdSmokeFree /> : <></>}
+            {aceptaFumador ? <MdSmokingRooms /> : <MdSmokeFree/>}
             {aceptaEquipaje ? <FaSuitcaseRolling /> : <></>}
             {usaBarbijo ? <MdMasks /> : <></>}
           </div>

@@ -5,6 +5,7 @@ import  Home  from "./components/Home/Home";
 import Perfil from "./components/Perfil/Perfil";
 import FormPerfil from "./components/FormPerfil/FormPerfil.jsx";
 import FormRegistro from './components/FormRegistro/FormRegistro';
+import { DetalleViaje } from "./components/DetalleViaje/DetalleViaje";
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route exact path="/perfil" element={<Perfil />} />
           <Route exact path="/perfil/editar" element={<FormPerfil />} />
           <Route exact path="/registro" element = {<FormRegistro />} />
+          <Route exact path="/viajes/detalle" element={<DetalleViaje/>}/>
         </Routes>
       </BrowserRouter>
     </div>
