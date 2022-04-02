@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getViajesTotal, filtroChecks } from "../redux/actions/actions";
+import { getViajesTotal, filtroChecks } from "../../redux/actions/actions";
+import "./Filtros.css";
 
 export function Filtros() {
   const dispatch = useDispatch();
@@ -12,20 +13,20 @@ export function Filtros() {
   const filtrosArray = [
     {
       id: 1,
-      name: "fumador"
+      name: "Fumador",
     },
     {
       id: 2,
-      name: "mascota"
+      name: "Mascota",
     },
     {
       id: 3,
-      name: "equipaje"
+      name: "Equipaje",
     },
     {
       id: 4,
-      name: "barbijo"
-    }
+      name: "Barbijo",
+    },
   ];
 
   useEffect(() => {
@@ -62,10 +63,10 @@ export function Filtros() {
   }
 
   return (
-    <div>
-      <select onChange={(e) => handleSelectAsientos(e)}>
+    <div class="font-mono">
+      <select className="select" onChange={(e) => handleSelectAsientos(e)}>
         <option value="default" disabled selected>
-          Filtrar por asientos disponibles
+          Asientos disponibles
         </option>
         <option value="1">1 </option>
         <option value="2">2 </option>
@@ -79,34 +80,36 @@ export function Filtros() {
         {filtrosArray.map((e, index) => {
           return (
             <div>
-              <label>{e.name}</label>
-              <input
-                type="checkbox"
-                key={e.id}
-                name={e.name}
-                value={e.name}
-                checked={isChecked[index]}
-                onChange={() => {
-                  handleOnChange(index);
-                }}
-              />
+              <label className="mycheckbox">
+                {e.name}
+                <input
+                  type="checkbox"
+                  key={e.id}
+                  name={e.name}
+                  value={e.name}
+                  checked={isChecked[index]}
+                  onChange={() => {
+                    handleOnChange(index);
+                  }}
+                />
+                <span></span>
+              </label>
             </div>
           );
         })}
       </div>
       <div>
-        <input
+        <button className="button_filtros"
           type="submit"
-          value="aplicar filtros"
-          name="aplicar filtros"
-          onClick={handleSubmit}
-        />
-        <input
+          value="Aplicar filtros"
+          name="Aplicar filtros"
+          onClick={handleSubmit}>Aplicar filtros</button>
+        <button 
+          className="button_filtros"
           type="submit"
-          value="limpiar filtros"
-          name="limpiar filtros"
-          onClick={handleLimpiarFiltros}
-        />
+          value="Limpiar filtros"
+          name="Limpiar filtros"
+          onClick={handleLimpiarFiltros}>Limpiar filtros</button>
       </div>
     </div>
   );
