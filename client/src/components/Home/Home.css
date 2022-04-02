@@ -1,0 +1,16 @@
+#general-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.container-cards {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+.card-home{
+    margin: 1em;
+}
