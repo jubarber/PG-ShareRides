@@ -6,10 +6,6 @@ import NavBar from "../NavBar";
 import { DetalleViaje } from "../DetalleViaje";
 import CardViajeUsuario from "../CardViaje/CardViajeUsuario/CardViajeUsuario";
 import "./Home.css";
-<<<<<<< HEAD
-import { Filtros } from "../Filtros/Filtros";
-=======
->>>>>>> develop
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -26,12 +22,6 @@ export default function Home() {
     <div id="general-card">
       <div>
         <NavBar />
-<<<<<<< HEAD
-        <Filtros />
-      </div>
-      <div>
-=======
->>>>>>> develop
       </div>
       <div className="container-cards">
         <div className="card-home">

@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getViajesTotal, filtroChecks } from "../../redux/actions/actions";
-<<<<<<< HEAD:client/src/components/Filtros/Filtros.jsx
-import "./Filtros.css";
-=======
->>>>>>> develop:client/src/components/Filtros.jsx
 
 export function Filtros() {
   const dispatch = useDispatch();
