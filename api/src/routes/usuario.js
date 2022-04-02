@@ -2,17 +2,17 @@ const { Router } = require("express");
 const router = Router();
 const { Usuario, Viaje } = require("../db.js");
 
-router.get("/iniciarsesion", async (req, res, next) => {
+router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
   try {
-    const { dni, password } = req.body;
-    if (dni) {
+    const { email, password } = req.params;
+    if (email) {
       var dbUsuario = await Usuario.findOne(
-        { where: { dni: dni } },
+        { where: { email: email } },
         { include: Viaje }
       );
       if (dbUsuario) {
         dbUsuario.password === password
-          ? res.send(dbUsuario)
+          ? res.send("ok")
           : res.send("contraseña incorrecta");
       } else {
         res.send("usuario no encontrado");
@@ -34,15 +34,15 @@ router.get("/usuarios", async (req, res, next) => {
 
 router.post("/registro", async (req, res, next) => {
   try {
-    const { dni, nombre, apellido, password, vehiculo } = req.body;
+    const { email, nombre, apellido, password, vehiculo } = req.body;
     let nuevoUsuario;
     if (vehiculo) {
       nuevoUsuario = await Usuario.findOrCreate({
-        where: { dni: dni, nombre, apellido, password, vehiculo } //vehiculo = patente del auto
+        where: { email, nombre, apellido, password, vehiculo } //vehiculo = patente del auto
       });
     } else {
       nuevoUsuario = await Usuario.findOrCreate({
-        where: { dni: dni, nombre, apellido, password }
+        where: { email, nombre, apellido, password }
       });
     }
     res.json(nuevoUsuario);
@@ -51,14 +51,25 @@ router.post("/registro", async (req, res, next) => {
   }
 });
 
-router.put("/:dni", async (req, res, next) => {
-  const { password, dni } = req.body;
+router.put("/cambiopassword", async (req, res, next) => {
+  const { password, email } = req.body;
   try {
-    let usuario = await Usuario.findByPk(dni);
+    let usuario = await Usuario.findByPk(email);
     usuario.update({ password: password });
     usuario.save();
     res.send("contraseña cambiada");
   } catch (err) {
+    next(err);
+  }
+});
+
+router.put("/logueado", async (req, res, next) => {
+  const { email } = req.body;
+  try{
+    let usuario = await Usuario.findByPk(email);
+    usuario.update({logueado: true});
+    usuario.save();
+  }catch(err){
     next(err);
   }
 });

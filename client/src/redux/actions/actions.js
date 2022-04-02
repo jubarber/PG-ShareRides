@@ -5,6 +5,7 @@ export const INICIAR_SESION = "INICIAR_SESION";
 export const GET_VIAJES_TOTAL = "GET_VIAJES_TOTAL";
 export const FILTRO_CHECKS = "FILTRO_CHECKS";
 export const REGISTRO_USUARIO = "REGISTRO_USUARIO";
+export const LOGGED = "LOGGED";
 
 export function getDetalleViaje(viajeId) {
   return function (dispatch) {
@@ -15,18 +16,6 @@ export function getDetalleViaje(viajeId) {
       )
       .catch((err) => console.log(err));
   };
-}
-
-export async function inicioSesion(payload) {
-  //va a recibir el estado de react donde tengo guardadas las cookies de inicio de sesion
-  let usuario = await axios({
-    method: "get",
-    url: "http://localhost:3001/api/usuario/iniciarsesion",
-    data: {
-      dni: payload.dni,
-      password: payload.password
-    }
-  });
 }
 
 export function getViajesTotal() {
@@ -56,7 +45,7 @@ export function filtroChecks(payload, asiento) {
 export function registroUsuario(payload) {
   return async function (dispatch) {
     try {
-      const nuevoUsuario = await axios.post("http://localhost:3001/", payload);
+      const nuevoUsuario = await axios.post("http://localhost:3001api/usuario/registro/", payload);
       return dispatch({
         type: "REGISTRO_USUARIO",
         nuevoUsuario
@@ -65,4 +54,21 @@ export function registroUsuario(payload) {
       console.log(error);
     }
   };
+}
+
+export function login(payload) {
+  return async function (dispatch){
+    try{
+      let logueado = await axios({
+        method: "put",
+        url: "http://localhost:3001/api/usuario/logueado",
+        data:{
+          email: payload
+        }
+        
+      })
+    }catch(err){
+      console.log(err);
+    }
+  }
 }
