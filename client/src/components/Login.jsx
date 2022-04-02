@@ -3,6 +3,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { login } from "../redux/actions/actions";
+import swal from "sweetalert";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -19,18 +20,25 @@ export default function Login() {
       url: `http://localhost:3001/api/usuario/iniciarsesion/${input.email}/${input.password}`
     }).then((r) => setInicioSesion(r.data));
   }
-
-  if (inicioSesion === "contraseña incorrecta") {
-    setError({ ...error, password: "Contraseña incorrecta" });
-  } else if (inicioSesion === "usuario no encontrado") {
-    setError({ ...error, usuario: "Usuario no registrado" });
-  } else if(inicioSesion === "ok") {
-    dispatch(login(input.email));
-  }
+  useEffect(() => {
+    console.log("USE EFFECT")
+    if (inicioSesion === "contraseña incorrecta") {
+      setError({ ...error, password: "Contraseña incorrecta" });
+      swal("Contraseña incorrecta");
+    } else if (inicioSesion === "usuario no encontrado") {
+      setError({ ...error, usuario: "Usuario no registrado" });
+      swal("El mail ingresado no es válido");
+    } else if (inicioSesion === "ok") {
+      dispatch(login(input.email));
+      window.location.href = "/home";
+    }
+  }, [inicioSesion]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     iniciarSesion(input);
+    // setError({ usuario: "", password: "" });
+    setInput({ email: "", password: "" });
   };
 
   function handleChangeEmail(e) {
@@ -59,7 +67,7 @@ export default function Login() {
           onChange={handleChangeEmail}
         />
         <input
-          type="text"
+          type="password"
           placeholder="Ingrese su contraseña"
           value={input.password}
           onChange={handleChangePassword}
