@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getViajesTotal, filtroChecks } from "../../redux/actions/actions";
+import "./Filtros.css";
+import Button from "@mui/material/Button";
 
 export function Filtros() {
   const dispatch = useDispatch();
@@ -12,21 +14,6 @@ export function Filtros() {
   const filtrosArray = [
     {
       id: 1,
-<<<<<<< HEAD:client/src/components/Filtros/Filtros.jsx
-      name: "fumador",
-    },
-    {
-      id: 2,
-      name: "mascota",
-    },
-    {
-      id: 3,
-      name: "equipaje",
-    },
-    {
-      id: 4,
-      name: "barbijo",
-=======
       name: "Fumador",
     },
     {
@@ -40,7 +27,6 @@ export function Filtros() {
     {
       id: 4,
       name: "Barbijo",
->>>>>>> develop:client/src/components/Filtros.jsx
     },
   ];
 
@@ -78,53 +64,62 @@ export function Filtros() {
   }
 
   return (
-    <div class="font-mono">
-      <select className="select" onChange={(e) => handleSelectAsientos(e)}>
-        <option value="default" disabled selected>
-          Asientos disponibles
-        </option>
-        <option value="1">1 </option>
-        <option value="2">2 </option>
-        <option value="3">3 </option>
-        <option value="4">4 </option>
-        <option value="5">5 </option>
-        <option value="6">6 </option>
-        <option value="7">7 </option>
-      </select>
-      <div>
-        {filtrosArray.map((e, index) => {
-          return (
-            <div>
-              <label className="mycheckbox">
-                {e.name}
-                <input
-                  type="checkbox"
-                  key={e.id}
-                  name={e.name}
-                  value={e.name}
-                  checked={isChecked[index]}
-                  onChange={() => {
-                    handleOnChange(index);
-                  }}
-                />
-                <span></span>
-              </label>
-            </div>
-          );
-        })}
+    <div className="contenedor-filtros" class="font-mono">
+      <div className="asientos">
+        <select className="select" onChange={(e) => handleSelectAsientos(e)}>
+          <option value="default" disabled selected>
+            Asientos disponibles
+          </option>
+          <option value="1">1 </option>
+          <option value="2">2 </option>
+          <option value="3">3 </option>
+          <option value="4">4 </option>
+          <option value="5">5 </option>
+          <option value="6">6 </option>
+          <option value="7">7 </option>
+        </select>
+        <div className="checkboxes">
+          {filtrosArray.map((e, index) => {
+            return (
+              <div>
+                <label className="mycheckbox">
+                  {e.name}
+                  <input
+                    type="checkbox"
+                    key={e.id}
+                    name={e.name}
+                    value={e.name}
+                    checked={isChecked[index]}
+                    onChange={() => {
+                      handleOnChange(index);
+                    }}
+                  />
+                  <span></span>
+                </label>
+              </div>
+            );
+          })}
+        </div>
       </div>
-      <div>
-        <button className="button_filtros"
+      <div className="aplicar-limpiar">
+        <button
+          className="button_filtros"
           type="submit"
           value="Aplicar filtros"
           name="Aplicar filtros"
-          onClick={handleSubmit}>Aplicar filtros</button>
-        <button 
+          onClick={handleSubmit}
+        >
+          Aplicar filtros
+        </button>
+        <button
           className="button_filtros"
           type="submit"
           value="Limpiar filtros"
           name="Limpiar filtros"
-          onClick={handleLimpiarFiltros}>Limpiar filtros</button>
+          onClick={handleLimpiarFiltros}
+        >
+          Limpiar filtros
+        </button>
       </div>
     </div>
   );
