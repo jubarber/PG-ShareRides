@@ -15,17 +15,19 @@ body {
   align-items: center;
   justify-content: center;
   background-color: #f1f1f1;
-  margin-top: 3rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .card {
-  width: 1000px;
-  height: 540px;
+  width: 70rem;
+  height: 34rem;
   background-color: white;
-  box-shadow: 0px 50px 100px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 px 50px 100px rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: row;
 }
 
 .container {
@@ -44,7 +46,8 @@ body {
 
 .menu h3 {
   font-size: 1em;
-  margin-left: 25px;
+  margin-left: 2rem;
+  margin-top: 1.8rem;
   font-weight: 800;
   float: left;
 }
@@ -62,7 +65,7 @@ body {
   padding: 0.5rem;
 }
 
-nav {
+.desplegable {
   position: relative;
   margin-top: 1rem;
   width: 19.4rem;
@@ -74,16 +77,17 @@ nav {
   border-bottom-left-radius: 8px;
 }
 
-nav a {
+.desplegable .login-registro {
   font-size: 1.1rem;
   display: inline-block;
   position: relative;
+  left: 1rem;
   z-index: 1;
   text-decoration: none;
   color: white;
   cursor: pointer;
 }
-nav .animation {
+.desplegable .animation {
   position: absolute;
   height: 100%;
   width: 100%;
@@ -92,31 +96,31 @@ nav .animation {
   transition: all 0.5s ease 0s;
   border-radius: 8px;
 }
-a:nth-child(1) {
+.login-registro:nth-child(1) {
+  width: 105px;
+}
+.login-registro:nth-child(2) {
   width: 100px;
 }
-a:nth-child(2) {
-  width: 110px;
-}
-a:nth-child(3) {
+.login-registro:nth-child(3) {
   width: 100px;
 }
 
-nav .start-home,
-a:nth-child(1):hover ~ .animation {
-  width: 100px;
+.desplegable .start-home,
+.login-registro:nth-child(1):hover ~ .animation {
+  width: 110px;
   left: 0;
   background-color: #9252ff;
 }
-nav .start-about,
-a:nth-child(2):hover ~ .animation {
+.desplegable .start-about,
+.login-registro:nth-child(2):hover ~ .animation {
   width: 110px;
   left: 102px;
   background-color: #9252ff;
 }
-nav .start-blog,
-a:nth-child(3):hover ~ .animation {
-  width: 100px;
+.desplegable .start-blog,
+.login-registro:nth-child(3):hover ~ .animation {
+  width: 110px;
   left: 211px;
   background-color: #9252ff;
 }
@@ -158,7 +162,7 @@ a:nth-child(3):hover ~ .animation {
   padding-bottom: 1rem;
 }
 
-.btn a {
+.btn .login-registro {
   width: 9rem;
   color: white;
   text-decoration: none;
@@ -170,23 +174,14 @@ a:nth-child(3):hover ~ .animation {
   margin-bottom: 0.5em;
 }
 
-.btn a:hover,
-.btn a:active {
+.btn .login-registro:hover,
+.btn .login-registro:active {
   background-color: white;
   color: #3ce84f;
 }
 
-.fb {
+.btn-google {
   width: 9rem;
-  color: white;
-  text-decoration: none;
-  background-color: rgb(22, 111, 229);
-  transition: background-color 0.2s;
-  transition: color 0.2s;
-  padding: 10px 20px;
-  border: 2px solid rgb(22, 111, 229);
-  margin-bottom: 0.5em;
-  margin-top: 0.5rem;
 }
 
 .photo {
