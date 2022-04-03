@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getViajesTotal, filtroChecks } from "../../redux/actions/actions";
-import "./Filtros.css"
+import "./Filtros.css";
+import Button from "@mui/material/Button";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import { FormControl } from "@mui/material";
+import { deepPurple } from "@mui/material/colors";
 
 export function Filtros() {
   const dispatch = useDispatch();
@@ -63,53 +69,76 @@ export function Filtros() {
   }
 
   return (
-    <div class="font-mono">
-      <select className="select" onChange={(e) => handleSelectAsientos(e)}>
-        <option value="default" disabled selected>
-          Asientos disponibles
-        </option>
-        <option value="1">1 </option>
-        <option value="2">2 </option>
-        <option value="3">3 </option>
-        <option value="4">4 </option>
-        <option value="5">5 </option>
-        <option value="6">6 </option>
-        <option value="7">7 </option>
-      </select>
-      <div>
-        {filtrosArray.map((e, index) => {
-          return (
-            <div>
-              <label className="mycheckbox">
-                {e.name}
-                <input
-                  type="checkbox"
-                  key={e.id}
-                  name={e.name}
-                  value={e.name}
-                  checked={isChecked[index]}
-                  onChange={() => {
-                    handleOnChange(index);
-                  }}
-                />
-                <span></span>
-              </label>
-            </div>
-          );
-        })}
+    <div className="contenedor-filtros" class="font-mono">
+      <div className="asientos">
+        <FormControl variant="standard" sx={{ m: 1, minWidth: 175 }}>
+          <InputLabel
+            id="demo-simple-select-standard-label"
+            sx={{ color: "white" }}
+            className="input-Select"
+          >
+            Asientos disponibles
+          </InputLabel>
+          <Select
+            // className="select"
+            labelId="demo-simple-select-standard-label"
+            id="demo-simple-select-standard"
+            onChange={(e) => handleSelectAsientos(e)}
+            sx={{ borderColor: "white" }}
+          >
+            <MenuItem value="1">1 </MenuItem>
+            <MenuItem value="2">2 </MenuItem>
+            <MenuItem value="3">3 </MenuItem>
+            <MenuItem value="4">4 </MenuItem>
+            <MenuItem value="5">5 </MenuItem>
+            <MenuItem value="6">6 </MenuItem>
+            <MenuItem value="7">7 </MenuItem>
+          </Select>
+        </FormControl>
+        <div className="checkboxes">
+          {filtrosArray.map((e, index) => {
+            return (
+              <div>
+                <label className="mycheckbox">
+                  {e.name}
+                  <input
+                    type="checkbox"
+                    key={e.id}
+                    name={e.name}
+                    value={e.name}
+                    checked={isChecked[index]}
+                    onChange={() => {
+                      handleOnChange(index);
+                    }}
+                  />
+                  <span></span>
+                </label>
+              </div>
+            );
+          })}
+        </div>
       </div>
-      <div>
-        <button className="button_filtros"
+      <div className="aplicar-limpiar">
+        <Button
+          variant="contained"
+          color="secondary"
           type="submit"
           value="Aplicar filtros"
           name="Aplicar filtros"
-          onClick={handleSubmit}>Aplicar filtros</button>
-        <button 
-          className="button_filtros"
+          onClick={handleSubmit}
+        >
+          Aplicar filtros
+        </Button>
+        <Button
+          variant="contained"
+          color="secondary"
           type="submit"
           value="Limpiar filtros"
           name="Limpiar filtros"
-          onClick={handleLimpiarFiltros}>Limpiar filtros</button>
+          onClick={handleLimpiarFiltros}
+        >
+          Limpiar filtros
+        </Button>
       </div>
     </div>
   );
