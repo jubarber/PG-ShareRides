@@ -123,19 +123,19 @@ export default function FormRegistro() {
   return (
     <div className="font-mono">
       <div className="contenedorRegistro">
-        <div className="buttonContainer">
-          <Link to="/home">
-            <button className="btn_volver">Volver</button>
+        <div>
+          <Link to="/">
+            <button className="Registro__btn_volver">Volver</button>
           </Link>
         </div>
-        <form onSubmit={handleSubmit} className="formularioRegistro">
+        <form onSubmit={handleSubmit} className="Registro__formulario">
           {/* grupo nombre */}
-          <div className="grupo">
-            <label htmlFor="nombre" className="formulario_label">
+          <div>
+            <label htmlFor="nombre" className="Registro__formulario_label">
               {" "}
               Nombre:
             </label>
-            <div className="grupo_input">
+            <div>
               <input
                 type="text"
                 name="nombre"
@@ -143,20 +143,20 @@ export default function FormRegistro() {
                 value={input.nombre}
                 placeholder="Ingrese su nombre"
                 onChange={handleChange}
-                className="input_Registro"
+                className="Registro__input"
               />
               {errors.nombre && (
-                <span className="error_registro">{errors.nombre}</span>
+                <span className="Registro__error">{errors.nombre}</span>
               )}
             </div>
           </div>
 
           {/* apellido */}
           <div>
-            <label htmlFor="apellido" className="formulario_label">
+            <label htmlFor="apellido" className="Registro__formulario_label">
               Apellido:
             </label>
-            <div className="grupo_input">
+            <div>
               <input
                 type="text"
                 name="apellido"
@@ -164,20 +164,20 @@ export default function FormRegistro() {
                 value={input.apellido}
                 placeholder="Ingrese su apellido"
                 onChange={handleChange}
-                className="input_Registro"
+                className="Registro__input"
               />
               {errors.apellido && (
-                <span className="error_registro">{errors.apellido}</span>
+                <span className="Registro__error">{errors.apellido}</span>
               )}
             </div>
           </div>
           {/* grupo dni*/}
           <div>
-            <label htmlFor="dni" className="formulario_label">
+            <label htmlFor="dni" className="Registro__formulario_label">
               {" "}
               DNI/Pasaporte:
             </label>
-            <div className="grupo_input">
+            <div>
               <input
                 type="string"
                 name="dni"
@@ -185,20 +185,20 @@ export default function FormRegistro() {
                 value={input.dni}
                 placeholder="Ingrese su identificación"
                 onChange={handleChange}
-                className="input_Registro"
+                className="Registro__input"
               />
               {errors.dni && (
-                <span className="error_registro">{errors.dni}</span>
+                <span className="Registro__error">{errors.dni}</span>
               )}
             </div>
           </div>
           {/* grupo email*/}
           <div>
-            <label htmlFor="email" className="formulario_label">
+            <label htmlFor="email" className="Registro__formulario_label">
               {" "}
               E-mail:
             </label>
-            <div className="grupo_input">
+            <div>
               <input
                 type="string"
                 name="email"
@@ -206,19 +206,19 @@ export default function FormRegistro() {
                 value={input.email}
                 placeholder="Ej: hola@hola.com"
                 onChange={handleChange}
-                className="input_Registro"
+                className="Registro__input"
               />
               {errors.email && (
-                <span className="error_registro">{errors.email}</span>
+                <span className="Registro__error">{errors.email}</span>
               )}
             </div>
           </div>
           {/* grupo  contraseña */}
           <div>
-            <label htmlFor="contraseña" className="formulario_label">
+            <label htmlFor="contraseña" className="Registro__formulario_label">
               Contraseña:
             </label>
-            <div className="grupo_input">
+            <div>
               <input
                 type={stateContraseña ? "text" : "password"}
                 name="contraseña"
@@ -226,22 +226,22 @@ export default function FormRegistro() {
                 value={input.contraseña}
                 placeholder="Ingresar contraseña"
                 onChange={handleChange}
-                className="input_Registro"
+                className="Registro__input"
               />
-              <button onClick={handleEye}>
-                {stateContraseña ? <BsEye /> : <BsEyeSlash />}
-              </button>
+                <button className="Registro__ojo" onClick={handleEye}>
+                  {stateContraseña ? <BsEye /> : <BsEyeSlash />}
+                </button>
               {errors.contraseña && (
-                <span className="error_registro">{errors.contraseña}</span>
+                <span className="Registro__error">{errors.contraseña}</span>
               )}
             </div>
           </div>
           {/* grupo confirmar contraseña*/}
           <div>
-            <label htmlFor="confirmar_contraseña" className="formulario_label">
+            <label htmlFor="confirmar_contraseña" className="Registro__formulario_label">
               Confirmar Contraseña:
             </label>
-            <div className="grupo_input">
+            <div>
               <input
                 type={stateContraseña ? "text" : "password"}
                 name="confirmar_contraseña"
@@ -249,25 +249,25 @@ export default function FormRegistro() {
                 value={input.nueva_contraseña}
                 placeholder="Confirmar contraseña"
                 onChange={handleChange}
-                className="input_Registro"
+                className="Registro__input"
               />
-              <button className="item-center" onClick={handleEye}>
+              <button className="Registro__ojo" onClick={handleEye}>
                 {stateContraseña ? <BsEye /> : <BsEyeSlash />}
               </button>
               {input.contraseña === input.nueva_contraseña ? (
                 ""
               ) : (
-                <p className="error_registro">No coincide con su contraseña</p>
+                <p className="Registro__error">No coincide con su contraseña</p>
               )}
             </div>
           </div>
           {/* grupo terminos y condiciones */}
           <div className="grupo_terminos">
-            <label className="formulario_label">
+            <label className="Registro__formulario_label">
               <input
                 type="checkbox"
                 name="terminos"
-                className="checkbox_registro"
+                className="Registro__checkbox"
                 onChange={handleCheck}
               />
               Acepto los terminos y condiciones.
@@ -275,7 +275,7 @@ export default function FormRegistro() {
               <p onClick={handleConfirmar}>Ver mas</p>
             </label>
             {errors.terminos && (
-              <span className="error_registro">{errors.terminos}</span>
+              <span className="registro__error">{errors.terminos}</span>
             )}
           </div>
           <div className="grupo_btn">
@@ -284,11 +284,11 @@ export default function FormRegistro() {
             !errors.dni &&
             !errors.contraseña &&
             !errors.terminos ? (
-              <button type="submit" className="btn_registro">
+              <button type="submit" className="Registro__btn_registro">
                 Registrarme
               </button>
             ) : (
-              <button type="submit" disabled className="disabled">
+              <button type="submit" disabled className="Registro__disabled">
                 Registrarme
               </button>
             )}
