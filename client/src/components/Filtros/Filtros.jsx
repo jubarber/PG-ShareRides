@@ -3,13 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { getViajesTotal, filtroChecks } from "../../redux/actions/actions";
 import "./Filtros.css";
 import Button from "@mui/material/Button";
-
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import { FormControl } from "@mui/material";
+import { deepPurple } from "@mui/material/colors";
 export function Filtros() {
   const dispatch = useDispatch();
   const viajesFiltrados = useSelector((state) => state.viajesFiltrados?.flat());
   const viajesTotal = useSelector((state) => state.viajes);
   const [isChecked, setIsChecked] = useState(new Array(4).fill(false));
   const [asiento, setAsiento] = useState("");
+
+  const Violeta = deepPurple[200];
 
   const filtrosArray = [
     {
@@ -66,18 +72,30 @@ export function Filtros() {
   return (
     <div className="contenedor-filtros" class="font-mono">
       <div className="asientos">
-        <select className="select" onChange={(e) => handleSelectAsientos(e)}>
-          <option value="default" disabled selected>
+        <FormControl variant="standard" sx={{ m: 1, minWidth: 175 }}>
+          <InputLabel
+            id="demo-simple-select-standard-label"
+            sx={{ color: "white" }}
+            className="input-Select"
+          >
             Asientos disponibles
-          </option>
-          <option value="1">1 </option>
-          <option value="2">2 </option>
-          <option value="3">3 </option>
-          <option value="4">4 </option>
-          <option value="5">5 </option>
-          <option value="6">6 </option>
-          <option value="7">7 </option>
-        </select>
+          </InputLabel>
+          <Select
+            // className="select"
+            labelId="demo-simple-select-standard-label"
+            id="demo-simple-select-standard"
+            onChange={(e) => handleSelectAsientos(e)}
+            sx={{ borderColor: "white" }}
+          >
+            <MenuItem value="1">1 </MenuItem>
+            <MenuItem value="2">2 </MenuItem>
+            <MenuItem value="3">3 </MenuItem>
+            <MenuItem value="4">4 </MenuItem>
+            <MenuItem value="5">5 </MenuItem>
+            <MenuItem value="6">6 </MenuItem>
+            <MenuItem value="7">7 </MenuItem>
+          </Select>
+        </FormControl>
         <div className="checkboxes">
           {filtrosArray.map((e, index) => {
             return (
@@ -102,24 +120,26 @@ export function Filtros() {
         </div>
       </div>
       <div className="aplicar-limpiar">
-        <button
-          className="button_filtros"
+        <Button
+          variant="contained"
+          color="secondary"
           type="submit"
           value="Aplicar filtros"
           name="Aplicar filtros"
           onClick={handleSubmit}
         >
           Aplicar filtros
-        </button>
-        <button
-          className="button_filtros"
+        </Button>
+        <Button
+          variant="contained"
+          color="secondary"
           type="submit"
           value="Limpiar filtros"
           name="Limpiar filtros"
           onClick={handleLimpiarFiltros}
         >
           Limpiar filtros
-        </button>
+        </Button>
       </div>
     </div>
   );
