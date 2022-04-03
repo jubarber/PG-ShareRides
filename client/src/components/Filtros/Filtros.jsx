@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getViajesTotal, filtroChecks } from "../../redux/actions/actions";
+import "./Filtros.css"
 
 export function Filtros() {
   const dispatch = useDispatch();

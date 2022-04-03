@@ -2,10 +2,10 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getViajesTotal } from "../../redux/actions/actions";
-import NavBar from "../NavBar";
 import { DetalleViaje } from "../DetalleViaje";
 import CardViajeUsuario from "../CardViaje/CardViajeUsuario/CardViajeUsuario";
 import "./Home.css";
+import {Filtros} from "../Filtros/Filtros"
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -21,7 +21,8 @@ export default function Home() {
   return (
     <div id="general-card">
       <div>
-        <NavBar />
+
+        <Filtros />
       </div>
       <div className="container-cards">
         <div className="card-home">

@@ -8,7 +8,6 @@ import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
 import userRojo from "../assets/userRojo.jpg";
 import notificacion from "../assets/notificacion.png";
-import { Filtros } from "./Filtros/Filtros";
 
 // const StyledButton = styled(IconButton)`
 //   position: fixed;
@@ -183,10 +182,6 @@ function Navbar() {
             </Menu>
           </li>
         </ul>
-
-        <div>
-          <Filtros />
-        </div>
       </nav>
     </>
   );

@@ -6,7 +6,7 @@
   
 }
 
-.formularioRegistro{
+.Registro__formulario{
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
@@ -17,7 +17,7 @@
   font-size: 20px;
 }
 
-.formulario_label{
+.Registro__formulario_label{
   display: block;
   font-weight: 500;
   padding: 10px;
@@ -25,12 +25,8 @@
   
 }
 
-.item-center{
-  align-items: center;
-}
 
-
-.input_Registro{
+.Registro__input{
   width: 80%;
   background-color:#fff ;
   border: 3px solid ;
@@ -44,13 +40,17 @@
   font-size: medium;
 }
 
-.input_Registro:focus {
+.Registro__input:focus {
 	border: 3px solid #9252ff;
 	outline: none;
 	box-shadow: 3px 0px 30px rgba(163, 163, 163, 0.4);
 }
 
-.checkbox_registro{
+.Registro__ojo{
+  margin-left: 5px;
+}
+
+.Registro__checkbox{
 	margin-right: 10px;
 }
 
@@ -59,34 +59,35 @@
     grid-column: span 2;
 }
 
-.buttonContainer{
+/* .Registro__buttonContainer{
   width: 20%;
   left: 0;
   position: fixed;
   padding: 6% 1%;
   padding-left: 10%;
-  /* z-index: 999; */
   display: flex;
   justify-content: flex-start;
-}
+}*/
 
-.btn_volver{
+.Registro__btn_volver {
   height: 45x;
-	line-height: 45px;
-  width: 100%;
-	background-color: #9252ff;
-	color: #fff;
-	font-weight: bold;
-	border: none;
-	border-radius: 3px;
-	cursor: pointer;
-	transition:  .1s easy all;
+  line-height: 45px;
+  width: 150px;
+  margin-top: 20px;
+  margin-left: 10%;
+  background-color: #9252ff;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.1s easy all;
 }
-.btn_volver:hover{
+.Registro__btn_volver:hover {
   box-shadow: 3px 0px 30px rgb(66, 65, 65);
 }
 
-.btn_registro{
+.Registro__btn_registro{
 	height: 45x;
 	line-height: 45px;
   width: 30%;
@@ -101,11 +102,11 @@
   margin-left: 5%;
 }
 
-.btn_registro:hover{
+.Registro__btn_registro:hover{
     box-shadow: 3px 0px 30px rgba(163, 163, 163, 1);
 }
 
-.disabled {
+.Registro__disabled {
   height: 45x;
 	line-height: 45px;
   width: 30%;
@@ -117,7 +118,7 @@
 	transition:  .1s easy all;
 }
 
-.error_registro {
+.Registro__error {
   color: rgb(201, 25, 25);
   padding: 5px;
   display: flex;

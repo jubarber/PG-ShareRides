@@ -92,7 +92,8 @@ nav .animation {
   transition: all 0.5s ease 0s;
   border-radius: 8px;
 }
-a:nth-child(1) {
+
+/* a:nth-child(1) {
   width: 100px;
 }
 a:nth-child(2) {
@@ -100,7 +101,7 @@ a:nth-child(2) {
 }
 a:nth-child(3) {
   width: 100px;
-}
+} */
 
 nav .start-home,
 a:nth-child(1):hover ~ .animation {

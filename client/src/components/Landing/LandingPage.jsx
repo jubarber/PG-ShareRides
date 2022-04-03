@@ -43,8 +43,8 @@ export default function LandingPage() {
                   sintiéndote segura y libre de prejuicios!
                 </p>
                 <div className="btn">
-                  <Link to="#">Inciar Sesion</Link>
-                  <Link to="#">Registrarse</Link>
+                  <Link to="/login">Inciar Sesion</Link>
+                  <Link to="/registro">Registrarse</Link>
                   <GoogleLogin
                     clientId="217227520954-k6ikmp0j3ksrgf2r0s1vtg0aifpn5e0p.apps.googleusercontent.com"
                     buttonText="Iniciar sesion"
