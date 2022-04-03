@@ -2,6 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getViajesTotal, filtroChecks } from "../../redux/actions/actions";
 
+
+import "./Filtros.css";
+import Button from "@mui/material/Button";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import { FormControl } from "@mui/material";
+import { deepPurple } from "@mui/material/colors";
+
+
 export function Filtros() {
   const dispatch = useDispatch();
   const viajesFiltrados = useSelector((state) => state.viajesFiltrados?.flat());
@@ -62,6 +72,7 @@ export function Filtros() {
   }
 
   return (
+
     <div>
       <select onChange={(e) => handleSelectAsientos(e)}>
         <option value="default" disabled selected>
@@ -96,17 +107,87 @@ export function Filtros() {
       </div>
       <div>
         <input
+    <div className="contenedor-filtros" class="font-mono">
+
+        <FormControl variant="standard" sx={{ m: 1, minWidth: 175 }}>
+          <InputLabel
+            id="demo-simple-select-standard-label"
+            sx={{ color: "white" }}
+            className="input-Select"
+          >
+            Asientos disponibles
+          </InputLabel>
+          <Select
+            // className="select"
+            labelId="demo-simple-select-standard-label"
+            id="demo-simple-select-standard"
+            onChange={(e) => handleSelectAsientos(e)}
+            sx={{ borderColor: "white" }}
+          >
+            <MenuItem value="1">1 </MenuItem>
+            <MenuItem value="2">2 </MenuItem>
+            <MenuItem value="3">3 </MenuItem>
+            <MenuItem value="4">4 </MenuItem>
+            <MenuItem value="5">5 </MenuItem>
+            <MenuItem value="6">6 </MenuItem>
+            <MenuItem value="7">7 </MenuItem>
+          </Select>
+        </FormControl>
+
+        <div className="checkboxes">
+          {filtrosArray.map((e, index) => {
+            return (
+              <div>
+                <label className="mycheckbox">
+                  {e.name}
+                  <input
+                    type="checkbox"
+                    key={e.id}
+                    name={e.name}
+                    value={e.name}
+                    checked={isChecked[index]}
+                    onChange={() => {
+                      handleOnChange(index);
+                    }}
+                  />
+                  <span></span>
+                </label>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div className="aplicar-limpiar">
+
+        <Button
+          variant="contained"
+          color="secondary"
           type="submit"
           value="aplicar filtros"
           name="aplicar filtros"
           onClick={handleSubmit}
+
         />
         <input
+
+        >
+          Aplicar filtros
+        </Button>
+        <Button
+          variant="contained"
+          color="secondary"
+
           type="submit"
           value="limpiar filtros"
           name="limpiar filtros"
           onClick={handleLimpiarFiltros}
+
         />
+
+        >
+          Limpiar filtros
+        </Button>
+
       </div>
     </div>
   );
