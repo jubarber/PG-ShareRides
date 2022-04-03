@@ -20,7 +20,6 @@ export default function Home() {
   console.log(viajes[0]);
   return (
     <div>
-
       <div>
         <Filtros />
       </div>
