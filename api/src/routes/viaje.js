@@ -62,11 +62,8 @@ router.post("/pasajero", async (req, res, next) => {
       usaBarbijo,
       aceptaEquipaje,
       viajeDisponible,
-<<<<<<< HEAD
-      dni,
-=======
-      email
->>>>>>> develop
+      email,
+      dni
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
@@ -83,6 +80,7 @@ router.post("/pasajero", async (req, res, next) => {
         aceptaMascota,
         usaBarbijo,
         viajeDisponible,
+        dni,
       });
       await nuevoViaje.addUsuario(email);
       res.json(nuevoViaje);
@@ -147,10 +145,4 @@ router.get("/:viajeId", async (req, res, next) => {
     next(err);
   }
 });
-
-<<<<<<< HEAD
-
-
-=======
->>>>>>> develop
 module.exports = router;
