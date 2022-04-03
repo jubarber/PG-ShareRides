@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getDetalleViaje } from "../../redux/actions/actions";
-import Navbar from "../NavBar";
+import Navbar from "../NavBar/NavBar";
 import "./DetalleViaje.css";
 import link from "../CardViaje/Links";
 import { MdSmokeFree, MdMasks, MdPets } from "react-icons/md";
