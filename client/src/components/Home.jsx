@@ -6,11 +6,7 @@ export const Home = () => {
   
   return (
     <div>
-      
       <NavBar />
-      
-      
-    
     </div>
   );
 };

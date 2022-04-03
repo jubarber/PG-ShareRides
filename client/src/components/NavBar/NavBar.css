@@ -1,0 +1,47 @@
+.contenedor-NavBar {
+  display: flex;
+  width: 100%;
+  height: 20rem;
+  background-color: blueviolet;
+  flex-direction: column;
+}
+
+.contenedor-titulo {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  height: 9rem;
+}
+
+.contenedor-titulo h1 {
+  font-size: 3rem;
+  margin-left: 10rem;
+}
+
+.contenedor-titulo img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+
+.panel-botones {
+  display: flex;
+  width: 30rem;
+  flex-direction: row;
+  align-items: center;
+}
+.panel-botones button {
+  position: relative;
+  right: -38rem;
+}
+
+.info-usuario {
+  display: flex;
+  align-items: center;
+  margin-right: 2rem;
+  position: relative;
+  right: -18rem;
+}
+.info-usuario h3 {
+  margin-right: 1rem;
+}

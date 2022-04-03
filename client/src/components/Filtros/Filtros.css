@@ -1,0 +1,99 @@
+.asientos {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  border: 2px solid black;
+  padding: 1rem;
+}
+
+.checkboxes {
+  display: flex;
+  flex-direction: row;
+}
+
+.mycheckbox {
+  font-size: 20px;
+}
+.mycheckbox input:checked ~ span::after {
+  background: rgb(12, 167, 12);
+  transform: scale(0.8) translate(31px);
+}
+
+.mycheckbox input {
+  display: none;
+}
+
+.mycheckbox span {
+  display: inline-block;
+  width: 50px;
+  height: 25px;
+  border-radius: 25px;
+  background: rgb(187, 186, 186);
+  cursor: pointer;
+  box-shadow: inset 0px 0px 2px rgb(15, 15, 15);
+  position: relative;
+  top: 0.3rem;
+  margin-right: 5rem;
+  margin-left: 1rem;
+}
+
+.mycheckbox span::after {
+  content: "";
+  display: block;
+  width: 25px;
+  height: 25px;
+  transform: scale(0.8);
+  border-radius: 25px;
+  background: rgb(248, 22, 22);
+  transition: 0.5s;
+  box-shadow: inset 0px 0px 2px rgb(37, 37, 37);
+}
+
+.select {
+  font-size: 20px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 20%;
+  height: 50px;
+  background-color: #fdf4ff;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 8px;
+  border: none;
+  text-align: center;
+}
+
+.select:focus {
+  border: solid 0.01px rgb(161, 120, 120);
+}
+
+.button_filtros {
+  font-size: 20px;
+  padding: 8px;
+  border-radius: 3px;
+  border: none;
+  margin-left: 1px;
+  background-color: #fdf4ff;
+  transition: 0.3s ease-in-out;
+}
+
+.button_filtros:active {
+  position: relative;
+  top: 1.5px;
+}
+
+.button_filtros:hover {
+  background-color: #9252ff;
+  cursor: pointer;
+  box-shadow: 3px 0px 30px rgba(163, 163, 163, 1);
+}
+
+.aplicar-limpiar {
+  display: flex;
+  height: 8rem;
+  align-items: center;
+  justify-content: space-evenly;
+  border-bottom: 2px solid black;
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+}
