@@ -5,10 +5,13 @@ import userRojo from "../../assets/userRojo.jpg";
 import logo from "../../assets/Icono shareRides.png";
 import { Link } from "react-router-dom";
 
+
+
 export default function NavBar() {
   return (
     <div className="contenedor-NavBar">
       <div className="contenedor-titulo">
+
         <div className="titulo-NavBar">
           <h1>
             <img src={logo} alt="" />

@@ -1,6 +1,7 @@
 .contenedor-NavBar {
   display: flex;
   width: 100%;
+
   height: 8rem;
   background-color: blueviolet;
   flex-direction: column;
@@ -18,6 +19,7 @@
   width: 4rem;
   height: 4rem;
 }
+
 .contenedor-titulo {
   display: flex;
   width: 100%;
@@ -30,6 +32,7 @@
   font-size: 3rem;
   margin-left: 10rem;
 }
+
 
 .panel-botones {
   display: flex;

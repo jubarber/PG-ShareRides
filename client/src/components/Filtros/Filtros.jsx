@@ -8,14 +8,13 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { FormControl } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
+
 export function Filtros() {
   const dispatch = useDispatch();
   const viajesFiltrados = useSelector((state) => state.viajesFiltrados?.flat());
   const viajesTotal = useSelector((state) => state.viajes);
   const [isChecked, setIsChecked] = useState(new Array(4).fill(false));
   const [asiento, setAsiento] = useState("");
-
-  const Violeta = deepPurple[200];
 
   const filtrosArray = [
     {
@@ -71,7 +70,7 @@ export function Filtros() {
 
   return (
     <div className="contenedor-filtros" class="font-mono">
-      <div className="asientos">
+
         <FormControl variant="standard" sx={{ m: 1, minWidth: 175 }}>
           <InputLabel
             id="demo-simple-select-standard-label"
@@ -96,6 +95,7 @@ export function Filtros() {
             <MenuItem value="7">7 </MenuItem>
           </Select>
         </FormControl>
+
         <div className="checkboxes">
           {filtrosArray.map((e, index) => {
             return (
@@ -120,6 +120,7 @@ export function Filtros() {
         </div>
       </div>
       <div className="aplicar-limpiar">
+
         <Button
           variant="contained"
           color="secondary"
