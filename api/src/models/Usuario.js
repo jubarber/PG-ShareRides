@@ -42,6 +42,11 @@ module.exports = (sequelize) => {
     vehiculo: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    logueado:{
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     }
   });
 };
