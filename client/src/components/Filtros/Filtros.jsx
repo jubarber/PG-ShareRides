@@ -8,14 +8,13 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { FormControl } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
+
 export function Filtros() {
   const dispatch = useDispatch();
   const viajesFiltrados = useSelector((state) => state.viajesFiltrados?.flat());
   const viajesTotal = useSelector((state) => state.viajes);
   const [isChecked, setIsChecked] = useState(new Array(4).fill(false));
   const [asiento, setAsiento] = useState("");
-
-  const Violeta = deepPurple[200];
 
   const filtrosArray = [
     {

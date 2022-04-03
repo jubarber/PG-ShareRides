@@ -16,8 +16,8 @@ export default function NavBar() {
           </h1>
         </div>
         <div className="panel-botones">
-          <button type="button" class="btn btn-outline-primary">
-            <Link to="/home">Home</Link>
+          <button type="button">
+            <Link to="/home">Home</Link>class="btn btn-outline-primary"
           </button>
           <button type="button" class="btn btn-outline-primary">
             <Link to="/#">Crear Viaje</Link>

@@ -23,7 +23,6 @@ export default function Home() {
       <div>
         <Filtros />
       </div>
-
       <div id="general-card">
         <div className="container-cards">
           <div className="card-home">
