@@ -8,14 +8,14 @@ import { Link } from "react-router-dom";
 
 export default function FormRegistro() {
   const dispatch = useDispatch();
-  const [stateContraseña, setStateContraseña] = useState(false);
+  const [statePassword, setStatePassword] = useState(false);
   const [input, setInput] = useState({
     nombre: "",
     apellido: "",
     dni: "",
     email: "",
-    contraseña: "",
-    confirmar_contraseña: "",
+    password: "",
+    nuevo_password: "",
     terminos: "",
   });
 
@@ -24,7 +24,7 @@ export default function FormRegistro() {
   const expresiones = {
     nombre: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
     apellido: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
-    contraseña: /^.{4,12}$/, // acepta cualquier digito - longitud de 4 a 12 digitos.
+    password: /^.{4,12}$/, // acepta cualquier digito - longitud de 4 a 12 digitos.
     /* dni: /^\d{7,8}\s/, */
     email: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
   };
@@ -50,10 +50,10 @@ export default function FormRegistro() {
     if (!input.dni) {
       errors.dni = "Debes ingesar DNI/Pasaporte";
     }
-    if (!input.contraseña) {
-      errors.contraseña = "Debe ingresar una contraseña";
-    } else if (!expresiones.contraseña.test(input.contraseña)) {
-      errors.contraseña = "La contraseña debe ser de 4 a 12 digitos";
+    if (!input.password) {
+      errors.password = "Debe ingresar una contraseña";
+    } else if (!expresiones.password.test(input.password)) {
+      errors.password = "La contraseña debe ser de 4 a 12 digitos";
     }
     if (!input.terminos) {
       errors.terminos = "Para continuar debes aceptar los terminos de uso";
@@ -63,7 +63,7 @@ export default function FormRegistro() {
 
   function handleEye(e) {
     e.preventDefault();
-    setStateContraseña((prevStateContraseña) => !prevStateContraseña);
+    setStatePassword((prevStatePassword) => !prevStatePassword);
   }
 
   function handleChange(e) {
@@ -123,8 +123,8 @@ export default function FormRegistro() {
         nombre: "",
         apellido: "",
         dni: "",
-        contraseña: "",
-        confirmar_contraseña: "",
+        password: "",
+        nuevo_password: "",
         terminos: "",
       });
     }
@@ -231,19 +231,19 @@ export default function FormRegistro() {
             </label>
             <div>
               <input
-                type={stateContraseña ? "text" : "password"}
-                name="contraseña"
-                id="contraseña"
+                type={statePassword ? "text" : "password"}
+                name="password"
+                id="password"
                 value={input.contraseña}
                 placeholder="Ingresar contraseña"
                 onChange={handleChange}
                 className="Registro__input"
               />
                 <button className="Registro__ojo" onClick={handleEye}>
-                  {stateContraseña ? <BsEye /> : <BsEyeSlash />}
+                  {statePassword ? <BsEye /> : <BsEyeSlash />}
                 </button>
-              {errors.contraseña && (
-                <span className="Registro__error">{errors.contraseña}</span>
+              {errors.password && (
+                <span className="Registro__error">{errors.password}</span>
               )}
             </div>
           </div>
@@ -254,18 +254,18 @@ export default function FormRegistro() {
             </label>
             <div>
               <input
-                type={stateContraseña ? "text" : "password"}
-                name="confirmar_contraseña"
-                id="confirmar_contraseña"
+                type={statePassword ? "text" : "password"}
+                name="nuevo_password"
+                id="nuevo_password"
                 value={input.nueva_contraseña}
                 placeholder="Confirmar contraseña"
                 onChange={handleChange}
                 className="Registro__input"
               />
               <button className="Registro__ojo" onClick={handleEye}>
-                {stateContraseña ? <BsEye /> : <BsEyeSlash />}
+                {statePassword ? <BsEye /> : <BsEyeSlash />}
               </button>
-              {input.contraseña === input.nueva_contraseña ? (
+              {input.password === input.nuevo_password ? (
                 ""
               ) : (
                 <p className="Registro__error">No coincide con su contraseña</p>
@@ -293,7 +293,7 @@ export default function FormRegistro() {
             {!errors.nombre &&
             !errors.apellido &&
             !errors.dni &&
-            !errors.contraseña &&
+            !errors.password &&
             !errors.terminos ? (
               <button type="submit" className="Registro__btn_registro">
                 Registrarme
