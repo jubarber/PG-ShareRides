@@ -27,10 +27,10 @@ module.exports = (sequelize) => {
       type: DataTypes.TEXT,
       allowNull: false
     },
-    conductor: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false
-    },
+    // conductor: {
+    //   type: DataTypes.BOOLEAN,
+    //   defaultValue: false
+    // },
     acercaDeMi: {
       type: DataTypes.STRING,
       allowNull: true
