@@ -26,10 +26,11 @@ export default function Home() {
       </div>
       <div id="general-card">
         <div className="container-cards">
-          <div className="card-home">
-            {viajes.map(
-              (e) =>
-                e && (
+
+          {viajes.map(
+            (e) =>
+              e && (
+                <div className="card-home">
                   <CardViajeUsuario
                     origen={e.origen}
                     destino={e.destino}
@@ -43,12 +44,12 @@ export default function Home() {
                     viajeDisponible={e.viajeDisponible}
                     key={e.id}
                     id={e.id}
-                    nombre={e.usuarios[0].nombre}
-                    apellido={e.usuarios[0].apellido}
+                    //nombre={e.usuarios[0].nombre}
+                    //apellido={e.usuarios[0].apellido}
                   />
-                )
-            )}
-          </div>
+                </div>
+              )
+          )}
         </div>
       </div>
       <div className="wallpaper">

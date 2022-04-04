@@ -13,28 +13,22 @@ import fondo from "../../assets/fondo perfil.jpg";
 
 export const DetalleViaje = () => {
   const dispatch = useDispatch();
-  // const params = useParams();
+  const params = useParams();
   const viaje = useSelector((state) => state.viajePorId);
   const { id } = useParams();
   // console.log(id)
   // console.log(viaje);
 
-  // useEffect(() => {
+  useEffect(() => {
   //   //para que sea dinamico, descomentar linea 8 y linea 18
   //   //hacerlo SOLO cuando el componente de la tarjeta del viaje YA TENGA el Link to hecho que redireccione a este componente.
   //   //sino no funcionará jeje
 
-  //   dispatch(getDetalleViaje(id));
-  // }, [dispatch, id]);
+   dispatch(getDetalleViaje(id));
+  }, [dispatch, id]);
 
   return (
     <div className="container-detalle font-mono">
-      <div className="nav-detalle">
-        <Navbar />
-        <nav>
-          <Link to="/home">Inicio</Link>
-        </nav>
-      </div>
       <div className="card-detalle">
         <div className="card-usuario-detalle">
           <div className="card-usuario-infper-detalle">
@@ -42,7 +36,9 @@ export const DetalleViaje = () => {
               <img src={link} alt="" />
             </div>
             <div className="card-usuario-nombre-val-detalle text-xl">
-              <span className="text-white my-9">Gonzalo Pachamama</span>
+              <span className="text-white my-9">
+                {viaje.nombre} {viaje.apellido}
+              </span>
               <span>Valoracion estrellas</span>
             </div>
           </div>
@@ -52,14 +48,14 @@ export const DetalleViaje = () => {
         <div className="card-viaje-detalle text-xl">
           <div className="flex flex-col justify-evenly w-full ml-4">
             <span>Desde: </span>
-            <span className="text-2xl font-bold flex items-center">
+            <span className="text-2xl flex items-center text-green-400">
               <VscLocation />
-              Buenos aires{viaje.origen}
+              {viaje.origen}
             </span>
             <span>Hacia:</span>
-            <span className="text-2xl font-bold flex items-center">
+            <span className="text-2xl flex items-center text-red-600">
               <VscLocation />
-              Tucumán{viaje.destino}
+              {viaje.destino}
             </span>
             <span>
               Fecha: <span className="font-bold">{viaje.fecha}</span>
@@ -80,7 +76,7 @@ export const DetalleViaje = () => {
                     : "text-orange-700"
                 }`}
               >
-                5{viaje.asientosAOcupar}
+                {viaje.asientosAOcupar}
               </span>
             </span>
             <span>

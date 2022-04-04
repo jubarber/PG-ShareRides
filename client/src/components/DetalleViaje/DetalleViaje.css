@@ -1,60 +1,60 @@
-.container-detalle{
+.container-detalle {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-.nav-detalle{
+  }
+  .nav-detalle {
     display: flex;
     flex-direction: row-reverse;
-
-}
-.card-detalle{
+  }
+  .card-detalle {
     display: flex;
     flex-direction: row;
     width: 80%;
     height: 45em;
     margin-top: 1em;
-}
-.card-usuario-detalle{
+  }
+  .card-usuario-detalle {
     display: flex;
     flex-direction: column;
     width: 40%;
     height: 70%;
-    background-color: dodgerblue;
+    background-color: #c375ff;
     border-radius: 3%;
-}
-.card-usuario-infper-detalle{
+  }
+  .card-usuario-infper-detalle {
     display: flex;
-    flex-direction:row
-}
-.card-usuario-img-detalle{
+    flex-direction: row;
+  }
+  .card-usuario-img-detalle {
     margin: 0.5em;
     width: 25%;
     height: max-content;
-}
-.card-usuario-img-detalle img{/*imagen*/
+  }
+  .card-usuario-img-detalle img {
     height: auto;
     border-radius: 50%;
-}
-.card-usuario-nombre-val-detalle{
+  }
+  .card-usuario-nombre-val-detalle {
     display: flex;
-    flex-direction:column;
-}
-.card-usuario-resumen-detalle{
+    flex-direction: column;
+  }
+  .card-usuario-resumen-detalle {
     width: auto;
     height: 8em;
     border: solid 0.2em black;
-    border-radius:1.5em;
+    border-radius: 1.5em;
     margin: 1em;
-}
-.card-viaje-detalle{
+    background-color: white;
+  }
+  .card-viaje-detalle {
     display: flex;
-    background-color: #d2d6d9;
+    background-color: whitesmoke;
     width: 80%;
     height: 67%;
     flex-direction: row;
-}
-.wallpaper {
+  }
+  .wallpaper {
     width: 100%;
     height: 100%;
     position: fixed;
@@ -67,3 +67,4 @@
     width: 100%;
     height: 100%;
   }
+  
