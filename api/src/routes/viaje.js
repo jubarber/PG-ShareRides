@@ -58,11 +58,7 @@ router.post("/pasajero", async (req, res, next) => {
       aceptaFumador,
       aceptaMascota,
       usaBarbijo,
-      aceptaEquipaje,
-<<<<<<< HEAD
-      viajeDisponible,
-=======
->>>>>>> develop
+      aceptaEquipaje
       email,
       dni
     } = req.body;
@@ -80,13 +76,8 @@ router.post("/pasajero", async (req, res, next) => {
         aceptaMascota,
         aceptaEquipaje,
         usaBarbijo,
-<<<<<<< HEAD
-        viajeDisponible,
-        dni,
-=======
         pagoCompartido,
         status: "pasajero"
->>>>>>> develop
       });
       await nuevoViaje.addUsuario(email);
       res.json(nuevoViaje);
@@ -151,4 +142,5 @@ router.get("/:viajeId", async (req, res, next) => {
     next(err);
   }
 });
+
 module.exports = router;
