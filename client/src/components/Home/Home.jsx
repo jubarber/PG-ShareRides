@@ -6,6 +6,7 @@ import { Filtros } from "../Filtros/Filtros";
 import { DetalleViaje } from "../DetalleViaje";
 import CardViajeUsuario from "../CardViaje/CardViajeUsuario/CardViajeUsuario";
 import "./Home.css";
+import fondo from "../../assets/fondo perfil.jpg";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ export default function Home() {
       </div>
       <div id="general-card">
         <div className="container-cards">
+
           {viajes.map(
             (e) =>
               e && (
@@ -49,6 +51,9 @@ export default function Home() {
               )
           )}
         </div>
+      </div>
+      <div className="wallpaper">
+        <img className="stretch" src={fondo} alt="" />
       </div>
     </div>
   );
