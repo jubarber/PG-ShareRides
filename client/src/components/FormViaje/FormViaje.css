@@ -1,0 +1,48 @@
+.contenedor_formviaje {
+  display: flex;
+  flex-direction: column;
+}
+
+.pasajero_conductor {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 3rem;
+}
+
+.label-formviaje {
+  font-size: 2rem;
+  margin-right: 1rem;
+}
+
+.input-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5rem;
+}
+
+.label_check {
+  display: flex;
+  align-items: center;
+}
+
+.btn-formviaje {
+  height: 4rem;
+  line-height: 45px;
+  width: 15%;
+  background-color: #9252ff;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.1s easy all;
+  position: fixed;
+  text-transform: uppercase;
+}
+
+.btn-formviaje:hover {
+  box-shadow: 3px 0px 30px rgba(163, 163, 163, 1);
+}

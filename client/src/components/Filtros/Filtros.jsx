@@ -70,7 +70,7 @@ export function Filtros() {
 
   return (
     <div className="contenedor-filtros" class="font-mono">
-
+      <div className="asientos">
         <FormControl variant="standard" sx={{ m: 1, minWidth: 175 }}>
           <InputLabel
             id="demo-simple-select-standard-label"
@@ -95,7 +95,6 @@ export function Filtros() {
             <MenuItem value="7">7 </MenuItem>
           </Select>
         </FormControl>
-
         <div className="checkboxes">
           {filtrosArray.map((e, index) => {
             return (
@@ -120,7 +119,6 @@ export function Filtros() {
         </div>
       </div>
       <div className="aplicar-limpiar">
-
         <Button
           variant="contained"
           color="secondary"

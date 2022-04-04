@@ -1,4 +1,4 @@
-const e = require("express");
+const express = require("express");
 const { Router } = require("express");
 const router = Router();
 const { Viaje, Usuario } = require("../db.js");
@@ -17,29 +17,27 @@ router.post("/conductor", async (req, res, next) => {
       aceptaMascota,
       usaBarbijo,
       aceptaEquipaje,
-      viajeDisponible,
-      email
+      email,
+      dni
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
-      const usuarioConductor = await Usuario.findByPk(email);
       nuevoViaje = await Viaje.create({
+        dni,
         fecha,
         hora,
         origen,
         destino,
         asientosAOcupar,
         formaDePago,
-        pagoCompartido,
-        aceptaEquipaje,
         aceptaFumador,
         aceptaMascota,
+        aceptaEquipaje,
         usaBarbijo,
-        viajeDisponible
+        pagoCompartido,
+        status: "conductor"
       });
       await nuevoViaje.addUsuario(email);
-      usuarioConductor.update({ conductor: true });
-      usuarioConductor.save();
       res.json(nuevoViaje);
     }
   } catch (error) {
@@ -61,26 +59,34 @@ router.post("/pasajero", async (req, res, next) => {
       aceptaMascota,
       usaBarbijo,
       aceptaEquipaje,
+<<<<<<< HEAD
       viajeDisponible,
+=======
+>>>>>>> develop
       email,
       dni
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
       nuevoViaje = await Viaje.create({
+        dni,
         fecha,
         hora,
         origen,
         destino,
         asientosAOcupar,
         formaDePago,
-        pagoCompartido,
-        aceptaEquipaje,
         aceptaFumador,
         aceptaMascota,
+        aceptaEquipaje,
         usaBarbijo,
+<<<<<<< HEAD
         viajeDisponible,
         dni,
+=======
+        pagoCompartido,
+        status: "pasajero"
+>>>>>>> develop
       });
       await nuevoViaje.addUsuario(email);
       res.json(nuevoViaje);
