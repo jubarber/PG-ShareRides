@@ -58,7 +58,7 @@ router.post("/pasajero", async (req, res, next) => {
       aceptaFumador,
       aceptaMascota,
       usaBarbijo,
-      aceptaEquipaje,
+      aceptaEquipaje
       email,
       dni
     } = req.body;
