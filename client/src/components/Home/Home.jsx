@@ -9,8 +9,7 @@ import "./Home.css";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const viajes = useSelector(
-    (state) => state.viajesFiltrados //me traigo el estado de los viajes para poder mostrarlos
+  const viajes = useSelector((state) => state.viajesFiltrados //me traigo el estado de los viajes para poder mostrarlos
   );
   useEffect(() => {
     //se monta home y despacho la accion para obtener los viajes
@@ -20,7 +19,6 @@ export default function Home() {
   console.log(viajes[0]);
   return (
     <div>
-
       <div>
         <Filtros />
       </div>
@@ -28,6 +26,7 @@ export default function Home() {
         <div className="container-cards">
           <div className="card-home">
             {viajes.map((e) => (
+              e &&
               <CardViajeUsuario
                 origen={e.origen}
                 destino={e.destino}

@@ -50,10 +50,10 @@ export default function LandingPage() {
                 </p>
                 <div className="btn">
                   <button className="login-registro">
-                    <Link to="#">Inciar Sesion</Link>
+                    <Link to="/login">Inciar Sesion</Link>
                   </button>
                   <button className="login-registro">
-                    <Link to="#">Registrarse</Link>
+                    <Link to="/registro">Registrarse</Link>
                   </button>
 
                   <GoogleLogin

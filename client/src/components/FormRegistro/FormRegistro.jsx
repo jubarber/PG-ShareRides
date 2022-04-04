@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import swal from "sweetalert";
 import { registroUsuario } from "../../redux/actions/actions";
 import "./FormRegistro.css";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
@@ -7,14 +8,14 @@ import { Link } from "react-router-dom";
 
 export default function FormRegistro() {
   const dispatch = useDispatch();
-  const [stateContraseña, setStateContraseña] = useState(false);
+  const [statePassword, setStatePassword] = useState(false);
   const [input, setInput] = useState({
     nombre: "",
     apellido: "",
     dni: "",
     email: "",
-    contraseña: "",
-    confirmar_contraseña: "",
+    password: "",
+    nuevo_password: "",
     terminos: "",
   });
 
@@ -23,7 +24,7 @@ export default function FormRegistro() {
   const expresiones = {
     nombre: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
     apellido: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
-    contraseña: /^.{4,12}$/, // acepta cualquier digito - longitud de 4 a 12 digitos.
+    password: /^.{4,12}$/, // acepta cualquier digito - longitud de 4 a 12 digitos.
     /* dni: /^\d{7,8}\s/, */
     email: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
   };
@@ -49,10 +50,10 @@ export default function FormRegistro() {
     if (!input.dni) {
       errors.dni = "Debes ingesar DNI/Pasaporte";
     }
-    if (!input.contraseña) {
-      errors.contraseña = "Debe ingresar una contraseña";
-    } else if (!expresiones.contraseña.test(input.contraseña)) {
-      errors.contraseña = "La contraseña debe ser de 4 a 12 digitos";
+    if (!input.password) {
+      errors.password = "Debe ingresar una contraseña";
+    } else if (!expresiones.password.test(input.password)) {
+      errors.password = "La contraseña debe ser de 4 a 12 digitos";
     }
     if (!input.terminos) {
       errors.terminos = "Para continuar debes aceptar los terminos de uso";
@@ -62,7 +63,7 @@ export default function FormRegistro() {
 
   function handleEye(e) {
     e.preventDefault();
-    setStateContraseña((prevStateContraseña) => !prevStateContraseña);
+    setStatePassword((prevStatePassword) => !prevStatePassword);
   }
 
   function handleChange(e) {
@@ -80,7 +81,7 @@ export default function FormRegistro() {
 
   function handleConfirmar(e) {
     e.preventDefault();
-    alert(
+    swal(
       "En este documento se describen los Términos y Condiciones generales aplicables al uso de los servicios ofrecidos por ShareRide® mediante www.shareRide.com.ar/app. Cualquier persona  que desee usar o utilizar shareRide® podrá hacerlo sujetándose a los Términos y Condiciones respectivos, junto con todas las demás políticas y principios"
     );
   }
@@ -104,16 +105,26 @@ export default function FormRegistro() {
     e.preventDefault();
     if (Object.keys(errors).length !== 0) {
       e.preventDefault();
-      alert("Por favor, completa todos los campos solicitados");
+      swal({
+        title: "Alto!",
+        text: "Por favor completá todos los campos",
+        icon: "warning",
+        button: true,
+        dangerMode: true
+      });
     } else {
       dispatch(registroUsuario(input));
-      alert("Registro exitoso");
+      swal({
+        title: "El registro ha sido exitoso!",
+        icon: "success",
+        button: "Crea tu viaje!",
+      })
       setInput({
         nombre: "",
         apellido: "",
         dni: "",
-        contraseña: "",
-        confirmar_contraseña: "",
+        password: "",
+        nuevo_password: "",
         terminos: "",
       });
     }
@@ -123,19 +134,19 @@ export default function FormRegistro() {
   return (
     <div className="font-mono">
       <div className="contenedorRegistro">
-        <div className="buttonContainer">
-          <Link to="/home">
-            <button className="btn_volver">Volver</button>
+        <div>
+          <Link to="/">
+            <button className="Registro__btn_volver">Volver</button>
           </Link>
         </div>
-        <form onSubmit={handleSubmit} className="formularioRegistro">
+        <form onSubmit={handleSubmit} className="Registro__formulario">
           {/* grupo nombre */}
-          <div className="grupo">
-            <label htmlFor="nombre" className="formulario_label">
+          <div>
+            <label htmlFor="nombre" className="Registro__formulario_label">
               {" "}
               Nombre:
             </label>
-            <div className="grupo_input">
+            <div>
               <input
                 type="text"
                 name="nombre"
@@ -143,20 +154,20 @@ export default function FormRegistro() {
                 value={input.nombre}
                 placeholder="Ingrese su nombre"
                 onChange={handleChange}
-                className="input_Registro"
+                className="Registro__input"
               />
               {errors.nombre && (
-                <span className="error_registro">{errors.nombre}</span>
+                <span className="Registro__error">{errors.nombre}</span>
               )}
             </div>
           </div>
 
           {/* apellido */}
           <div>
-            <label htmlFor="apellido" className="formulario_label">
+            <label htmlFor="apellido" className="Registro__formulario_label">
               Apellido:
             </label>
-            <div className="grupo_input">
+            <div>
               <input
                 type="text"
                 name="apellido"
@@ -164,20 +175,20 @@ export default function FormRegistro() {
                 value={input.apellido}
                 placeholder="Ingrese su apellido"
                 onChange={handleChange}
-                className="input_Registro"
+                className="Registro__input"
               />
               {errors.apellido && (
-                <span className="error_registro">{errors.apellido}</span>
+                <span className="Registro__error">{errors.apellido}</span>
               )}
             </div>
           </div>
           {/* grupo dni*/}
           <div>
-            <label htmlFor="dni" className="formulario_label">
+            <label htmlFor="dni" className="Registro__formulario_label">
               {" "}
               DNI/Pasaporte:
             </label>
-            <div className="grupo_input">
+            <div>
               <input
                 type="string"
                 name="dni"
@@ -185,20 +196,20 @@ export default function FormRegistro() {
                 value={input.dni}
                 placeholder="Ingrese su identificación"
                 onChange={handleChange}
-                className="input_Registro"
+                className="Registro__input"
               />
               {errors.dni && (
-                <span className="error_registro">{errors.dni}</span>
+                <span className="Registro__error">{errors.dni}</span>
               )}
             </div>
           </div>
           {/* grupo email*/}
           <div>
-            <label htmlFor="email" className="formulario_label">
+            <label htmlFor="email" className="Registro__formulario_label">
               {" "}
               E-mail:
             </label>
-            <div className="grupo_input">
+            <div>
               <input
                 type="string"
                 name="email"
@@ -206,68 +217,68 @@ export default function FormRegistro() {
                 value={input.email}
                 placeholder="Ej: hola@hola.com"
                 onChange={handleChange}
-                className="input_Registro"
+                className="Registro__input"
               />
               {errors.email && (
-                <span className="error_registro">{errors.email}</span>
+                <span className="Registro__error">{errors.email}</span>
               )}
             </div>
           </div>
           {/* grupo  contraseña */}
           <div>
-            <label htmlFor="contraseña" className="formulario_label">
+            <label htmlFor="contraseña" className="Registro__formulario_label">
               Contraseña:
             </label>
-            <div className="grupo_input">
+            <div>
               <input
-                type={stateContraseña ? "text" : "password"}
-                name="contraseña"
-                id="contraseña"
+                type={statePassword ? "text" : "password"}
+                name="password"
+                id="password"
                 value={input.contraseña}
                 placeholder="Ingresar contraseña"
                 onChange={handleChange}
-                className="input_Registro"
+                className="Registro__input"
               />
-              <button onClick={handleEye}>
-                {stateContraseña ? <BsEye /> : <BsEyeSlash />}
-              </button>
-              {errors.contraseña && (
-                <span className="error_registro">{errors.contraseña}</span>
+                <button className="Registro__ojo" onClick={handleEye}>
+                  {statePassword ? <BsEye /> : <BsEyeSlash />}
+                </button>
+              {errors.password && (
+                <span className="Registro__error">{errors.password}</span>
               )}
             </div>
           </div>
           {/* grupo confirmar contraseña*/}
           <div>
-            <label htmlFor="confirmar_contraseña" className="formulario_label">
+            <label htmlFor="confirmar_contraseña" className="Registro__formulario_label">
               Confirmar Contraseña:
             </label>
-            <div className="grupo_input">
+            <div>
               <input
-                type={stateContraseña ? "text" : "password"}
-                name="confirmar_contraseña"
-                id="confirmar_contraseña"
+                type={statePassword ? "text" : "password"}
+                name="nuevo_password"
+                id="nuevo_password"
                 value={input.nueva_contraseña}
                 placeholder="Confirmar contraseña"
                 onChange={handleChange}
-                className="input_Registro"
+                className="Registro__input"
               />
-              <button className="item-center" onClick={handleEye}>
-                {stateContraseña ? <BsEye /> : <BsEyeSlash />}
+              <button className="Registro__ojo" onClick={handleEye}>
+                {statePassword ? <BsEye /> : <BsEyeSlash />}
               </button>
-              {input.contraseña === input.nueva_contraseña ? (
+              {input.password === input.nuevo_password ? (
                 ""
               ) : (
-                <p className="error_registro">No coincide con su contraseña</p>
+                <p className="Registro__error">No coincide con su contraseña</p>
               )}
             </div>
           </div>
           {/* grupo terminos y condiciones */}
           <div className="grupo_terminos">
-            <label className="formulario_label">
+            <label className="Registro__formulario_label">
               <input
                 type="checkbox"
                 name="terminos"
-                className="checkbox_registro"
+                className="Registro__checkbox"
                 onChange={handleCheck}
               />
               Acepto los terminos y condiciones.
@@ -275,20 +286,20 @@ export default function FormRegistro() {
               <p onClick={handleConfirmar}>Ver mas</p>
             </label>
             {errors.terminos && (
-              <span className="error_registro">{errors.terminos}</span>
+              <span className="registro__error">{errors.terminos}</span>
             )}
           </div>
           <div className="grupo_btn">
             {!errors.nombre &&
             !errors.apellido &&
             !errors.dni &&
-            !errors.contraseña &&
+            !errors.password &&
             !errors.terminos ? (
-              <button type="submit" className="btn_registro">
+              <button type="submit" className="Registro__btn_registro">
                 Registrarme
               </button>
             ) : (
-              <button type="submit" disabled className="disabled">
+              <button type="submit" disabled className="Registro__disabled">
                 Registrarme
               </button>
             )}

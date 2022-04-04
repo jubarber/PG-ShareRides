@@ -14,10 +14,8 @@ router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
         dbUsuario.password === password
           ? res.send("ok")
           : res.send("contraseña incorrecta");
-      } else {
-        res.send("usuario no encontrado");
-      }
-    } //aca termina el if dni
+      } else res.send("usuario no encontrado");
+    }
   } catch (err) {
     next(err);
   }

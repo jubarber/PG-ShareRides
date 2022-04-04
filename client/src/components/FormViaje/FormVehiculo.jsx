@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import swal from "sweetalert";
+import { postVehiculo } from "../../redux/actions/actions";
+
 export default function FormVehiculo() {
   const dispatch = useDispatch();
   const [auto, setAuto] = useState({
@@ -7,7 +10,7 @@ export default function FormVehiculo() {
     marca: "",
     modelo: "",
     dni: "",
-    email: "",
+    email: ""
   });
   const [errors, setErrors] = useState({});
 
@@ -16,7 +19,7 @@ export default function FormVehiculo() {
     marca: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
     modelo: /^[0-9]*$/,
     email: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
-    dni: /^(?!^0+$)[a-zA-Z0-9]{3,20}$/,
+    dni: /^(?!^0+$)[a-zA-Z0-9]{3,20}$/
   };
 
   function validacion(auto) {
@@ -52,31 +55,50 @@ export default function FormVehiculo() {
   function handleOnChange(e) {
     setAuto({
       ...auto,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
     setErrors(
       validacion({
         ...auto,
-        [e.target.name]: e.target.value,
+        [e.target.name]: e.target.value
       })
     );
   }
   function handleSubmit(e) {
     e.preventDefault();
-    if (Object.keys(errors).length !== 0) {
+    if (!auto.patente) {
       e.preventDefault();
-      alert("Por favor, completa todos los campos solicitados");
+      swal({
+        title: "Alto!",
+        text: "Por favor completá todos los campos",
+        icon: "warning",
+        button: true,
+        dangerMode: true
+      });
+    } else if (Object.keys(errors).length !== 0) {
+      e.preventDefault();
+      swal({
+        title: "Alto!",
+        text: "Por favor completá todos los campos",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+      });
     } else {
-      alert("Registro exitoso");
-      // dispatch(crearVehiculo(auto));
+      // swal("Registro exitoso");
+      dispatch(postVehiculo(auto));
+      swal({
+        title: "El registro ha sido exitoso!",
+        icon: "success",
+        button: "Crea tu viaje!",
+      }).then(function(){window.location = "/formconductor"});
       setAuto({
         patente: "",
         marca: "",
         modelo: "",
         dni: "",
-        email: "",
+        email: ""
       });
-      window.location.href = "/formconductor";
     }
     //history.push('/') //quiero q me envie a la seccion completar mi perfil?
   }
