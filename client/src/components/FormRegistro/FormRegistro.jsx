@@ -14,7 +14,7 @@ export default function FormRegistro() {
     dni: "",
     email: "",
     contraseña: "",
-    confirmar_contraseña: "",
+    nueva_contraseña: "",
     terminos: "",
   });
 
@@ -113,7 +113,7 @@ export default function FormRegistro() {
         apellido: "",
         dni: "",
         contraseña: "",
-        confirmar_contraseña: "",
+        nueva_contraseña: "",
         terminos: "",
       });
     }
