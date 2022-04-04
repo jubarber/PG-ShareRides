@@ -16,11 +16,11 @@ export default function NavBar() {
           </h1>
         </div>
         <div className="panel-botones">
-          <button type="button">
-            <Link to="/home">Home</Link>class="btn btn-outline-primary"
+          <button class="btn btn-outline-primary" type="button">
+            <Link to="/home">Home</Link>
           </button>
           <button type="button" class="btn btn-outline-primary">
-            <Link to="/#">Crear Viaje</Link>
+            <Link to="/formviaje">Crear Viaje</Link>
           </button>
         </div>
         <div className="info-usuario">

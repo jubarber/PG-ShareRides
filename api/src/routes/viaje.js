@@ -17,25 +17,25 @@ router.post("/conductor", async (req, res, next) => {
       aceptaMascota,
       usaBarbijo,
       aceptaEquipaje,
-      viajeDisponible,
-      email
+      email,
+      dni
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
       const usuarioConductor = await Usuario.findByPk(email);
       nuevoViaje = await Viaje.create({
+        dni,
         fecha,
         hora,
         origen,
         destino,
         asientosAOcupar,
         formaDePago,
-        pagoCompartido,
-        aceptaEquipaje,
         aceptaFumador,
         aceptaMascota,
+        aceptaEquipaje,
         usaBarbijo,
-        viajeDisponible
+        pagoCompartido
       });
       await nuevoViaje.addUsuario(email);
       usuarioConductor.update({ conductor: true });
@@ -61,9 +61,24 @@ router.post("/pasajero", async (req, res, next) => {
       aceptaMascota,
       usaBarbijo,
       aceptaEquipaje,
-      viajeDisponible,
-      email
+      email,
+      dni
     } = req.body;
+    console.log(
+      fecha,
+      hora,
+      origen,
+      destino,
+      asientosAOcupar,
+      formaDePago,
+      pagoCompartido,
+      aceptaFumador,
+      aceptaMascota,
+      usaBarbijo,
+      aceptaEquipaje,
+      email,
+      dni
+    );
     let nuevoViaje;
     if (fecha && origen && destino) {
       nuevoViaje = await Viaje.create({
@@ -74,11 +89,12 @@ router.post("/pasajero", async (req, res, next) => {
         asientosAOcupar,
         formaDePago,
         pagoCompartido,
-        aceptaEquipaje,
         aceptaFumador,
         aceptaMascota,
         usaBarbijo,
-        viajeDisponible
+        aceptaEquipaje,
+        email,
+        dni
       });
       await nuevoViaje.addUsuario(email);
       res.json(nuevoViaje);
@@ -143,5 +159,4 @@ router.get("/:viajeId", async (req, res, next) => {
     next(err);
   }
 });
-
 module.exports = router;
