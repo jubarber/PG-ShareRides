@@ -15,6 +15,7 @@ export default function FormPasajero() {
     email: "",
     dni: "",
     asiento: "",
+    formaDePago: "A coordinar"
   });
 
   const expresiones = {
@@ -22,9 +23,8 @@ export default function FormPasajero() {
     hora: /^.{4,12}$/,
     origen: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
     destino: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
-
     email: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
-    asiento: /^.{1,7}$/,
+    asiento: /^.{1,7}$/
   };
 
   function validacion(viaje) {
@@ -68,36 +68,36 @@ export default function FormPasajero() {
   const filtrosArray = [
     {
       id: 1,
-      name: "Acepto fumador",
+      name: "Acepto fumador"
     },
     {
       id: 2,
-      name: "Acepto mascota",
+      name: "Acepto mascota"
     },
     {
       id: 3,
-      name: "Acepto equipaje",
+      name: "Acepto equipaje"
     },
     {
       id: 4,
-      name: "Uso de barbijo",
+      name: "Uso de barbijo"
     },
     {
       id: 5,
-      name: "Pago compartido",
-    },
+      name: "Pago compartido"
+    }
   ];
 
   function handleOnChange(e) {
     e.preventDefault();
     setViaje({
       ...viaje,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
     setErrors(
       validacion({
         ...viaje,
-        [e.target.name]: e.target.value,
+        [e.target.name]: e.target.value
       })
     );
   }
@@ -120,10 +120,19 @@ export default function FormPasajero() {
       !viaje.email
     ) {
       e.preventDefault();
-      alert("Por favor, completa todos los campos solicitados");
+      swal({
+        title: "Alto!",
+        text: "Por favor completá todos los campos",
+        icon: "warning",
+        button: true,
+        dangerMode: true
+      });
     } else {
-      alert("Registro exitoso");
-      window.location.href = "/home";
+      swal({
+        title: "El registro ha sido exitoso!",
+        icon: "success",
+        button: "Crea tu viaje!",
+      }).then(function(){window.location = "/home"});
       dispatch(postViajePasajero(isChecked, viaje));
 
       setViaje({
@@ -134,8 +143,8 @@ export default function FormPasajero() {
         email: "",
         dni: "",
         asiento: "",
+        formaDePago: "A coordinar"
       });
-      
     }
   }
 

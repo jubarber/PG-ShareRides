@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import {postViajeConductor} from "../../redux/actions/actions"
+import swal from "sweetalert";
+import { postViajeConductor } from "../../redux/actions/actions";
+
+
 export default function FormPasajero() {
   const dispatch = useDispatch();
 
@@ -12,16 +15,18 @@ export default function FormPasajero() {
     origen: "",
     destino: "",
     dni: "",
-    asiento:""
+    asiento: "",
+    formaDePago: "A coordinar",
+    email: "nahue@gmail.com"
   });
 
   const expresiones = {
     fecha: /^.{4,18}$/,
     hora: /^.{4,12}$/,
-    asiento:/^.{1,7}$/,
+    asiento: /^.{1,7}$/,
     origen: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
     destino: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
-    dni: /^(?!^0+$)[a-zA-Z0-9]{3,20}$/,
+    dni: /^(?!^0+$)[a-zA-Z0-9]{3,20}$/
   };
 
   function validacion(viaje) {
@@ -32,7 +37,6 @@ export default function FormPasajero() {
     } else if (!expresiones.hora.test(viaje.hora)) {
       errors.hora = "Ingresa una hora valida";
     }
-
     if (!viaje.fecha) {
       errors.fecha = "Debes ingresar la fecha del viaje";
     } else if (!expresiones.fecha.test(viaje.fecha)) {
@@ -63,36 +67,36 @@ export default function FormPasajero() {
   const filtrosArray = [
     {
       id: 1,
-      name: "Acepto fumador",
+      name: "Acepto fumador"
     },
     {
       id: 2,
-      name: "Acepto mascota",
+      name: "Acepto mascota"
     },
     {
       id: 3,
-      name: "Acepto equipaje",
+      name: "Acepto equipaje"
     },
     {
       id: 4,
-      name: "Uso de barbijo",
+      name: "Uso de barbijo"
     },
     {
       id: 5,
-      name: "Pago compartido",
-    },
+      name: "Pago compartido"
+    }
   ];
 
   function handleOnChange(e) {
     e.preventDefault();
     setViaje({
       ...viaje,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
     setErrors(
       validacion({
         ...viaje,
-        [e.target.name]: e.target.value,
+        [e.target.name]: e.target.value
       })
     );
   }
@@ -104,33 +108,42 @@ export default function FormPasajero() {
     setIsChecked(updatedCheckedState);
   };
 
-
-
   function handleSubmit(e) {
     e.preventDefault();
-    if (!viaje.fecha ||
+    if (
+      !viaje.fecha ||
       !viaje.hora ||
       !viaje.origen ||
       !viaje.destino ||
       !viaje.dni ||
-      !viaje.asiento 
-     ) {
+      !viaje.asiento
+    ) {
       e.preventDefault();
-      alert("Por favor, completa todos los campos solicitados");
+      swal({
+        title: "Alto!",
+        text: "Por favor completá todos los campos",
+        icon: "warning",
+        button: true,
+        dangerMode: true
+      });
     } else {
-      alert("Registro exitoso");
-      window.location.href = "/home";
+      swal({
+        title: "El registro ha sido exitoso!",
+        icon: "success",
+        button: "Crea tu viaje!",
+      }).then(function(){window.location = "/home"});
       dispatch(postViajeConductor(isChecked, viaje));
-   
+
       setViaje({
         fecha: "",
         hora: "",
         origen: "",
         destino: "",
         dni: "",
-        asiento:""
+        asiento: "",
+        formaDePago: "A coordinar",
+        email: "nahue@gmail.com"
       });
-     
     }
   }
 
@@ -184,7 +197,7 @@ export default function FormPasajero() {
           onChange={(e) => handleOnChange(e)}
         />
         {errors.dni && <span>{errors.dni}</span>}
-<br></br>
+        <br></br>
         <span>Asientos a ocupar</span>
         <input
           type="number"
@@ -195,9 +208,6 @@ export default function FormPasajero() {
         />
         {errors.asiento && <span>{errors.asiento}</span>}
 
-
-
-    
         <div>
           {filtrosArray.map((e, index) => {
             return (
@@ -229,21 +239,21 @@ export default function FormPasajero() {
           !errors.destino &&
           !errors.origen &&
           !errors.fecha &&
-          !errors.asiento? (
+          !errors.asiento ? (
             <input
-            type="submit"
-            value="Registrar viaje"
-            name="Registrar viaje"
-            className="btn_registro"
-          />
+              type="submit"
+              value="Registrar viaje"
+              name="Registrar viaje"
+              className="btn_registro"
+            />
           ) : (
             <input
-            type="submit"
-            value="Registrar viaje"
-            name="Registrar viaje"
-            disabled="disabled"
-            className="disabled"
-          />
+              type="submit"
+              value="Registrar viaje"
+              name="Registrar viaje"
+              disabled="disabled"
+              className="disabled"
+            />
           )}
         </div>
       </form>
