@@ -45,13 +45,22 @@ export function filtroChecks(payload, asiento) {
 export function registroUsuario(payload) {
   return async function (dispatch) {
     try {
-      const nuevoUsuario = await axios.post(
-        "http://localhost:3001api/usuario/registro/",
-        payload
+      const nuevoUsuario = await axios({
+        method: "post",
+        url: "http://localhost:3001api/usuario/registro",
+        data: {
+          email: payload.email,
+          nombre: payload.nombre,
+          apellido: payload.apellido,
+          password: payload.password,
+          vehiculo: payload.vehiculo,
+          dni: payload.dni
+         }
+        }
       );
       return dispatch({
         type: "REGISTRO_USUARIO",
-        nuevoUsuario
+        payload: nuevoUsuario
       });
     } catch (error) {
       console.log(error);

@@ -103,7 +103,9 @@ export default function FormRegistro() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (Object.keys(errors).length !== 0) {
+    setErrors(validacion({...input, [e.target.value] : e.target.name}))
+    const err = validacion(input)
+    if (Object.values(err).length !== 0) {
       e.preventDefault();
       swal({
         title: "Alto!",
