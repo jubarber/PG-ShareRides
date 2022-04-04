@@ -56,9 +56,9 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
       defaultValue: true
     },
-    conductor: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
     detalles: {
       type: DataTypes.TEXT,
