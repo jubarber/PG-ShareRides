@@ -5,11 +5,13 @@ const { Usuario, Viaje } = require("../db.js");
 router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
   try {
     const { email, password } = req.params;
+    //console.log("soy email" , email);
     if (email) {
       var dbUsuario = await Usuario.findOne(
         { where: { email: email } },
         { include: Viaje }
       );
+      //console.log("soy db usuario", dbUsuario);
       if (dbUsuario) {
         dbUsuario.password === password
           ? res.send("ok")
