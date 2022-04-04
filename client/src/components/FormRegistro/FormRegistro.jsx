@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import swal from "sweetalert";
 import { registroUsuario } from "../../redux/actions/actions";
 import "./FormRegistro.css";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
@@ -80,7 +81,7 @@ export default function FormRegistro() {
 
   function handleConfirmar(e) {
     e.preventDefault();
-    alert(
+    swal(
       "En este documento se describen los Términos y Condiciones generales aplicables al uso de los servicios ofrecidos por ShareRide® mediante www.shareRide.com.ar/app. Cualquier persona  que desee usar o utilizar shareRide® podrá hacerlo sujetándose a los Términos y Condiciones respectivos, junto con todas las demás políticas y principios"
     );
   }
@@ -104,10 +105,20 @@ export default function FormRegistro() {
     e.preventDefault();
     if (Object.keys(errors).length !== 0) {
       e.preventDefault();
-      alert("Por favor, completa todos los campos solicitados");
+      swal({
+        title: "Alto!",
+        text: "Por favor completá todos los campos",
+        icon: "warning",
+        button: true,
+        dangerMode: true
+      });
     } else {
       dispatch(registroUsuario(input));
-      alert("Registro exitoso");
+      swal({
+        title: "El registro ha sido exitoso!",
+        icon: "success",
+        button: "Crea tu viaje!",
+      })
       setInput({
         nombre: "",
         apellido: "",

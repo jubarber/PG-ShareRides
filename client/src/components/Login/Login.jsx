@@ -13,7 +13,7 @@ export default function Login() {
   const [input, setInput] = useState({ email: "", password: "" });
   const [error, setError] = useState({
     usuario: "",
-    password: "",
+    password: ""
   });
   const [inicioSesion, setInicioSesion] = useState("");
   const [statePassword, setStatePassword] = useState(false);
@@ -21,20 +21,38 @@ export default function Login() {
   function iniciarSesion(input) {
     axios({
       method: "get",
-      url: `http://localhost:3001/api/usuario/iniciarsesion/${input.email}/${input.password}`,
+      url: `http://localhost:3001/api/usuario/iniciarsesion/${input.email}/${input.password}`
     }).then((r) => setInicioSesion(r.data));
   }
+
   useEffect(() => {
-    console.log("USE EFFECT");
     if (inicioSesion === "contraseña incorrecta") {
       setError({ ...error, password: "Contraseña incorrecta" });
-      swal("Contraseña incorrecta");
+      swal({
+        title: "Ups!",
+        text: "Contraseña incorrecta",
+        icon: "warning",
+        button: true,
+        dangerMode: true
+      });
     } else if (inicioSesion === "usuario no encontrado") {
       setError({ ...error, usuario: "Usuario no registrado" });
-      swal("El email ingresado no es válido");
+      swal({
+        title: "Ups!",
+        text: "El email ingresado no es válido",
+        icon: "warning",
+        button: true,
+        dangerMode: true
+      });
     } else if (inicioSesion === "ok") {
       dispatch(login(input.email));
-      window.location.href = "/home";
+      swal({
+        title: "El inicio de sesión ha sido exitoso!",
+        icon: "success",
+        button: "Bienvenidx!"
+      }).then(function () {
+        window.location = "/home";
+      });
     }
   }, [inicioSesion]);
 
@@ -45,16 +63,35 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    iniciarSesion(input);
-    // setError({ usuario: "", password: "" });
-    setInput({ email: "", password: "" });
+    if (Object.values(input)[0] === "") {
+      e.preventDefault();
+      swal({
+        title: "Alto!",
+        text: "Por favor complete todos los campos",
+        icon: "warning",
+        button: true,
+        dangerMode: true
+      });
+    } else if (Object.values(input)[1] === "") {
+      e.preventDefault();
+      swal({
+        title: "Alto!",
+        text: "Por favor ingrese su contraseña",
+        icon: "warning",
+        button: true,
+        dangerMode: true
+      });
+    } else {
+      iniciarSesion(input);
+      setInput({ email: "", password: "" });
+    }
   };
 
   function handleChangeEmail(e) {
     e.preventDefault();
     setInput({
       ...input,
-      email: e.target.value,
+      email: e.target.value
     });
   }
 
@@ -62,12 +99,12 @@ export default function Login() {
     e.preventDefault();
     setInput({
       ...input,
-      password: e.target.value,
+      password: e.target.value
     });
   }
 
   return (
-    <div  >
+    <div>
       <div className="wallpaper">
         <img className="stretch" src={fondo} alt="" />
       </div>
@@ -101,7 +138,6 @@ export default function Login() {
         <button className="Login__btn_login" type="submit">
           Iniciar Sesión
         </button>
-        
       </form>
     </div>
   );
