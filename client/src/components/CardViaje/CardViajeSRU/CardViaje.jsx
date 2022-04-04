@@ -21,19 +21,19 @@ export default function Card({
     <div className="container-card font-mono italic">
       <div className="data-card">
         <div className="prueba">
-          <i className="text-orange-600 text-xs text-left w-full flex flex-col-reverse w-4/12">
-            <VscLocation className="icono text-purple-600" />
+          <i className="text-xs text-left w-full flex flex-col-reverse w-4/12">
+            <VscLocation className="icono text-green-400" />
             origen
           </i>
-          <i className="text-base w-full">{origen}</i>
+          <i className="text-base w-full text-green-400">{origen}</i>
         </div>
         <i className="text-right w-full text-sm	">{origen}</i>
         <div className="prueba">
-          <i className="text-sky-400 text-xs text-left w-full flex flex-col-reverse w-4/12">
-            <VscLocation className="icono text-purple-600" />
+          <i className="text-xs text-left w-full flex flex-col-reverse w-4/12">
+            <VscLocation className="icono text-red-600" />
             destino
           </i>
-          <i className="text-base w-full">{destino} </i>
+          <i className="text-base w-full text-red-600">{destino} </i>
         </div>
         <i className="text-right w-full text-sm	">{destino}</i>
         <h5 className="text-center text-xs">

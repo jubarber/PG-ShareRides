@@ -47,9 +47,6 @@ export default function FormRegistro() {
     } else if (!expresiones.apellido.test(input.apellido)) {
       errors.apellido = "Ingrese un apellido valido";
     }
-    if (!input.dni) {
-      errors.dni = "Debes ingesar DNI/Pasaporte";
-    }
     if (!input.password) {
       errors.password = "Debe ingresar una contraseña";
     } else if (!expresiones.password.test(input.password)) {
@@ -119,8 +116,9 @@ export default function FormRegistro() {
       swal({
         title: "El registro ha sido exitoso!",
         icon: "success",
-        button: "Crea tu viaje!",
+        button: "Bienvenide!",
       })
+      .then(function(){window.location = "/home"});
       setInput({
         nombre: "",
         apellido: "",
@@ -200,9 +198,6 @@ export default function FormRegistro() {
                 onChange={handleChange}
                 className="Registro__input"
               />
-              {errors.dni && (
-                <span className="Registro__error">{errors.dni}</span>
-              )}
             </div>
           </div>
           {/* grupo email*/}
@@ -294,7 +289,6 @@ export default function FormRegistro() {
           <div className="grupo_btn">
             {!errors.nombre &&
             !errors.apellido &&
-            !errors.dni &&
             !errors.password &&
             !errors.terminos ? (
               <button type="submit" className="Registro__btn_registro">
