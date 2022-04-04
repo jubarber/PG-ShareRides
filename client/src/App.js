@@ -27,7 +27,7 @@ function App() {
           <Route exact path="/formpasajero" element = {<FormPasajero />} />
           <Route exact path="/formvehiculo" element = {<FormVehiculo />} />
           <Route exact path="/formconductor" element = {<FormConductor />} />
-          <Route exact path="/viajes/detalle" element={<DetalleViaje />} />
+          <Route exact path="/detalle/:id" element={<DetalleViaje />} />
           <Route exact path="/login" element={<Login />} />
 
         </Routes>
