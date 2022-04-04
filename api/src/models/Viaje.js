@@ -55,6 +55,10 @@ module.exports = (sequelize) => {
     viajeDisponible: {
       type: DataTypes.BOOLEAN,
       defaultValue: true
-    }
+    },
+    conductor: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
   });
 };
