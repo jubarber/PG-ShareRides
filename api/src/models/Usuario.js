@@ -47,6 +47,10 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false
+    },
+    calificacion: {
+      type: DataTypes.STRING,
+      defaultValue: ""
     }
   });
 };
