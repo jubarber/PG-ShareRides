@@ -34,15 +34,15 @@ router.get("/usuarios", async (req, res, next) => {
 
 router.post("/registro", async (req, res, next) => {
   try {
-    const { email, nombre, apellido, password, vehiculo, dni } = req.body;
+    const { email, nombre, apellido, password, vehiculo } = req.body;
     let nuevoUsuario;
     if (vehiculo) {
       nuevoUsuario = await Usuario.findOrCreate({
-        where: { email, nombre, apellido, password, vehiculo, dni} //vehiculo = patente del auto
+        where: { email, nombre, apellido, password, vehiculo} //vehiculo = patente del auto
       });
     } else {
       nuevoUsuario = await Usuario.findOrCreate({
-        where: { email, nombre, apellido, password, dni }
+        where: { email, nombre, apellido, password}
       });
     }
     res.json(nuevoUsuario);

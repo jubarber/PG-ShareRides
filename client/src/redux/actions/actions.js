@@ -32,22 +32,25 @@ export function getViajesTotal() {
 }
 
 export function filtroChecks(payload, asiento) {
+  //console.log(payload, asiento);
   return async function (dispatch) {
     let viajes = await axios({
       method: "get",
       url: `http://localhost:3001/api/viaje/filtro/${payload[0]}/${payload[1]}/${payload[2]}/${payload[3]}?asientosAOcupar=${asiento}`
     });
+    console.log("Este console", viajes.data)
     return dispatch({ type: "FILTRO_CHECKS", payload: viajes.data });
   };
 }
 
 //registro usuario nuevo
 export function registroUsuario(payload) {
+  console.log("soy payload", payload);
   return async function (dispatch) {
     try {
       const nuevoUsuario = await axios({
         method: "post",
-        url: "http://localhost:3001api/usuario/registro",
+        url: "http://localhost:3001/api/usuario/registro",
         data: {
           email: payload.email,
           nombre: payload.nombre,

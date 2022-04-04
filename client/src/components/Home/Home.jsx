@@ -9,7 +9,8 @@ import "./Home.css";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const viajes = useSelector((state) => state.viajesFiltrados //me traigo el estado de los viajes para poder mostrarlos
+  const viajes = useSelector(
+    (state) => state.viajesFiltrados //me traigo el estado de los viajes para poder mostrarlos
   );
   useEffect(() => {
     //se monta home y despacho la accion para obtener los viajes
@@ -24,27 +25,29 @@ export default function Home() {
       </div>
       <div id="general-card">
         <div className="container-cards">
-          <div className="card-home">
-            {viajes.map((e) => (
-              e &&
-              <CardViajeUsuario
-                origen={e.origen}
-                destino={e.destino}
-                fecha={e.fecha}
-                hora={e.hora}
-                asientosAOcupar={e.asientosAOcupar}
-                aceptaEquipaje={e.aceptaEquipaje}
-                aceptaFumador={e.aceptaFumador}
-                aceptaMascota={e.aceptaMascota}
-                usaBarbijo={e.usaBarbijo}
-                viajeDisponible={e.viajeDisponible}
-                key={e.id}
-                id={e.id}
-                nombre={e.usuarios[0].nombre}
-                apellido={e.usuarios[0].apellido}
-              />
-            ))}
-          </div>
+          {viajes.map(
+            (e) =>
+              e && (
+                <div className="card-home">
+                  <CardViajeUsuario
+                    origen={e.origen}
+                    destino={e.destino}
+                    fecha={e.fecha}
+                    hora={e.hora}
+                    asientosAOcupar={e.asientosAOcupar}
+                    aceptaEquipaje={e.aceptaEquipaje}
+                    aceptaFumador={e.aceptaFumador}
+                    aceptaMascota={e.aceptaMascota}
+                    usaBarbijo={e.usaBarbijo}
+                    viajeDisponible={e.viajeDisponible}
+                    key={e.id}
+                    id={e.id}
+                    //nombre={e.usuarios[0].nombre}
+                    //apellido={e.usuarios[0].apellido}
+                  />
+                </div>
+              )
+          )}
         </div>
       </div>
     </div>
