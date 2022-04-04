@@ -1,0 +1,82 @@
+.form-formpasajero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  height: 45rem;
+  margin-top: 3rem;
+}
+
+.label-formpasajero {
+  display: block;
+  font-weight: 500;
+  padding-top: 1rem;
+  cursor: pointer;
+}
+
+.input-text {
+  width: 80%;
+  background-color: #fff;
+  border: 3px solid;
+  border-radius: 3px;
+  height: 45px;
+  line-height: 45px;
+  padding: 0 40px 0 10px;
+  transition: 0.3s ease all;
+  border-radius: 20px;
+  border-radius: 58px;
+  font-size: medium;
+}
+
+.form-formpasajero input:focus {
+  border: 3px solid #9252ff;
+  outline: none;
+  box-shadow: 3px 0px 30px rgba(163, 163, 163, 0.4);
+}
+
+.checkbox-formpasajero {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.checkbox-formpasajero div {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.btn-formpasajero {
+  height: 3rem;
+  line-height: 45px;
+  width: 15%;
+  background-color: #9252ff;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.1s easy all;
+  text-transform: uppercase;
+}
+
+.btn-formpasajero:hover {
+  box-shadow: 3px 0px 30px rgba(163, 163, 163, 1);
+}
+
+.btn-formpasajero-disable {
+  height: 3rem;
+  line-height: 45px;
+  width: 15%;
+  background: rgb(154, 153, 153);
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 3px;
+  transition: 0.1s easy all;
+  text-transform: uppercase;
+}
+
+.btn-registrar-formpasajero {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5rem;
+}

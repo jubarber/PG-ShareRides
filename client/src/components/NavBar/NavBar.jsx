@@ -24,7 +24,7 @@ export default function NavBar() {
           </button>
         </div>
         <div className="info-usuario">
-          <h3>Hola, Julio</h3>
+          <h3>Hola</h3>
           <img src={userRojo} alt="" />
         </div>
       </div>

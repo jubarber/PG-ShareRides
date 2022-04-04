@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import swal from "sweetalert";
 import { postViajeConductor } from "../../redux/actions/actions";
 
-
 export default function FormPasajero() {
   const dispatch = useDispatch();
 
@@ -17,7 +16,7 @@ export default function FormPasajero() {
     dni: "",
     asiento: "",
     formaDePago: "A coordinar",
-    email: "nahue@gmail.com"
+    email: "nahue@gmail.com",
   });
 
   const expresiones = {
@@ -26,7 +25,7 @@ export default function FormPasajero() {
     asiento: /^.{1,7}$/,
     origen: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
     destino: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
-    dni: /^(?!^0+$)[a-zA-Z0-9]{3,20}$/
+    dni: /^(?!^0+$)[a-zA-Z0-9]{3,20}$/,
   };
 
   function validacion(viaje) {
@@ -67,36 +66,36 @@ export default function FormPasajero() {
   const filtrosArray = [
     {
       id: 1,
-      name: "Acepto fumador"
+      name: "Acepto fumador",
     },
     {
       id: 2,
-      name: "Acepto mascota"
+      name: "Acepto mascota",
     },
     {
       id: 3,
-      name: "Acepto equipaje"
+      name: "Acepto equipaje",
     },
     {
       id: 4,
-      name: "Uso de barbijo"
+      name: "Uso de barbijo",
     },
     {
       id: 5,
-      name: "Pago compartido"
-    }
+      name: "Pago compartido",
+    },
   ];
 
   function handleOnChange(e) {
     e.preventDefault();
     setViaje({
       ...viaje,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
     setErrors(
       validacion({
         ...viaje,
-        [e.target.name]: e.target.value
+        [e.target.name]: e.target.value,
       })
     );
   }
@@ -124,14 +123,16 @@ export default function FormPasajero() {
         text: "Por favor completá todos los campos",
         icon: "warning",
         button: true,
-        dangerMode: true
+        dangerMode: true,
       });
     } else {
       swal({
         title: "El registro ha sido exitoso!",
         icon: "success",
-        button: "Crea tu viaje!",
-      }).then(function(){window.location = "/home"});
+        button: "Buen viaje!",
+      }).then(function () {
+        window.location = "/home";
+      });
       dispatch(postViajeConductor(isChecked, viaje));
 
       setViaje({
@@ -142,7 +143,7 @@ export default function FormPasajero() {
         dni: "",
         asiento: "",
         formaDePago: "A coordinar",
-        email: "nahue@gmail.com"
+        email: "nahue@gmail.com",
       });
     }
   }
