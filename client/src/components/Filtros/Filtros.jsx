@@ -8,6 +8,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { FormControl } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
+import SearchBar from "../SearchBar/SearchBar";
 
 export function Filtros() {
   const dispatch = useDispatch();
@@ -67,7 +68,6 @@ export function Filtros() {
     setIsChecked(estadoLimpio);
     setAsiento("");
   }
-
   return (
     <div className="contenedor-filtros" class="font-mono">
       <div className="asientos">
@@ -117,7 +117,7 @@ export function Filtros() {
             );
           })}
         </div>
-
+       </div>
         <div className="aplicar-limpiar">
           <Button
             variant="contained"
@@ -142,7 +142,6 @@ export function Filtros() {
             Limpiar filtros
           </Button>
         </div>
-      </div>
-    </div>
+         </div>
   );
 }

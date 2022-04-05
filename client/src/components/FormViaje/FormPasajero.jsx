@@ -75,7 +75,6 @@ export default function FormPasajero() {
   const filtrosArray = [
     {
       id: 1,
-
       name: "Soy fumador",
     },
     {
@@ -85,8 +84,6 @@ export default function FormPasajero() {
     {
       id: 3,
       name: "Llevo equipaje",
-
-
     },
     {
       id: 4,
@@ -130,7 +127,6 @@ export default function FormPasajero() {
       !viaje.email
     ) {
       e.preventDefault();
-
       swal({
         title: "Alto!",
         text: "Por favor completá todos los campos",
@@ -146,8 +142,6 @@ export default function FormPasajero() {
       }).then(function () {
         window.location = "/home";
       });
-
-
       dispatch(postViajePasajero(isChecked, viaje));
 
       setViaje({
@@ -158,17 +152,14 @@ export default function FormPasajero() {
         email: "",
         dni: "",
         asiento: "",
-
         formaDePago: "A coordinar",
       });
-
     }
   }
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
-
         <div className="form-formpasajero">
           <div className="form-parte-1">
             <label className="label-formpasajero">Fecha</label>

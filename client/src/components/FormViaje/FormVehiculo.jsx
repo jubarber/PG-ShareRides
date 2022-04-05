@@ -22,7 +22,7 @@ export default function FormVehiculo() {
     marca: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
     modelo: /^[0-9]*$/,
     email: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
-    dni: /^(?!^0+$)[a-zA-Z0-9]{3,20}$/,
+    dni: /^(?!^0+$)[a-zA-Z0-9]{3,20}$/
   };
 
   function validacion(auto) {
@@ -69,7 +69,6 @@ export default function FormVehiculo() {
   }
   function handleSubmit(e) {
     e.preventDefault();
-    
     if (!auto.patente) {
       e.preventDefault();
       swal({
@@ -96,7 +95,6 @@ export default function FormVehiculo() {
         icon: "success",
         button: "Crea tu viaje!",
       }).then(function(){window.location = "/formconductor"});
-
       setAuto({
         patente: "",
         marca: "",
