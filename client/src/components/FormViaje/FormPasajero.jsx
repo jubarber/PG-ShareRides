@@ -1,14 +1,20 @@
+<<<<<<< HEAD
+=======
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
+>>>>>>> develop
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import swal from "sweetalert";
 import { postViajePasajero } from "../../redux/actions/actions";
+<<<<<<< HEAD
+=======
 import "./FormPasajero.css";
 import fondo from "../../assets/fondo perfil.jpg";
 
+>>>>>>> develop
 export default function FormPasajero() {
   const dispatch = useDispatch();
 
@@ -22,7 +28,10 @@ export default function FormPasajero() {
     email: "",
     dni: "",
     asiento: "",
+<<<<<<< HEAD
+=======
     formaDePago: "A coordinar",
+>>>>>>> develop
   });
 
   const expresiones = {
@@ -30,6 +39,10 @@ export default function FormPasajero() {
     hora: /^.{4,12}$/,
     origen: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
     destino: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
+<<<<<<< HEAD
+
+=======
+>>>>>>> develop
     email: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
     asiento: /^.{1,7}$/,
   };
@@ -75,6 +88,17 @@ export default function FormPasajero() {
   const filtrosArray = [
     {
       id: 1,
+<<<<<<< HEAD
+      name: "Acepto fumador",
+    },
+    {
+      id: 2,
+      name: "Acepto mascota",
+    },
+    {
+      id: 3,
+      name: "Acepto equipaje",
+=======
       name: "Soy fumador",
     },
     {
@@ -84,6 +108,7 @@ export default function FormPasajero() {
     {
       id: 3,
       name: "Llevo equipaje",
+>>>>>>> develop
     },
     {
       id: 4,
@@ -127,6 +152,12 @@ export default function FormPasajero() {
       !viaje.email
     ) {
       e.preventDefault();
+<<<<<<< HEAD
+      alert("Por favor, completa todos los campos solicitados");
+    } else {
+      alert("Registro exitoso");
+      window.location.href = "/home";
+=======
       swal({
         title: "Alto!",
         text: "Por favor completá todos los campos",
@@ -142,6 +173,7 @@ export default function FormPasajero() {
       }).then(function () {
         window.location = "/home";
       });
+>>>>>>> develop
       dispatch(postViajePasajero(isChecked, viaje));
 
       setViaje({
@@ -152,14 +184,139 @@ export default function FormPasajero() {
         email: "",
         dni: "",
         asiento: "",
+<<<<<<< HEAD
+      });
+      
+=======
         formaDePago: "A coordinar",
       });
+>>>>>>> develop
     }
   }
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
+<<<<<<< HEAD
+        <span>Fecha</span>
+
+        <input
+          type="text"
+          name="fecha"
+          value={viaje.fecha}
+          onChange={(e) => handleOnChange(e)}
+        />
+        {errors.fecha && <span>{errors.fecha}</span>}
+
+        <br></br>
+        <span>Hora</span>
+
+        <input
+          type="text"
+          name="hora"
+          value={viaje.hora}
+          onChange={(e) => handleOnChange(e)}
+        />
+        {errors.hora && <span>{errors.hora}</span>}
+        <br></br>
+        <span>Origen</span>
+
+        <input
+          type="text"
+          name="origen"
+          value={viaje.origen}
+          onChange={(e) => handleOnChange(e)}
+        />
+        {errors.origen && <span>{errors.origen}</span>}
+        <br></br>
+
+        <span>Destino</span>
+        <input
+          type="text"
+          name="destino"
+          value={viaje.destino}
+          onChange={(e) => handleOnChange(e)}
+        />
+        {errors.destino && <span>{errors.destino}</span>}
+        <br></br>
+        <span>Email</span>
+        <input
+          type="text"
+          name="email"
+          value={viaje.email}
+          onChange={(e) => handleOnChange(e)}
+        />
+        {errors.email && <span>{errors.email}</span>}
+        <br></br>
+        <span>Dni/Pasaporte</span>
+        <input
+          type="text"
+          name="dni"
+          value={viaje.dni}
+          onChange={(e) => handleOnChange(e)}
+        />
+
+        <br></br>
+        <span>Asientos a ocupar</span>
+        <input
+          type="number"
+          name="asiento"
+          placeholder="entre 1 y 7"
+          value={viaje.asiento}
+          onChange={(e) => handleOnChange(e)}
+        />
+        {errors.asiento && <span>{errors.asiento}</span>}
+
+        <div>
+          {filtrosArray.map((e, index) => {
+            return (
+              <div>
+                <label>{e.name}</label>
+                <input
+                  type="checkbox"
+                  key={e.id}
+                  name={e.name}
+                  value={e.name}
+                  checked={isChecked[index]}
+                  onChange={() => {
+                    handleCheckBox(index);
+                  }}
+                />
+              </div>
+            );
+          })}
+
+          {isChecked[4] && (
+            <select>
+              <option value="Efecto">Efectivo</option>
+              <option value="MP">Mercado Pago</option>
+            </select>
+          )}
+        </div>
+
+        {!errors.email &&
+        !errors.hora &&
+        !errors.destino &&
+        !errors.origen &&
+        !errors.fecha &&
+        !errors.asiento ? (
+          <input
+            type="submit"
+            value="Registrar viaje"
+            name="Registrar viaje"
+            className="btn_registro"
+          />
+        ) : (
+          <input
+            type="submit"
+            value="Registrar viaje"
+            name="Registrar viaje"
+            disabled="disabled"
+            className="disabled"
+          />
+        )}
+      </form>
+=======
         <div className="form-formpasajero">
           <div className="form-parte-1">
             <label className="label-formpasajero">Fecha</label>
@@ -248,14 +405,12 @@ export default function FormPasajero() {
               <span className="Registro__error">{errors.asiento}</span>
             )}
 
-            <div>
+            <div className="Pasajere__checkboxes">
               {filtrosArray.map((e, index) => {
                 return (
-                  <div className="checkbox-formpasajero">
-                    <div>
-                      <label className="label-formpasajero">{e.name}</label>
-                    </div>
-                    <div>
+                  <div>
+                    <label className="Pasajere__mycheckbox">
+                      {e.name}
                       <input
                         type="checkbox"
                         key={e.id}
@@ -265,9 +420,9 @@ export default function FormPasajero() {
                         onChange={() => {
                           handleCheckBox(index);
                         }}
-                        className="checkbox-formpasajero"
                       />
-                    </div>
+                      <span></span>
+                    </label>
                   </div>
                 );
               })}
@@ -323,6 +478,7 @@ export default function FormPasajero() {
       <div className="wallpaper">
         <img className="stretch" src={fondo} alt="" />
       </div>
+>>>>>>> develop
     </div>
   );
 }

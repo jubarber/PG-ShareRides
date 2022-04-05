@@ -1,0 +1,159 @@
+.Vehiculo__titulo {
+  font-size: 30px;
+  text-align: center;
+  margin-right: 50px;
+}
+
+.Vehiculo__nav {
+  margin-top: 50px;
+}
+
+.Vehiculo__formulario {
+  max-width: 800px;
+  width: 100%;
+  margin: auto;
+  padding: 40px;
+  font-size: 20px;
+}
+
+.Vehiculo__formulario_label {
+  display: block;
+  font-weight: 500;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.Vehiculo__grupo_input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Vehiculo__input {
+  width: 35rem;
+  background-color: #fff;
+  border: 3px solid;
+  border-radius: 3px;
+  height: 45px;
+  line-height: 45px;
+  padding: 0 40px 0 10px;
+  transition: 0.3s ease all;
+  border-radius: 20px;
+  border-radius: 58px;
+  font-size: medium;
+}
+
+.Vehiculo__input:focus {
+  border: 3px solid #9252ff;
+  outline: none;
+  box-shadow: 3px 0px 30px rgba(163, 163, 163, 0.4);
+}
+
+.Vehiculo__grupo_btn {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.Vehiculo__btn_volver {
+  height: 45x;
+  line-height: 45px;
+  width: 150px;
+  margin-top: 20px;
+  margin-left: 10%;
+  background-color: #9252ff;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.1s easy all;
+}
+.Vehiculo__btn_volver:hover {
+  box-shadow: 3px 0px 30px rgb(66, 65, 65);
+}
+
+.Vehiculo__btn_registro {
+  height: 45x;
+  line-height: 45px;
+  width: 30%;
+  background-color: #9252ff;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.1s easy all;
+  margin-left: 5%;
+}
+
+.Vehiculo__btn_registro:hover {
+  box-shadow: 3px 0px 30px rgba(163, 163, 163, 1);
+}
+
+.Vehiculo__disabled {
+  height: 45x;
+  line-height: 45px;
+  width: 30%;
+  background: rgb(154, 153, 153);
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 3px;
+  transition: 0.1s easy all;
+}
+
+.Vehiculo__error {
+  color: rgb(201, 25, 25);
+  padding: 5px;
+  display: flex;
+  text-align: left;
+  justify-content: left;
+  font-size: 0.8rem;
+  font-weight: 600;
+
+  animation-name: error;
+  animation-duration: 3s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+
+  -webkit-animation-name: error;
+  -webkit-animation-duration: 3s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+}
+@-moz-keyframes error {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes error {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes error {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
