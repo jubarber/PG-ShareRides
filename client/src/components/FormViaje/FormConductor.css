@@ -1,4 +1,22 @@
-.form-formpasajero {
+.Conductore__btn_volver {
+  height: 45x;
+  line-height: 45px;
+  width: 150px;
+  margin-top: 25px;
+  margin-left: 5%;
+  background-color: #9252ff;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.1s easy all;
+}
+.Conductore__btn_volver:hover {
+  box-shadow: 3px 0px 30px rgb(66, 65, 65);
+}
+
+.Conductore__form {
   display: flex;
   align-items: flex-start;
   justify-content: space-evenly;
@@ -6,14 +24,14 @@
   margin-top: 3rem;
 }
 
-.label-formpasajero {
+.Conductore__formulario_label {
   display: block;
   font-weight: 500;
-  padding-top: 1rem;
+  padding-top: 2.2rem;
   cursor: pointer;
 }
 
-.input-text {
+.Conductore__input {
   width: 80%;
   background-color: #fff;
   border: 3px solid;
@@ -27,24 +45,19 @@
   font-size: medium;
 }
 
-.form-formpasajero input:focus {
+.Conductore__input:focus {
   border: 3px solid #9252ff;
   outline: none;
   box-shadow: 3px 0px 30px rgba(163, 163, 163, 0.4);
 }
 
-.checkbox-formpasajero {
+.Conductore_btn {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
+  justify-content: center;
+  margin-bottom: 5rem;
 }
 
-.checkbox-formpasajero div {
-  margin-bottom: 1rem;
-  margin-top: 1rem;
-}
-
-.btn-formpasajero {
+.Conductore__btn_registro {
   height: 3rem;
   line-height: 45px;
   width: 15%;
@@ -58,11 +71,11 @@
   text-transform: uppercase;
 }
 
-.btn-formpasajero:hover {
+.Conductore__btn_registro:hover {
   box-shadow: 3px 0px 30px rgba(163, 163, 163, 1);
 }
 
-.btn-formpasajero-disable {
+.Conductore__disable {
   height: 3rem;
   line-height: 45px;
   width: 15%;
@@ -75,32 +88,81 @@
   text-transform: uppercase;
 }
 
-.btn-registrar-formpasajero {
+.Conductore__error {
+  color: rgb(201, 25, 25);
+  padding: 5px;
   display: flex;
-  justify-content: center;
-  margin-bottom: 5rem;
+  text-align: left;
+  justify-content: left;
+  font-size: 0.8rem;
+  font-weight: 600;
+
+  animation-name: error;
+  animation-duration: 3s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+
+  -webkit-animation-name: error;
+  -webkit-animation-duration: 3s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+}
+@-moz-keyframes error {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
-.Pasajere__checkboxes {
+@-webkit-keyframes error {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes error {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.Conductore__checkboxes {
   display: flex;
   flex-direction: column;
 }
 
-.Pasajere__mycheckbox {
+.Conductore__mycheckbox {
   font-size: 20px;
   color: white;
   margin-top: 3rem;
 }
-.Pasajere__mycheckbox input:checked ~ span::after {
+.Conductore__mycheckbox input:checked ~ span::after {
   background: rgb(12, 167, 12);
   transform: scale(0.8) translate(31px);
 }
 
-.Pasajere__mycheckbox input {
+.Conductore__mycheckbox input {
   display: none;
 }
 
-.Pasajere__mycheckbox span {
+.Conductore__mycheckbox span {
   display: inline-block;
   width: 50px;
   height: 25px;
@@ -114,7 +176,7 @@
   margin-left: 1rem;
 }
 
-.Pasajere__mycheckbox span::after {
+.Conductore__mycheckbox span::after {
   content: "";
   display: block;
   width: 25px;
