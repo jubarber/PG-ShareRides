@@ -13,7 +13,7 @@ export default function FormVehiculo() {
     marca: "",
     modelo: "",
     dni: "",
-    email: "",
+    email: ""
   });
   const [errors, setErrors] = useState({});
 
@@ -58,17 +58,18 @@ export default function FormVehiculo() {
   function handleOnChange(e) {
     setAuto({
       ...auto,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
     setErrors(
       validacion({
         ...auto,
-        [e.target.name]: e.target.value,
+        [e.target.name]: e.target.value
       })
     );
   }
   function handleSubmit(e) {
     e.preventDefault();
+    
     if (!auto.patente) {
       e.preventDefault();
       swal({
@@ -94,15 +95,14 @@ export default function FormVehiculo() {
         title: "El registro ha sido exitoso!",
         icon: "success",
         button: "Crea tu viaje!",
-      }).then(function () {
-        window.location = "/formconductor";
-      });
+      }).then(function(){window.location = "/formconductor"});
+
       setAuto({
         patente: "",
         marca: "",
         modelo: "",
         dni: "",
-        email: "",
+        email: ""
       });
     }
     //history.push('/') //quiero q me envie a la seccion completar mi perfil?

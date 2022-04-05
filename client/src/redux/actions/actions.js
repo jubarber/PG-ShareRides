@@ -71,6 +71,36 @@ export function registroUsuario(payload) {
   };
 }
 
+<<<<<<< HEAD
+export  async function postViajePasajero(payload, payload2) {
+  try {
+    let pasajero = await axios({
+      method: "post",
+      url: "http://localhost:3001/api/viaje/pasajero",
+      data: {
+        payload,
+        payload2
+      }
+    });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function postViajeConductor(payload, payload2) {
+  try {
+    let conductor = await axios({
+      method: "post",
+      url: "http://localhost:3001/api/viaje/conductor",
+      data: {
+        payload,
+        payload2
+      }
+    });
+  } catch (err) {
+    console.log(err);
+  }
+=======
 export function postViajePasajero(checkboxes, viaje) {
   return async function (dispatch) {
     try {
@@ -152,6 +182,7 @@ export function postViajeConductor(checkboxes, viaje) {
       console.log(err);
     }
   };
+>>>>>>> develop
 }
 export function login(payload) {
   return async function (dispatch) {

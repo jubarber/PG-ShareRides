@@ -55,6 +55,14 @@ module.exports = (sequelize) => {
     viajeDisponible: {
       type: DataTypes.BOOLEAN,
       defaultValue: true
+    },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    detalles: {
+      type: DataTypes.TEXT,
+      allowNull: true
     }
   });
 };
