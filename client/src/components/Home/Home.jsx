@@ -26,7 +26,6 @@ export default function Home() {
       </div>
       <div id="general-card">
         <div className="container-cards">
-
           {viajes.map(
             (e) =>
               e && (
