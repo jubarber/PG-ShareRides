@@ -144,7 +144,7 @@ export default function FormRegistro() {
           <div>
             <label htmlFor="nombre" className="Registro__formulario_label">
               {" "}
-              Nombre:
+              * Nombre:
             </label>
             <div>
               <input
@@ -165,7 +165,7 @@ export default function FormRegistro() {
           {/* apellido */}
           <div>
             <label htmlFor="apellido" className="Registro__formulario_label">
-              Apellido:
+              * Apellido:
             </label>
             <div>
               <input
@@ -204,7 +204,7 @@ export default function FormRegistro() {
           <div>
             <label htmlFor="email" className="Registro__formulario_label">
               {" "}
-              E-mail:
+              * E-mail:
             </label>
             <div>
               <input
@@ -224,7 +224,7 @@ export default function FormRegistro() {
           {/* grupo  contraseña */}
           <div>
             <label htmlFor="contraseña" className="Registro__formulario_label">
-              Contraseña:
+              * Contraseña:
             </label>
             <div>
               <input
@@ -247,7 +247,7 @@ export default function FormRegistro() {
           {/* grupo confirmar contraseña*/}
           <div>
             <label htmlFor="confirmar_contraseña" className="Registro__formulario_label">
-              Confirmar Contraseña:
+              * Confirmar Contraseña:
             </label>
             <div>
               <input

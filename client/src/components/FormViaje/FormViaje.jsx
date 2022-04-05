@@ -97,7 +97,6 @@ export default function FormViaje() {
           />
         </div>
       </div>
-
       <div className="input-btn">
         <input
           type="submit"
@@ -110,6 +109,7 @@ export default function FormViaje() {
         <img className="stretch" src={fondo} alt="" />
 >>>>>>> develop
       </div>
+
     </div>
   );
 }
