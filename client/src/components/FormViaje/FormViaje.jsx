@@ -63,7 +63,6 @@ export default function FormViaje() {
           />
         </div>
       </div>
-
       <div className="input-btn">
         <input
           type="submit"
@@ -75,6 +74,7 @@ export default function FormViaje() {
       <div className="wallpaper">
         <img className="stretch" src={fondo} alt="" />
       </div>
+
     </div>
   );
 }
