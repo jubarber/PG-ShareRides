@@ -10,6 +10,7 @@ import fondo from "../../assets/fondo perfil.jpg";
 
 export default function Home() {
   const dispatch = useDispatch();
+
   const viajes = useSelector(
     (state) => state.viajesFiltrados //me traigo el estado de los viajes para poder mostrarlos
   );
@@ -24,6 +25,7 @@ export default function Home() {
       <div>
         <Filtros />
       </div>
+
       <div id="general-card">
         <div className="container-cards">
           {viajes.map(

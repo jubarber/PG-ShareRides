@@ -3,6 +3,8 @@ import {
   GET_VIAJES_TOTAL,
   FILTRO_CHECKS,
   REGISTRO_USUARIO,
+  SEARCHORIGEN,
+  SEARCHDESTINO
 } from "../actions/actions.js";
 
 const initialState = {
@@ -36,6 +38,18 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
+    case SEARCHDESTINO:
+      console.log(" llegue al reducer destino", action.payload)
+      return {
+        ...state,
+        viajesFiltrados: action.payload,
+      };
+      case SEARCHORIGEN:
+        console.log(" llegue al reducer origen", action.payload)
+        return {
+          ...state,
+          viajesFiltrados: action.payload,
+        };
 
     default:
       return { ...state };

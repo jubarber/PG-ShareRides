@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-<<<<<<< HEAD
-=======
 import fondo from "../../assets/fondo perfil.jpg";
 import "./FormViaje.css";
 import CheckBox from "@mui/material/Checkbox";
->>>>>>> develop
 
 export default function FormViaje() {
   const [isChecked, setIsChecked] = useState({
@@ -34,37 +31,6 @@ export default function FormViaje() {
   }
 
   return (
-<<<<<<< HEAD
-    <div>
-      <div>
-        <label>Pasajere</label>
-        <input
-          type="checkbox"
-          value="pasajero"
-          name="pasajero"
-          checked={isChecked.pasajero}
-          onChange={(e) => {
-            handleOnChange(e);
-          }}
-        />
-      </div>
-
-      <div>
-        <label>Conductore</label>
-        <input
-          type="checkbox"
-          value="conductor"
-          name="conductor"
-          checked={isChecked.conductor}
-          onChange={(e) => {
-            handleOnChange(e);
-          }}
-        />
-      </div>
-
-      <div>
-        <input type="submit" value="siguiente" onClick={handleSubmit} />
-=======
     <div className="contenedor_formviaje">
       <div className="pasajero_conductor">
         <div className="label_check">
@@ -108,7 +74,6 @@ export default function FormViaje() {
       </div>
       <div className="wallpaper">
         <img className="stretch" src={fondo} alt="" />
->>>>>>> develop
       </div>
     </div>
   );

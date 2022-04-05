@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-<<<<<<< HEAD
-=======
 import swal from "sweetalert";
 import { postVehiculo } from "../../redux/actions/actions";
 
->>>>>>> develop
 export default function FormVehiculo() {
   const dispatch = useDispatch();
   const [auto, setAuto] = useState({
@@ -13,11 +10,7 @@ export default function FormVehiculo() {
     marca: "",
     modelo: "",
     dni: "",
-<<<<<<< HEAD
-    email: "",
-=======
     email: ""
->>>>>>> develop
   });
   const [errors, setErrors] = useState({});
 
@@ -26,11 +19,7 @@ export default function FormVehiculo() {
     marca: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
     modelo: /^[0-9]*$/,
     email: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
-<<<<<<< HEAD
-    dni: /^(?!^0+$)[a-zA-Z0-9]{3,20}$/,
-=======
     dni: /^(?!^0+$)[a-zA-Z0-9]{3,20}$/
->>>>>>> develop
   };
 
   function validacion(auto) {
@@ -66,33 +55,17 @@ export default function FormVehiculo() {
   function handleOnChange(e) {
     setAuto({
       ...auto,
-<<<<<<< HEAD
-      [e.target.name]: e.target.value,
-=======
       [e.target.name]: e.target.value
->>>>>>> develop
     });
     setErrors(
       validacion({
         ...auto,
-<<<<<<< HEAD
-        [e.target.name]: e.target.value,
-=======
         [e.target.name]: e.target.value
->>>>>>> develop
       })
     );
   }
   function handleSubmit(e) {
     e.preventDefault();
-<<<<<<< HEAD
-    if (Object.keys(errors).length !== 0) {
-      e.preventDefault();
-      alert("Por favor, completa todos los campos solicitados");
-    } else {
-      alert("Registro exitoso");
-      // dispatch(crearVehiculo(auto));
-=======
     if (!auto.patente) {
       e.preventDefault();
       swal({
@@ -119,20 +92,13 @@ export default function FormVehiculo() {
         icon: "success",
         button: "Crea tu viaje!",
       }).then(function(){window.location = "/formconductor"});
->>>>>>> develop
       setAuto({
         patente: "",
         marca: "",
         modelo: "",
         dni: "",
-<<<<<<< HEAD
-        email: "",
-      });
-      window.location.href = "/formconductor";
-=======
         email: ""
       });
->>>>>>> develop
     }
     //history.push('/') //quiero q me envie a la seccion completar mi perfil?
   }

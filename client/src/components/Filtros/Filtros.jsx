@@ -8,6 +8,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { FormControl } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
+import SearchBar from "../SearchBar/SearchBar";
 
 export function Filtros() {
   const dispatch = useDispatch();
@@ -129,6 +130,9 @@ export function Filtros() {
         >
           Aplicar filtros
         </Button>
+        <div>
+          <SearchBar />
+        </div>
         <Button
           variant="contained"
           color="secondary"

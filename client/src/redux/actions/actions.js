@@ -6,6 +6,8 @@ export const GET_VIAJES_TOTAL = "GET_VIAJES_TOTAL";
 export const FILTRO_CHECKS = "FILTRO_CHECKS";
 export const REGISTRO_USUARIO = "REGISTRO_USUARIO";
 export const LOGGED = "LOGGED";
+export const SEARCHORIGEN = "SEARCHORIGEN";
+export const SEARCHDESTINO = "SEARCHDESTINO"
 
 export function getDetalleViaje(viajeId) {
   return function (dispatch) {
@@ -71,36 +73,6 @@ export function registroUsuario(payload) {
   };
 }
 
-<<<<<<< HEAD
-export  async function postViajePasajero(payload, payload2) {
-  try {
-    let pasajero = await axios({
-      method: "post",
-      url: "http://localhost:3001/api/viaje/pasajero",
-      data: {
-        payload,
-        payload2
-      }
-    });
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-export async function postViajeConductor(payload, payload2) {
-  try {
-    let conductor = await axios({
-      method: "post",
-      url: "http://localhost:3001/api/viaje/conductor",
-      data: {
-        payload,
-        payload2
-      }
-    });
-  } catch (err) {
-    console.log(err);
-  }
-=======
 export function postViajePasajero(checkboxes, viaje) {
   return async function (dispatch) {
     try {
@@ -182,7 +154,6 @@ export function postViajeConductor(checkboxes, viaje) {
       console.log(err);
     }
   };
->>>>>>> develop
 }
 export function login(payload) {
   return async function (dispatch) {
@@ -199,4 +170,29 @@ export function login(payload) {
       console.log(err);
     }
   };
+}
+export function searchOrigen(origen){
+  return async function(dispatch){
+    console.log("action origen", origen)
+    try {
+      console.log("action origen", origen)
+      let search = await axios.get(`http://localhost:3001/api/viaje/searchorigen?origen=${origen}`
+      )
+      return dispatch({ type: "SEARCHORIGEN", payload: search.data })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+export function searchDestino(destino){
+  return async function(dispatch){
+    console.log("action destino", destino)
+    try {
+      let search = await axios.get(`http://localhost:3001/api/viaje/searchdestino?destino=${destino}`
+      )
+      return dispatch({ type: "SEARCHDESTINO", payload: search.data })
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
