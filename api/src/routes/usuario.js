@@ -5,19 +5,19 @@ const { Usuario, Viaje } = require("../db.js");
 router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
   try {
     const { email, password } = req.params;
+    //console.log("soy email" , email);
     if (email) {
       var dbUsuario = await Usuario.findOne(
         { where: { email: email } },
         { include: Viaje }
       );
+      //console.log("soy db usuario", dbUsuario);
       if (dbUsuario) {
         dbUsuario.password === password
           ? res.send("ok")
           : res.send("contraseña incorrecta");
-      } else {
-        res.send("usuario no encontrado");
-      }
-    } //aca termina el if dni
+      } else res.send("usuario no encontrado");
+    }
   } catch (err) {
     next(err);
   }
@@ -38,11 +38,11 @@ router.post("/registro", async (req, res, next) => {
     let nuevoUsuario;
     if (vehiculo) {
       nuevoUsuario = await Usuario.findOrCreate({
-        where: { email, nombre, apellido, password, vehiculo } //vehiculo = patente del auto
+        where: { email, nombre, apellido, password, vehiculo} //vehiculo = patente del auto
       });
     } else {
       nuevoUsuario = await Usuario.findOrCreate({
-        where: { email, nombre, apellido, password }
+        where: { email, nombre, apellido, password}
       });
     }
     res.json(nuevoUsuario);

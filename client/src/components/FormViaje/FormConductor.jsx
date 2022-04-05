@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import {postViajeConductor} from "../../redux/actions/actions"
+import swal from "sweetalert";
+import { postViajeConductor } from "../../redux/actions/actions";
+import fondo from "../../assets/fondo perfil.jpg";
+import { Link } from "react-router-dom";
+import "./FormConductor.css";
+
 export default function FormPasajero() {
   const dispatch = useDispatch();
 
@@ -12,13 +17,15 @@ export default function FormPasajero() {
     origen: "",
     destino: "",
     dni: "",
-    asiento:""
+    asiento: "",
+    formaDePago: "",
+    email: "",
   });
 
   const expresiones = {
     fecha: /^.{4,18}$/,
     hora: /^.{4,12}$/,
-    asiento:/^.{1,7}$/,
+    asiento: /^.{1,7}$/,
     origen: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
     destino: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
     dni: /^(?!^0+$)[a-zA-Z0-9]{3,20}$/,
@@ -32,7 +39,6 @@ export default function FormPasajero() {
     } else if (!expresiones.hora.test(viaje.hora)) {
       errors.hora = "Ingresa una hora valida";
     }
-
     if (!viaje.fecha) {
       errors.fecha = "Debes ingresar la fecha del viaje";
     } else if (!expresiones.fecha.test(viaje.fecha)) {
@@ -104,149 +110,200 @@ export default function FormPasajero() {
     setIsChecked(updatedCheckedState);
   };
 
-
-
   function handleSubmit(e) {
     e.preventDefault();
-    if (!viaje.fecha ||
+    if (
+      !viaje.fecha ||
       !viaje.hora ||
       !viaje.origen ||
       !viaje.destino ||
       !viaje.dni ||
-      !viaje.asiento 
-     ) {
+      !viaje.asiento
+    ) {
       e.preventDefault();
-      alert("Por favor, completa todos los campos solicitados");
+      swal({
+        title: "Alto!",
+        text: "Por favor completá todos los campos",
+        icon: "warning",
+        button: true,
+        dangerMode: true,
+      });
     } else {
-      alert("Registro exitoso");
-      window.location.href = "/home";
+      swal({
+        title: "El registro ha sido exitoso!",
+        icon: "success",
+        button: "Buen viaje!",
+      }).then(function () {
+        window.location = "/home";
+      });
       dispatch(postViajeConductor(isChecked, viaje));
-   
+
       setViaje({
         fecha: "",
         hora: "",
         origen: "",
         destino: "",
         dni: "",
-        asiento:""
+        asiento: "",
+        formaDePago: "",
+        email: "",
       });
-     
     }
   }
 
   return (
     <div>
+      <div className="Conductore__nav">
+        <Link to="/formvehiculo">
+          <button className="Conductore__btn_volver">Volver</button>
+        </Link>
+      </div>
       <form onSubmit={handleSubmit}>
-        <span>Fecha</span>
-
-        <input
-          type="text"
-          name="fecha"
-          value={viaje.fecha}
-          onChange={(e) => handleOnChange(e)}
-        />
-        {errors.fecha && <span>{errors.fecha}</span>}
-
-        <br></br>
-        <span>Hora</span>
-
-        <input
-          type="text"
-          name="hora"
-          value={viaje.hora}
-          onChange={(e) => handleOnChange(e)}
-        />
-        {errors.hora && <span>{errors.hora}</span>}
-        <br></br>
-        <span>Origen</span>
-        <input
-          type="text"
-          name="origen"
-          value={viaje.origen}
-          onChange={(e) => handleOnChange(e)}
-        />
-        {errors.origen && <span>{errors.origen}</span>}
-        <br></br>
-        <span>Destino</span>
-        <input
-          type="text"
-          name="destino"
-          value={viaje.destino}
-          onChange={(e) => handleOnChange(e)}
-        />
-        {errors.destino && <span>{errors.destino}</span>}
-        <br></br>
-        <span>Dni</span>
-        <input
-          type="text"
-          name="dni"
-          value={viaje.dni}
-          onChange={(e) => handleOnChange(e)}
-        />
-        {errors.dni && <span>{errors.dni}</span>}
-<br></br>
-        <span>Asientos a ocupar</span>
-        <input
-          type="number"
-          name="asiento"
-          placeholder="entre 1 y 7"
-          value={viaje.asiento}
-          onChange={(e) => handleOnChange(e)}
-        />
-        {errors.asiento && <span>{errors.asiento}</span>}
-
-
-
-    
-        <div>
-          {filtrosArray.map((e, index) => {
-            return (
-              <div>
-                <label>{e.name}</label>
-                <input
-                  type="checkbox"
-                  key={e.id}
-                  name={e.name}
-                  value={e.name}
-                  checked={isChecked[index]}
-                  onChange={() => {
-                    handleCheckBox(index);
-                  }}
-                />
-              </div>
-            );
-          })}
-          {isChecked[4] && (
-            <select>
-              <option value="Efecto">Efectivo</option>
-              <option value="MP">Mercado Pago</option>
-            </select>
-          )}
-        </div>
-        <div>
-          {!errors.dni &&
-          !errors.hora &&
-          !errors.destino &&
-          !errors.origen &&
-          !errors.fecha &&
-          !errors.asiento? (
-            <input
-            type="submit"
-            value="Registrar viaje"
-            name="Registrar viaje"
-            className="btn_registro"
-          />
-          ) : (
-            <input
-            type="submit"
-            value="Registrar viaje"
-            name="Registrar viaje"
-            disabled="disabled"
-            className="disabled"
-          />
-          )}
+        <div className="Conductore__form">
+          <div className="Conductore__input_1">
+            <div>
+              <label className="Conductore__formulario_label">Fecha</label>
+              <input
+                className="Conductore__input"
+                type="text"
+                name="fecha"
+                value={viaje.fecha}
+                onChange={(e) => handleOnChange(e)}
+              />
+              {errors.fecha && (
+                <span className="Conductore__error">{errors.fecha}</span>
+              )}
+            </div>
+            <div>
+              <label className="Conductore__formulario_label">Hora</label>
+              <input
+                className="Conductore__input"
+                type="text"
+                name="hora"
+                value={viaje.hora}
+                onChange={(e) => handleOnChange(e)}
+              />
+              {errors.hora && (
+                <span className="Conductore__error">{errors.hora}</span>
+              )}
+            </div>
+            <div>
+              <label className="Conductore__formulario_label">Origen</label>
+              <input
+                className="Conductore__input"
+                type="text"
+                name="origen"
+                value={viaje.origen}
+                onChange={(e) => handleOnChange(e)}
+              />
+              {errors.origen && (
+                <span className="Conductore__error">{errors.origen}</span>
+              )}
+            </div>
+            <div>
+              <label className="Conductore__formulario_label">Destino</label>
+              <input
+                className="Conductore__input"
+                type="text"
+                name="destino"
+                value={viaje.destino}
+                onChange={(e) => handleOnChange(e)}
+              />
+              {errors.destino && (
+                <span className="Conductore__error">{errors.destino}</span>
+              )}
+            </div>
+            <div>
+              <label className="Conductore__formulario_label">
+                Dni/Pasaporte
+              </label>
+              <input
+                className="Conductore__input"
+                type="text"
+                name="dni"
+                value={viaje.dni}
+                onChange={(e) => handleOnChange(e)}
+              />
+              {errors.dni && (
+                <span className="Conductore__error">{errors.dni}</span>
+              )}
+            </div>
+          </div>
+          <div className="Conductore__input_2">
+            <div>
+              <label className="Conductore__formulario_label">
+                Asientos disponibles
+              </label>
+              <input
+                className="Conductore__input"
+                type="number"
+                name="asiento"
+                placeholder="entre 1 y 7"
+                value={viaje.asiento}
+                onChange={(e) => handleOnChange(e)}
+              />
+              {errors.asiento && (
+                <span className="Conductore__error">{errors.asiento}</span>
+              )}
+            </div>
+            <div className="Conductore__checkboxes">
+              {filtrosArray.map((e, index) => {
+                return (
+                  <div>
+                    <label className="Conductore__mycheckbox">
+                      {e.name}
+                      <input
+                        type="checkbox"
+                        key={e.id}
+                        name={e.name}
+                        value={e.name}
+                        checked={isChecked[index]}
+                        onChange={() => {
+                          handleCheckBox(index);
+                        }}
+                      />
+                      <span></span>
+                    </label>
+                  </div>
+                );
+              })}
+              {isChecked[4] && (
+                <select>
+                  <option value="Efecto">Efectivo</option>
+                  <option value="MP">Mercado Pago</option>
+                </select>
+              )}
+            </div>
+          </div>
+          <div>
+            {!errors.dni &&
+            !errors.hora &&
+            !errors.destino &&
+            !errors.origen &&
+            !errors.fecha &&
+            !errors.asiento ? (
+              <input
+                type="submit"
+                value="Registrar viaje"
+                name="Registrar viaje"
+                className="Conductore__btn_registro"
+              />
+            ) : (
+              <input
+                type="submit"
+                value="Registrar viaje"
+                name="Registrar viaje"
+                disabled="disabled"
+                className="Conductore__disabled"
+              />
+            )}
+          </div>
         </div>
       </form>
+
+      <div className="wallpaper">
+        <img className="stretch" src={fondo} alt="" />
+      </div>
     </div>
   );
 }

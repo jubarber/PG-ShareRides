@@ -1,7 +1,20 @@
+<<<<<<< HEAD
+=======
+import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+>>>>>>> develop
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import swal from "sweetalert";
 import { postViajePasajero } from "../../redux/actions/actions";
+<<<<<<< HEAD
+=======
+import "./FormPasajero.css";
+import fondo from "../../assets/fondo perfil.jpg";
+
+>>>>>>> develop
 export default function FormPasajero() {
   const dispatch = useDispatch();
 
@@ -15,6 +28,10 @@ export default function FormPasajero() {
     email: "",
     dni: "",
     asiento: "",
+<<<<<<< HEAD
+=======
+    formaDePago: "A coordinar",
+>>>>>>> develop
   });
 
   const expresiones = {
@@ -22,7 +39,10 @@ export default function FormPasajero() {
     hora: /^.{4,12}$/,
     origen: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
     destino: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
+<<<<<<< HEAD
 
+=======
+>>>>>>> develop
     email: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
     asiento: /^.{1,7}$/,
   };
@@ -68,6 +88,7 @@ export default function FormPasajero() {
   const filtrosArray = [
     {
       id: 1,
+<<<<<<< HEAD
       name: "Acepto fumador",
     },
     {
@@ -77,6 +98,17 @@ export default function FormPasajero() {
     {
       id: 3,
       name: "Acepto equipaje",
+=======
+      name: "Soy fumador",
+    },
+    {
+      id: 2,
+      name: "Llevo mascota",
+    },
+    {
+      id: 3,
+      name: "Llevo equipaje",
+>>>>>>> develop
     },
     {
       id: 4,
@@ -120,10 +152,28 @@ export default function FormPasajero() {
       !viaje.email
     ) {
       e.preventDefault();
+<<<<<<< HEAD
       alert("Por favor, completa todos los campos solicitados");
     } else {
       alert("Registro exitoso");
       window.location.href = "/home";
+=======
+      swal({
+        title: "Alto!",
+        text: "Por favor completá todos los campos",
+        icon: "warning",
+        button: true,
+        dangerMode: true,
+      });
+    } else {
+      swal({
+        title: "El registro ha sido exitoso!",
+        icon: "success",
+        button: "Buen viaje!",
+      }).then(function () {
+        window.location = "/home";
+      });
+>>>>>>> develop
       dispatch(postViajePasajero(isChecked, viaje));
 
       setViaje({
@@ -134,14 +184,20 @@ export default function FormPasajero() {
         email: "",
         dni: "",
         asiento: "",
+<<<<<<< HEAD
       });
       
+=======
+        formaDePago: "A coordinar",
+      });
+>>>>>>> develop
     }
   }
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
+<<<<<<< HEAD
         <span>Fecha</span>
 
         <input
@@ -260,6 +316,169 @@ export default function FormPasajero() {
           />
         )}
       </form>
+=======
+        <div className="form-formpasajero">
+          <div className="form-parte-1">
+            <label className="label-formpasajero">Fecha</label>
+
+            <input
+              type="text"
+              name="fecha"
+              value={viaje.fecha}
+              onChange={(e) => handleOnChange(e)}
+              className="input-text"
+            />
+            {errors.fecha && (
+              <span className="Registro__error">{errors.fecha}</span>
+            )}
+
+            <label className="label-formpasajero">Hora</label>
+
+            <input
+              type="text"
+              name="hora"
+              value={viaje.hora}
+              onChange={(e) => handleOnChange(e)}
+              className="input-text"
+            />
+            {errors.hora && (
+              <span className="Registro__error">{errors.hora}</span>
+            )}
+
+            <label className="label-formpasajero">Origen</label>
+
+            <input
+              type="text"
+              name="origen"
+              value={viaje.origen}
+              onChange={(e) => handleOnChange(e)}
+              className="input-text"
+            />
+            {errors.origen && (
+              <span className="Registro__error">{errors.origen}</span>
+            )}
+
+            <label className="label-formpasajero">Destino</label>
+            <input
+              type="text"
+              name="destino"
+              value={viaje.destino}
+              onChange={(e) => handleOnChange(e)}
+              className="input-text"
+            />
+            {errors.destino && (
+              <span className="Registro__error">{errors.destino}</span>
+            )}
+
+            <label className="label-formpasajero">Email</label>
+            <input
+              type="text"
+              name="email"
+              value={viaje.email}
+              onChange={(e) => handleOnChange(e)}
+              className="input-text"
+            />
+            {errors.email && (
+              <span className="Registro__error">{errors.email}</span>
+            )}
+
+            <label className="label-formpasajero">Dni/Pasaporte</label>
+            <input
+              type="text"
+              name="dni"
+              value={viaje.dni}
+              onChange={(e) => handleOnChange(e)}
+              className="input-text"
+            />
+          </div>
+          <div className="form-parte-2">
+            <label className="label-formpasajero">Asientos a ocupar</label>
+            <input
+              type="number"
+              name="asiento"
+              placeholder="entre 1 y 7"
+              value={viaje.asiento}
+              onChange={(e) => handleOnChange(e)}
+              className="input-text"
+            />
+            {errors.asiento && (
+              <span className="Registro__error">{errors.asiento}</span>
+            )}
+
+            <div className="Pasajere__checkboxes">
+              {filtrosArray.map((e, index) => {
+                return (
+                  <div>
+                    <label className="Pasajere__mycheckbox">
+                      {e.name}
+                      <input
+                        type="checkbox"
+                        key={e.id}
+                        name={e.name}
+                        value={e.name}
+                        checked={isChecked[index]}
+                        onChange={() => {
+                          handleCheckBox(index);
+                        }}
+                      />
+                      <span></span>
+                    </label>
+                  </div>
+                );
+              })}
+
+              {isChecked[4] && (
+                <FormControl variant="standard" sx={{ m: 1, minWidth: 160 }}>
+                  <InputLabel
+                    id="demo-simple-select-standard-label"
+                    sx={{ color: "white" }}
+                  >
+                    Medio de pago
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-standard-label"
+                    id="demo-simple-select-standard"
+                  >
+                    <MenuItem value="">Acordar</MenuItem>
+                    <MenuItem value="Efecto">Efectivo</MenuItem>
+                    <MenuItem value="MP">Mercado Pago</MenuItem>
+                  </Select>
+                </FormControl>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="btn-registrar-formpasajero">
+          {!errors.email &&
+          !errors.hora &&
+          !errors.destino &&
+          !errors.origen &&
+          !errors.fecha &&
+          !errors.asiento ? (
+            <button
+              type="submit"
+              name="Registrar viaje"
+              className="btn-formpasajero"
+            >
+              Registrar viaje
+            </button>
+          ) : (
+            <button
+              type="submit"
+              value="Registrar viaje"
+              name="Registrar viaje"
+              disabled="disabled"
+              className="btn-formpasajero-disable"
+            >
+              Registrar Viaje
+            </button>
+          )}
+        </div>
+      </form>
+      <div className="wallpaper">
+        <img className="stretch" src={fondo} alt="" />
+      </div>
+>>>>>>> develop
     </div>
   );
 }

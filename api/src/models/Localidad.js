@@ -17,7 +17,7 @@ module.exports = (sequelize) => {
     },
     municipio:{
         type: DataTypes.STRING,
-        allowNull: true
+        // allowNull: false
     }
   });
 };
