@@ -1,7 +1,13 @@
+.font-mono {
+  height: 100%;
+}
 .asientos {
+  margin-top: 0%;
+  width: 20rem;
+  height: 100%;
   display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
   border-bottom: 2px solid black;
   border-left: 2px solid black;
@@ -12,12 +18,14 @@
 
 .checkboxes {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  margin-top: 2rem;
 }
 
 .mycheckbox {
   font-size: 20px;
   color: white;
+  margin-bottom: 2rem;
 }
 .mycheckbox input:checked ~ span::after {
   background: rgb(12, 167, 12);
@@ -71,34 +79,11 @@
   border: solid 0.01px rgb(161, 120, 120);
 }
 
-.button_filtros {
-  font-size: 20px;
-  padding: 8px;
-  border-radius: 3px;
-  border: none;
-  margin-left: 1px;
-  background-color: #fdf4ff;
-  transition: 0.3s ease-in-out;
-}
-
-.button_filtros:active {
-  position: relative;
-  top: 1.5px;
-}
-
-.button_filtros:hover {
-  background-color: #9252ff;
-  cursor: pointer;
-  box-shadow: 3px 0px 30px rgba(163, 163, 163, 1);
-}
-
 .aplicar-limpiar {
   display: flex;
-  height: 8rem;
+  width: 19rem;
+  height: 6rem;
   align-items: center;
-  justify-content: space-evenly;
-  border-bottom: 2px solid black;
-  border-left: 2px solid black;
-  border-right: 2px solid black;
   background-color: rgb(116, 20, 207);
+  justify-content: space-around;
 }

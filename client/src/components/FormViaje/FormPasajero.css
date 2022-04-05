@@ -83,12 +83,13 @@
 
 .Pasajere__checkboxes {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .Pasajere__mycheckbox {
   font-size: 20px;
   color: white;
+  margin-top: 3rem;
 }
 .Pasajere__mycheckbox input:checked ~ span::after {
   background: rgb(12, 167, 12);
@@ -124,4 +125,3 @@
   transition: 0.5s;
   box-shadow: inset 0px 0px 2px rgb(37, 37, 37);
 }
-

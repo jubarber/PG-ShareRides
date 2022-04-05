@@ -117,28 +117,31 @@ export function Filtros() {
             );
           })}
         </div>
-      </div>
-      <div className="aplicar-limpiar">
-        <Button
-          variant="contained"
-          color="secondary"
-          type="submit"
-          value="Aplicar filtros"
-          name="Aplicar filtros"
-          onClick={handleSubmit}
-        >
-          Aplicar filtros
-        </Button>
-        <Button
-          variant="contained"
-          color="secondary"
-          type="submit"
-          value="Limpiar filtros"
-          name="Limpiar filtros"
-          onClick={handleLimpiarFiltros}
-        >
-          Limpiar filtros
-        </Button>
+
+        <div className="aplicar-limpiar">
+          <Button
+            variant="contained"
+            color="secondary"
+            size="small"
+            type="submit"
+            value="Aplicar filtros"
+            name="Aplicar filtros"
+            onClick={handleSubmit}
+          >
+            Aplicar filtros
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            size="small"
+            type="submit"
+            value="Limpiar filtros"
+            name="Limpiar filtros"
+            onClick={handleLimpiarFiltros}
+          >
+            Limpiar filtros
+          </Button>
+        </div>
       </div>
     </div>
   );
