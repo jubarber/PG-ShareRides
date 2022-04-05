@@ -6,7 +6,7 @@ import { FaEdit } from "react-icons/fa";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import PaginacionComentarios from "./PaginacionComentarios";
-import foto from "../../assets/foto perfil.jfif";
+import foto from "../../assets/userRojo.jpg";
 
 export default function Perfil() {
   const [usuario, setUsuario] = useState({
@@ -303,7 +303,7 @@ export default function Perfil() {
               </label>
             </div>
             <div className="comentario">
-              <label>Deja tu comentario</label>
+              <label>Deja tu comentario:</label>
               <input type="text" />
             </div>
             <Button color="secondary" size="medium" className="btn-enviar">
@@ -315,7 +315,7 @@ export default function Perfil() {
           personitas.map((e) => (
             <div className="resenas-card">
               <div className="encabezado">
-                <img src={e.Foto} alt="" />
+                <img src={foto} alt="" />
                 <h1>{e.Nombre}</h1>
               </div>
               <h3>Punturacion: {e.Estrellas}</h3>

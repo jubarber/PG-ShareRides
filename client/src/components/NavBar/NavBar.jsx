@@ -25,7 +25,9 @@ export default function NavBar() {
         </div>
         <div className="info-usuario">
           <h3>Hola</h3>
-          <img src={userRojo} alt="" />
+          <Link to="/perfil">
+            <img src={userRojo} alt="" />
+          </Link>
         </div>
       </div>
     </div>
