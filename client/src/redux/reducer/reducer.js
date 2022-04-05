@@ -4,7 +4,7 @@ import {
   FILTRO_CHECKS,
   REGISTRO_USUARIO,
   SEARCHORIGEN,
-  SEARCHDESTINO
+  SEARCHDESTINO,
   GET_USUARIOS,
 } from "../actions/actions.js";
 
