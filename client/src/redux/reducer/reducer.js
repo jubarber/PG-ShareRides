@@ -5,6 +5,7 @@ import {
   REGISTRO_USUARIO,
   SEARCHORIGEN,
   SEARCHDESTINO
+  GET_USUARIOS,
 } from "../actions/actions.js";
 
 const initialState = {
@@ -27,6 +28,11 @@ function rootReducer(state = initialState, action) {
         ...state,
         viajes: action.payload,
         viajesFiltrados: action.payload,
+      };
+    case GET_USUARIOS:
+      return {
+        ...state,
+        usuarios: action.payload,
       };
     case FILTRO_CHECKS:
       return {

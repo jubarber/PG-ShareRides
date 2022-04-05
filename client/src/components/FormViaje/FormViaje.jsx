@@ -63,7 +63,6 @@ export default function FormViaje() {
           />
         </div>
       </div>
-
       <div className="input-btn">
         <input
           type="submit"
