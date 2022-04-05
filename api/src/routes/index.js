@@ -4,7 +4,6 @@ const { Router } = require("express");
 const usuarioRouter = require('./usuario.js');
 const vehiculoRouter = require('./vehiculo.js');
 const viajeRouter = require('./viaje.js');
-const provinciaRouter = require('./provincia.js');
 const localidadRouter = require('./localidad.js')
 
 const router = Router();
@@ -14,7 +13,6 @@ const router = Router();
 router.use("/usuario", usuarioRouter);
 router.use("/vehiculo", vehiculoRouter);
 router.use("/viaje", viajeRouter);
-router.use("/provincia", provinciaRouter);
 router.use('/localidad', localidadRouter)
 
 

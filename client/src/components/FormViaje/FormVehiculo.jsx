@@ -69,6 +69,7 @@ export default function FormVehiculo() {
   }
   function handleSubmit(e) {
     e.preventDefault();
+    
     if (!auto.patente) {
       e.preventDefault();
       swal({

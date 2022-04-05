@@ -6,7 +6,7 @@ import { FaEdit } from "react-icons/fa";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import PaginacionComentarios from "./PaginacionComentarios";
-import foto from "../../assets/foto perfil.jfif";
+import foto from "../../assets/userRojo.jpg";
 
 export default function Perfil() {
   const [usuario, setUsuario] = useState({
@@ -17,8 +17,6 @@ export default function Perfil() {
     DNI: "",
     AcercaDeMi: "",
     Imagen: "",
-    Patente: "",
-    Modelo: "",
   });
 
   const [check, setCheck] = useState(false);
@@ -26,9 +24,6 @@ export default function Perfil() {
   const [habilitarDNI, setHabilitarDNI] = useState(true);
   const [habilitarAcercaDeMi, setHabilitarAcercaDeMi] = useState(true);
   const [habilitarImagen, setHabilitarImagen] = useState(true);
-  const [habilitarMarca, setHabilitarMarca] = useState(true);
-  const [habilitarPatente, setHabilitarPatente] = useState(true);
-  const [habilitarModelo, setHabilitarModelo] = useState(true);
 
   let array = [
     {
@@ -77,8 +72,6 @@ export default function Perfil() {
   const primerComentario = ultimoComentario - comentariosPorPagina;
   const personitas = array?.slice(primerComentario, ultimoComentario);
 
-  console.log(array);
-
   const paginacion = (pageNum) => {
     setPagina(pageNum);
   };
@@ -102,19 +95,6 @@ export default function Perfil() {
   const clickImagen = (e) => {
     e.preventDefault();
     setHabilitarImagen(!habilitarImagen);
-  };
-  const clickMarca = (e) => {
-    e.preventDefault();
-    setHabilitarMarca(!habilitarMarca);
-  };
-  const clickPatente = (e) => {
-    e.preventDefault();
-    setHabilitarPatente(!habilitarPatente);
-  };
-
-  const clickModelo = (e) => {
-    e.preventDefault();
-    setHabilitarModelo(!habilitarModelo);
   };
 
   const handleChange = (e) => {
@@ -227,63 +207,6 @@ export default function Perfil() {
                 <FaEdit />
               </button>
             </div>
-            <div className="nombre">
-              <label>
-                <Checkbox
-                  aria-label="Tengo Auto!"
-                  color="secondary"
-                  onChange={handleCheck}
-                />
-                Tengo Auto!
-              </label>
-            </div>
-            {check ? (
-              <>
-                {" "}
-                <div className="nombre">
-                  <h5>Marca___</h5>
-                  <input
-                    type="text"
-                    className="input-perfil"
-                    onChange={handleChange}
-                    name="Patente"
-                    value={usuario.Patente}
-                    disabled={habilitarPatente}
-                  />
-                  <button onClick={clickPatente}>
-                    <FaEdit />
-                  </button>
-                </div>
-                <div className="nombre">
-                  <h5>Patente_</h5>
-                  <input
-                    type="text"
-                    className="input-perfil"
-                    onChange={handleChange}
-                    name="Patente"
-                    value={usuario.Patente}
-                    disabled={habilitarPatente}
-                  />
-                  <button onClick={clickPatente}>
-                    <FaEdit />
-                  </button>
-                </div>
-                <div className="nombre">
-                  <h5>Modelo__</h5>
-                  <input
-                    type="text"
-                    className="input-perfil"
-                    onChange={handleChange}
-                    name="Modelo"
-                    value={usuario.Modelo}
-                    disabled={habilitarModelo}
-                  />
-                  <button onClick={clickModelo}>
-                    <FaEdit />
-                  </button>
-                </div>
-              </>
-            ) : null}
           </form>
         </div>
       </div>
@@ -303,7 +226,7 @@ export default function Perfil() {
               </label>
             </div>
             <div className="comentario">
-              <label>Deja tu comentario</label>
+              <label>Deja tu comentario:</label>
               <input type="text" />
             </div>
             <Button color="secondary" size="medium" className="btn-enviar">
@@ -315,7 +238,7 @@ export default function Perfil() {
           personitas.map((e) => (
             <div className="resenas-card">
               <div className="encabezado">
-                <img src={e.Foto} alt="" />
+                <img src={foto} alt="" />
                 <h1>{e.Nombre}</h1>
               </div>
               <h3>Punturacion: {e.Estrellas}</h3>
