@@ -17,8 +17,6 @@ export default function Perfil() {
     DNI: "",
     AcercaDeMi: "",
     Imagen: "",
-    Patente: "",
-    Modelo: "",
   });
 
   const [check, setCheck] = useState(false);
@@ -26,9 +24,6 @@ export default function Perfil() {
   const [habilitarDNI, setHabilitarDNI] = useState(true);
   const [habilitarAcercaDeMi, setHabilitarAcercaDeMi] = useState(true);
   const [habilitarImagen, setHabilitarImagen] = useState(true);
-  const [habilitarMarca, setHabilitarMarca] = useState(true);
-  const [habilitarPatente, setHabilitarPatente] = useState(true);
-  const [habilitarModelo, setHabilitarModelo] = useState(true);
 
   let array = [
     {
@@ -77,8 +72,6 @@ export default function Perfil() {
   const primerComentario = ultimoComentario - comentariosPorPagina;
   const personitas = array?.slice(primerComentario, ultimoComentario);
 
-  console.log(array);
-
   const paginacion = (pageNum) => {
     setPagina(pageNum);
   };
@@ -102,19 +95,6 @@ export default function Perfil() {
   const clickImagen = (e) => {
     e.preventDefault();
     setHabilitarImagen(!habilitarImagen);
-  };
-  const clickMarca = (e) => {
-    e.preventDefault();
-    setHabilitarMarca(!habilitarMarca);
-  };
-  const clickPatente = (e) => {
-    e.preventDefault();
-    setHabilitarPatente(!habilitarPatente);
-  };
-
-  const clickModelo = (e) => {
-    e.preventDefault();
-    setHabilitarModelo(!habilitarModelo);
   };
 
   const handleChange = (e) => {
@@ -227,63 +207,6 @@ export default function Perfil() {
                 <FaEdit />
               </button>
             </div>
-            <div className="nombre">
-              <label>
-                <Checkbox
-                  aria-label="Tengo Auto!"
-                  color="secondary"
-                  onChange={handleCheck}
-                />
-                Tengo Auto!
-              </label>
-            </div>
-            {check ? (
-              <>
-                {" "}
-                <div className="nombre">
-                  <h5>Marca___</h5>
-                  <input
-                    type="text"
-                    className="input-perfil"
-                    onChange={handleChange}
-                    name="Patente"
-                    value={usuario.Patente}
-                    disabled={habilitarPatente}
-                  />
-                  <button onClick={clickPatente}>
-                    <FaEdit />
-                  </button>
-                </div>
-                <div className="nombre">
-                  <h5>Patente_</h5>
-                  <input
-                    type="text"
-                    className="input-perfil"
-                    onChange={handleChange}
-                    name="Patente"
-                    value={usuario.Patente}
-                    disabled={habilitarPatente}
-                  />
-                  <button onClick={clickPatente}>
-                    <FaEdit />
-                  </button>
-                </div>
-                <div className="nombre">
-                  <h5>Modelo__</h5>
-                  <input
-                    type="text"
-                    className="input-perfil"
-                    onChange={handleChange}
-                    name="Modelo"
-                    value={usuario.Modelo}
-                    disabled={habilitarModelo}
-                  />
-                  <button onClick={clickModelo}>
-                    <FaEdit />
-                  </button>
-                </div>
-              </>
-            ) : null}
           </form>
         </div>
       </div>
