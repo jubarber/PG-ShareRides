@@ -1,13 +1,9 @@
-.Conductore__nav {
-  margin-top: 50px;
-}
-
 .Conductore__btn_volver {
   height: 45x;
   line-height: 45px;
   width: 150px;
-  margin-top: 20px;
-  margin-left: 10%;
+  margin-top: 25px;
+  margin-left: 5%;
   background-color: #9252ff;
   color: #fff;
   font-weight: bold;
@@ -21,25 +17,19 @@
 }
 
 .Conductore__form {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-evenly;
-    height: 45rem;
-    margin-top: 3rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  height: 45rem;
+  margin-top: 3rem;
 }
 
-.Conductore__label {
+.Conductore__formulario_label {
   display: block;
   font-weight: 500;
-  padding-top: 1rem;
+  padding-top: 2.2rem;
   cursor: pointer;
 }
-
-.Conductore__input_1, .Conductore__input_2 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
 
 .Conductore__input {
   width: 80%;
@@ -59,6 +49,12 @@
   border: 3px solid #9252ff;
   outline: none;
   box-shadow: 3px 0px 30px rgba(163, 163, 163, 0.4);
+}
+
+.Conductore_btn {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5rem;
 }
 
 .Conductore__btn_registro {
@@ -149,12 +145,13 @@
 
 .Conductore__checkboxes {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .Conductore__mycheckbox {
   font-size: 20px;
   color: white;
+  margin-top: 3rem;
 }
 .Conductore__mycheckbox input:checked ~ span::after {
   background: rgb(12, 167, 12);

@@ -18,7 +18,7 @@ router.post("/conductor", async (req, res, next) => {
       usaBarbijo,
       aceptaEquipaje,
       email,
-      dni
+      dni,
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
@@ -35,7 +35,7 @@ router.post("/conductor", async (req, res, next) => {
         aceptaEquipaje,
         usaBarbijo,
         pagoCompartido,
-        status: "conductor"
+        status: "conductor",
       });
       await nuevoViaje.addUsuario(email);
       res.json(nuevoViaje);
@@ -58,9 +58,9 @@ router.post("/pasajero", async (req, res, next) => {
       aceptaFumador,
       aceptaMascota,
       usaBarbijo,
-      aceptaEquipaje
+      aceptaEquipaje,
       email,
-      dni
+      dni,
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
@@ -77,7 +77,7 @@ router.post("/pasajero", async (req, res, next) => {
         aceptaEquipaje,
         usaBarbijo,
         pagoCompartido,
-        status: "pasajero"
+        status: "pasajero",
       });
       await nuevoViaje.addUsuario(email);
       res.json(nuevoViaje);
@@ -111,9 +111,9 @@ router.get(
             aceptaMascota: aceptaMascota,
             aceptaEquipaje: aceptaEquipaje,
             usaBarbijo: usaBarbijo,
-            asientosAOcupar: asientosAOcupar
+            asientosAOcupar: asientosAOcupar,
           },
-          include: Usuario
+          include: Usuario,
         });
       } else {
         viajesTotal = await Viaje.findAll({
@@ -121,9 +121,9 @@ router.get(
             aceptaFumador: aceptaFumador,
             aceptaMascota: aceptaMascota,
             aceptaEquipaje: aceptaEquipaje,
-            usaBarbijo: usaBarbijo
+            usaBarbijo: usaBarbijo,
           },
-          include: Usuario
+          include: Usuario,
         });
       }
       res.send(viajesTotal);
