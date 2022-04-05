@@ -22,6 +22,7 @@ export default function FormPasajero() {
     email: "",
     dni: "",
     asiento: "",
+    formaDePago: "A coordinar",
   });
 
   const expresiones = {
@@ -74,15 +75,18 @@ export default function FormPasajero() {
   const filtrosArray = [
     {
       id: 1,
-      name: "Acepto fumador",
+
+      name: "Soy fumador",
     },
     {
       id: 2,
-      name: "Acepto mascota",
+      name: "Llevo mascota",
     },
     {
       id: 3,
-      name: "Acepto equipaje",
+      name: "Llevo equipaje",
+
+
     },
     {
       id: 4,
@@ -126,10 +130,24 @@ export default function FormPasajero() {
       !viaje.email
     ) {
       e.preventDefault();
-      alert("Por favor, completa todos los campos solicitados");
+
+      swal({
+        title: "Alto!",
+        text: "Por favor completá todos los campos",
+        icon: "warning",
+        button: true,
+        dangerMode: true,
+      });
     } else {
-      alert("Registro exitoso");
-      window.location.href = "/home";
+      swal({
+        title: "El registro ha sido exitoso!",
+        icon: "success",
+        button: "Buen viaje!",
+      }).then(function () {
+        window.location = "/home";
+      });
+
+
       dispatch(postViajePasajero(isChecked, viaje));
 
       setViaje({
@@ -140,132 +158,178 @@ export default function FormPasajero() {
         email: "",
         dni: "",
         asiento: "",
+
+        formaDePago: "A coordinar",
       });
-      
+
     }
   }
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <span>Fecha</span>
 
-        <input
-          type="text"
-          name="fecha"
-          value={viaje.fecha}
-          onChange={(e) => handleOnChange(e)}
-        />
-        {errors.fecha && <span>{errors.fecha}</span>}
+        <div className="form-formpasajero">
+          <div className="form-parte-1">
+            <label className="label-formpasajero">Fecha</label>
 
-        <br></br>
-        <span>Hora</span>
+            <input
+              type="text"
+              name="fecha"
+              value={viaje.fecha}
+              onChange={(e) => handleOnChange(e)}
+              className="input-text"
+            />
+            {errors.fecha && (
+              <span className="Registro__error">{errors.fecha}</span>
+            )}
 
-        <input
-          type="text"
-          name="hora"
-          value={viaje.hora}
-          onChange={(e) => handleOnChange(e)}
-        />
-        {errors.hora && <span>{errors.hora}</span>}
-        <br></br>
-        <span>Origen</span>
+            <label className="label-formpasajero">Hora</label>
 
-        <input
-          type="text"
-          name="origen"
-          value={viaje.origen}
-          onChange={(e) => handleOnChange(e)}
-        />
-        {errors.origen && <span>{errors.origen}</span>}
-        <br></br>
+            <input
+              type="text"
+              name="hora"
+              value={viaje.hora}
+              onChange={(e) => handleOnChange(e)}
+              className="input-text"
+            />
+            {errors.hora && (
+              <span className="Registro__error">{errors.hora}</span>
+            )}
 
-        <span>Destino</span>
-        <input
-          type="text"
-          name="destino"
-          value={viaje.destino}
-          onChange={(e) => handleOnChange(e)}
-        />
-        {errors.destino && <span>{errors.destino}</span>}
-        <br></br>
-        <span>Email</span>
-        <input
-          type="text"
-          name="email"
-          value={viaje.email}
-          onChange={(e) => handleOnChange(e)}
-        />
-        {errors.email && <span>{errors.email}</span>}
-        <br></br>
-        <span>Dni/Pasaporte</span>
-        <input
-          type="text"
-          name="dni"
-          value={viaje.dni}
-          onChange={(e) => handleOnChange(e)}
-        />
+            <label className="label-formpasajero">Origen</label>
 
-        <br></br>
-        <span>Asientos a ocupar</span>
-        <input
-          type="number"
-          name="asiento"
-          placeholder="entre 1 y 7"
-          value={viaje.asiento}
-          onChange={(e) => handleOnChange(e)}
-        />
-        {errors.asiento && <span>{errors.asiento}</span>}
+            <input
+              type="text"
+              name="origen"
+              value={viaje.origen}
+              onChange={(e) => handleOnChange(e)}
+              className="input-text"
+            />
+            {errors.origen && (
+              <span className="Registro__error">{errors.origen}</span>
+            )}
 
-        <div>
-          {filtrosArray.map((e, index) => {
-            return (
-              <div>
-                <label>{e.name}</label>
-                <input
-                  type="checkbox"
-                  key={e.id}
-                  name={e.name}
-                  value={e.name}
-                  checked={isChecked[index]}
-                  onChange={() => {
-                    handleCheckBox(index);
-                  }}
-                />
-              </div>
-            );
-          })}
+            <label className="label-formpasajero">Destino</label>
+            <input
+              type="text"
+              name="destino"
+              value={viaje.destino}
+              onChange={(e) => handleOnChange(e)}
+              className="input-text"
+            />
+            {errors.destino && (
+              <span className="Registro__error">{errors.destino}</span>
+            )}
 
-          {isChecked[4] && (
-            <select>
-              <option value="Efecto">Efectivo</option>
-              <option value="MP">Mercado Pago</option>
-            </select>
+            <label className="label-formpasajero">Email</label>
+            <input
+              type="text"
+              name="email"
+              value={viaje.email}
+              onChange={(e) => handleOnChange(e)}
+              className="input-text"
+            />
+            {errors.email && (
+              <span className="Registro__error">{errors.email}</span>
+            )}
+
+            <label className="label-formpasajero">Dni/Pasaporte</label>
+            <input
+              type="text"
+              name="dni"
+              value={viaje.dni}
+              onChange={(e) => handleOnChange(e)}
+              className="input-text"
+            />
+          </div>
+          <div className="form-parte-2">
+            <label className="label-formpasajero">Asientos a ocupar</label>
+            <input
+              type="number"
+              name="asiento"
+              placeholder="entre 1 y 7"
+              value={viaje.asiento}
+              onChange={(e) => handleOnChange(e)}
+              className="input-text"
+            />
+            {errors.asiento && (
+              <span className="Registro__error">{errors.asiento}</span>
+            )}
+
+            <div className="Pasajere__checkboxes">
+              {filtrosArray.map((e, index) => {
+                return (
+                  <div>
+                    <label className="Pasajere__mycheckbox">
+                      {e.name}
+                      <input
+                        type="checkbox"
+                        key={e.id}
+                        name={e.name}
+                        value={e.name}
+                        checked={isChecked[index]}
+                        onChange={() => {
+                          handleCheckBox(index);
+                        }}
+                      />
+                      <span></span>
+                    </label>
+                  </div>
+                );
+              })}
+
+              {isChecked[4] && (
+                <FormControl variant="standard" sx={{ m: 1, minWidth: 160 }}>
+                  <InputLabel
+                    id="demo-simple-select-standard-label"
+                    sx={{ color: "white" }}
+                  >
+                    Medio de pago
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-standard-label"
+                    id="demo-simple-select-standard"
+                  >
+                    <MenuItem value="">Acordar</MenuItem>
+                    <MenuItem value="Efecto">Efectivo</MenuItem>
+                    <MenuItem value="MP">Mercado Pago</MenuItem>
+                  </Select>
+                </FormControl>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="btn-registrar-formpasajero">
+          {!errors.email &&
+          !errors.hora &&
+          !errors.destino &&
+          !errors.origen &&
+          !errors.fecha &&
+          !errors.asiento ? (
+            <button
+              type="submit"
+              name="Registrar viaje"
+              className="btn-formpasajero"
+            >
+              Registrar viaje
+            </button>
+          ) : (
+            <button
+              type="submit"
+              value="Registrar viaje"
+              name="Registrar viaje"
+              disabled="disabled"
+              className="btn-formpasajero-disable"
+            >
+              Registrar Viaje
+            </button>
           )}
         </div>
-
-        {!errors.email &&
-        !errors.hora &&
-        !errors.destino &&
-        !errors.origen &&
-        !errors.fecha &&
-        !errors.asiento ? (
-          <input
-            type="submit"
-            value="Registrar viaje"
-            name="Registrar viaje"
-            className="btn_registro"
-          />
-        ) : (
-          <input
-            type="submit"
-            value="Registrar viaje"
-            name="Registrar viaje"
-            disabled="disabled"
-            className="disabled"
-          />
-        )}
       </form>
+      <div className="wallpaper">
+        <img className="stretch" src={fondo} alt="" />
+      </div>
     </div>
   );
 }

@@ -161,73 +161,67 @@ export default function FormPasajero() {
       <form onSubmit={handleSubmit}>
         <div className="Conductore__form">
           <div className="Conductore__input_1">
-            <div>
-              <label className="Conductore__formulario_label">Fecha</label>
-              <input
-                className="Conductore__input"
-                type="text"
-                name="fecha"
-                value={viaje.fecha}
-                onChange={(e) => handleOnChange(e)}
-              />
-              {errors.fecha && (
-                <span className="Conductore__error">{errors.fecha}</span>
-              )}
-            </div>
-            <div>
-              <label className="Conductore__formulario_label">Hora</label>
-              <input
-                className="Conductore__input"
-                type="text"
-                name="hora"
-                value={viaje.hora}
-                onChange={(e) => handleOnChange(e)}
-              />
-              {errors.hora && (
-                <span className="Conductore__error">{errors.hora}</span>
-              )}
-            </div>
-            <div>
-              <label className="Conductore__formulario_label">Origen</label>
-              <input
-                className="Conductore__input"
-                type="text"
-                name="origen"
-                value={viaje.origen}
-                onChange={(e) => handleOnChange(e)}
-              />
-              {errors.origen && (
-                <span className="Conductore__error">{errors.origen}</span>
-              )}
-            </div>
-            <div>
-              <label className="Conductore__formulario_label">Destino</label>
-              <input
-                className="Conductore__input"
-                type="text"
-                name="destino"
-                value={viaje.destino}
-                onChange={(e) => handleOnChange(e)}
-              />
-              {errors.destino && (
-                <span className="Conductore__error">{errors.destino}</span>
-              )}
-            </div>
-            <div>
-              <label className="Conductore__formulario_label">
-                Dni/Pasaporte
-              </label>
-              <input
-                className="Conductore__input"
-                type="text"
-                name="dni"
-                value={viaje.dni}
-                onChange={(e) => handleOnChange(e)}
-              />
-              {errors.dni && (
-                <span className="Conductore__error">{errors.dni}</span>
-              )}
-            </div>
+            <label className="Conductore__formulario_label">Fecha</label>
+            <input
+              className="Conductore__input"
+              type="text"
+              name="fecha"
+              value={viaje.fecha}
+              onChange={(e) => handleOnChange(e)}
+            />
+            {errors.fecha && (
+              <span className="Conductore__error">{errors.fecha}</span>
+            )}
+
+            <label className="Conductore__formulario_label">Hora</label>
+            <input
+              className="Conductore__input"
+              type="text"
+              name="hora"
+              value={viaje.hora}
+              onChange={(e) => handleOnChange(e)}
+            />
+            {errors.hora && (
+              <span className="Conductore__error">{errors.hora}</span>
+            )}
+
+            <label className="Conductore__formulario_label">Origen</label>
+            <input
+              className="Conductore__input"
+              type="text"
+              name="origen"
+              value={viaje.origen}
+              onChange={(e) => handleOnChange(e)}
+            />
+            {errors.origen && (
+              <span className="Conductore__error">{errors.origen}</span>
+            )}
+
+            <label className="Conductore__formulario_label">Destino</label>
+            <input
+              className="Conductore__input"
+              type="text"
+              name="destino"
+              value={viaje.destino}
+              onChange={(e) => handleOnChange(e)}
+            />
+            {errors.destino && (
+              <span className="Conductore__error">{errors.destino}</span>
+            )}
+
+            <label className="Conductore__formulario_label">
+              Dni/Pasaporte
+            </label>
+            <input
+              className="Conductore__input"
+              type="text"
+              name="dni"
+              value={viaje.dni}
+              onChange={(e) => handleOnChange(e)}
+            />
+            {errors.dni && (
+              <span className="Conductore__error">{errors.dni}</span>
+            )}
           </div>
           <div className="Conductore__input_2">
             <div>
@@ -246,58 +240,57 @@ export default function FormPasajero() {
                 <span className="Conductore__error">{errors.asiento}</span>
               )}
             </div>
-            <div className="Conductore__checkboxes">
-              {filtrosArray.map((e, index) => {
-                return (
-                  <div>
-                    <label className="Conductore__mycheckbox">
-                      {e.name}
-                      <input
-                        type="checkbox"
-                        key={e.id}
-                        name={e.name}
-                        value={e.name}
-                        checked={isChecked[index]}
-                        onChange={() => {
-                          handleCheckBox(index);
-                        }}
-                      />
-                      <span></span>
-                    </label>
-                  </div>
-                );
-              })}
-              {isChecked[4] && (
-                <select>
-                  <option value="Efecto">Efectivo</option>
-                  <option value="MP">Mercado Pago</option>
-                </select>
-              )}
-            </div>
-          </div>
-          <div>
-            {!errors.dni &&
-            !errors.hora &&
-            !errors.destino &&
-            !errors.origen &&
-            !errors.fecha &&
-            !errors.asiento ? (
-              <input
-                type="submit"
-                value="Registrar viaje"
-                name="Registrar viaje"
-                className="Conductore__btn_registro"
-              />
-            ) : (
-              <input
-                type="submit"
-                value="Registrar viaje"
-                name="Registrar viaje"
-                disabled="disabled"
-                className="Conductore__disabled"
-              />
+
+            {filtrosArray.map((e, index) => {
+              return (
+                <div>
+                  <label className="Conductore__mycheckbox">
+                    {e.name}
+                    <input
+                      type="checkbox"
+                      key={e.id}
+                      name={e.name}
+                      value={e.name}
+                      checked={isChecked[index]}
+                      onChange={() => {
+                        handleCheckBox(index);
+                      }}
+                    />
+                    <span></span>
+                  </label>
+                </div>
+              );
+            })}
+            {isChecked[4] && (
+              <select>
+                <option value="Efecto">Efectivo</option>
+                <option value="MP">Mercado Pago</option>
+              </select>
             )}
           </div>
+        </div>
+        <div className="Conductore_btn">
+          {!errors.dni &&
+          !errors.hora &&
+          !errors.destino &&
+          !errors.origen &&
+          !errors.fecha &&
+          !errors.asiento ? (
+            <input
+              type="submit"
+              value="Registrar viaje"
+              name="Registrar viaje"
+              className="Conductore__btn_registro"
+            />
+          ) : (
+            <input
+              type="submit"
+              value="Registrar viaje"
+              name="Registrar viaje"
+              disabled="disabled"
+              className="Conductore__disabled"
+            />
+          )}
         </div>
       </form>
 

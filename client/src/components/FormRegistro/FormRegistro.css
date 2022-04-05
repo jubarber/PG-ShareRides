@@ -1,12 +1,4 @@
-.contenedorRegistro{
-  background-image: url("../../assets/fondo\ perfil.jpg");
-  background-size: cover;
-  width: 100%;
-  height: 100vh;
-  
-}
-
-.Registro__formulario{
+.Registro__formulario {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
@@ -17,46 +9,49 @@
   font-size: 20px;
 }
 
-.Registro__formulario_label{
+.Registro__formulario_label {
   display: block;
   font-weight: 500;
   padding: 10px;
   cursor: pointer;
-  
 }
 
-
-.Registro__input{
+.Registro__input {
   width: 80%;
-  background-color:#fff ;
-  border: 3px solid ;
+  background-color: #fff;
+  border: 3px solid;
   border-radius: 3px;
   height: 45px;
   line-height: 45px;
-  padding:  0 40px 0 10px;
-  transition: .3s ease all;
+  padding: 0 40px 0 10px;
+  transition: 0.3s ease all;
   border-radius: 20px;
   border-radius: 58px;
   font-size: medium;
 }
 
 .Registro__input:focus {
-	border: 3px solid #9252ff;
-	outline: none;
-	box-shadow: 3px 0px 30px rgba(163, 163, 163, 0.4);
+  border: 3px solid #9252ff;
+  outline: none;
+  box-shadow: 3px 0px 30px rgba(163, 163, 163, 0.4);
 }
 
-.Registro__ojo{
+.Registro__ojo {
   margin-left: 5px;
 }
 
-.Registro__checkbox{
-	margin-right: 10px;
+.Registro__checkbox {
+  margin-right: 10px;
 }
 
-.grupo_terminos,
+.grupo_terminos {
+  grid-column: span 2;
+}
 .grupo_btn {
-    grid-column: span 2;
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .Registro__btn_volver {
@@ -77,35 +72,33 @@
   box-shadow: 3px 0px 30px rgb(66, 65, 65);
 }
 
-.Registro__btn_registro{
-	height: 45x;
-	line-height: 45px;
-  width: 30%;
-	background-color: #9252ff;
-	color: #fff;
-	font-weight: bold;
-	border: none;
-	border-radius: 3px;
-	cursor: pointer;
-	transition:  .1s easy all;
-  position:fixed;
-  margin-left: 5%;
+.Registro__btn_registro {
+  height: 45x;
+  line-height: 45px;
+  width: 15rem;
+  background-color: #9252ff;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.1s easy all;
 }
 
-.Registro__btn_registro:hover{
-    box-shadow: 3px 0px 30px rgba(163, 163, 163, 1);
+.Registro__btn_registro:hover {
+  box-shadow: 3px 0px 30px rgba(163, 163, 163, 1);
 }
 
 .Registro__disabled {
   height: 45x;
-	line-height: 45px;
-  width: 30%;
-	background: rgb(154, 153, 153);
-	color: #fff;
-	font-weight: bold;
-	border: none;
-	border-radius: 3px;
-	transition:  .1s easy all;
+  line-height: 45px;
+  width: 15rem;
+  background: rgb(154, 153, 153);
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 3px;
+  transition: 0.1s easy all;
 }
 
 .Registro__error {
@@ -114,7 +107,7 @@
   display: flex;
   text-align: left;
   justify-content: left;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 600;
 
   animation-name: error;
@@ -162,4 +155,3 @@
     opacity: 1;
   }
 }
-
