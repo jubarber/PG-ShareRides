@@ -13,7 +13,6 @@ import MenuItem from "@mui/material/MenuItem";
 import { FormControl } from "@mui/material";
 import Cookies from "universal-cookie"
 
-
 export default function Home() {
   const cookies = new Cookies()
   const dispatch = useDispatch();

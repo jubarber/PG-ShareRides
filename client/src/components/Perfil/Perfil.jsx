@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import fondo from "../../assets/fondo perfil.jpg";
 import "./Perfil.css";
@@ -13,6 +13,20 @@ import { getUsuarios } from "../../redux/actions/actions";
 export default function Perfil() {
   const dispatch = useDispatch();
   const miUsuario = useSelector((state) => state.usuarios);
+
+  // useEffect(() => {
+  //   dispatch(getUsuarios());
+  // }, []);
+
+  // const perfil = useSelector((state) => state.usuariosPorId);
+  // const { email } = useParams();
+  // useEffect(() => {
+  //   console.log("soy email", email);
+  //   dispatch(getUsuariosById(email));
+  // }, []);
+  // console.log("click", email);
+  // console.log("perfil", perfil);
+
   console.log(miUsuario);
   const [usuario, setUsuario] = useState({
     Nombre: "",

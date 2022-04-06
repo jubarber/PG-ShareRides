@@ -13,7 +13,7 @@ export default function FormPasajero() {
 
   const [isChecked, setIsChecked] = useState(new Array(5).fill(false));
   const [errors, setErrors] = useState({});
-  const cookieMail = cookies.get("email")
+  const cookieMail = cookies.get("email");
   const [viaje, setViaje] = useState({
     fecha: "",
     hora: "",
@@ -88,7 +88,7 @@ export default function FormPasajero() {
 
   function handleOnChange(e) {
     e.preventDefault();
-  console.log(viaje)
+    console.log(viaje);
     setViaje({
       ...viaje,
       [e.target.name]: e.target.value,
@@ -107,7 +107,6 @@ export default function FormPasajero() {
     );
     setIsChecked(updatedCheckedState);
   };
-
 
   function handleSubmit(e) {
     e.preventDefault();
