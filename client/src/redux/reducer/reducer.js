@@ -56,7 +56,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         viajesFiltrados: action.payload,
       };
-
     default:
       return { ...state };
   }
