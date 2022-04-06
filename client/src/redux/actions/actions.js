@@ -84,7 +84,6 @@ export function registroUsuario(payload) {
     }
   };
 }
-
 export function postViajePasajero(checkboxes, viaje) {
   console.log(viaje);
   return async function (dispatch) {

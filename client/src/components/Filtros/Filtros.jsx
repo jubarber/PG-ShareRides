@@ -82,6 +82,10 @@ export function Filtros() {
   return (
     <div className="contenedor-filtros" class="font-mono">
       <div className="asientos">
+        <div>
+          <SearchBar />
+        </div>
+
         <FormControl variant="standard" sx={{ m: 1, minWidth: 175 }}>
           <InputLabel
             id="demo-simple-select-standard-label"

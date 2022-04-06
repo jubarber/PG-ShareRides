@@ -3,8 +3,8 @@
 }
 .asientos {
   margin-top: 0%;
-  width: 20rem;
-  height: 100%;
+  width: 21rem;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
