@@ -33,18 +33,18 @@ export function getViajesTotal() {
   };
 }
 
-export function getUsuarios() {
-  return async function (dispatch) {
-    try {
-      let usuarios = await axios.get(
-        "http://localhost:3001/api/usuario/usuarios"
-      );
-      return dispatch({ type: "GET_USUARIOS", payload: usuarios.data });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-}
+// export function getUsuarios() {
+//   return async function (dispatch) {
+//     try {
+//       let usuarios = await axios.get(
+//         "http://localhost:3001/api/usuario/usuarios"
+//       );
+//       return dispatch({ type: "GET_USUARIOS", payload: usuarios.data });
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   };
+// }
 
 export function getUsuariosById(email) {
   return async function (dispatch) {

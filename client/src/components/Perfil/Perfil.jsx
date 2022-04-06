@@ -8,15 +8,15 @@ import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import PaginacionComentarios from "./PaginacionComentarios";
 import foto from "../../assets/userRojo.jpg";
-import { getUsuarios, getUsuariosById } from "../../redux/actions/actions";
+// import { getUsuarios, getUsuariosById } from "../../redux/actions/actions";
 
 export default function Perfil() {
   const dispatch = useDispatch();
   const miUsuario = useSelector((state) => state.usuarios);
 
-  useEffect(() => {
-    dispatch(getUsuarios());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getUsuarios());
+  // }, []);
 
   // const perfil = useSelector((state) => state.usuariosPorId);
   // const { email } = useParams();

@@ -11,7 +11,7 @@ const initialState = {
   viajePorId: [],
   viajes: [],
   viajesFiltrados: [],
-  usuarios: [],
+  // usuarios: [],
   usuariosPorId: [],
 };
 
@@ -29,11 +29,11 @@ function rootReducer(state = initialState, action) {
         viajes: action.payload,
         viajesFiltrados: action.payload,
       };
-    case GET_USUARIOS:
-      return {
-        ...state,
-        usuarios: action.payload,
-      };
+    // case GET_USUARIOS:
+    //   return {
+    //     ...state,
+    //     usuarios: action.payload,
+    //   };
     case GET_USUARIOS_BY_ID:
       return {
         ...state,
