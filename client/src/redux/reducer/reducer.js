@@ -3,16 +3,17 @@ import {
   GET_VIAJES_TOTAL,
   FILTRO_CHECKS,
   REGISTRO_USUARIO,
+  SEARCHORIGEN,
+  SEARCHDESTINO,
   GET_USUARIOS,
-  GET_USUARIOS_BY_ID,
 } from "../actions/actions.js";
 
 const initialState = {
   viajePorId: [],
   viajes: [],
   viajesFiltrados: [],
-  // usuarios: [],
-  usuariosPorId: [],
+  usuarios: [],
+  usuario: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -29,16 +30,12 @@ function rootReducer(state = initialState, action) {
         viajes: action.payload,
         viajesFiltrados: action.payload,
       };
-    // case GET_USUARIOS:
-    //   return {
-    //     ...state,
-    //     usuarios: action.payload,
-    //   };
-    case GET_USUARIOS_BY_ID:
+    case GET_USUARIOS:
       return {
         ...state,
-        usuariosPorId: action.payload,
+        usuarios: action.payload,
       };
+
     case FILTRO_CHECKS:
       return {
         ...state,
@@ -48,6 +45,18 @@ function rootReducer(state = initialState, action) {
     case REGISTRO_USUARIO:
       return {
         ...state,
+      };
+    case SEARCHDESTINO:
+      console.log(" llegue al reducer destino", action.payload);
+      return {
+        ...state,
+        viajesFiltrados: action.payload,
+      };
+    case SEARCHORIGEN:
+      console.log(" llegue al reducer origen", action.payload);
+      return {
+        ...state,
+        viajesFiltrados: action.payload,
       };
 
     default:

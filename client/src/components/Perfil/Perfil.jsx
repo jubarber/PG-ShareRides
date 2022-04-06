@@ -8,7 +8,7 @@ import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import PaginacionComentarios from "./PaginacionComentarios";
 import foto from "../../assets/userRojo.jpg";
-// import { getUsuarios, getUsuariosById } from "../../redux/actions/actions";
+import { getUsuarios } from "../../redux/actions/actions";
 
 export default function Perfil() {
   const dispatch = useDispatch();
@@ -74,6 +74,10 @@ export default function Perfil() {
     e.preventDefault();
     setHabilitarImagen(!habilitarImagen);
   };
+
+  useEffect(() => {
+    dispatch(getUsuarios());
+  }, [dispatch]);
 
   const handleChange = (e) => {
     setUsuario({

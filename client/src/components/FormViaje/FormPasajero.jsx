@@ -8,6 +8,7 @@ import swal from "sweetalert";
 import { postViajePasajero } from "../../redux/actions/actions";
 import "./FormPasajero.css";
 import fondo from "../../assets/fondo perfil.jpg";
+import "./FormPasajero.css";
 
 export default function FormPasajero() {
   const dispatch = useDispatch();

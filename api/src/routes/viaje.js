@@ -132,6 +132,39 @@ router.get(
     }
   }
 );
+router.get("/searchdestino", async (req, res, next) => {
+  const { destino } = req.query;
+  console.log(destino);
+  try {
+    if (destino) {
+      let viajes = await Viaje.findAll();
+      filtradoDestino = await viajes.filter((e) => {
+      return  e.dataValues.destino.toLowerCase().includes(destino.toLowerCase());
+      });
+    }
+    console.log(filtradoDestino);
+    res.send(filtradoDestino);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/searchorigen", async (req, res, next) => {
+  const { origen } = req.query;
+  console.log("back", origen)
+  try {
+    if (origen) {
+      let viajes = await Viaje.findAll();
+       filtradoOrigen = await viajes.filter((e) => {
+       return e.dataValues.origen.toLowerCase().includes(origen.toLowerCase());
+      });
+    }
+    console.log(filtradoOrigen)
+    res.send(filtradoOrigen);
+  } catch (err) {
+    next(err);
+  }
+});
 
 router.get("/:viajeId", async (req, res, next) => {
   const { viajeId } = req.params;
@@ -142,5 +175,11 @@ router.get("/:viajeId", async (req, res, next) => {
     next(err);
   }
 });
+
+
+
+
+
+
 
 module.exports = router;

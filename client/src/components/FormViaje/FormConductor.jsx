@@ -1,27 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import swal from "sweetalert";
 import { postViajeConductor } from "../../redux/actions/actions";
 import fondo from "../../assets/fondo perfil.jpg";
 import { Link } from "react-router-dom";
 import "./FormConductor.css";
+import Cookies from "universal-cookie";
 
 export default function FormPasajero() {
+  const cookies = new Cookies();
   const dispatch = useDispatch();
 
   const [isChecked, setIsChecked] = useState(new Array(5).fill(false));
   const [errors, setErrors] = useState({});
+  const cookieMail = cookies.get("email");
   const [viaje, setViaje] = useState({
     fecha: "",
     hora: "",
     origen: "",
     destino: "",
-    dni: "",
+    dni: cookies.get("dni"),
     asiento: "",
     formaDePago: "",
-    email: "",
+    email: cookieMail,
   });
-
   const expresiones = {
     fecha: /^.{4,18}$/,
     hora: /^.{4,12}$/,
@@ -53,11 +55,6 @@ export default function FormPasajero() {
       errors.destino = "Debes ingresar el destino del viaje";
     } else if (!expresiones.destino.test(viaje.destino)) {
       errors.destino = "Ingrese un destino valido";
-    }
-    if (!viaje.dni) {
-      errors.dni = "Debes ingesar DNI/Pasaporte";
-    } else if (!expresiones.dni.test(viaje.dni)) {
-      errors.dni = "Ingrese un Dni/Pasaporte valido";
     }
     if (!viaje.asiento) {
       errors.asiento = "Debes ingresar la fecha del viaje";
@@ -91,6 +88,7 @@ export default function FormPasajero() {
 
   function handleOnChange(e) {
     e.preventDefault();
+    console.log(viaje);
     setViaje({
       ...viaje,
       [e.target.name]: e.target.value,
@@ -117,7 +115,6 @@ export default function FormPasajero() {
       !viaje.hora ||
       !viaje.origen ||
       !viaje.destino ||
-      !viaje.dni ||
       !viaje.asiento
     ) {
       e.preventDefault();
@@ -219,9 +216,6 @@ export default function FormPasajero() {
               value={viaje.dni}
               onChange={(e) => handleOnChange(e)}
             />
-            {errors.dni && (
-              <span className="Conductore__error">{errors.dni}</span>
-            )}
           </div>
           <div className="Conductore__input_2">
             <div>
@@ -270,8 +264,7 @@ export default function FormPasajero() {
           </div>
         </div>
         <div className="Conductore_btn">
-          {!errors.dni &&
-          !errors.hora &&
+          {!errors.hora &&
           !errors.destino &&
           !errors.origen &&
           !errors.fecha &&
