@@ -29,8 +29,8 @@ export default function FormPasajero() {
   const expresiones = {
     fecha: /^.{4,18}$/,
     hora: /^.{4,12}$/,
-    origen: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
-    destino: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
+    origen: /^[a-zA-ZÀ-ÿ\s]{4,30}$/,
+    destino: /^[a-zA-ZÀ-ÿ\s]{4,30}$/,
     email: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
     asiento: /^.{1,7}$/,
   };

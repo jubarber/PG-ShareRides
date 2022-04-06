@@ -28,7 +28,7 @@
   margin-bottom: 2rem;
 }
 .mycheckbox input:checked ~ span::after {
-  background: rgb(12, 167, 12);
+  background: rgb(87, 149, 87);
   transform: scale(0.8) translate(31px);
 }
 
@@ -41,7 +41,7 @@
   width: 50px;
   height: 25px;
   border-radius: 25px;
-  background: rgb(187, 186, 186);
+  background: white;
   cursor: pointer;
   box-shadow: inset 0px 0px 2px rgb(15, 15, 15);
   position: relative;
@@ -57,7 +57,7 @@
   height: 25px;
   transform: scale(0.8);
   border-radius: 25px;
-  background: rgb(248, 22, 22);
+  background: rgb(187, 186, 186);
   transition: 0.5s;
   box-shadow: inset 0px 0px 2px rgb(37, 37, 37);
 }

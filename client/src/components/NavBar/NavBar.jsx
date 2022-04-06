@@ -16,6 +16,7 @@ import Tooltip from "@mui/material/Tooltip";
 import { BiLogOut } from "react-icons/bi";
 import user from "../../assets/user.png";
 import { logout } from "../../redux/actions/actions";
+import { FaHome } from "react-icons/fa";
 
 export default function NavBar() {
   const dispatch = useDispatch();
@@ -50,7 +51,9 @@ export default function NavBar() {
         </div>
         <div className="panel-botones">
           <button class="btn btn-outline-primary" type="button">
-            <Link to="/home">Home</Link>
+            <Link to="/home">
+              <FaHome />
+            </Link>
           </button>
           <button type="button" class="btn btn-outline-primary">
             <Link to="/formviaje">Crear Viaje</Link>
