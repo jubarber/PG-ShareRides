@@ -1,11 +1,8 @@
 import React, { useEffect } from "react";
-import { Filtros } from "../Filtros/Filtros";
 import "./NavBar.css";
-import userRojo from "../../assets/userRojo.jpg";
 import logo from "../../assets/Icono shareRides.png";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsuariosById, getUsuarios } from "../../redux/actions/actions";
 import Cookies from "universal-cookie";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
@@ -18,12 +15,17 @@ import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import { BiLogOut } from "react-icons/bi";
 import user from "../../assets/user.png";
+import { logout } from "../../redux/actions/actions";
+
 
 export default function NavBar() {
   const dispatch = useDispatch();
   const cookies = new Cookies();
   const cookieNombre = cookies.get("nombre");
   const cookieAvatar = cookies.get("avatar");
+  const cookieEmail = cookies.get("email");
+
+
 
   // ------Menu------
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -33,6 +35,11 @@ export default function NavBar() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout(cookieEmail));
+    window.location.href = "/";
   };
 
   return (
@@ -55,7 +62,11 @@ export default function NavBar() {
         <div className="info-usuario">
           <h3>Hola, {cookieNombre}</h3>
           <Box
-            sx={{ display: "flex", alignItems: "center", textAlign: "center" }}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              textAlign: "center",
+            }}
           >
             <Tooltip title="Perfil">
               <IconButton
@@ -109,15 +120,29 @@ export default function NavBar() {
             transformOrigin={{ horizontal: "right", vertical: "top" }}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
-            <MenuItem>
-              <Avatar /> Profile
-            </MenuItem>
+        <Link to="/perfil">
+              <MenuItem>
+                <img
+                  src={cookieAvatar === "null" ? user : cookieAvatar}
+                  alt=""
+                  style={{
+                    width: 32,
+                    height: 32,
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                />{" "}
+                Mi Perfil
+              </MenuItem>
+            </Link>
+
             <Divider />
-            <MenuItem>
+            <MenuItem onClick={handleLogout}>
               <ListItemIcon>
-                <BiLogOut fontSize="small" />
+                <BiLogOut style={{ width: 32, height: 32 }} />
               </ListItemIcon>
-              Logout
+              Cerrar Sesion
+
             </MenuItem>
           </Menu>
         </div>

@@ -9,9 +9,9 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  border-bottom: 2px solid black;
-  border-left: 2px solid black;
-  border-right: 2px solid black;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
   padding: 1rem;
   background-color: rgb(116, 20, 207);
 }

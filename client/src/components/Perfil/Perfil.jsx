@@ -9,25 +9,18 @@ import Checkbox from "@mui/material/Checkbox";
 import PaginacionComentarios from "./PaginacionComentarios";
 import foto from "../../assets/userRojo.jpg";
 import { getUsuarios } from "../../redux/actions/actions";
+import Cookies from "universal-cookie";
 
 export default function Perfil() {
   const dispatch = useDispatch();
-  const miUsuario = useSelector((state) => state.usuarios);
+  const cookies = new Cookies();
+  const nombre = cookies.get("nombre");
+  const apellido = cookies.get("apellido");
+  const email = cookies.get("email");
+  const DNI = cookies.get("dni");
+  const avatar = cookies.get("avatar");
+  const acercaDeMi = cookies.get("acercaDeMi");
 
-  // useEffect(() => {
-  //   dispatch(getUsuarios());
-  // }, []);
-
-  // const perfil = useSelector((state) => state.usuariosPorId);
-  // const { email } = useParams();
-  // useEffect(() => {
-  //   console.log("soy email", email);
-  //   dispatch(getUsuariosById(email));
-  // }, []);
-  // console.log("click", email);
-  // console.log("perfil", perfil);
-
-  console.log(miUsuario);
   const [usuario, setUsuario] = useState({
     Nombre: "",
     Apellido: "",
@@ -87,15 +80,15 @@ export default function Perfil() {
   };
 
   return (
-    <div className="perfil" class="font-mono">
+    <div className="perfil">
       <div className="contenedor-perfil">
         <div className="contenedor-imagen">
           <div className="img-perfil">
-            <img src={foto} alt="" />
+            <img src={avatar} alt="" />
           </div>
           <div className="bio-perfil">
             <h1>
-              {miUsuario[0]?.nombre} {miUsuario[0]?.apellido}
+              {nombre} {apellido}
             </h1>
             <input
               type="text"
@@ -126,9 +119,8 @@ export default function Perfil() {
               <input
                 type="text"
                 className="input-perfil"
-                onChange={handleChange}
                 name="Nombre"
-                value={miUsuario[0]?.nombre}
+                value={nombre}
                 disabled
               />
               <button disabled>
@@ -141,7 +133,7 @@ export default function Perfil() {
                 type="text"
                 className="input-perfil"
                 name="Apellido"
-                value={miUsuario[0]?.apellido}
+                value={apellido}
                 disabled
               />
               <button disabled>
@@ -153,9 +145,8 @@ export default function Perfil() {
               <input
                 type="text"
                 className="input-perfil"
-                onChange={handleChange}
                 name="Email"
-                value={miUsuario[0]?.email}
+                value={email}
                 disabled
               />
               <button disabled>
@@ -183,7 +174,7 @@ export default function Perfil() {
                 className="input-perfil"
                 onChange={handleChange}
                 name="DNI"
-                value={usuario.DNI}
+                value={DNI === "null" ? "" : DNI}
                 disabled={habilitarDNI}
               />
               <button onClick={clickDNI}>
