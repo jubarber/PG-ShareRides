@@ -1,16 +1,62 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import GoogleLogin from "react-google-login";
 import { Link } from "react-router-dom";
 import "./LandingPage.css";
+import Cookies from "universal-cookie";
+import { login, getUsuarioByEmail } from "../../redux/actions/actions";
+import axios from "axios";
 
 export default function LandingPage() {
+  const dispatch = useDispatch();
+  const error = useSelector(state => state.error);
+  const usuarioReducer = useSelector(state => state.usuario);
   const [menu, SetMenu] = useState(false);
-  const responseGoogle = (response) => {
-    console.log("Este es el nombre: " + response.profileObj.name);
-    console.log("Este es el email: " + response.profileObj.email);
-    console.log("Esta es la foto: " + response.profileObj.imageUrl);
-    window.location.href="/home"
+  const cookies = new Cookies();
+  const [usuario, setUsuario] = useState("hola soy usuario de google");
+
+  const responseGoogle = response => {
+    setUsuario({
+      nombre: response.profileObj.givenName,
+      apellido: response.profileObj.familyName,
+      email: response.profileObj.email,
+      avatar: response.profileObj.imageUrl
+    });
   };
+
+  useEffect(
+    () => {
+      cookies.set("email", usuario.email, { path: "/" });
+      cookies.set("nombre", usuario.nombre, { path: "/" });
+      cookies.set("apellido", usuario.apellido, { path: "/" });
+      cookies.set("avatar", usuario.avatar, { path: "/" });
+      console.log("Bienvenidx " + cookies.get("nombre") + "!");
+
+      if (usuario.email) {
+        console.log("email");
+        if (Object.values(usuarioReducer).length > 0) {
+          console.log("usuario reducer", usuarioReducer);
+          setTimeout(() => {
+            window.location.href = "/home";
+          }, 2000);
+        } else {
+          console.log("error");
+          setTimeout(() => {
+            window.location.href = "/registrogoogle";
+          }, 2000);
+        }
+      }
+    },
+    [usuarioReducer] //fin use effect
+  ); //fin de verdad use effect
+
+  useEffect(
+    () => {
+      console.log("dispatch");
+      dispatch(getUsuarioByEmail(usuario.email));
+    },
+    [usuario]
+  );
 
   const handleMenu = () => {
     SetMenu(!menu);
@@ -23,9 +69,9 @@ export default function LandingPage() {
             <div className="menu">
               <h3>Share Rides</h3>
               <button onClick={handleMenu} className="btn-menu">
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-bars" />
               </button>
-              {menu && (
+              {menu &&
                 <nav className="desplegable">
                   <Link to={"#"} className="login-registro">
                     Acerca De
@@ -36,9 +82,8 @@ export default function LandingPage() {
                   <Link to={"#"} className="login-registro">
                     Donacion
                   </Link>
-                  <div className="animation start-home"></div>
-                </nav>
-              )}
+                  <div className="animation start-home" />
+                </nav>}
             </div>
             <div className="content">
               <div className="text">
@@ -64,13 +109,12 @@ export default function LandingPage() {
                     onFailure={responseGoogle}
                     cookiePolicy={"single_host_origin"}
                     className="btn-google"
-
                   />
                 </div>
               </div>
             </div>
           </div>
-          <div className="photo"></div>
+          <div className="photo" />
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { login, getUsuarioByEmail } from "../../redux/actions/actions";
+import { login } from "../../redux/actions/actions";
 import swal from "sweetalert";
 import fondo from "../../assets/fondo perfil.jpg";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
@@ -16,7 +16,7 @@ export default function Login() {
   const [input, setInput] = useState({ email: "", password: "" });
   const [error, setError] = useState({
     usuario: "",
-    password: ""
+    password: "",
   });
   const [inicioSesion, setInicioSesion] = useState("");
   const [statePassword, setStatePassword] = useState(false);
@@ -24,21 +24,30 @@ export default function Login() {
   function iniciarSesion(input) {
     axios({
       method: "get",
-      url: `http://localhost:3001/api/usuario/iniciarsesion/${input.email}/${input.password}`
+      url: `http://localhost:3001/api/usuario/iniciarsesion/${input.email}/${input.password}`,
     }).then((r) => setInicioSesion(r.data));
   }
 
   function getUsuarioByEmail(email) {
     axios({
       method: "get",
-      url: `http://localhost:3001/api/usuario/usuarios/${email}`
-    })
-    .then((r) => setUsuario(r.data))
+      url: `http://localhost:3001/api/usuario/usuarios/${email}`,
+    }).then((r) => setUsuario(r.data));
+  } //fin function getUsuario
   
-  }; //fin function getUsuario
-
-// console.log(usuario)
-
+    useEffect(() => {
+      cookies.set("dni", usuario.dni, { path: "/" });
+      cookies.set("email", usuario.email, { path: "/" });
+      cookies.set("nombre", usuario.nombre, { path: "/" });
+      cookies.set("apellido", usuario.apellido, { path: "/" });
+      cookies.set("logueado", usuario.logueado, { path: "/" });
+      cookies.set("vehiculo", usuario.vehiculo, { path: "/" });
+      cookies.set("avatar", usuario.avatar, { path: "/" });
+      cookies.set("acercaDeMi", usuario.acercaDeMi, { path: "/" });
+      cookies.set("calificacion", input.calificacion, { path: "/" });
+      console.log(cookies.get("nombre"));
+    }, [usuario]);
+  
   useEffect(() => {
     if (inicioSesion === "contraseña incorrecta") {
       setError({ ...error, password: "Contraseña incorrecta" });
@@ -47,7 +56,7 @@ export default function Login() {
         text: "Contraseña incorrecta",
         icon: "warning",
         button: true,
-        dangerMode: true
+        dangerMode: true,
       });
     } else if (inicioSesion === "usuario no encontrado") {
       setError({ ...error, usuario: "Usuario no registrado" });
@@ -56,7 +65,7 @@ export default function Login() {
         text: "El email ingresado no es válido",
         icon: "warning",
         button: true,
-        dangerMode: true
+        dangerMode: true,
       });
     } else if (inicioSesion === "ok") {
       getUsuarioByEmail(input.email);
@@ -64,27 +73,13 @@ export default function Login() {
       swal({
         title: "El inicio de sesión ha sido exitoso!",
         icon: "success",
-        button: "Bienvenidx!"
+        button: "Bienvenidx!",
       })
-      // .then(console.log(cookies.get("email")+" bienvenidx"))
-      .then(function () {
-        window.location = "/home";
-      });
+        .then(function () {
+          window.location = "/home";
+        });
     }
   }, [inicioSesion]);
-
-  useEffect(() => {
-    cookies.set("dni", usuario.dni, {path: "/"});
-    cookies.set("email", usuario.email, {path: "/"});
-    cookies.set("nombre", usuario.nombre, {path: "/"});
-    cookies.set("apellido", usuario.apellido, {path: "/"});
-    cookies.set("logueado", usuario.logueado, {path: "/"});
-    cookies.set("vehiculo", usuario.vehiculo, {path: "/"});
-    cookies.set("avatar", usuario.avatar, {path: "/"});
-    cookies.set("acercaDeMi", usuario.acercaDeMi, {path: "/"});
-    cookies.set("calificacion", input.calificacion, {path: "/"});
-    console.log(cookies.get("nombre"))
-  }, [usuario])
 
   function handleEye(e) {
     e.preventDefault();
@@ -100,7 +95,7 @@ export default function Login() {
         text: "Por favor complete todos los campos",
         icon: "warning",
         button: true,
-        dangerMode: true
+        dangerMode: true,
       });
     } else if (Object.values(input)[1] === "") {
       e.preventDefault();
@@ -109,7 +104,7 @@ export default function Login() {
         text: "Por favor ingrese su contraseña",
         icon: "warning",
         button: true,
-        dangerMode: true
+        dangerMode: true,
       });
     } else {
       iniciarSesion(input);
@@ -120,7 +115,7 @@ export default function Login() {
     e.preventDefault();
     setInput({
       ...input,
-      email: e.target.value
+      email: e.target.value,
     });
   }
 
@@ -128,7 +123,7 @@ export default function Login() {
     e.preventDefault();
     setInput({
       ...input,
-      password: e.target.value
+      password: e.target.value,
     });
   }
 

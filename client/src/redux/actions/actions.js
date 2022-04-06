@@ -1,5 +1,4 @@
 import axios from "axios";
-
 export const GET_DETALLE_VIAJE = "GET_DETALLE_VIAJE";
 export const INICIAR_SESION = "INICIAR_SESION";
 export const GET_VIAJES_TOTAL = "GET_VIAJES_TOTAL";
@@ -9,6 +8,7 @@ export const LOGGED = "LOGGED";
 export const SEARCHORIGEN = "SEARCHORIGEN";
 export const SEARCHDESTINO = "SEARCHDESTINO";
 export const GET_USUARIOS = "GET_USUARIOS";
+export const USUARIO_MAIL = "USUARIO_MAIL"
 
 export function getDetalleViaje(viajeId) {
   return function (dispatch) {
@@ -167,6 +167,7 @@ export function postViajeConductor(checkboxes, viaje) {
     }
   };
 }
+
 export function login(payload) {
   return async function (dispatch) {
     try {
@@ -183,6 +184,25 @@ export function login(payload) {
     }
   };
 }
+
+export function logout(payload) {
+  return async function (dispatch) {
+    try {
+      let deslogueado = await axios({
+        method: "put",
+        url: "http://localhost:3001/api/usuario/deslogueado",
+        data: {
+          email: payload,
+        },
+      });
+      console.log("deslogueado");
+      return dispatch({ type: "LOGGED_OUT", payload: deslogueado.data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
+
 export function searchOrigen(origen) {
   return async function (dispatch) {
     console.log("action origen", origen);
@@ -209,4 +229,18 @@ export function searchDestino(destino) {
       console.log(error);
     }
   };
+}
+
+export function getUsuarioByEmail(email) {
+  return async function (dispatch){
+  try{
+    let usuario = await axios({
+    method: "get",
+    url: `http://localhost:3001/api/usuario/usuarios/${email}`
+  });
+  return dispatch({type: "USUARIO_MAIL", payload: usuario.data})
+} catch(err) {
+  console.log(err)
+}
+}
 }
