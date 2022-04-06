@@ -7,9 +7,8 @@ export const FILTRO_CHECKS = "FILTRO_CHECKS";
 export const REGISTRO_USUARIO = "REGISTRO_USUARIO";
 export const LOGGED = "LOGGED";
 export const SEARCHORIGEN = "SEARCHORIGEN";
-export const SEARCHDESTINO = "SEARCHDESTINO";
+export const SEARCHDESTINO = "SEARCHDESTINO"
 export const GET_USUARIOS = "GET_USUARIOS";
-export const GET_USUARIOS_EMAIL = "GET_USUARIOS_EMAIL";
 
 export function getDetalleViaje(viajeId) {
   return function (dispatch) {
