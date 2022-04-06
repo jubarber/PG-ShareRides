@@ -6,7 +6,6 @@ import {
   SEARCHORIGEN,
   SEARCHDESTINO,
   GET_USUARIOS,
-  GET_USUARIOS_EMAIL,
 } from "../actions/actions.js";
 
 const initialState = {
