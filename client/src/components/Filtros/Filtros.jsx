@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getViajesTotal,
   filtroChecks,
-  logout
+  logout,
 } from "../../redux/actions/actions";
 import "./Filtros.css";
 import Button from "@mui/material/Button";
@@ -26,20 +26,20 @@ export function Filtros() {
   const filtrosArray = [
     {
       id: 1,
-      name: "Fumador"
+      name: "Fumador",
     },
     {
       id: 2,
-      name: "Mascota"
+      name: "Mascota",
     },
     {
       id: 3,
-      name: "Equipaje"
+      name: "Equipaje",
     },
     {
       id: 4,
-      name: "Barbijo"
-    }
+      name: "Barbijo",
+    },
   ];
 
   useEffect(() => {

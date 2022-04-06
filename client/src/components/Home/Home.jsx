@@ -12,7 +12,6 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { FormControl } from "@mui/material";
 
-
 export default function Home() {
   const dispatch = useDispatch();
   const viajes = useSelector(

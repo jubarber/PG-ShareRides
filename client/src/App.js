@@ -10,6 +10,10 @@ import FormVehiculo from "./components/FormViaje/FormVehiculo";
 import FormConductor from "./components/FormViaje/FormConductor";
 import { DetalleViaje } from "./components/DetalleViaje/DetalleViaje";
 import Login from "./components/Login/Login";
+<<<<<<< HEAD
+=======
+
+>>>>>>> f5fbb7c8b6664657aca2a93455c31a3a3b546f7d
 
 function App() {
   return (
