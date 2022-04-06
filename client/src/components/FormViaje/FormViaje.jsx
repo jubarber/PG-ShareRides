@@ -74,7 +74,6 @@ export default function FormViaje() {
       <div className="wallpaper">
         <img className="stretch" src={fondo} alt="" />
       </div>
-
     </div>
   );
 }

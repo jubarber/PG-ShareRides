@@ -18,7 +18,7 @@ router.post("/conductor", async (req, res, next) => {
       usaBarbijo,
       aceptaEquipaje,
       email,
-      dni
+      dni,
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
@@ -35,7 +35,7 @@ router.post("/conductor", async (req, res, next) => {
         aceptaEquipaje,
         usaBarbijo,
         pagoCompartido,
-        status: "conductor"
+        status: "conductor",
       });
       await nuevoViaje.addUsuario(email);
       res.json(nuevoViaje);
@@ -58,9 +58,9 @@ router.post("/pasajero", async (req, res, next) => {
       aceptaFumador,
       aceptaMascota,
       usaBarbijo,
-      aceptaEquipaje
+      aceptaEquipaje,
       email,
-      dni
+      dni,
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
@@ -77,7 +77,7 @@ router.post("/pasajero", async (req, res, next) => {
         aceptaEquipaje,
         usaBarbijo,
         pagoCompartido,
-        status: "pasajero"
+        status: "pasajero",
       });
       await nuevoViaje.addUsuario(email);
       res.json(nuevoViaje);
@@ -111,9 +111,9 @@ router.get(
             aceptaMascota: aceptaMascota,
             aceptaEquipaje: aceptaEquipaje,
             usaBarbijo: usaBarbijo,
-            asientosAOcupar: asientosAOcupar
+            asientosAOcupar: asientosAOcupar,
           },
-          include: Usuario
+          include: Usuario,
         });
       } else {
         viajesTotal = await Viaje.findAll({
@@ -121,9 +121,9 @@ router.get(
             aceptaFumador: aceptaFumador,
             aceptaMascota: aceptaMascota,
             aceptaEquipaje: aceptaEquipaje,
-            usaBarbijo: usaBarbijo
+            usaBarbijo: usaBarbijo,
           },
-          include: Usuario
+          include: Usuario,
         });
       }
       res.send(viajesTotal);
@@ -132,6 +132,39 @@ router.get(
     }
   }
 );
+router.get("/searchdestino", async (req, res, next) => {
+  const { destino } = req.query;
+  console.log(destino);
+  try {
+    if (destino) {
+      let viajes = await Viaje.findAll();
+      filtradoDestino = await viajes.filter((e) => {
+      return  e.dataValues.destino.toLowerCase().includes(destino.toLowerCase());
+      });
+    }
+    console.log(filtradoDestino);
+    res.send(filtradoDestino);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/searchorigen", async (req, res, next) => {
+  const { origen } = req.query;
+  console.log("back", origen)
+  try {
+    if (origen) {
+      let viajes = await Viaje.findAll();
+       filtradoOrigen = await viajes.filter((e) => {
+       return e.dataValues.origen.toLowerCase().includes(origen.toLowerCase());
+      });
+    }
+    console.log(filtradoOrigen)
+    res.send(filtradoOrigen);
+  } catch (err) {
+    next(err);
+  }
+});
 
 router.get("/:viajeId", async (req, res, next) => {
   const { viajeId } = req.params;
@@ -142,5 +175,11 @@ router.get("/:viajeId", async (req, res, next) => {
     next(err);
   }
 });
+
+
+
+
+
+
 
 module.exports = router;
