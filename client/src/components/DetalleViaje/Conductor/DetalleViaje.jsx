@@ -28,7 +28,7 @@ export const DetalleViaje = () => {
   }, [dispatch, id]);
 
   return (
-    <div className="container-detalle font-mono">
+    <div className="container-detalle">
       <div className="card-detalle">
         <div className="card-usuario-detalle">
           <div className="card-usuario-infper-detalle">
