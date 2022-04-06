@@ -6,6 +6,7 @@ import {
   SEARCHORIGEN,
   SEARCHDESTINO,
   GET_USUARIOS,
+  USUARIO_MAIL
 } from "../actions/actions.js";
 
 const initialState = {
@@ -13,7 +14,8 @@ const initialState = {
   viajes: [],
   viajesFiltrados: [],
   usuarios: [],
-  usuario: []
+  usuario: [],
+  error: ""
 };
 
 function rootReducer(state = initialState, action) {
@@ -42,26 +44,24 @@ function rootReducer(state = initialState, action) {
     case REGISTRO_USUARIO:
       return {
         ...state,
-        usuarios: action.payload,
+        usuarios: action.payload
       };
     case SEARCHDESTINO:
-      console.log(" llegue al reducer destino", action.payload);
-      return {
-        ...state,
-        viajesFiltrados: action.payload,
-      };
-    case SEARCHORIGEN:
-      console.log(" llegue al reducer origen", action.payload);
       return {
         ...state,
         viajesFiltrados: action.payload
       };
     case SEARCHORIGEN:
-      console.log(" llegue al reducer origen", action.payload);
       return {
         ...state,
         viajesFiltrados: action.payload
       };
+    case USUARIO_MAIL:
+      if (action.payload === "error") {
+        return { ...state, error: action.payload, usuario: {} };
+      } else {
+        return { ...state, usuario: action.payload };
+      }
     default:
       return { ...state };
   }
