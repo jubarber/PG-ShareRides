@@ -23,7 +23,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         viajePorId: action.payload,
       };
-
     case GET_VIAJES_TOTAL:
       return {
         ...state,
@@ -41,10 +40,10 @@ function rootReducer(state = initialState, action) {
         ...state,
         viajesFiltrados: action.payload,
       };
-
     case REGISTRO_USUARIO:
       return {
         ...state,
+        usuarios: action.payload,
       };
     case SEARCHDESTINO:
       console.log(" llegue al reducer destino", action.payload);
@@ -58,7 +57,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         viajesFiltrados: action.payload,
       };
-
     default:
       return { ...state };
   }
