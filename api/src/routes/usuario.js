@@ -36,7 +36,8 @@ router.get("/usuarios/:email", async (req, res, next) => {
   const { email } = req.params;
   try {
     let usuario = await Usuario.findByPk(email);
-    res.send(usuario);
+    if(usuario) res.send(usuario);
+    else res.send("error")
   } catch (err) {
     next(err);
   }

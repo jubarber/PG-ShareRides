@@ -17,12 +17,15 @@ import { BiLogOut } from "react-icons/bi";
 import user from "../../assets/user.png";
 import { logout } from "../../redux/actions/actions";
 
+
 export default function NavBar() {
   const dispatch = useDispatch();
   const cookies = new Cookies();
   const cookieNombre = cookies.get("nombre");
   const cookieAvatar = cookies.get("avatar");
   const cookieEmail = cookies.get("email");
+
+
 
   // ------Menu------
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -117,7 +120,7 @@ export default function NavBar() {
             transformOrigin={{ horizontal: "right", vertical: "top" }}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
-            <Link to="/perfil">
+        <Link to="/perfil">
               <MenuItem>
                 <img
                   src={cookieAvatar === "null" ? user : cookieAvatar}
@@ -139,6 +142,7 @@ export default function NavBar() {
                 <BiLogOut style={{ width: 32, height: 32 }} />
               </ListItemIcon>
               Cerrar Sesion
+
             </MenuItem>
           </Menu>
         </div>

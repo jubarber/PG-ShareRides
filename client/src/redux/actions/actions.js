@@ -8,6 +8,7 @@ export const LOGGED = "LOGGED";
 export const SEARCHORIGEN = "SEARCHORIGEN";
 export const SEARCHDESTINO = "SEARCHDESTINO";
 export const GET_USUARIOS = "GET_USUARIOS";
+export const USUARIO_MAIL = "USUARIO_MAIL"
 
 export function getDetalleViaje(viajeId) {
   return function (dispatch) {
@@ -83,7 +84,6 @@ export function registroUsuario(payload) {
     }
   };
 }
-
 export function postViajePasajero(checkboxes, viaje) {
   console.log(viaje);
   return async function (dispatch) {
@@ -229,4 +229,18 @@ export function searchDestino(destino) {
       console.log(error);
     }
   };
+}
+
+export function getUsuarioByEmail(email) {
+  return async function (dispatch){
+  try{
+    let usuario = await axios({
+    method: "get",
+    url: `http://localhost:3001/api/usuario/usuarios/${email}`
+  });
+  return dispatch({type: "USUARIO_MAIL", payload: usuario.data})
+} catch(err) {
+  console.log(err)
+}
+}
 }

@@ -136,8 +136,9 @@ router.get("/searchdestino", async (req, res, next) => {
   const { destino } = req.query;
   console.log(destino);
   try {
+    let filtradoDestino;
     if (destino) {
-      let viajes = await Viaje.findAll();
+      let viajes = await Viaje.findAll({include: Usuario});
       filtradoDestino = await viajes.filter((e) => {
       return  e.dataValues.destino.toLowerCase().includes(destino.toLowerCase());
       });
@@ -153,8 +154,9 @@ router.get("/searchorigen", async (req, res, next) => {
   const { origen } = req.query;
   console.log("back", origen)
   try {
+    let filtradoOrigen;
     if (origen) {
-      let viajes = await Viaje.findAll();
+      let viajes = await Viaje.findAll({include: Usuario});
        filtradoOrigen = await viajes.filter((e) => {
        return e.dataValues.origen.toLowerCase().includes(origen.toLowerCase());
       });
