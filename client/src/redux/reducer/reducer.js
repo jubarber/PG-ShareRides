@@ -35,33 +35,27 @@ function rootReducer(state = initialState, action) {
         ...state,
         usuarios: action.payload,
       };
-    case GET_USUARIOS_EMAIL:
-      return {
-        ...state,
-        usuario: action.payload,
-      }
     case FILTRO_CHECKS:
       return {
         ...state,
         viajesFiltrados: action.payload,
       };
-
     case REGISTRO_USUARIO:
       return {
         ...state,
       };
     case SEARCHDESTINO:
-      console.log(" llegue al reducer destino", action.payload)
+      console.log(" llegue al reducer destino", action.payload);
       return {
         ...state,
         viajesFiltrados: action.payload,
       };
-      case SEARCHORIGEN:
-        console.log(" llegue al reducer origen", action.payload)
-        return {
-          ...state,
-          viajesFiltrados: action.payload,
-        };
+    case SEARCHORIGEN:
+      console.log(" llegue al reducer origen", action.payload);
+      return {
+        ...state,
+        viajesFiltrados: action.payload,
+      };
 
     default:
       return { ...state };

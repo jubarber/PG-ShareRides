@@ -71,6 +71,10 @@ export function Filtros() {
   return (
     <div className="contenedor-filtros" class="font-mono">
       <div className="asientos">
+        <div>
+          <SearchBar />
+        </div>
+
         <FormControl variant="standard" sx={{ m: 1, minWidth: 175 }}>
           <InputLabel
             id="demo-simple-select-standard-label"
@@ -117,31 +121,31 @@ export function Filtros() {
             );
           })}
         </div>
-       </div>
-        <div className="aplicar-limpiar">
-          <Button
-            variant="contained"
-            color="secondary"
-            size="small"
-            type="submit"
-            value="Aplicar filtros"
-            name="Aplicar filtros"
-            onClick={handleSubmit}
-          >
-            Aplicar filtros
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            size="small"
-            type="submit"
-            value="Limpiar filtros"
-            name="Limpiar filtros"
-            onClick={handleLimpiarFiltros}
-          >
-            Limpiar filtros
-          </Button>
-        </div>
-         </div>
+      </div>
+      <div className="aplicar-limpiar">
+        <Button
+          variant="contained"
+          color="secondary"
+          size="small"
+          type="submit"
+          value="Aplicar filtros"
+          name="Aplicar filtros"
+          onClick={handleSubmit}
+        >
+          Aplicar filtros
+        </Button>
+        <Button
+          variant="contained"
+          color="secondary"
+          size="small"
+          type="submit"
+          value="Limpiar filtros"
+          name="Limpiar filtros"
+          onClick={handleLimpiarFiltros}
+        >
+          Limpiar filtros
+        </Button>
+      </div>
+    </div>
   );
 }
