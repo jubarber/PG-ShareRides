@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getViajesTotal,
   filtroChecks,
+  // logout,
 } from "../../redux/actions/actions";
 import "./Filtros.css";
 import Button from "@mui/material/Button";
@@ -12,8 +13,10 @@ import MenuItem from "@mui/material/MenuItem";
 import { FormControl } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
 import SearchBar from "../SearchBar/SearchBar";
+// import Cookies from "universal-cookie";
 
 export function Filtros() {
+  // const cookies = new Cookies();
   const dispatch = useDispatch();
   const viajesFiltrados = useSelector((state) => state.viajesFiltrados?.flat());
   const viajesTotal = useSelector((state) => state.viajes);
@@ -63,6 +66,11 @@ export function Filtros() {
     e.preventDefault();
     dispatch(filtroChecks(isChecked, asiento));
   }
+  // function handleLogout(email) {
+  //   let cookieMail = cookies.get("email");
+  //   dispatch(logout(cookieMail));
+  //   window.location.href = "/";
+  // }
 
   function handleLimpiarFiltros(e) {
     e.preventDefault();
@@ -98,6 +106,15 @@ export function Filtros() {
             <MenuItem value="7">7 </MenuItem>
           </Select>
         </FormControl>
+        {/* <button
+          onClick={handleLogout}
+          variant="contained"
+          color="secondary"
+          size="small"
+          type="submit"
+        >
+          Logout
+        </button> */}
         <div className="checkboxes">
           {filtrosArray.map((e, index) => {
             return (

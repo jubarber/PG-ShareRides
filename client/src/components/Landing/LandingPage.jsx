@@ -2,15 +2,32 @@ import React, { useState } from "react";
 import GoogleLogin from "react-google-login";
 import { Link } from "react-router-dom";
 import "./LandingPage.css";
+import Cookies from "universal-cookie";
+import { login } from "../../redux/actions/actions";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 export default function LandingPage() {
   const [menu, SetMenu] = useState(false);
+  const cookies = new Cookies();
+  const [usuario, setUsuario] = useState("hola soy usuario de google");
+
   const responseGoogle = (response) => {
-    console.log("Este es el nombre: " + response.profileObj.name);
-    console.log("Este es el email: " + response.profileObj.email);
-    console.log("Esta es la foto: " + response.profileObj.imageUrl);
-    window.location.href="/home"
+    setUsuario({
+      nombre: response.profileObj.givenName,
+      apellido: response.profileObj.familyName,
+      email: response.profileObj.email,
+      avatar: response.profileObj.imageUrl,
+    });
+    window.location.href = "/registrogoogle";
   };
+  useEffect(() => {
+    cookies.set("email", usuario.email, { path: "/" });
+    cookies.set("nombre", usuario.nombre, { path: "/" });
+    cookies.set("apellido", usuario.apellido, { path: "/" });
+    cookies.set("avatar", usuario.avatar, { path: "/" });
+    console.log(cookies.get("nombre"));
+  }, [usuario]);
 
   const handleMenu = () => {
     SetMenu(!menu);
@@ -64,7 +81,6 @@ export default function LandingPage() {
                     onFailure={responseGoogle}
                     cookiePolicy={"single_host_origin"}
                     className="btn-google"
-
                   />
                 </div>
               </div>

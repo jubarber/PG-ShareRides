@@ -8,8 +8,9 @@ import FormViaje from "./components/FormViaje/FormViaje";
 import FormPasajero from "./components/FormViaje/FormPasajero";
 import FormVehiculo from "./components/FormViaje/FormVehiculo";
 import FormConductor from "./components/FormViaje/FormConductor";
-import { DetalleViaje } from "./components/DetalleViaje/DetalleViaje";
+import { DetalleViaje } from "./components/DetalleViaje/Conductor/DetalleViaje";
 import Login from "./components/Login/Login";
+import RegistroGoogle from "./components/RegistroGoogle/RegistroGoogle"
 
 function App() {
   return (
@@ -27,10 +28,10 @@ function App() {
           <Route exact path="/formconductor" element={<FormConductor />} />
           <Route exact path="/detalle/:id" element={<DetalleViaje />} />
           <Route exact path="/login" element={<Login />} />
+          <Route exact path="/registrogoogle" element={<RegistroGoogle />} />
         </Routes>
       </BrowserRouter>
     </div>
   );
 }
-
 export default App;
