@@ -8,7 +8,7 @@ import FormViaje from "./components/FormViaje/FormViaje";
 import FormPasajero from "./components/FormViaje/FormPasajero";
 import FormVehiculo from "./components/FormViaje/FormVehiculo";
 import FormConductor from "./components/FormViaje/FormConductor";
-import { DetalleViaje } from "./components/DetalleViaje/DetalleViaje";
+import { DetalleViaje } from "./components/DetalleViaje/Conductor/DetalleViaje";
 import Login from "./components/Login/Login";
 
 function App() {
@@ -32,5 +32,4 @@ function App() {
     </div>
   );
 }
-
 export default App;

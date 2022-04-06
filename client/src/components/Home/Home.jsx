@@ -1,17 +1,17 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getViajesTotal } from "../../redux/actions/actions";
 import { Filtros } from "../Filtros/Filtros";
-import { DetalleViaje } from "../DetalleViaje/DetalleViaje";
-import CardViajeUsuario from "../CardViaje/CardViajeUsuario/CardViajeUsuario";
+// import { DetalleViaje } from "../DetalleViaje/DetalleViaje";
+import CardViajeUsuario from "../CardViaje/CardViajeUsuario/Conductor/CardViajeUsuario";
 import "./Home.css";
 import fondo from "../../assets/fondo perfil.jpg";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { FormControl } from "@mui/material";
-
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -22,8 +22,7 @@ export default function Home() {
     //se monta home y despacho la accion para obtener los viajes
     dispatch(getViajesTotal());
   }, [dispatch]);
-  console.log(viajes);
-  console.log(viajes[0]);
+  console.log("estos es lo que llega", viajes);
   return (
     <div>
       <div className="home-general">
@@ -56,24 +55,38 @@ export default function Home() {
             {viajes.map(
               (e) =>
                 e && (
-                  <div className="card-home">
-                    <CardViajeUsuario
-                      origen={e.origen}
-                      destino={e.destino}
-                      fecha={e.fecha}
-                      hora={e.hora}
-                      asientosAOcupar={e.asientosAOcupar}
-                      aceptaEquipaje={e.aceptaEquipaje}
-                      aceptaFumador={e.aceptaFumador}
-                      aceptaMascota={e.aceptaMascota}
-                      usaBarbijo={e.usaBarbijo}
-                      viajeDisponible={e.viajeDisponible}
-                      key={e.id}
-                      id={e.id}
-                      //nombre={e.usuarios[0].nombre}
-                      //apellido={e.usuarios[0].apellido}
-                    />
-                  </div>
+                  <Link to={"/detalle/" + e.id}>
+                    <div className="card-home">
+                      <CardViajeUsuario
+                        origen={e.origen}
+                        destino={e.destino}
+                        fecha={e.fecha}
+                        hora={e.hora}
+                        asientosAOcupar={e.asientosAOcupar}
+                        aceptaEquipaje={e.aceptaEquipaje}
+                        aceptaFumador={e.aceptaFumador}
+                        aceptaMascota={e.aceptaMascota}
+                        usaBarbijo={e.usaBarbijo}
+                        viajeDisponible={e.viajeDisponible}
+                        key={e.id}
+                        id={e.id}
+                        nombre={
+                          e.usuarios.length > 0 ? (
+                            e.usuarios[0].nombre
+                          ) : (
+                            <>undefined</>
+                          )
+                        }
+                        apellido={
+                          e.usuarios.length > 0 ? (
+                            e.usuarios[0].apellido
+                          ) : (
+                            <>undefined</>
+                          )
+                        }
+                      />
+                    </div>
+                  </Link>
                 )
             )}
           </div>
