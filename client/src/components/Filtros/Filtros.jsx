@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getViajesTotal,
   filtroChecks,
-  logout
+  // logout
 } from "../../redux/actions/actions";
 import "./Filtros.css";
 import Button from "@mui/material/Button";
