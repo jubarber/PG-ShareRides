@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { getDetalleViaje } from "../../redux/actions/actions";
-import Navbar from "../NavBar/NavBar";
+import { getDetalleViaje } from "../../../redux/actions/actions";
+import Navbar from "../../NavBar/NavBar";
 import "./DetalleViaje.css";
-import link from "../CardViaje/Links";
+import link from "../../CardViaje/Links";
 import { MdSmokeFree, MdMasks, MdPets } from "react-icons/md";
 import { FaSuitcaseRolling } from "react-icons/fa";
 import { ImStarEmpty, ImStarHalf, ImStarFull } from "react-icons/im";
 import { VscLocation } from "react-icons/vsc";
-import fondo from "../../assets/fondo perfil.jpg";
+import fondo from "../../../assets/fondo perfil.jpg";
 
 export const DetalleViaje = () => {
   const dispatch = useDispatch();
@@ -20,11 +20,11 @@ export const DetalleViaje = () => {
   // console.log(viaje);
 
   useEffect(() => {
-  //   //para que sea dinamico, descomentar linea 8 y linea 18
-  //   //hacerlo SOLO cuando el componente de la tarjeta del viaje YA TENGA el Link to hecho que redireccione a este componente.
-  //   //sino no funcionará jeje
+    //   //para que sea dinamico, descomentar linea 8 y linea 18
+    //   //hacerlo SOLO cuando el componente de la tarjeta del viaje YA TENGA el Link to hecho que redireccione a este componente.
+    //   //sino no funcionará jeje
 
-   dispatch(getDetalleViaje(id));
+    dispatch(getDetalleViaje(id));
   }, [dispatch, id]);
 
   return (
@@ -37,13 +37,30 @@ export const DetalleViaje = () => {
             </div>
             <div className="card-usuario-nombre-val-detalle text-xl">
               <span className="text-white my-9">
-                {viaje.nombre} {viaje.apellido}
+                Hard code{viaje.nombre} {viaje.apellido}
               </span>
               <span>Valoracion estrellas</span>
             </div>
           </div>
           <span className="ml-4 text-xl">Acerca de mi</span>
-          <div className="card-usuario-resumen-detalle rounded-sm"></div>
+          <div className="card-usuario-resumen-detalle rounded-sm">
+            <span className="m-2">
+              Trabajo en un local, que queda en rosario y necesito viajar
+              seguido a funes
+            </span>
+          </div>
+          <div className="card-usuario-resumen-detalle rounded-sm">
+            <span className="m-2">
+              Viajo con dos valijas y un perrito chiquito, estoy dispuesto a
+              compartir gastos! vamos a escrtibir mucho para ver como queda esto
+              creo que son demasiados caracteres
+            </span>
+          </div>
+          <div className="btn-detalle">
+            <button className="detalle-mensaje">
+              <Link to="/login">Enviar mensaje</Link>
+            </button>
+          </div>
         </div>
         <div className="card-viaje-detalle text-xl">
           <div className="flex flex-col justify-evenly w-full ml-4">
@@ -81,7 +98,10 @@ export const DetalleViaje = () => {
             </span>
             <span>
               Forma de pago:{" "}
-              <span className="font-bold">{viaje.formaDePago}</span>
+              <span className="font-bold">
+                {/* no llega bien forma de pago */}
+                {viaje.formaDePago ? viaje.formaDePago : "no"}
+              </span>
             </span>
             <span>
               Comparte gastos:
@@ -111,7 +131,7 @@ export const DetalleViaje = () => {
             </span>
             <span className="flex items-center">
               <MdMasks className="mx-2" />
-              Usa Barbijo:{" "}
+              Usa obligatorio de Barbijo:{" "}
               <span className="font-bold">
                 {viaje.usaBarbijo ? "sí" : "no"}
               </span>
