@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import fondo from "../../assets/fondo perfil.jpg";
 import "./Perfil.css";
@@ -8,11 +8,25 @@ import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import PaginacionComentarios from "./PaginacionComentarios";
 import foto from "../../assets/userRojo.jpg";
-import { getUsuarios } from "../../redux/actions/actions";
+import { getUsuarios, getUsuariosById } from "../../redux/actions/actions";
 
 export default function Perfil() {
   const dispatch = useDispatch();
   const miUsuario = useSelector((state) => state.usuarios);
+
+  useEffect(() => {
+    dispatch(getUsuarios());
+  }, []);
+
+  // const perfil = useSelector((state) => state.usuariosPorId);
+  // const { email } = useParams();
+  // useEffect(() => {
+  //   console.log("soy email", email);
+  //   dispatch(getUsuariosById(email));
+  // }, []);
+  // console.log("click", email);
+  // console.log("perfil", perfil);
+
   console.log(miUsuario);
   const [usuario, setUsuario] = useState({
     Nombre: "",
@@ -60,10 +74,6 @@ export default function Perfil() {
     e.preventDefault();
     setHabilitarImagen(!habilitarImagen);
   };
-
-  useEffect(() => {
-    dispatch(getUsuarios());
-  }, [dispatch]);
 
   const handleChange = (e) => {
     setUsuario({

@@ -13,7 +13,7 @@ export default function Login() {
   const [input, setInput] = useState({ email: "", password: "" });
   const [error, setError] = useState({
     usuario: "",
-    password: ""
+    password: "",
   });
   const [inicioSesion, setInicioSesion] = useState("");
   const [statePassword, setStatePassword] = useState(false);
@@ -21,7 +21,7 @@ export default function Login() {
   function iniciarSesion(input) {
     axios({
       method: "get",
-      url: `http://localhost:3001/api/usuario/iniciarsesion/${input.email}/${input.password}`
+      url: `http://localhost:3001/api/usuario/iniciarsesion/${input.email}/${input.password}`,
     }).then((r) => setInicioSesion(r.data));
   }
 
@@ -33,7 +33,7 @@ export default function Login() {
         text: "Contraseña incorrecta",
         icon: "warning",
         button: true,
-        dangerMode: true
+        dangerMode: true,
       });
     } else if (inicioSesion === "usuario no encontrado") {
       setError({ ...error, usuario: "Usuario no registrado" });
@@ -42,14 +42,15 @@ export default function Login() {
         text: "El email ingresado no es válido",
         icon: "warning",
         button: true,
-        dangerMode: true
+        dangerMode: true,
       });
     } else if (inicioSesion === "ok") {
+      console.log("holaaa");
       dispatch(login(input.email));
       swal({
         title: "El inicio de sesión ha sido exitoso!",
         icon: "success",
-        button: "Bienvenidx!"
+        button: "Bienvenidx!",
       }).then(function () {
         window.location = "/home";
       });
@@ -70,7 +71,7 @@ export default function Login() {
         text: "Por favor complete todos los campos",
         icon: "warning",
         button: true,
-        dangerMode: true
+        dangerMode: true,
       });
     } else if (Object.values(input)[1] === "") {
       e.preventDefault();
@@ -79,11 +80,10 @@ export default function Login() {
         text: "Por favor ingrese su contraseña",
         icon: "warning",
         button: true,
-        dangerMode: true
+        dangerMode: true,
       });
     } else {
       iniciarSesion(input);
-      setInput({ email: "", password: "" });
     }
   };
 
@@ -91,7 +91,7 @@ export default function Login() {
     e.preventDefault();
     setInput({
       ...input,
-      email: e.target.value
+      email: e.target.value,
     });
   }
 
@@ -99,7 +99,7 @@ export default function Login() {
     e.preventDefault();
     setInput({
       ...input,
-      password: e.target.value
+      password: e.target.value,
     });
   }
 

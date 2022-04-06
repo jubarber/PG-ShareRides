@@ -7,6 +7,7 @@ export const FILTRO_CHECKS = "FILTRO_CHECKS";
 export const REGISTRO_USUARIO = "REGISTRO_USUARIO";
 export const LOGGED = "LOGGED";
 export const GET_USUARIOS = "GET_USUARIOS";
+export const GET_USUARIOS_BY_ID = "GET_USUARIOS_BY_ID";
 
 export function getDetalleViaje(viajeId) {
   return function (dispatch) {
@@ -39,6 +40,23 @@ export function getUsuarios() {
         "http://localhost:3001/api/usuario/usuarios"
       );
       return dispatch({ type: "GET_USUARIOS", payload: usuarios.data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
+
+export function getUsuariosById(email) {
+  return async function (dispatch) {
+    try {
+      let usuarioID = await axios.get(
+        `http://localhost:3001/api/usuario/usuarios/${email}`
+      );
+      console.log("action", usuarioID.data);
+      return dispatch({
+        type: "GET_USUARIOS_BY_ID",
+        payload: usuarioID.data,
+      });
     } catch (err) {
       console.log(err);
     }

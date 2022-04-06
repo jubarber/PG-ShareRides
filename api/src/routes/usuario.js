@@ -32,17 +32,28 @@ router.get("/usuarios", async (req, res, next) => {
   }
 });
 
+router.get("/usuarios/:email", async (req, res, next) => {
+  const { email } = req.params;
+  try {
+    let usuarioEncontrado = await Usuario.findByPk(email);
+    console.log(usuarioEncontrado.dataValues);
+    res.send(usuarioEncontrado);
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.post("/registro", async (req, res, next) => {
   try {
     const { email, nombre, apellido, password, vehiculo } = req.body;
     let nuevoUsuario;
     if (vehiculo) {
       nuevoUsuario = await Usuario.findOrCreate({
-        where: { email, nombre, apellido, password, vehiculo} //vehiculo = patente del auto
+        where: { email, nombre, apellido, password, vehiculo }, //vehiculo = patente del auto
       });
     } else {
       nuevoUsuario = await Usuario.findOrCreate({
-        where: { email, nombre, apellido, password}
+        where: { email, nombre, apellido, password },
       });
     }
     res.json(nuevoUsuario);
@@ -65,11 +76,12 @@ router.put("/cambiopassword", async (req, res, next) => {
 
 router.put("/logueado", async (req, res, next) => {
   const { email } = req.body;
-  try{
+  try {
     let usuario = await Usuario.findByPk(email);
-    usuario.update({logueado: true});
+    console.log(usuario);
+    usuario.update({ logueado: true });
     usuario.save();
-  }catch(err){
+  } catch (err) {
     next(err);
   }
 });

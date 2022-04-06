@@ -19,7 +19,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
           <Route exact path="/home" element={<Home />} />
-          <Route exact path="/perfil" element={<Perfil />} />
+          <Route exact path="/perfil/:email" element={<Perfil />} />
           <Route exact path="/registro" element={<FormRegistro />} />
           <Route exact path="/formviaje" element={<FormViaje />} />
           <Route exact path="/formpasajero" element={<FormPasajero />} />

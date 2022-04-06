@@ -4,6 +4,7 @@ import {
   FILTRO_CHECKS,
   REGISTRO_USUARIO,
   GET_USUARIOS,
+  GET_USUARIOS_BY_ID,
 } from "../actions/actions.js";
 
 const initialState = {
@@ -11,6 +12,7 @@ const initialState = {
   viajes: [],
   viajesFiltrados: [],
   usuarios: [],
+  usuariosPorId: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -31,6 +33,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         usuarios: action.payload,
+      };
+    case GET_USUARIOS_BY_ID:
+      return {
+        ...state,
+        usuariosPorId: action.payload,
       };
     case FILTRO_CHECKS:
       return {

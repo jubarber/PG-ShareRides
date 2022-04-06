@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Filtros } from "../Filtros/Filtros";
 import "./NavBar.css";
 import userRojo from "../../assets/userRojo.jpg";
 import logo from "../../assets/Icono shareRides.png";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getUsuariosById, getUsuarios } from "../../redux/actions/actions";
 
 export default function NavBar() {
+  const dispatch = useDispatch();
+
+  const email = "julio@gmail.com";
+
   return (
     <div className="contenedor-NavBar">
       <div className="contenedor-titulo">
@@ -25,7 +31,7 @@ export default function NavBar() {
         </div>
         <div className="info-usuario">
           <h3>Hola</h3>
-          <Link to="/perfil">
+          <Link to={`/perfil/${email}`}>
             <img src={userRojo} alt="" />
           </Link>
         </div>
