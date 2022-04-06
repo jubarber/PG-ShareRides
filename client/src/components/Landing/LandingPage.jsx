@@ -9,6 +9,7 @@ export default function LandingPage() {
     console.log("Este es el nombre: " + response.profileObj.name);
     console.log("Este es el email: " + response.profileObj.email);
     console.log("Esta es la foto: " + response.profileObj.imageUrl);
+    window.location.href="/home"
   };
 
   const handleMenu = () => {
@@ -63,6 +64,7 @@ export default function LandingPage() {
                     onFailure={responseGoogle}
                     cookiePolicy={"single_host_origin"}
                     className="btn-google"
+
                   />
                 </div>
               </div>

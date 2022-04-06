@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { login } from "../../redux/actions/actions";
+import { login, getUsuarioByEmail } from "../../redux/actions/actions";
 import swal from "sweetalert";
 import fondo from "../../assets/fondo perfil.jpg";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
 import "./Login.css";
+import Cookies from "universal-cookie";
 
 export default function Login() {
+  const cookies = new Cookies();
   const dispatch = useDispatch();
+  const [usuario, setUsuario] = useState("hola soy usuario vacio");
   const [input, setInput] = useState({ email: "", password: "" });
   const [error, setError] = useState({
     usuario: "",
@@ -24,6 +27,17 @@ export default function Login() {
       url: `http://localhost:3001/api/usuario/iniciarsesion/${input.email}/${input.password}`
     }).then((r) => setInicioSesion(r.data));
   }
+
+  function getUsuarioByEmail(email) {
+    axios({
+      method: "get",
+      url: `http://localhost:3001/api/usuario/usuarios/${email}`
+    })
+    .then((r) => setUsuario(r.data))
+  
+  }; //fin function getUsuario
+
+// console.log(usuario)
 
   useEffect(() => {
     if (inicioSesion === "contraseña incorrecta") {
@@ -45,16 +59,32 @@ export default function Login() {
         dangerMode: true
       });
     } else if (inicioSesion === "ok") {
+      getUsuarioByEmail(input.email);
       dispatch(login(input.email));
       swal({
         title: "El inicio de sesión ha sido exitoso!",
         icon: "success",
         button: "Bienvenidx!"
-      }).then(function () {
+      })
+      // .then(console.log(cookies.get("email")+" bienvenidx"))
+      .then(function () {
         window.location = "/home";
       });
     }
   }, [inicioSesion]);
+
+  useEffect(() => {
+    cookies.set("dni", usuario.dni, {path: "/"});
+    cookies.set("email", usuario.email, {path: "/"});
+    cookies.set("nombre", usuario.nombre, {path: "/"});
+    cookies.set("apellido", usuario.apellido, {path: "/"});
+    cookies.set("logueado", usuario.logueado, {path: "/"});
+    cookies.set("vehiculo", usuario.vehiculo, {path: "/"});
+    cookies.set("avatar", usuario.avatar, {path: "/"});
+    cookies.set("acercaDeMi", usuario.acercaDeMi, {path: "/"});
+    cookies.set("calificacion", input.calificacion, {path: "/"});
+    console.log(cookies.get("nombre"))
+  }, [usuario])
 
   function handleEye(e) {
     e.preventDefault();
@@ -83,7 +113,6 @@ export default function Login() {
       });
     } else {
       iniciarSesion(input);
-      setInput({ email: "", password: "" });
     }
   };
 
