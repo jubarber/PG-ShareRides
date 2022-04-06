@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import fondo from "../../assets/fondo perfil.jpg";
 import "./Perfil.css";
 import { FaEdit } from "react-icons/fa";
@@ -7,8 +8,12 @@ import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import PaginacionComentarios from "./PaginacionComentarios";
 import foto from "../../assets/userRojo.jpg";
+import { getUsuarios } from "../../redux/actions/actions";
 
 export default function Perfil() {
+  const dispatch = useDispatch();
+  const miUsuario = useSelector((state) => state.usuarios);
+  console.log(miUsuario);
   const [usuario, setUsuario] = useState({
     Nombre: "",
     Apellido: "",
@@ -25,56 +30,15 @@ export default function Perfil() {
   const [habilitarAcercaDeMi, setHabilitarAcercaDeMi] = useState(true);
   const [habilitarImagen, setHabilitarImagen] = useState(true);
 
-  let array = [
-    {
-      Nombre: "Julio",
-      Puntuacion: 4,
-      Comentario: "sfsofsifisfhsfihsifoshfoshfsofhsofhs",
-    },
-    {
-      Nombre: "Julio",
-      Puntuacion: 4,
-      Comentario: "sfsofsifisfhsfihsifoshfoshfsofhsofhs",
-    },
-    {
-      Nombre: "Julio",
-      Puntuacion: 4,
-      Comentario:
-        "Holaaaa no me voy a arreglar, sufri aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    },
-    {
-      Nombre: "Julio",
-      Puntuacion: 4,
-      Comentario: "sfsofsifisfhsfihsifoshfoshfsofhsofhs",
-    },
-    {
-      Nombre: "Julio",
-      Puntuacion: 4,
-      Comentario: "sfsofsifisfhsfihsifoshfoshfsofhsofhs",
-    },
-    {
-      Nombre: "Julio",
-      Puntuacion: 4,
-      Comentario: `sfsofsifis
-      fhsfihsifoshfoshfsofhsofhs`,
-    },
-    {
-      Nombre: "Julio",
-      Puntuacion: 4,
-      Comentario: `sfsofsifisfhsfihsifoshfo
-      shfsofhsofhs`,
-    },
-  ];
+  // const [pagina, setPagina] = useState(1);
+  // const [comentariosPorPagina, setComentariosPorPagina] = useState(3);
+  // const ultimoComentario = pagina * comentariosPorPagina;
+  // const primerComentario = ultimoComentario - comentariosPorPagina;
+  // const personitas = array?.slice(primerComentario, ultimoComentario);
 
-  const [pagina, setPagina] = useState(1);
-  const [comentariosPorPagina, setComentariosPorPagina] = useState(3);
-  const ultimoComentario = pagina * comentariosPorPagina;
-  const primerComentario = ultimoComentario - comentariosPorPagina;
-  const personitas = array?.slice(primerComentario, ultimoComentario);
-
-  const paginacion = (pageNum) => {
-    setPagina(pageNum);
-  };
+  // const paginacion = (pageNum) => {
+  //   setPagina(pageNum);
+  // };
 
   const handleCheck = (e) => {
     setCheck(!check);
@@ -97,6 +61,10 @@ export default function Perfil() {
     setHabilitarImagen(!habilitarImagen);
   };
 
+  useEffect(() => {
+    dispatch(getUsuarios());
+  }, [dispatch]);
+
   const handleChange = (e) => {
     setUsuario({
       ...usuario,
@@ -112,7 +80,9 @@ export default function Perfil() {
             <img src={foto} alt="" />
           </div>
           <div className="bio-perfil">
-            <h1>Julio Humere</h1>
+            <h1>
+              {miUsuario[0]?.nombre} {miUsuario[0]?.apellido}
+            </h1>
             <input
               type="text"
               onChange={handleChange}
@@ -144,7 +114,7 @@ export default function Perfil() {
                 className="input-perfil"
                 onChange={handleChange}
                 name="Nombre"
-                value={usuario.Nombre}
+                value={miUsuario[0]?.nombre}
                 disabled
               />
               <button disabled>
@@ -156,9 +126,8 @@ export default function Perfil() {
               <input
                 type="text"
                 className="input-perfil"
-                onChange={handleChange}
                 name="Apellido"
-                value={usuario.Apellido}
+                value={miUsuario[0]?.apellido}
                 disabled
               />
               <button disabled>
@@ -172,7 +141,7 @@ export default function Perfil() {
                 className="input-perfil"
                 onChange={handleChange}
                 name="Email"
-                value={usuario.Email}
+                value={miUsuario[0]?.email}
                 disabled
               />
               <button disabled>
@@ -234,7 +203,7 @@ export default function Perfil() {
             </Button>
           </div>
         </form>
-        {personitas &&
+        {/* {personitas &&
           personitas.map((e) => (
             <div className="resenas-card">
               <div className="encabezado">
@@ -246,16 +215,16 @@ export default function Perfil() {
                 <p>{e.Comentario}</p>
               </div>
             </div>
-          ))}
+          ))} */}
       </div>
       <div className="pag">
-        <PaginacionComentarios
+        {/* <PaginacionComentarios
           comentariosPorPagina={comentariosPorPagina}
           array={array.length}
           paginacion={paginacion}
           pagina={pagina}
           setPagina={setPagina}
-        />
+        /> */}
       </div>
       <div className="wallpaper">
         <img className="stretch" src={fondo} alt="" />

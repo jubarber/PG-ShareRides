@@ -4,7 +4,9 @@ import {
   FILTRO_CHECKS,
   REGISTRO_USUARIO,
   SEARCHORIGEN,
-  SEARCHDESTINO
+  SEARCHDESTINO,
+  GET_USUARIOS,
+  GET_USUARIOS_EMAIL,
 } from "../actions/actions.js";
 
 const initialState = {
@@ -12,6 +14,7 @@ const initialState = {
   viajes: [],
   viajesFiltrados: [],
   usuarios: [],
+  usuario: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -28,6 +31,16 @@ function rootReducer(state = initialState, action) {
         viajes: action.payload,
         viajesFiltrados: action.payload,
       };
+    case GET_USUARIOS:
+      return {
+        ...state,
+        usuarios: action.payload,
+      };
+    case GET_USUARIOS_EMAIL:
+      return {
+        ...state,
+        usuario: action.payload,
+      }
     case FILTRO_CHECKS:
       return {
         ...state,

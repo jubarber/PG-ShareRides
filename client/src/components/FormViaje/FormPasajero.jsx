@@ -8,6 +8,7 @@ import swal from "sweetalert";
 import { postViajePasajero } from "../../redux/actions/actions";
 import "./FormPasajero.css";
 import fondo from "../../assets/fondo perfil.jpg";
+import "./FormPasajero.css";
 
 export default function FormPasajero() {
   const dispatch = useDispatch();
@@ -248,14 +249,12 @@ export default function FormPasajero() {
               <span className="Registro__error">{errors.asiento}</span>
             )}
 
-            <div>
+            <div className="Pasajere__checkboxes">
               {filtrosArray.map((e, index) => {
                 return (
-                  <div className="checkbox-formpasajero">
-                    <div>
-                      <label className="label-formpasajero">{e.name}</label>
-                    </div>
-                    <div>
+                  <div>
+                    <label className="Pasajere__mycheckbox">
+                      {e.name}
                       <input
                         type="checkbox"
                         key={e.id}
@@ -265,9 +264,9 @@ export default function FormPasajero() {
                         onChange={() => {
                           handleCheckBox(index);
                         }}
-                        className="checkbox-formpasajero"
                       />
-                    </div>
+                      <span></span>
+                    </label>
                   </div>
                 );
               })}

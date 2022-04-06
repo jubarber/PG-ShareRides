@@ -1,23 +1,36 @@
-.Registro__formulario {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+.Vehiculo__titulo {
+  font-size: 30px;
+  text-align: center;
+  margin-right: 50px;
+}
+
+.Vehiculo__nav {
+  margin-top: 50px;
+}
+
+.Vehiculo__formulario {
   max-width: 800px;
-  width: 90%;
+  width: 100%;
   margin: auto;
   padding: 40px;
   font-size: 20px;
 }
 
-.Registro__formulario_label {
+.Vehiculo__formulario_label {
   display: block;
   font-weight: 500;
   padding: 10px;
   cursor: pointer;
 }
 
-.Registro__input {
-  width: 80%;
+.Vehiculo__grupo_input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Vehiculo__input {
+  width: 35rem;
   background-color: #fff;
   border: 3px solid;
   border-radius: 3px;
@@ -30,31 +43,19 @@
   font-size: medium;
 }
 
-.Registro__input:focus {
+.Vehiculo__input:focus {
   border: 3px solid #9252ff;
   outline: none;
   box-shadow: 3px 0px 30px rgba(163, 163, 163, 0.4);
 }
 
-.Registro__ojo {
-  margin-left: 5px;
-}
-
-.Registro__checkbox {
-  margin-right: 10px;
-}
-
-.grupo_terminos {
-  grid-column: span 2;
-}
-.grupo_btn {
+.Vehiculo__grupo_btn {
+  margin-top: 30px;
   display: flex;
   justify-content: center;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
 }
 
-.Registro__btn_volver {
+.Vehiculo__btn_volver {
   height: 45x;
   line-height: 45px;
   width: 150px;
@@ -68,14 +69,14 @@
   cursor: pointer;
   transition: 0.1s easy all;
 }
-.Registro__btn_volver:hover {
+.Vehiculo__btn_volver:hover {
   box-shadow: 3px 0px 30px rgb(66, 65, 65);
 }
 
-.Registro__btn_registro {
+.Vehiculo__btn_registro {
   height: 45x;
   line-height: 45px;
-  width: 15rem;
+  width: 30%;
   background-color: #9252ff;
   color: #fff;
   font-weight: bold;
@@ -83,16 +84,17 @@
   border-radius: 3px;
   cursor: pointer;
   transition: 0.1s easy all;
+  margin-left: 5%;
 }
 
-.Registro__btn_registro:hover {
+.Vehiculo__btn_registro:hover {
   box-shadow: 3px 0px 30px rgba(163, 163, 163, 1);
 }
 
-.Registro__disabled {
+.Vehiculo__disabled {
   height: 45x;
   line-height: 45px;
-  width: 15rem;
+  width: 30%;
   background: rgb(154, 153, 153);
   color: #fff;
   font-weight: bold;
@@ -101,13 +103,13 @@
   transition: 0.1s easy all;
 }
 
-.Registro__error {
+.Vehiculo__error {
   color: rgb(201, 25, 25);
   padding: 5px;
   display: flex;
   text-align: left;
   justify-content: left;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 600;
 
   animation-name: error;

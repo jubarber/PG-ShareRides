@@ -64,6 +64,7 @@ export default function LandingPage() {
                     onFailure={responseGoogle}
                     cookiePolicy={"single_host_origin"}
                     className="btn-google"
+
                   />
                 </div>
               </div>

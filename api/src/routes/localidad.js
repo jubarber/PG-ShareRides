@@ -24,7 +24,7 @@ router.get("/localidades", async (req, res, next) => {
             return {
               nombre: e.nombre,
               municipio: e.municipio_nombre,
-              provincia: e.provincia_nombre
+              provincia: e.provincia_nombre,
             };
           });
         }
@@ -33,8 +33,8 @@ router.get("/localidades", async (req, res, next) => {
             where: {
               nombre: e.nombre,
               municipio: e.municipio,
-              provincia: e.provincia
-            }
+              provincia: e.provincia,
+            },
           });
         });
         res.send(apiLocalidades);

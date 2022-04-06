@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "./components/Landing/LandingPage";
 import Home from "./components/Home/Home";
-// import Filtros from "./components/Filtros/Filtros";
 import NavBar from "./components/NavBar/NavBar";
 import Perfil from "./components/Perfil/Perfil";
 import FormRegistro from './components/FormRegistro/FormRegistro';
@@ -11,8 +10,6 @@ import FormVehiculo from "./components/FormViaje/FormVehiculo"
 import FormConductor from "./components/FormViaje/FormConductor"
 import { DetalleViaje } from "./components/DetalleViaje/DetalleViaje";
 import Login from "./components/Login/Login"
-
-
 
 function App() {
   return (
@@ -30,7 +27,6 @@ function App() {
           <Route exact path="/formconductor" element = {<FormConductor />} />
           <Route exact path="/detalle/:id" element={<DetalleViaje />} />
           <Route exact path="/login" element={<Login />} />
-
         </Routes>
       </BrowserRouter>
     </div>

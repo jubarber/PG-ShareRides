@@ -68,7 +68,6 @@ export function Filtros() {
     setIsChecked(estadoLimpio);
     setAsiento("");
   }
-
   return (
     <div className="contenedor-filtros" class="font-mono">
       <div className="asientos">
@@ -118,32 +117,31 @@ export function Filtros() {
             );
           })}
         </div>
-      </div>
-      <div className="aplicar-limpiar">
-        <Button
-          variant="contained"
-          color="secondary"
-          type="submit"
-          value="Aplicar filtros"
-          name="Aplicar filtros"
-          onClick={handleSubmit}
-        >
-          Aplicar filtros
-        </Button>
-        <div>
-          <SearchBar />
+       </div>
+        <div className="aplicar-limpiar">
+          <Button
+            variant="contained"
+            color="secondary"
+            size="small"
+            type="submit"
+            value="Aplicar filtros"
+            name="Aplicar filtros"
+            onClick={handleSubmit}
+          >
+            Aplicar filtros
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            size="small"
+            type="submit"
+            value="Limpiar filtros"
+            name="Limpiar filtros"
+            onClick={handleLimpiarFiltros}
+          >
+            Limpiar filtros
+          </Button>
         </div>
-        <Button
-          variant="contained"
-          color="secondary"
-          type="submit"
-          value="Limpiar filtros"
-          name="Limpiar filtros"
-          onClick={handleLimpiarFiltros}
-        >
-          Limpiar filtros
-        </Button>
-      </div>
-    </div>
+         </div>
   );
 }
