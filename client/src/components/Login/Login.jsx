@@ -60,15 +60,6 @@ export default function Login() {
       });
     } else if (inicioSesion === "ok") {
       getUsuarioByEmail(input.email);
-      // cookies.set("dni", usuario.dni, {path: "/"});
-      // cookies.set("email", usuario.email, {path: "/"});
-      // cookies.set("nombre", usuario.nombre, {path: "/"});
-      // cookies.set("apellido", usuario.apellido, {path: "/"});
-      // cookies.set("logueado", usuario.logueado, {path: "/"});
-      // cookies.set("vehiculo", usuario.vehiculo, {path: "/"});
-      // cookies.set("avatar", usuario.avatar, {path: "/"});
-      // cookies.set("acercaDeMi", usuario.acercaDeMi, {path: "/"});
-      // cookies.set("calificacion", input.calificacion, {path: "/"});
       dispatch(login(input.email));
       swal({
         title: "El inicio de sesión ha sido exitoso!",
