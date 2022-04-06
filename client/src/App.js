@@ -10,10 +10,7 @@ import FormVehiculo from "./components/FormViaje/FormVehiculo";
 import FormConductor from "./components/FormViaje/FormConductor";
 import { DetalleViaje } from "./components/DetalleViaje/DetalleViaje";
 import Login from "./components/Login/Login";
-<<<<<<< HEAD
-=======
-
->>>>>>> f5fbb7c8b6664657aca2a93455c31a3a3b546f7d
+import RegistroGoogle from "./components/RegistroGoogle/RegistroGoogle"
 
 function App() {
   return (
@@ -31,6 +28,7 @@ function App() {
           <Route exact path="/formconductor" element={<FormConductor />} />
           <Route exact path="/detalle/:id" element={<DetalleViaje />} />
           <Route exact path="/login" element={<Login />} />
+          <Route exact path="/registrogoogle" element={<RegistroGoogle />} />
         </Routes>
       </BrowserRouter>
     </div>
