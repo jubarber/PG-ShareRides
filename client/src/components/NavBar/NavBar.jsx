@@ -16,7 +16,7 @@ import Tooltip from "@mui/material/Tooltip";
 import { BiLogOut } from "react-icons/bi";
 import user from "../../assets/user.png";
 import { logout } from "../../redux/actions/actions";
-
+import { FaHome } from "react-icons/fa";
 
 export default function NavBar() {
   const dispatch = useDispatch();
@@ -24,8 +24,6 @@ export default function NavBar() {
   const cookieNombre = cookies.get("nombre");
   const cookieAvatar = cookies.get("avatar");
   const cookieEmail = cookies.get("email");
-
-
 
   // ------Menu------
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -53,7 +51,9 @@ export default function NavBar() {
         </div>
         <div className="panel-botones">
           <button class="btn btn-outline-primary" type="button">
-            <Link to="/home">Home</Link>
+            <Link to="/home">
+              <FaHome />
+            </Link>
           </button>
           <button type="button" class="btn btn-outline-primary">
             <Link to="/formviaje">Crear Viaje</Link>
@@ -120,7 +120,7 @@ export default function NavBar() {
             transformOrigin={{ horizontal: "right", vertical: "top" }}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
-        <Link to="/perfil">
+            <Link to="/perfil">
               <MenuItem>
                 <img
                   src={cookieAvatar === "null" ? user : cookieAvatar}
@@ -142,7 +142,6 @@ export default function NavBar() {
                 <BiLogOut style={{ width: 32, height: 32 }} />
               </ListItemIcon>
               Cerrar Sesion
-
             </MenuItem>
           </Menu>
         </div>
