@@ -15,7 +15,6 @@ import { FormControl } from "@mui/material";
 
 export default function Home() {
   const dispatch = useDispatch();
-
   const viajes = useSelector(
     (state) => state.viajesFiltrados //me traigo el estado de los viajes para poder mostrarlos
   );

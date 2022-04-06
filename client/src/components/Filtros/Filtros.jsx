@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getViajesTotal, filtroChecks } from "../../redux/actions/actions";
+import {
+  getViajesTotal,
+  filtroChecks,
+  logout
+} from "../../redux/actions/actions";
 import "./Filtros.css";
 import Button from "@mui/material/Button";
 import InputLabel from "@mui/material/InputLabel";
@@ -9,8 +13,10 @@ import MenuItem from "@mui/material/MenuItem";
 import { FormControl } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
 import SearchBar from "../SearchBar/SearchBar";
+// import Cookies from "universal-cookie";
 
 export function Filtros() {
+  // const cookies = new Cookies();
   const dispatch = useDispatch();
   const viajesFiltrados = useSelector((state) => state.viajesFiltrados?.flat());
   const viajesTotal = useSelector((state) => state.viajes);
@@ -20,20 +26,20 @@ export function Filtros() {
   const filtrosArray = [
     {
       id: 1,
-      name: "Fumador",
+      name: "Fumador"
     },
     {
       id: 2,
-      name: "Mascota",
+      name: "Mascota"
     },
     {
       id: 3,
-      name: "Equipaje",
+      name: "Equipaje"
     },
     {
       id: 4,
-      name: "Barbijo",
-    },
+      name: "Barbijo"
+    }
   ];
 
   useEffect(() => {
@@ -60,6 +66,11 @@ export function Filtros() {
     e.preventDefault();
     dispatch(filtroChecks(isChecked, asiento));
   }
+  // function handleLogout(email) {
+  //   let cookieMail = cookies.get("email");
+  //   dispatch(logout(cookieMail));
+  //   window.location.href = "/";
+  // }
 
   function handleLimpiarFiltros(e) {
     e.preventDefault();
@@ -95,6 +106,15 @@ export function Filtros() {
             <MenuItem value="7">7 </MenuItem>
           </Select>
         </FormControl>
+        {/* <button
+          onClick={handleLogout}
+          variant="contained"
+          color="secondary"
+          size="small"
+          type="submit"
+        >
+          Logout
+        </button> */}
         <div className="checkboxes">
           {filtrosArray.map((e, index) => {
             return (
@@ -117,31 +137,31 @@ export function Filtros() {
             );
           })}
         </div>
-       </div>
-        <div className="aplicar-limpiar">
-          <Button
-            variant="contained"
-            color="secondary"
-            size="small"
-            type="submit"
-            value="Aplicar filtros"
-            name="Aplicar filtros"
-            onClick={handleSubmit}
-          >
-            Aplicar filtros
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            size="small"
-            type="submit"
-            value="Limpiar filtros"
-            name="Limpiar filtros"
-            onClick={handleLimpiarFiltros}
-          >
-            Limpiar filtros
-          </Button>
-        </div>
-         </div>
+      </div>
+      <div className="aplicar-limpiar">
+        <Button
+          variant="contained"
+          color="secondary"
+          size="small"
+          type="submit"
+          value="Aplicar filtros"
+          name="Aplicar filtros"
+          onClick={handleSubmit}
+        >
+          Aplicar filtros
+        </Button>
+        <Button
+          variant="contained"
+          color="secondary"
+          size="small"
+          type="submit"
+          value="Limpiar filtros"
+          name="Limpiar filtros"
+          onClick={handleLimpiarFiltros}
+        >
+          Limpiar filtros
+        </Button>
+      </div>
+    </div>
   );
 }
