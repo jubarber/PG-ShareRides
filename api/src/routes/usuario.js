@@ -79,6 +79,19 @@ router.put("/logueado", async (req, res, next) => {
     let usuario = await Usuario.findByPk(email);
     usuario.update({ logueado: true });
     usuario.save();
+    res.send("usuario logueado")
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.put("/deslogueado", async (req, res, next) => {
+  const { email } = req.body;
+  try {
+    let usuario = await Usuario.findByPk(email);
+    usuario.update({ logueado: false });
+    usuario.save();
+    res.send("usuario deslogueado")
   } catch (err) {
     next(err);
   }
