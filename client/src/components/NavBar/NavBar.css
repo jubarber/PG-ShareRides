@@ -40,6 +40,25 @@
   align-items: center;
   justify-content: space-around;
 }
+#root
+  > div
+  > div.contenedor-NavBar
+  > div
+  > div.panel-botones
+  > button:nth-child(1)
+  > a:hover {
+  color: white;
+}
+
+#root
+  > div
+  > div.contenedor-NavBar
+  > div
+  > div.panel-botones
+  > button:nth-child(2)
+  > a:hover {
+  color: white;
+}
 
 .btn-outline-primary {
   color: white;
@@ -56,11 +75,60 @@
   padding-left: 5rem;
 }
 .info-usuario h3 {
-  margin-right: 1rem;
+  font-size: 1.5rem;
+  color: white;
 }
 
 .info-usuario img {
   width: 4rem;
   height: 4rem;
+  border-radius: 50%;
+}
+
+#account-menu
+  > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiMenu-paper.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation0.MuiPopover-paper.css-aqqxug-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
+  left: 1060px;
+}
+
+#account-menu
+  > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiMenu-paper.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation0.MuiPopover-paper.css-aqqxug-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper
+  > ul
+  > a {
+  width: 10rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+#account-menu
+  > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiMenu-paper.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation0.MuiPopover-paper.css-aqqxug-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper
+  > ul {
+  width: 10rem;
+}
+
+#account-menu
+  > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiMenu-paper.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation0.MuiPopover-paper.css-aqqxug-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper
+  > ul
+  > a
+  > li {
+  width: 10rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+#account-menu
+  > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiMenu-paper.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation0.MuiPopover-paper.css-aqqxug-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper
+  > ul
+  > li:nth-child(3) {
+  width: 10rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+#account-menu
+  > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiMenu-paper.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation0.MuiPopover-paper.css-aqqxug-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper
+  > ul
+  > a
+  > li
+  > img {
   border-radius: 50%;
 }

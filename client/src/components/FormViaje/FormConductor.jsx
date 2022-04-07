@@ -28,8 +28,8 @@ export default function FormPasajero() {
     fecha: /^.{4,18}$/,
     hora: /^.{4,12}$/,
     asiento: /^.{1,7}$/,
-    origen: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
-    destino: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
+    origen: /^[a-zA-ZÀ-ÿ\s]{4,30}$/,
+    destino: /^[a-zA-ZÀ-ÿ\s]{4,30}$/,
     dni: /^(?!^0+$)[a-zA-Z0-9]{3,20}$/,
   };
 
