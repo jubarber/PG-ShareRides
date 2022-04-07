@@ -19,10 +19,7 @@
 #nueva-clase:hover {
   transform: translateY(-0.1em);
   box-shadow: 0px 12px 16px rgba(0, 0, 0, 0.2);
-<<<<<<< HEAD
-=======
   transition: 0.3s ease-in-out;
->>>>>>> develop
 }
 .parent {
   display: grid;
