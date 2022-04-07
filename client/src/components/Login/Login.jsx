@@ -44,7 +44,7 @@ export default function Login() {
       cookies.set("vehiculo", usuario.vehiculo, { path: "/" });
       cookies.set("avatar", usuario.avatar, { path: "/" });
       cookies.set("acercaDeMi", usuario.acercaDeMi, { path: "/" });
-      cookies.set("calificacion", input.calificacion, { path: "/" });
+      cookies.set("calificacion", usuario.calificacion, { path: "/" });
       console.log(cookies.get("nombre"));
     }, [usuario]);
   
