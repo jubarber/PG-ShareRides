@@ -134,7 +134,7 @@ export default function FormRegistro() {
   }
 
   return (
-    <div className="font-mono">
+    <div>
       <div className="contenedorRegistro">
         <div>
           <Link to="/">
