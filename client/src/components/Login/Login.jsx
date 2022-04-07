@@ -36,19 +36,19 @@ export default function Login() {
     }).then((r) => setUsuario(r.data));
   } //fin function getUsuario
 
-  useEffect(() => {
-    cookies.set("dni", usuario.dni, { path: "/" });
-    cookies.set("email", usuario.email, { path: "/" });
-    cookies.set("nombre", usuario.nombre, { path: "/" });
-    cookies.set("apellido", usuario.apellido, { path: "/" });
-    cookies.set("logueado", usuario.logueado, { path: "/" });
-    cookies.set("vehiculo", usuario.vehiculo, { path: "/" });
-    cookies.set("avatar", usuario.avatar, { path: "/" });
-    cookies.set("acercaDeMi", usuario.acercaDeMi, { path: "/" });
-    cookies.set("calificacion", input.calificacion, { path: "/" });
-    console.log(cookies.get("nombre"));
-  }, [usuario]);
-
+    useEffect(() => {
+      cookies.set("dni", usuario.dni, { path: "/" });
+      cookies.set("email", usuario.email, { path: "/" });
+      cookies.set("nombre", usuario.nombre, { path: "/" });
+      cookies.set("apellido", usuario.apellido, { path: "/" });
+      cookies.set("logueado", usuario.logueado, { path: "/" });
+      cookies.set("vehiculo", usuario.vehiculo, { path: "/" });
+      cookies.set("avatar", usuario.avatar, { path: "/" });
+      cookies.set("acercaDeMi", usuario.acercaDeMi, { path: "/" });
+      cookies.set("calificacion", usuario.calificacion, { path: "/" });
+      console.log(cookies.get("nombre"));
+    }, [usuario]);
+  
   useEffect(() => {
     if (inicioSesion === "contraseña incorrecta") {
       setError({ ...error, password: "Contraseña incorrecta" });

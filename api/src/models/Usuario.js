@@ -6,7 +6,7 @@ module.exports = (sequelize) => {
   sequelize.define("usuario", {
     dni: {
       type: DataTypes.INTEGER,
-      unique: true,
+      unique: true
       // allowNull: false
     },
     email: {
@@ -27,10 +27,6 @@ module.exports = (sequelize) => {
       type: DataTypes.TEXT,
       allowNull: false
     },
-    // conductor: {
-    //   type: DataTypes.BOOLEAN,
-    //   defaultValue: false
-    // },
     acercaDeMi: {
       type: DataTypes.STRING,
       allowNull: true
@@ -41,9 +37,9 @@ module.exports = (sequelize) => {
     },
     vehiculo: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: true
     },
-    logueado:{
+    logueado: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false
@@ -51,6 +47,18 @@ module.exports = (sequelize) => {
     calificacion: {
       type: DataTypes.STRING,
       defaultValue: ""
-    }
+    },
+    comentarios: {
+      type: DataTypes.TEXT,
+      defaultValue: ""
+    },
+    telefono: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    reportado: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   });
 };

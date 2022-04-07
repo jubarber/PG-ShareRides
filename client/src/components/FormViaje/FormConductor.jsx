@@ -16,6 +16,7 @@ export default function FormPasajero() {
   const [errors, setErrors] = useState({});
   const cookieMail = cookies.get("email");
   const [viaje, setViaje] = useState({
+    nombre: cookies.get("nombre"),
     fecha: "",
     hora: "",
     origen: "",
