@@ -49,11 +49,11 @@ router.post("/registro", async (req, res, next) => {
     let nuevoUsuario;
     if (vehiculo) {
       nuevoUsuario = await Usuario.findOrCreate({
-        where: { email, nombre, apellido, password, vehiculo } //vehiculo = patente del auto
+        where: { email, nombre, apellido, password, vehiculo }, //vehiculo = patente del auto
       });
     } else {
       nuevoUsuario = await Usuario.findOrCreate({
-        where: { email, nombre, apellido, password }
+        where: { email, nombre, apellido, password },
       });
     }
     res.json(nuevoUsuario);
@@ -80,7 +80,7 @@ router.put("/logueado", async (req, res, next) => {
     let usuario = await Usuario.findByPk(email);
     usuario.update({ logueado: true });
     usuario.save();
-    res.send("usuario logueado")
+    res.send("usuario logueado");
   } catch (err) {
     next(err);
   }
@@ -92,7 +92,7 @@ router.put("/deslogueado", async (req, res, next) => {
     let usuario = await Usuario.findByPk(email);
     usuario.update({ logueado: false });
     usuario.save();
-    res.send("usuario deslogueado")
+    res.send("usuario deslogueado");
   } catch (err) {
     next(err);
   }
