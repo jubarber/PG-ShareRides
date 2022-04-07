@@ -69,12 +69,6 @@
   color: white;
 }
 
-.IniciarSesion-y-Registrar {
-  display: flex;
-  justify-content: space-between;
-  width: 15rem;
-}
-
 .info-usuario {
   display: flex;
   align-items: center;

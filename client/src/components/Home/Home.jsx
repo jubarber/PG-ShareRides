@@ -12,23 +12,27 @@ import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { FormControl } from "@mui/material";
-import Cookies from "universal-cookie"
+import Cookies from "universal-cookie";
+import NavBar from "../NavBar/NavBar";
 
 export default function Home() {
-  const cookies = new Cookies()
+  const cookies = new Cookies();
   const dispatch = useDispatch();
+
   const viajes = useSelector(
     (state) => state.viajesFiltrados //me traigo el estado de los viajes para poder mostrarlos
   );
-  const cookieMail = cookies.get("email")
+  const cookieMail = cookies.get("email");
+  console.log("mail home", cookies.get("email"))
   useEffect(() => {
     //se monta home y despacho la accion para obtener los viajes
-    dispatch(login(cookieMail))
+    dispatch(login(cookieMail));
     dispatch(getViajesTotal());
   }, [dispatch]);
   console.log("estos es lo que llega", viajes);
   return (
     <div>
+      <NavBar />
       <div className="home-general">
         <div>
           <Filtros />

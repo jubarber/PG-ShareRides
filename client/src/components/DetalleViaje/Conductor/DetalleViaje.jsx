@@ -10,6 +10,10 @@ import { FaSuitcaseRolling } from "react-icons/fa";
 import { ImStarEmpty, ImStarHalf, ImStarFull } from "react-icons/im";
 import { VscLocation } from "react-icons/vsc";
 import fondo from "../../../assets/fondo perfil.jpg";
+<<<<<<< HEAD
+=======
+import NavBar from "../../NavBar/NavBar";
+>>>>>>> develop
 
 export const DetalleViaje = () => {
   const dispatch = useDispatch();
@@ -28,7 +32,12 @@ export const DetalleViaje = () => {
   }, [dispatch, id]);
 
   return (
+<<<<<<< HEAD
     <div className="container-detalle font-mono">
+=======
+    <div className="container-detalle">
+      <NavBar />
+>>>>>>> develop
       <div className="card-detalle">
         <div className="card-usuario-detalle">
           <div className="card-usuario-infper-detalle">

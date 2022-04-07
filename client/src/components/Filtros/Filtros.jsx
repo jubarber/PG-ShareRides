@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getViajesTotal,
-  filtroChecks,
-  logout,
-} from "../../redux/actions/actions";
+import { getViajesTotal, filtroChecks } from "../../redux/actions/actions";
 import "./Filtros.css";
 import Button from "@mui/material/Button";
 import InputLabel from "@mui/material/InputLabel";
@@ -13,10 +9,8 @@ import MenuItem from "@mui/material/MenuItem";
 import { FormControl } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
 import SearchBar from "../SearchBar/SearchBar";
-// import Cookies from "universal-cookie";
 
 export function Filtros() {
-  // const cookies = new Cookies();
   const dispatch = useDispatch();
   const viajesFiltrados = useSelector((state) => state.viajesFiltrados?.flat());
   const viajesTotal = useSelector((state) => state.viajes);
@@ -66,11 +60,6 @@ export function Filtros() {
     e.preventDefault();
     dispatch(filtroChecks(isChecked, asiento));
   }
-  // function handleLogout(email) {
-  //   let cookieMail = cookies.get("email");
-  //   dispatch(logout(cookieMail));
-  //   window.location.href = "/";
-  // }
 
   function handleLimpiarFiltros(e) {
     e.preventDefault();
@@ -80,8 +69,12 @@ export function Filtros() {
     setAsiento("");
   }
   return (
-    <div className="contenedor-filtros" class="font-mono">
+    <div className="contenedor-filtros">
       <div className="asientos">
+        <div>
+          <SearchBar />
+        </div>
+
         <FormControl variant="standard" sx={{ m: 1, minWidth: 175 }}>
           <InputLabel
             id="demo-simple-select-standard-label"
@@ -91,7 +84,6 @@ export function Filtros() {
             Asientos disponibles
           </InputLabel>
           <Select
-            // className="select"
             labelId="demo-simple-select-standard-label"
             id="demo-simple-select-standard"
             onChange={(e) => handleSelectAsientos(e)}
@@ -106,15 +98,6 @@ export function Filtros() {
             <MenuItem value="7">7 </MenuItem>
           </Select>
         </FormControl>
-        {/* <button
-          onClick={handleLogout}
-          variant="contained"
-          color="secondary"
-          size="small"
-          type="submit"
-        >
-          Logout
-        </button> */}
         <div className="checkboxes">
           {filtrosArray.map((e, index) => {
             return (
@@ -137,30 +120,30 @@ export function Filtros() {
             );
           })}
         </div>
-      </div>
-      <div className="aplicar-limpiar">
-        <Button
-          variant="contained"
-          color="secondary"
-          size="small"
-          type="submit"
-          value="Aplicar filtros"
-          name="Aplicar filtros"
-          onClick={handleSubmit}
-        >
-          Aplicar filtros
-        </Button>
-        <Button
-          variant="contained"
-          color="secondary"
-          size="small"
-          type="submit"
-          value="Limpiar filtros"
-          name="Limpiar filtros"
-          onClick={handleLimpiarFiltros}
-        >
-          Limpiar filtros
-        </Button>
+        <div className="aplicar-limpiar">
+          <Button
+            variant="contained"
+            color="secondary"
+            size="small"
+            type="submit"
+            value="Aplicar filtros"
+            name="Aplicar filtros"
+            onClick={handleSubmit}
+          >
+            Aplicar filtros
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            size="small"
+            type="submit"
+            value="Limpiar filtros"
+            name="Limpiar filtros"
+            onClick={handleLimpiarFiltros}
+          >
+            Limpiar filtros
+          </Button>
+        </div>
       </div>
     </div>
   );

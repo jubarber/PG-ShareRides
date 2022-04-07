@@ -10,13 +10,12 @@ import FormVehiculo from "./components/FormViaje/FormVehiculo";
 import FormConductor from "./components/FormViaje/FormConductor";
 import { DetalleViaje } from "./components/DetalleViaje/Conductor/DetalleViaje";
 import Login from "./components/Login/Login";
-import RegistroGoogle from "./components/RegistroGoogle/RegistroGoogle"
+import RegistroGoogle from "./components/RegistroGoogle/RegistroGoogle";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <NavBar />
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
           <Route exact path="/home" element={<Home />} />
@@ -34,4 +33,8 @@ function App() {
     </div>
   );
 }
+<<<<<<< HEAD
 export default App;
+=======
+export default App;
+>>>>>>> develop

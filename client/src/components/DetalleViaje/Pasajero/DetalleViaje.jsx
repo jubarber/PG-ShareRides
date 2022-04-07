@@ -10,6 +10,10 @@ import { FaSuitcaseRolling } from "react-icons/fa";
 import { ImStarEmpty, ImStarHalf, ImStarFull } from "react-icons/im";
 import { VscLocation } from "react-icons/vsc";
 import fondo from "../../../assets/fondo perfil.jpg";
+<<<<<<< HEAD:client/src/components/DetalleViaje/Pasajero/DetalleViaje.jsx
+=======
+import NavBar from "../../NavBar/NavBar";
+>>>>>>> develop:client/src/components/DetalleViaje/DetalleViaje.jsx
 
 export const DetalleViaje = () => {
   const dispatch = useDispatch();
@@ -28,7 +32,8 @@ export const DetalleViaje = () => {
   }, [dispatch, id]);
 
   return (
-    <div className="container-detalle font-mono">
+    <div className="container-detalle">
+      <NavBar />
       <div className="card-detalle">
         <div className="card-usuario-detalle">
           <div className="card-usuario-infper-detalle">

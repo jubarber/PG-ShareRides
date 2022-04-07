@@ -6,6 +6,7 @@ import fondo from "../../assets/fondo perfil.jpg";
 import { Link } from "react-router-dom";
 import "./FormConductor.css";
 import Cookies from "universal-cookie";
+import NavBar from "../NavBar/NavBar";
 
 export default function FormPasajero() {
   const cookies = new Cookies();
@@ -15,6 +16,7 @@ export default function FormPasajero() {
   const [errors, setErrors] = useState({});
   const cookieMail = cookies.get("email");
   const [viaje, setViaje] = useState({
+    nombre: cookies.get("nombre"),
     fecha: "",
     hora: "",
     origen: "",
@@ -28,8 +30,8 @@ export default function FormPasajero() {
     fecha: /^.{4,18}$/,
     hora: /^.{4,12}$/,
     asiento: /^.{1,7}$/,
-    origen: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
-    destino: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
+    origen: /^[a-zA-ZÀ-ÿ\s]{4,30}$/,
+    destino: /^[a-zA-ZÀ-ÿ\s]{4,30}$/,
     dni: /^(?!^0+$)[a-zA-Z0-9]{3,20}$/,
   };
 
@@ -150,6 +152,7 @@ export default function FormPasajero() {
 
   return (
     <div>
+      <NavBar />
       <div className="Conductore__nav">
         <Link to="/formvehiculo">
           <button className="Conductore__btn_volver">Volver</button>
