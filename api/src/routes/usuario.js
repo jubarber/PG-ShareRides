@@ -37,12 +37,8 @@ router.get("/usuarios/:email", async (req, res, next) => {
   const { email } = req.params;
   try {
     let usuario = await Usuario.findByPk(email);
-<<<<<<< HEAD
-    res.send(usuario);
-=======
     if (usuario) res.send(usuario);
     else res.send("error");
->>>>>>> develop
   } catch (err) {
     next(err);
   }
@@ -52,21 +48,9 @@ router.post("/registro", async (req, res, next) => {
   try {
     const { email, nombre, apellido, password } = req.body;
     let nuevoUsuario;
-<<<<<<< HEAD
-    if (vehiculo) {
-      nuevoUsuario = await Usuario.findOrCreate({
-        where: { email, nombre, apellido, password, vehiculo } //vehiculo = patente del auto
-      });
-    } else {
-      nuevoUsuario = await Usuario.findOrCreate({
-        where: { email, nombre, apellido, password }
-      });
-    }
-=======
     nuevoUsuario = await Usuario.findOrCreate({
       where: { email, nombre, apellido, password }
     });
->>>>>>> develop
     res.json(nuevoUsuario);
 
     const sgMail = require("@sendgrid/mail");
@@ -155,8 +139,6 @@ router.post("/mailnuevapassword", async (req, res, next) => {
 router.put("/modificarperfil", async (req, res, next) => {
   const { email, acercaDeMi, telefono, avatar, dni } = req.body;
   try {
-<<<<<<< HEAD
-=======
     let usuario = await Usuario.findByPk(email);
     usuario.update({
       acercaDeMi: acercaDeMi,
@@ -209,7 +191,6 @@ router.post("/emailmodificarperfil", async (req, res, next) => {
 router.put("/logueado", async (req, res, next) => {
   const { email } = req.body;
   try {
->>>>>>> develop
     let usuario = await Usuario.findByPk(email);
     usuario.update({ logueado: true });
     usuario.save();
@@ -225,11 +206,7 @@ router.put("/deslogueado", async (req, res, next) => {
     let usuario = await Usuario.findByPk(email);
     usuario.update({ logueado: false });
     usuario.save();
-<<<<<<< HEAD
-    res.send("usuario deslogueado")
-=======
     res.send("usuario deslogueado");
->>>>>>> develop
   } catch (err) {
     next(err);
   }
