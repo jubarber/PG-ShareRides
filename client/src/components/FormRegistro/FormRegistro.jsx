@@ -6,8 +6,10 @@ import { registroUsuario } from "../../redux/actions/actions";
 import "./FormRegistro.css";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import Cookies from "universal-cookie"
 
 export default function FormRegistro() {
+  const cookies = new Cookies();
   const dispatch = useDispatch();
   const [statePassword, setStatePassword] = useState(false);
   const [input, setInput] = useState({
@@ -113,11 +115,18 @@ export default function FormRegistro() {
         dangerMode: true,
       });
     } else {
+        cookies.set("dni", input.dni, { path: "/" });
+        cookies.set("email", input.email, { path: "/" });
+        cookies.set("nombre", input.nombre, { path: "/" });
+        cookies.set("apellido", input.apellido, { path: "/" });
+        console.log("COOKIES REGISTRO ", cookies.get("nombre"));
       dispatch(registroUsuario(input));
+     let cookieNombre = cookies.get("nombre");
       swal({
         title: "El registro ha sido exitoso!",
+        text: `Gracias por registrarte! Bienvenide ${cookieNombre}`,
         icon: "success",
-        button: "Bienvenide!",
+        button: "Ingresar",
       }).then(function () {
         window.location = "/home";
       });

@@ -22,6 +22,7 @@ export default function Home() {
     (state) => state.viajesFiltrados //me traigo el estado de los viajes para poder mostrarlos
   );
   const cookieMail = cookies.get("email");
+  console.log("mail home", cookies.get("email"))
   useEffect(() => {
     //se monta home y despacho la accion para obtener los viajes
     dispatch(login(cookieMail));
