@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { login, getUsuarioByEmail } from "../../redux/actions/actions";
+import { login } from "../../redux/actions/actions";
 import swal from "sweetalert";
 import fondo from "../../assets/fondo perfil.jpg";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
@@ -34,9 +34,20 @@ export default function Login() {
       url: `http://localhost:3001/api/usuario/usuarios/${email}`,
     }).then((r) => setUsuario(r.data));
   } //fin function getUsuario
-
-  // console.log(usuario)
-
+  
+    useEffect(() => {
+      cookies.set("dni", usuario.dni, { path: "/" });
+      cookies.set("email", usuario.email, { path: "/" });
+      cookies.set("nombre", usuario.nombre, { path: "/" });
+      cookies.set("apellido", usuario.apellido, { path: "/" });
+      cookies.set("logueado", usuario.logueado, { path: "/" });
+      cookies.set("vehiculo", usuario.vehiculo, { path: "/" });
+      cookies.set("avatar", usuario.avatar, { path: "/" });
+      cookies.set("acercaDeMi", usuario.acercaDeMi, { path: "/" });
+      cookies.set("calificacion", input.calificacion, { path: "/" });
+      console.log(cookies.get("nombre"));
+    }, [usuario]);
+  
   useEffect(() => {
     if (inicioSesion === "contraseña incorrecta") {
       setError({ ...error, password: "Contraseña incorrecta" });
@@ -64,25 +75,11 @@ export default function Login() {
         icon: "success",
         button: "Bienvenidx!",
       })
-        // .then(console.log(cookies.get("email")+" bienvenidx"))
         .then(function () {
           window.location = "/home";
         });
     }
   }, [inicioSesion]);
-
-  useEffect(() => {
-    cookies.set("dni", usuario.dni, { path: "/" });
-    cookies.set("email", usuario.email, { path: "/" });
-    cookies.set("nombre", usuario.nombre, { path: "/" });
-    cookies.set("apellido", usuario.apellido, { path: "/" });
-    cookies.set("logueado", usuario.logueado, { path: "/" });
-    cookies.set("vehiculo", usuario.vehiculo, { path: "/" });
-    cookies.set("avatar", usuario.avatar, { path: "/" });
-    cookies.set("acercaDeMi", usuario.acercaDeMi, { path: "/" });
-    cookies.set("calificacion", input.calificacion, { path: "/" });
-    console.log(cookies.get("nombre"));
-  }, [usuario]);
 
   function handleEye(e) {
     e.preventDefault();

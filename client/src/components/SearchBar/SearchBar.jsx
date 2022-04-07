@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { searchOrigen,  searchDestino} from "../../redux/actions/actions";
+import {
+  searchOrigen,
+  searchDestino,
+  getViajesTotal,
+} from "../../redux/actions/actions";
+import "./SearchBar.css";
+import { BsSearch } from "react-icons/bs";
+import Button from "@mui/material/Button";
 
 export default function SearchBar() {
   const dispatch = useDispatch();
@@ -20,8 +27,7 @@ export default function SearchBar() {
     if (origen === "") {
       alert("Escriba un origen");
     } else {
-     dispatch(searchOrigen(origen))
-      setOrigen("");
+      dispatch(searchOrigen(origen));
     }
   }
   function handleSubmitDestino(e) {
@@ -29,32 +35,57 @@ export default function SearchBar() {
     if (destino === "") {
       alert("Escriba un destino");
     } else {
-     dispatch(searchDestino(destino))
-      setDestino("");
+      dispatch(searchDestino(destino));
     }
   }
-
+  function handleSubmitLimpiar(e) {
+    e.preventDefault();
+    setOrigen("");
+    setDestino("");
+    dispatch(getViajesTotal());
+  }
 
   return (
-    
-    <div>
-      <form onSubmit={handleSubmitOrigen}>
+    <div className="searchbar__container">
+      <form className="searchbar__form" onSubmit={handleSubmitOrigen}>
         <input
+          className="searchbar__input text-black"
           type="text"
+          name={origen}
+          value={origen}
           placeholder="Buscar origen"
           onChange={(e) => handleOrigen(e)}
         />
-        <button type="submit">Buscar</button>
+        <button type="submit" className="searchbar__btn">
+          <BsSearch size="25" />
+        </button>
       </form>
-     
-      <form onSubmit={handleSubmitDestino}>
+      <form className="searchbar__form" onSubmit={handleSubmitDestino}>
         <input
+          className="searchbar__input"
           type="text"
+          name={destino}
+          value={destino}
           placeholder="Buscar destino"
           onChange={(e) => handleDestino(e)}
         />
-        <button type="submit">Buscar</button>
+        <button type="submit" className="searchbar__btn">
+          <BsSearch size="25" />
+        </button>
       </form>
+      <div className="searchbar__pos__btn">
+        <Button
+          variant="contained"
+          color="secondary"
+          size="small"
+          type="submit"
+          value="Limpiar filtros"
+          name="Limpiar filtros"
+          onClick={handleSubmitLimpiar}
+        >
+          Limpiar filtros
+        </Button>
+      </div>
     </div>
   );
 }

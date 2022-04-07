@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getViajesTotal,
   filtroChecks,
-  logout,
+  // logout,
 } from "../../redux/actions/actions";
 import "./Filtros.css";
 import Button from "@mui/material/Button";
@@ -26,20 +26,20 @@ export function Filtros() {
   const filtrosArray = [
     {
       id: 1,
-      name: "Fumador",
+      name: "Fumador"
     },
     {
       id: 2,
-      name: "Mascota",
+      name: "Mascota"
     },
     {
       id: 3,
-      name: "Equipaje",
+      name: "Equipaje"
     },
     {
       id: 4,
-      name: "Barbijo",
-    },
+      name: "Barbijo"
+    }
   ];
 
   useEffect(() => {
@@ -80,8 +80,12 @@ export function Filtros() {
     setAsiento("");
   }
   return (
-    <div className="contenedor-filtros" class="font-mono">
+    <div className="contenedor-filtros">
       <div className="asientos">
+        <div>
+          <SearchBar />
+        </div>
+
         <FormControl variant="standard" sx={{ m: 1, minWidth: 175 }}>
           <InputLabel
             id="demo-simple-select-standard-label"
@@ -137,30 +141,30 @@ export function Filtros() {
             );
           })}
         </div>
-      </div>
-      <div className="aplicar-limpiar">
-        <Button
-          variant="contained"
-          color="secondary"
-          size="small"
-          type="submit"
-          value="Aplicar filtros"
-          name="Aplicar filtros"
-          onClick={handleSubmit}
-        >
-          Aplicar filtros
-        </Button>
-        <Button
-          variant="contained"
-          color="secondary"
-          size="small"
-          type="submit"
-          value="Limpiar filtros"
-          name="Limpiar filtros"
-          onClick={handleLimpiarFiltros}
-        >
-          Limpiar filtros
-        </Button>
+        <div className="aplicar-limpiar">
+          <Button
+            variant="contained"
+            color="secondary"
+            size="small"
+            type="submit"
+            value="Aplicar filtros"
+            name="Aplicar filtros"
+            onClick={handleSubmit}
+          >
+            Aplicar filtros
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            size="small"
+            type="submit"
+            value="Limpiar filtros"
+            name="Limpiar filtros"
+            onClick={handleLimpiarFiltros}
+          >
+            Limpiar filtros
+          </Button>
+        </div>
       </div>
     </div>
   );
