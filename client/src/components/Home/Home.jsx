@@ -13,6 +13,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { FormControl } from "@mui/material";
 import Cookies from "universal-cookie";
+import NavBar from "../NavBar/NavBar";
 
 export default function Home() {
   const cookies = new Cookies();
@@ -30,6 +31,7 @@ export default function Home() {
   console.log("estos es lo que llega", viajes);
   return (
     <div>
+      <NavBar />
       <div className="home-general">
         <div>
           <Filtros />
