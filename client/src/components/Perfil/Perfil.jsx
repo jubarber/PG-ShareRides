@@ -10,6 +10,7 @@ import PaginacionComentarios from "./PaginacionComentarios";
 import foto from "../../assets/userRojo.jpg";
 import { getUsuarios } from "../../redux/actions/actions";
 import Cookies from "universal-cookie";
+import NavBar from "../NavBar/NavBar";
 
 export default function Perfil() {
   const dispatch = useDispatch();
@@ -81,6 +82,7 @@ export default function Perfil() {
 
   return (
     <div className="perfil">
+      <NavBar />
       <div className="contenedor-perfil">
         <div className="contenedor-imagen">
           <div className="img-perfil">

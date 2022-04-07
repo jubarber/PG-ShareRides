@@ -6,7 +6,9 @@ import { registroUsuario } from "../../redux/actions/actions";
 import "./FormRegistro.css";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import NavBarSinLogin from "../NavBar/NavBarSinLogin";
 import Cookies from "universal-cookie"
+
 
 export default function FormRegistro() {
   const cookies = new Cookies();
@@ -144,6 +146,7 @@ export default function FormRegistro() {
 
   return (
     <div>
+      <NavBarSinLogin />
       <div className="contenedorRegistro">
         <div>
           <Link to="/">

@@ -7,6 +7,7 @@ import fondo from "../../assets/fondo perfil.jpg";
 import { Link } from "react-router-dom";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
 import "./RegistroGoogle.css";
+import NavBarSinLogin from "../NavBar/NavBarSinLogin";
 
 export default function RegistroGoogle() {
   const cookies = new Cookies();
@@ -83,6 +84,7 @@ export default function RegistroGoogle() {
 
   return (
     <div>
+      <NavBarSinLogin />
       <div className="wallpaper">
         <img className="stretch" src={fondo} alt="" />
       </div>
