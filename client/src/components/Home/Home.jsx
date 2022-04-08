@@ -2,9 +2,12 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getViajesTotal, login } from "../../redux/actions/actions";
+import {
+  getViajesTotal,
+  login,
+  filterPerCard,
+} from "../../redux/actions/actions";
 import { Filtros } from "../Filtros/Filtros";
-// import { DetalleViaje } from "../DetalleViaje/DetalleViaje";
 import CardViajeUsuarioPasajere from "../CardViaje/CardViajeUsuario/Pasajero/CardViajeUsuario";
 import CardViajeUsuarioConductore from "../CardViaje/CardViajeUsuario/Conductor/CardViajeUsuario";
 import "./Home.css";
@@ -19,23 +22,24 @@ import NavBar from "../NavBar/NavBar";
 export default function Home() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
-  const [render, setRender] = useState(1);
-
+  const [render, setRender] = useState("");
   const viajes = useSelector(
     (state) => state.viajesFiltrados //me traigo el estado de los viajes para poder mostrarlos
   );
+  // console.log("esto es viajes!!!", viajes);
   const cookieMail = cookies.get("email");
-  console.log("mail home", cookies.get("email"));
+  // console.log("mail home", cookies.get("email"));
   useEffect(() => {
     //se monta home y despacho la accion para obtener los viajes
     dispatch(login(cookieMail));
-    dispatch(getViajesTotal());
+    /* dispatch(getViajesTotal());*/
+    console.log('entre en effect')
+    dispatch(filterPerCard(render));
   }, [dispatch]);
-  console.log("estos es lo que llega", viajes);
-  let handleChange = (e) => {
-    e.target.value === "Pasajere" ? setRender(2) : setRender(1);
-  };
-  console.log(render)
+  function handleChange (e) {
+    dispatch(filterPerCard(e.target.value));    
+    setRender(e.target.value)
+   };
   return (
     <div>
       <NavBar />
@@ -58,10 +62,12 @@ export default function Home() {
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   label="Selecciona tu puesto"
+                  value={render}
                   onChange={(e) => handleChange(e)}
                 >
-                  <MenuItem value="Conductore">Conductore</MenuItem>
-                  <MenuItem value="Pasajere">Pasajere</MenuItem>
+                  {/* <MenuItem value="seleccionar viaje" disabled selected> </MenuItem> */}
+                  <MenuItem value="conductor">Conductore</MenuItem>
+                  <MenuItem value="pasajero">Pasajere</MenuItem>
                 </Select>
               </FormControl>
             </label>
@@ -72,7 +78,7 @@ export default function Home() {
                 e && (
                   <Link to={"/detalle/" + e.id}>
                     <div className="card-home">
-                      {render === 2 ? (
+                      {e.status === "pasajero" ? (
                         <CardViajeUsuarioPasajere
                           origen={e.origen}
                           destino={e.destino}
