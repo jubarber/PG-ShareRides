@@ -14,6 +14,7 @@ import Cookies from "universal-cookie";
 import NavBar from "../NavBar/NavBar";
 import user from "../../assets/user.png";
 
+
 export default function Perfil() {
   const dispatch = useDispatch();
   const cookies = new Cookies();
