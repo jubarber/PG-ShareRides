@@ -46,10 +46,17 @@ router.get("/usuarios/:email", async (req, res, next) => {
 
 router.post("/registro", async (req, res, next) => {
   try {
+<<<<<<< HEAD
+    const { email, nombre, apellido, password, avatar } = req.body;
+    let nuevoUsuario;
+    nuevoUsuario = await Usuario.findOrCreate({
+      where: { email, nombre, apellido, password, avatar },
+=======
     const { email, nombre, apellido, password } = req.body;
     let nuevoUsuario;
     nuevoUsuario = await Usuario.findOrCreate({
       where: { email, nombre, apellido, password }
+>>>>>>> f3fe7b2b16778258ed1678c89e6e22f926a563d2
     });
     res.json(nuevoUsuario);
 
@@ -207,6 +214,49 @@ router.put("/deslogueado", async (req, res, next) => {
     usuario.update({ logueado: false });
     usuario.save();
     res.send("usuario deslogueado");
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.put("/modificarperfil", async (req, res, next) => {
+  const { email, acercaDeMi, telefono, avatar, dni } = req.body;
+  try {
+    let usuario = await Usuario.findByPk(email);
+    if (dni) {
+      console.log("entre a dni");
+      usuario.update({
+        dni: dni,
+      });
+      usuario.save();
+    }
+    if (telefono) {
+      console.log("entre a telefono");
+      usuario.update({
+        telefono: telefono,
+      });
+      usuario.save();
+    }
+    if (avatar) {
+      usuario.update({
+        avatar: avatar,
+      });
+      usuario.save();
+    }
+    if (acercaDeMi) {
+      usuario.update({
+        acercaDeMi: acercaDeMi,
+      });
+      usuario.save();
+    } else {
+      usuario.update({
+        acercaDeMi: acercaDeMi,
+        telefono: telefono,
+        avatar: avatar,
+        dni: dni,
+      });
+      usuario.save();
+    }
   } catch (err) {
     next(err);
   }

@@ -149,7 +149,7 @@ export default function FormRegistro() {
       <NavBarSinLogin />
       <div className="contenedorRegistro">
         <div>
-          <Link to="/">
+          <Link to="/home">
             <button className="Registro__btn_volver">Volver</button>
           </Link>
         </div>
