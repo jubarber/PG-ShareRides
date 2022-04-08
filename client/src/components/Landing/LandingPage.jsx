@@ -6,21 +6,22 @@ import "./LandingPage.css";
 import Cookies from "universal-cookie";
 import { login, getUsuarioByEmail } from "../../redux/actions/actions";
 import axios from "axios";
+import NavBarSinLogin from "../NavBar/NavBarSinLogin";
 
 export default function LandingPage() {
   const dispatch = useDispatch();
-  const error = useSelector(state => state.error);
-  const usuarioReducer = useSelector(state => state.usuario);
+  const error = useSelector((state) => state.error);
+  const usuarioReducer = useSelector((state) => state.usuario);
   const [menu, SetMenu] = useState(false);
   const cookies = new Cookies();
   const [usuario, setUsuario] = useState("hola soy usuario de google");
 
-  const responseGoogle = response => {
+  const responseGoogle = (response) => {
     setUsuario({
       nombre: response.profileObj.givenName,
       apellido: response.profileObj.familyName,
       email: response.profileObj.email,
-      avatar: response.profileObj.imageUrl
+      avatar: response.profileObj.imageUrl,
     });
   };
 
@@ -50,19 +51,17 @@ export default function LandingPage() {
     [usuarioReducer] //fin use effect
   ); //fin de verdad use effect
 
-  useEffect(
-    () => {
-      console.log("dispatch");
-      dispatch(getUsuarioByEmail(usuario.email));
-    },
-    [usuario]
-  );
+  useEffect(() => {
+    console.log("dispatch");
+    dispatch(getUsuarioByEmail(usuario.email));
+  }, [usuario]);
 
   const handleMenu = () => {
     SetMenu(!menu);
   };
   return (
     <div>
+      <NavBarSinLogin />
       <div className="page">
         <div className="card">
           <div className="container">
@@ -71,7 +70,7 @@ export default function LandingPage() {
               <button onClick={handleMenu} className="btn-menu">
                 <i class="fas fa-bars" />
               </button>
-              {menu &&
+              {menu && (
                 <nav className="desplegable">
                   <Link to={"#"} className="login-registro">
                     Acerca De
@@ -83,7 +82,8 @@ export default function LandingPage() {
                     Donacion
                   </Link>
                   <div className="animation start-home" />
-                </nav>}
+                </nav>
+              )}
             </div>
             <div className="content">
               <div className="text">

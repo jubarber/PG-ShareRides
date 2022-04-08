@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import fondo from "../../assets/fondo perfil.jpg";
 import "./FormViaje.css";
 import CheckBox from "@mui/material/Checkbox";
+import NavBar from "../NavBar/NavBar";
 
 export default function FormViaje() {
   const [isChecked, setIsChecked] = useState({
@@ -32,6 +33,7 @@ export default function FormViaje() {
 
   return (
     <div className="contenedor_formviaje">
+      <NavBar />
       <div className="pasajero_conductor">
         <div className="label_check">
           <label className="label-formviaje">Pasajere</label>
