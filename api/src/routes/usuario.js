@@ -46,17 +46,10 @@ router.get("/usuarios/:email", async (req, res, next) => {
 
 router.post("/registro", async (req, res, next) => {
   try {
-<<<<<<< HEAD
-    const { email, nombre, apellido, password, avatar } = req.body;
-    let nuevoUsuario;
-    nuevoUsuario = await Usuario.findOrCreate({
-      where: { email, nombre, apellido, password, avatar },
-=======
     const { email, nombre, apellido, password } = req.body;
     let nuevoUsuario;
     nuevoUsuario = await Usuario.findOrCreate({
       where: { email, nombre, apellido, password }
->>>>>>> f3fe7b2b16778258ed1678c89e6e22f926a563d2
     });
     res.json(nuevoUsuario);
 
