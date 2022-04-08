@@ -231,28 +231,4 @@ router.put("/modificarperfil", async (req, res, next) => {
   }
 });
 
-router.put("/comentarios", async (req, res, next) => {
-  const { email, calificacion, comentarios } = req.body;
-  try {
-    let nuevoComentario;
-    nuevoComentario = await Usuario.findByPk(email);
-    if (calificacion) {
-      console.log("entre a calificacion");
-      nuevoComentario.update({
-        calificacion: calificacion,
-      });
-      nuevoComentario.save();
-    }
-    if (comentarios) {
-      console.log("entre a comentarios");
-      nuevoComentario.update({
-        comentarios: comentarios,
-      });
-      nuevoComentario.save();
-    }
-  } catch (err) {
-    next(err);
-  }
-});
-
 module.exports = router;

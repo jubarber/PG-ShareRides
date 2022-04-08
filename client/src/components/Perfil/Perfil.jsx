@@ -18,6 +18,7 @@ import user from "../../assets/user.png";
 import Rating from "@mui/material/Rating";
 import PaginacionComentarios from "./PaginacionComentarios";
 
+
 export default function Perfil() {
   const dispatch = useDispatch();
   const cookies = new Cookies();

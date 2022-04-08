@@ -354,3 +354,11 @@ export function filterPerCard(payload) {
     payload,
   };
 }
+
+export function filterPerCard(payload) {
+  return {
+    type: FILTERTYPE,
+    payload
+    }
+  }
+
