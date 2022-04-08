@@ -46,17 +46,10 @@ router.get("/usuarios/:email", async (req, res, next) => {
 
 router.post("/registro", async (req, res, next) => {
   try {
-<<<<<<< HEAD
-    const { email, nombre, apellido, password, avatar } = req.body;
-    let nuevoUsuario;
-    nuevoUsuario = await Usuario.findOrCreate({
-      where: { email, nombre, apellido, password, avatar },
-=======
     const { email, nombre, apellido, password } = req.body;
     let nuevoUsuario;
     nuevoUsuario = await Usuario.findOrCreate({
-      where: { email, nombre, apellido, password }
->>>>>>> f3fe7b2b16778258ed1678c89e6e22f926a563d2
+      where: { email, nombre, apellido, password },
     });
     res.json(nuevoUsuario);
 
@@ -84,7 +77,7 @@ router.post("/registro", async (req, res, next) => {
       <h3>Buenas rutas!</h3>
       </body>
       </html>
-      `
+      `,
     };
     sgMail
       .send(message)
@@ -132,7 +125,7 @@ router.post("/mailnuevapassword", async (req, res, next) => {
       <h3>Buenas rutas!</h3>
       </body>
       </html>
-      `
+      `,
     };
     sgMail
       .send(message)
@@ -140,22 +133,6 @@ router.post("/mailnuevapassword", async (req, res, next) => {
       .catch((err) => console.log(err.message));
   } catch (error) {
     next(error);
-  }
-});
-
-router.put("/modificarperfil", async (req, res, next) => {
-  const { email, acercaDeMi, telefono, avatar, dni } = req.body;
-  try {
-    let usuario = await Usuario.findByPk(email);
-    usuario.update({
-      acercaDeMi: acercaDeMi,
-      telefono: telefono,
-      avatar: avatar,
-      dni: dni
-    });
-    usuario.save();
-  } catch (err) {
-    next(err);
   }
 });
 
@@ -184,7 +161,7 @@ router.post("/emailmodificarperfil", async (req, res, next) => {
       <h3>Buenas rutas!</h3>
       </body>
       </html>
-      `
+      `,
     };
     sgMail
       .send(message)
@@ -246,14 +223,6 @@ router.put("/modificarperfil", async (req, res, next) => {
     if (acercaDeMi) {
       usuario.update({
         acercaDeMi: acercaDeMi,
-      });
-      usuario.save();
-    } else {
-      usuario.update({
-        acercaDeMi: acercaDeMi,
-        telefono: telefono,
-        avatar: avatar,
-        dni: dni,
       });
       usuario.save();
     }

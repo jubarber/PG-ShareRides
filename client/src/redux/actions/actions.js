@@ -213,6 +213,7 @@ export function mailModificarPerfil(payload) {
 
 export function modificacionPerfil(payload) {
   return async function (dispatch) {
+    console.log("perfil", payload);
     try {
       let perfilModificado = await axios({
         method: "put",

@@ -14,7 +14,6 @@ import Cookies from "universal-cookie";
 import NavBar from "../NavBar/NavBar";
 import user from "../../assets/user.png";
 
-
 export default function Perfil() {
   const dispatch = useDispatch();
   const cookies = new Cookies();
@@ -175,7 +174,6 @@ export default function Perfil() {
                   type="submit"
                   value="Guardar Cambios"
                   className="btn-modificacion-perfil-active"
-                  onChange={(e) => deshabilitarInputs(e)}
                 ></input>
               ) : (
                 <input
