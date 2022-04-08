@@ -8,6 +8,7 @@ import {
   GET_USUARIOS,
   USUARIO_MAIL,
   FILTERTYPE,
+  MODIFICAR_PERFIL,
 } from "../actions/actions.js";
 
 const initialState = {
