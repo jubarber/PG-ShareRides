@@ -16,11 +16,14 @@ export default function RegistroGoogle() {
   let cookieEmail = cookies.get("email");
   let cookieNombre = cookies.get("nombre");
   let cookieApellido = cookies.get("apellido");
+  let cookieAvatar = cookies.get("avatar");
+  console.log(cookieAvatar);
   const [input, setInput] = useState({ password: "", confirmPassword: "" });
   const [usuario, setUsuario] = useState({
     email: cookieEmail,
     nombre: cookieNombre,
     apellido: cookieApellido,
+    avatar: cookieAvatar,
     password: "",
     confirmPassword: "",
   });
@@ -77,7 +80,7 @@ export default function RegistroGoogle() {
         icon: "success",
         button: "Bienvenidx!",
       }).then(function () {
-        window.location = "/home";
+        // window.location = "/home";
       });
     }
   }

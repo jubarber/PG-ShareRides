@@ -4,13 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import fondo from "../../assets/fondo perfil.jpg";
 import "./Perfil.css";
 import { FaEdit } from "react-icons/fa";
+import { AiFillCheckSquare } from "react-icons/ai";
 import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
-import PaginacionComentarios from "./PaginacionComentarios";
-import foto from "../../assets/userRojo.jpg";
-import { getUsuarios } from "../../redux/actions/actions";
+import {
+  getUsuarioByEmail,
+  modificacionPerfil,
+} from "../../redux/actions/actions";
 import Cookies from "universal-cookie";
 import NavBar from "../NavBar/NavBar";
+import user from "../../assets/user.png";
 
 export default function Perfil() {
   const dispatch = useDispatch();
@@ -22,14 +24,19 @@ export default function Perfil() {
   const avatar = cookies.get("avatar");
   const acercaDeMi = cookies.get("acercaDeMi");
 
+  const miUsuario = useSelector((state) => state.usuario);
+  useEffect(() => {
+    dispatch(getUsuarioByEmail(email));
+  }, []);
+
   const [usuario, setUsuario] = useState({
-    Nombre: "",
-    Apellido: "",
-    Email: "",
-    Telefono: "",
-    DNI: "",
-    AcercaDeMi: "",
-    Imagen: "",
+    nombre: "",
+    apellido: "",
+    email: email,
+    telefono: "",
+    dni: "",
+    acercaDeMi: "",
+    imagen: "",
   });
 
   const [check, setCheck] = useState(false);
@@ -48,30 +55,17 @@ export default function Perfil() {
   //   setPagina(pageNum);
   // };
 
-  const handleCheck = (e) => {
-    setCheck(!check);
-  };
-
-  const clickTelefono = (e) => {
-    e.preventDefault();
-    setHabilitarTelefono(!habilitarTelefono);
-  };
-  const clickDNI = (e) => {
+  const habilitarInputs = (e) => {
     e.preventDefault();
     setHabilitarDNI(!habilitarDNI);
-  };
-  const clickAcercaDeMi = (e) => {
-    e.preventDefault();
+    setHabilitarTelefono(!habilitarTelefono);
     setHabilitarAcercaDeMi(!habilitarAcercaDeMi);
   };
-  const clickImagen = (e) => {
+  const deshabilitarInputs = (e) => {
     e.preventDefault();
-    setHabilitarImagen(!habilitarImagen);
+    setHabilitarDNI(!habilitarDNI);
+    setHabilitarTelefono(!habilitarTelefono);
   };
-
-  useEffect(() => {
-    dispatch(getUsuarios());
-  }, [dispatch]);
 
   const handleChange = (e) => {
     setUsuario({
@@ -80,28 +74,32 @@ export default function Perfil() {
     });
   };
 
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    dispatch(modificacionPerfil(usuario));
+  };
+
   return (
     <div className="perfil">
       <NavBar />
       <div className="contenedor-perfil">
         <div className="contenedor-imagen">
           <div className="img-perfil">
-            <img src={avatar} alt="" />
+            <img src={avatar === "null" ? user : avatar} alt="" />
           </div>
           <div className="bio-perfil">
             <h1>
               {nombre} {apellido}
-            </h1>
-            <input
+            </h1>{" "}
+            <textarea
               type="text"
               onChange={handleChange}
-              name="AcercaDeMi"
-              value={usuario.AcercaDeMi}
+              name="acercaDeMi"
+              value={
+                miUsuario.acercaDeMi ? miUsuario.acercaDeMi : usuario.acercaDeMi
+              }
               disabled={habilitarAcercaDeMi}
             />{" "}
-            <button onClick={clickAcercaDeMi}>
-              <FaEdit />
-            </button>
             <div className="btn-perfil">
               <Button color="secondary" size="medium">
                 Seguir
@@ -115,45 +113,36 @@ export default function Perfil() {
         </div>
 
         <div>
-          <form className="contenedor-form">
+          <form className="contenedor-form" onSubmit={(e) => handleUpdate(e)}>
             <div className="nombre">
-              <h5>Nombre__</h5>
+              <h5>Nombre</h5>
               <input
                 type="text"
                 className="input-perfil"
-                name="Nombre"
-                value={nombre}
+                name="nombre"
+                value={miUsuario.nombre}
                 disabled
               />
-              <button disabled>
-                <FaEdit />
-              </button>
             </div>
             <div className="nombre">
               <h5>Apellido</h5>
               <input
                 type="text"
                 className="input-perfil"
-                name="Apellido"
-                value={apellido}
+                name="apellido"
+                value={miUsuario.apellido}
                 disabled
               />
-              <button disabled>
-                <FaEdit />
-              </button>
             </div>
             <div className="nombre">
-              <h5>Email___</h5>
+              <h5>Email</h5>
               <input
                 type="text"
                 className="input-perfil"
-                name="Email"
-                value={email}
+                name="email"
+                value={miUsuario.email}
                 disabled
               />
-              <button disabled>
-                <FaEdit />
-              </button>
             </div>
             <div className="nombre">
               <h5>Telefono</h5>
@@ -161,25 +150,41 @@ export default function Perfil() {
                 type="text"
                 className="input-perfil"
                 onChange={handleChange}
-                name="Telefono"
-                value={usuario.Telefono}
+                name="telefono"
+                value={usuario.telefono ? usuario.telefono : miUsuario.telefono}
                 disabled={habilitarTelefono}
               />
-              <button onClick={clickTelefono}>
-                <FaEdit />
-              </button>
             </div>
             <div className="nombre">
-              <h5>DNI_____</h5>
+              <h5>DNI</h5>
               <input
                 type="text"
                 className="input-perfil"
                 onChange={handleChange}
-                name="DNI"
-                value={DNI === "null" ? "" : DNI}
+                name="dni"
+                value={usuario.dni ? usuario.dni : miUsuario.dni}
                 disabled={habilitarDNI}
               />
-              <button onClick={clickDNI}>
+            </div>
+            <div className="btn-modificacion-perfil">
+              {habilitarTelefono === false &&
+              habilitarDNI === false &&
+              habilitarAcercaDeMi === false ? (
+                <input
+                  type="submit"
+                  value="Guardar Cambios"
+                  className="btn-modificacion-perfil-active"
+                  onChange={(e) => deshabilitarInputs(e)}
+                ></input>
+              ) : (
+                <input
+                  type="button"
+                  value="Guardar Cambios"
+                  disabled
+                  className="btn-modificacion-perfil-disabled"
+                />
+              )}
+              <button onClick={(e) => habilitarInputs(e)}>
                 <FaEdit />
               </button>
             </div>
