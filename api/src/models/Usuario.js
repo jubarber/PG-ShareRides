@@ -44,14 +44,6 @@ module.exports = (sequelize) => {
       allowNull: false,
       defaultValue: false,
     },
-    calificacion: {
-      type: DataTypes.STRING,
-      defaultValue: "",
-    },
-    comentarios: {
-      type: DataTypes.TEXT,
-      defaultValue: "",
-    },
     telefono: {
       type: DataTypes.STRING,
       allowNull: true,

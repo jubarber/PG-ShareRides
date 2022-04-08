@@ -7,12 +7,16 @@ import { FaEdit } from "react-icons/fa";
 import { AiFillCheckSquare } from "react-icons/ai";
 import Button from "@mui/material/Button";
 import {
+  getComentarios,
   getUsuarioByEmail,
   modificacionPerfil,
+  postComentarios,
 } from "../../redux/actions/actions";
 import Cookies from "universal-cookie";
 import NavBar from "../NavBar/NavBar";
 import user from "../../assets/user.png";
+import Rating from "@mui/material/Rating";
+import PaginacionComentarios from "./PaginacionComentarios";
 
 export default function Perfil() {
   const dispatch = useDispatch();
@@ -23,6 +27,12 @@ export default function Perfil() {
   const DNI = cookies.get("dni");
   const avatar = cookies.get("avatar");
   const acercaDeMi = cookies.get("acercaDeMi");
+
+  //---------------- Comentarios ---------------------
+  const comentarios = useSelector((state) => state.comentarios);
+  useEffect(() => {
+    dispatch(getComentarios());
+  }, [dispatch]);
 
   const miUsuario = useSelector((state) => state.usuario);
   useEffect(() => {
@@ -39,21 +49,32 @@ export default function Perfil() {
     imagen: "",
   });
 
+  const [reviews, setReviews] = useState({
+    calificacion: "",
+    comentarios: "",
+    email: email,
+  });
+
+  console.log(reviews);
+
   const [check, setCheck] = useState(false);
   const [habilitarTelefono, setHabilitarTelefono] = useState(true);
   const [habilitarDNI, setHabilitarDNI] = useState(true);
   const [habilitarAcercaDeMi, setHabilitarAcercaDeMi] = useState(true);
   const [habilitarImagen, setHabilitarImagen] = useState(true);
 
-  // const [pagina, setPagina] = useState(1);
-  // const [comentariosPorPagina, setComentariosPorPagina] = useState(3);
-  // const ultimoComentario = pagina * comentariosPorPagina;
-  // const primerComentario = ultimoComentario - comentariosPorPagina;
-  // const personitas = array?.slice(primerComentario, ultimoComentario);
+  const [pagina, setPagina] = useState(1);
+  const [comentariosPorPagina, setComentariosPorPagina] = useState(3);
+  const ultimoComentario = pagina * comentariosPorPagina;
+  const primerComentario = ultimoComentario - comentariosPorPagina;
+  const ComentariosTotales = comentarios?.slice(
+    primerComentario,
+    ultimoComentario
+  );
 
-  // const paginacion = (pageNum) => {
-  //   setPagina(pageNum);
-  // };
+  const paginacion = (pageNum) => {
+    setPagina(pageNum);
+  };
 
   const habilitarInputs = (e) => {
     e.preventDefault();
@@ -71,6 +92,22 @@ export default function Perfil() {
     setUsuario({
       ...usuario,
       [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleChangeReviews = (e) => {
+    setReviews({
+      ...reviews,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmitComentarios = (e) => {
+    e.preventDefault();
+    dispatch(postComentarios(reviews));
+    setReviews({
+      calificacion: "",
+      comentarios: "",
     });
   };
 
@@ -191,51 +228,58 @@ export default function Perfil() {
         </div>
       </div>
       <div className="resenas">
-        <form>
+        <form onSubmit={handleSubmitComentarios}>
           <div className="comentarios">
             <h1>Comentarios</h1>
             <div className="comentarios-card">
-              <label>
-                Punturacion:
-                <input
-                  type="number"
-                  min="1"
-                  max="10"
-                  classname="input-number"
-                />{" "}
-              </label>
+              <Rating
+                onChange={handleChangeReviews}
+                name="calificacion"
+                value={reviews.calificacion}
+                precision={0.5}
+              />
             </div>
             <div className="comentario">
               <label>Deja tu comentario:</label>
-              <input type="text" />
+              <textarea
+                type="text"
+                onChange={handleChangeReviews}
+                name="comentarios"
+                value={reviews.comentarios}
+              />
             </div>
-            <Button color="secondary" size="medium" className="btn-enviar">
-              Enviar
-            </Button>
+            <input
+              color="secondary"
+              size="medium"
+              value="Enviar"
+              type="submit"
+            />
           </div>
         </form>
-        {/* {personitas &&
-          personitas.map((e) => (
+        {ComentariosTotales &&
+          ComentariosTotales.map((e) => (
             <div className="resenas-card">
               <div className="encabezado">
-                <img src={foto} alt="" />
-                <h1>{e.Nombre}</h1>
+                <img src={avatar} alt="" />
+                <h1>
+                  {nombre} {apellido}
+                </h1>
               </div>
-              <h3>Punturacion: {e.Estrellas}</h3>
+              <Rating value={e.calificacion} />
               <div className="texto">
-                <p>{e.Comentario}</p>
+                <p>{e.comentarios}</p>
               </div>
             </div>
-          ))} */}
+          ))}
       </div>
       <div className="pag">
-        {/* <PaginacionComentarios
+        <PaginacionComentarios
           comentariosPorPagina={comentariosPorPagina}
-          array={array.length}
+          comentarios={comentarios.length}
           paginacion={paginacion}
           pagina={pagina}
           setPagina={setPagina}
-        /> */}
+        />
       </div>
       <div className="wallpaper">
         <img className="stretch" src={fondo} alt="" />

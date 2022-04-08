@@ -10,6 +10,8 @@ export const SEARCHDESTINO = "SEARCHDESTINO";
 export const GET_USUARIOS = "GET_USUARIOS";
 export const USUARIO_MAIL = "USUARIO_MAIL";
 export const MODIFICAR_PERFIL = "MODIFICAR_PERFIL";
+export const COMENTARIOS = "COMENTARIOS";
+export const GET_COMENTARIOS = "GET_COMENTARIOS";
 
 export function getDetalleViaje(viajeId) {
   return function (dispatch) {
@@ -309,6 +311,39 @@ export function getUsuarioByEmail(email) {
       return dispatch({ type: "USUARIO_MAIL", payload: usuario.data });
     } catch (err) {
       console.log(err);
+    }
+  };
+}
+
+export function postComentarios(payload) {
+  return async function (dispatch) {
+    console.log("post comentarios action", payload);
+    try {
+      let comentario = await axios({
+        method: "post",
+        url: "http://localhost:3001/api/comentarios/postComentarios",
+        data: {
+          email: payload.email,
+          calificacion: payload.calificacion,
+          comentarios: payload.comentarios,
+        },
+      });
+      return dispatch({ type: "COMENTARIOS", payload: comentario.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function getComentarios() {
+  return async function (dispatch) {
+    try {
+      let comentarios = await axios(
+        "http://localhost:3001/api/comentarios/comentarios"
+      );
+      return dispatch({ type: "GET_COMENTARIOS", payload: comentarios.data });
+    } catch (error) {
+      console.log(error);
     }
   };
 }

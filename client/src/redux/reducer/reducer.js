@@ -8,6 +8,8 @@ import {
   GET_USUARIOS,
   USUARIO_MAIL,
   MODIFICAR_PERFIL,
+  COMENTARIOS,
+  GET_COMENTARIOS,
 } from "../actions/actions.js";
 
 const initialState = {
@@ -17,6 +19,7 @@ const initialState = {
   usuarios: [],
   usuario: [],
   error: "",
+  comentarios: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -63,6 +66,12 @@ function rootReducer(state = initialState, action) {
       } else {
         return { ...state, usuario: action.payload };
       }
+    case GET_COMENTARIOS:
+      return {
+        ...state,
+        comentarios: action.payload,
+      };
+
     default:
       return { ...state };
   }
