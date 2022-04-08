@@ -311,28 +311,3 @@ export function getUsuarioByEmail(email) {
     }
   };
 }
-
-export function modificacionPerfil(payload) {
-  return async function (dispatch) {
-    console.log("info perfil", payload);
-    try {
-      let perfilModificado = await axios({
-        method: "put",
-        url: "http://localhost:3001/api/usuario/modificarperfil",
-        data: {
-          email: payload.email,
-          acercaDeMi: payload.acercaDeMi,
-          telefono: payload.telefono,
-          avatar: payload.avatar,
-          dni: payload.dni,
-        },
-      });
-      return dispatch({
-        type: "MODIFICAR_PERFIL",
-        payload: perfilModificado.data,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-}
