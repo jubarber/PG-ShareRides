@@ -9,6 +9,7 @@ export const SEARCHORIGEN = "SEARCHORIGEN";
 export const SEARCHDESTINO = "SEARCHDESTINO";
 export const GET_USUARIOS = "GET_USUARIOS";
 export const USUARIO_MAIL = "USUARIO_MAIL";
+export const FILTERTYPE = "FILTERTYPE";
 export const MODIFICAR_PERFIL = "MODIFICAR_PERFIL";
 
 export function getDetalleViaje(viajeId) {
@@ -312,3 +313,11 @@ export function getUsuarioByEmail(email) {
     }
   };
 }
+
+export function filterPerCard(payload) {
+  return {
+    type: FILTERTYPE,
+    payload
+    }
+  }
+

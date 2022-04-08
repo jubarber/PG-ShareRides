@@ -21,6 +21,7 @@ export default function Card({
   nombre,
   apellido,
   id,
+  status
 }) {
   //get de usuario (nombre, apellido y valoracion). foto usuario. Provincias/localidades como llegan y si se puede mostras cada una independiente de la otra. Iniciar sesion con aut 0 y con las cuquis trabajar con la info.
   return (
@@ -61,10 +62,6 @@ export default function Card({
             )}
           </div>
           <div class="div3">
-            {/* <MdPets />
-            <FaSuitcaseRolling />
-            <MdMasks />
-            <MdSmokingRooms /> */}
             {aceptaMascota ? <MdPets className="line-through" /> : <></>}
             {aceptaFumador ? <MdSmokingRooms /> : <MdSmokeFree />}
             {aceptaEquipaje ? (
