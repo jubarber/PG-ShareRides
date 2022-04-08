@@ -7,6 +7,7 @@ import {
   SEARCHDESTINO,
   GET_USUARIOS,
   USUARIO_MAIL,
+  FILTERTYPE,
   MODIFICAR_PERFIL,
   COMENTARIOS,
   GET_COMENTARIOS,
@@ -72,6 +73,14 @@ function rootReducer(state = initialState, action) {
         comentarios: action.payload,
       };
 
+    case FILTERTYPE:
+      const viajes_usuario = state.viajes.filter(
+        (e) => e.status === action.payload
+      );
+      return {
+        ...state,
+        viajesFiltrados: viajes_usuario,
+      };
     default:
       return { ...state };
   }

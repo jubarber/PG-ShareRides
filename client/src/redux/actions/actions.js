@@ -9,6 +9,7 @@ export const SEARCHORIGEN = "SEARCHORIGEN";
 export const SEARCHDESTINO = "SEARCHDESTINO";
 export const GET_USUARIOS = "GET_USUARIOS";
 export const USUARIO_MAIL = "USUARIO_MAIL";
+export const FILTERTYPE = "FILTERTYPE";
 export const MODIFICAR_PERFIL = "MODIFICAR_PERFIL";
 export const COMENTARIOS = "COMENTARIOS";
 export const GET_COMENTARIOS = "GET_COMENTARIOS";
@@ -345,5 +346,11 @@ export function getComentarios() {
     } catch (error) {
       console.log(error);
     }
+  };
+}
+export function filterPerCard(payload) {
+  return {
+    type: FILTERTYPE,
+    payload,
   };
 }
