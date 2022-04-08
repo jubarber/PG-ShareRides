@@ -100,6 +100,7 @@ export function postViajePasajero(checkboxes, viaje) {
           usaBarbijo: checkboxes[3],
           pagoCompartido: checkboxes[4],
           formaDePago: viaje.formaDePago,
+          nombre: viaje.nombre,
           fecha: viaje.fecha,
           hora: viaje.hora,
           origen: viaje.origen,
@@ -151,6 +152,7 @@ export function postViajeConductor(checkboxes, viaje) {
           usaBarbijo: checkboxes[3],
           pagoCompartido: checkboxes[4],
           formaDePago: viaje.formaDePago,
+          nombre: viaje.nombre,
           fecha: viaje.fecha,
           hora: viaje.hora,
           origen: viaje.origen,
@@ -163,6 +165,69 @@ export function postViajeConductor(checkboxes, viaje) {
       return dispatch({
         type: "POST_VIASJE_CONDUCTOR",
         payload: conductor.data,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
+
+export function mailNuevaPassword(payload) {
+  return async function (dispatch) {
+    try {
+      let mail = await axios({
+        method: "post",
+        url: "http://localhost:3001/api/usuario/mailnuevapassword",
+        data: {
+          email: payload.email,
+          nombre: payload.nombre,
+        },
+      });
+      return dispatch({ type: "MAIL_PASS", payload: mail.data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
+
+export function mailModificarPerfil(payload) {
+  return async function (dispatch) {
+    try {
+      let modificarPerfil = await axios({
+        method: "post",
+        url: "http://localhost:3001/api/usuario/emailmodificarperfil",
+        data: {
+          email: payload.email,
+          nombre: payload.nombre,
+        },
+      });
+      return dispatch({
+        type: "MAIL_MOD_PERFIL",
+        payload: modificarPerfil.data,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
+
+export function modificacionPerfil(payload) {
+  return async function (dispatch) {
+    try {
+      let perfilModificado = await axios({
+        method: "put",
+        url: "http://localhost:3001/api/usuario/modificarperfil",
+        data: {
+          email: payload.email,
+          acercaDeMi: payload.acercaDeMi,
+          telefono: payload.telefono,
+          avatar: payload.avatar,
+          dni: payload.dni,
+        },
+      });
+      return dispatch({
+        type: "MODIFICAR_PERFIL",
+        payload: perfilModificado.data,
       });
     } catch (err) {
       console.log(err);

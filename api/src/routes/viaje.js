@@ -19,6 +19,7 @@ router.post("/conductor", async (req, res, next) => {
       aceptaEquipaje,
       email,
       dni,
+      nombre
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
@@ -35,11 +36,40 @@ router.post("/conductor", async (req, res, next) => {
         aceptaEquipaje,
         usaBarbijo,
         pagoCompartido,
-        status: "conductor",
+        status: "conductor"
       });
       await nuevoViaje.addUsuario(email);
       res.json(nuevoViaje);
     }
+    const sgMail = require("@sendgrid/mail");
+
+    sgMail.setApiKey(API_KEY);
+
+    const message = {
+      to: email,
+      from: "pgsharerides@gmail.com",
+
+      subject: "Viaje creado",
+      html: `<html>
+      <head>
+      <h2>
+      Hola ${nombre}! 
+      </h2>
+      </head>
+      <body>
+      <h4>
+      Te agradecemos por crear tu viaje. Esperamos que tengas una buena experiencia. 
+      Recorda, que vas a tener la posibilidad de hacer una reseña sobre tu conductore/pasajere.
+      </h4>
+      <h3>Buenas rutas!</h3>
+      </body>
+      </html>
+      `
+    };
+    sgMail
+      .send(message)
+      .then((r) => console.log("mail enviado"))
+      .catch((err) => console.log(err.message));
   } catch (error) {
     next(error);
   }
@@ -61,6 +91,7 @@ router.post("/pasajero", async (req, res, next) => {
       aceptaEquipaje,
       email,
       dni,
+      nombre
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
@@ -77,11 +108,40 @@ router.post("/pasajero", async (req, res, next) => {
         aceptaEquipaje,
         usaBarbijo,
         pagoCompartido,
-        status: "pasajero",
+        status: "pasajero"
       });
       await nuevoViaje.addUsuario(email);
       res.json(nuevoViaje);
     }
+    const sgMail = require("@sendgrid/mail");
+
+    sgMail.setApiKey(API_KEY);
+
+    const message = {
+      to: email,
+      from: "pgsharerides@gmail.com",
+
+      subject: "Viaje creado",
+      html: `<html>
+      <head>
+      <h2>
+      Hola ${nombre}! 
+      </h2>
+      </head>
+      <body>
+      <h4>
+      Te agradecemos por crear tu viaje. Esperamos que tengas una buena experiencia. 
+      Recorda, que vas a tener la posibilidad de hacer una reseña sobre tu conductore/pasajere.
+      </h4>
+      <h3>Buenas rutas!</h3>
+      </body>
+      </html>
+      `
+    };
+    sgMail
+      .send(message)
+      .then((r) => console.log("mail enviado"))
+      .catch((err) => console.log(err.message));
   } catch (error) {
     next(error);
   }
@@ -111,9 +171,9 @@ router.get(
             aceptaMascota: aceptaMascota,
             aceptaEquipaje: aceptaEquipaje,
             usaBarbijo: usaBarbijo,
-            asientosAOcupar: asientosAOcupar,
+            asientosAOcupar: asientosAOcupar
           },
-          include: Usuario,
+          include: Usuario
         });
       } else {
         viajesTotal = await Viaje.findAll({
@@ -121,9 +181,9 @@ router.get(
             aceptaFumador: aceptaFumador,
             aceptaMascota: aceptaMascota,
             aceptaEquipaje: aceptaEquipaje,
-            usaBarbijo: usaBarbijo,
+            usaBarbijo: usaBarbijo
           },
-          include: Usuario,
+          include: Usuario
         });
       }
       res.send(viajesTotal);
@@ -132,15 +192,18 @@ router.get(
     }
   }
 );
+
 router.get("/searchdestino", async (req, res, next) => {
   const { destino } = req.query;
   console.log(destino);
   try {
     let filtradoDestino;
     if (destino) {
-      let viajes = await Viaje.findAll({include: Usuario});
+      let viajes = await Viaje.findAll({ include: Usuario });
       filtradoDestino = await viajes.filter((e) => {
-      return  e.dataValues.destino.toLowerCase().includes(destino.toLowerCase());
+        return e.dataValues.destino
+          .toLowerCase()
+          .includes(destino.toLowerCase());
       });
     }
     console.log(filtradoDestino);
@@ -152,16 +215,16 @@ router.get("/searchdestino", async (req, res, next) => {
 
 router.get("/searchorigen", async (req, res, next) => {
   const { origen } = req.query;
-  console.log("back", origen)
+  console.log("back", origen);
   try {
     let filtradoOrigen;
     if (origen) {
-      let viajes = await Viaje.findAll({include: Usuario});
-       filtradoOrigen = await viajes.filter((e) => {
-       return e.dataValues.origen.toLowerCase().includes(origen.toLowerCase());
+      let viajes = await Viaje.findAll({ include: Usuario });
+      filtradoOrigen = await viajes.filter((e) => {
+        return e.dataValues.origen.toLowerCase().includes(origen.toLowerCase());
       });
     }
-    console.log(filtradoOrigen)
+    console.log(filtradoOrigen);
     res.send(filtradoOrigen);
   } catch (err) {
     next(err);
@@ -177,11 +240,5 @@ router.get("/:viajeId", async (req, res, next) => {
     next(err);
   }
 });
-
-
-
-
-
-
 
 module.exports = router;

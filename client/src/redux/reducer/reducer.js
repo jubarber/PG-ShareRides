@@ -37,7 +37,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         usuarios: action.payload,
       };
-
     case FILTRO_CHECKS:
       return {
         ...state,

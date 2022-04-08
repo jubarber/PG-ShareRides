@@ -10,13 +10,16 @@ import "./FormPasajero.css";
 import fondo from "../../assets/fondo perfil.jpg";
 import NavBar from "../NavBar/NavBar";
 import "./FormPasajero.css";
+import Cookies from "universal-cookie"
 
 export default function FormPasajero() {
+  const cookies = new Cookies();
   const dispatch = useDispatch();
 
   const [isChecked, setIsChecked] = useState(new Array(5).fill(false));
   const [errors, setErrors] = useState({});
   const [viaje, setViaje] = useState({
+    nombre: cookies.get("nombre"),
     fecha: "",
     hora: "",
     origen: "",
