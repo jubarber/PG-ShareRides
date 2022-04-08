@@ -8,6 +8,7 @@ import swal from "sweetalert";
 import { postViajePasajero } from "../../redux/actions/actions";
 import "./FormPasajero.css";
 import fondo from "../../assets/fondo perfil.jpg";
+import NavBar from "../NavBar/NavBar";
 import "./FormPasajero.css";
 import Cookies from "universal-cookie"
 
@@ -164,6 +165,7 @@ export default function FormPasajero() {
 
   return (
     <div>
+      <NavBar />
       <form onSubmit={handleSubmit}>
         <div className="form-formpasajero">
           <div className="form-parte-1">

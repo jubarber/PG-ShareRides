@@ -83,7 +83,7 @@ export default function SearchBar() {
           name="Limpiar filtros"
           onClick={handleSubmitLimpiar}
         >
-          Limpiar filtros
+          Limpiar buscador
         </Button>
       </div>
     </div>

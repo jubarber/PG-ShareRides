@@ -7,6 +7,7 @@ import fondo from "../../assets/fondo perfil.jpg";
 import { Link } from "react-router-dom";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
 import "./RegistroGoogle.css";
+import NavBarSinLogin from "../NavBar/NavBarSinLogin";
 
 export default function RegistroGoogle() {
   const cookies = new Cookies();
@@ -15,11 +16,14 @@ export default function RegistroGoogle() {
   let cookieEmail = cookies.get("email");
   let cookieNombre = cookies.get("nombre");
   let cookieApellido = cookies.get("apellido");
+  let cookieAvatar = cookies.get("avatar");
+  console.log(cookieAvatar);
   const [input, setInput] = useState({ password: "", confirmPassword: "" });
   const [usuario, setUsuario] = useState({
     email: cookieEmail,
     nombre: cookieNombre,
     apellido: cookieApellido,
+    avatar: cookieAvatar,
     password: "",
     confirmPassword: "",
   });
@@ -76,13 +80,14 @@ export default function RegistroGoogle() {
         icon: "success",
         button: "Bienvenidx!",
       }).then(function () {
-        window.location = "/home";
+        // window.location = "/home";
       });
     }
   }
 
   return (
     <div>
+      <NavBarSinLogin />
       <div className="wallpaper">
         <img className="stretch" src={fondo} alt="" />
       </div>

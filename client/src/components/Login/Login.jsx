@@ -8,6 +8,7 @@ import fondo from "../../assets/fondo perfil.jpg";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
 import "./Login.css";
 import Cookies from "universal-cookie";
+import NavBarSinLogin from "../NavBar/NavBarSinLogin";
 
 export default function Login() {
   const cookies = new Cookies();
@@ -34,7 +35,7 @@ export default function Login() {
       url: `http://localhost:3001/api/usuario/usuarios/${email}`,
     }).then((r) => setUsuario(r.data));
   } //fin function getUsuario
-  
+
     useEffect(() => {
       cookies.set("dni", usuario.dni, { path: "/" });
       cookies.set("email", usuario.email, { path: "/" });
@@ -74,10 +75,9 @@ export default function Login() {
         title: "El inicio de sesión ha sido exitoso!",
         icon: "success",
         button: "Bienvenidx!",
-      })
-        .then(function () {
-          window.location = "/home";
-        });
+      }).then(function () {
+        window.location = "/home";
+      });
     }
   }, [inicioSesion]);
 
@@ -129,11 +129,12 @@ export default function Login() {
 
   return (
     <div>
+      <NavBarSinLogin />
       <div className="wallpaper">
         <img className="stretch" src={fondo} alt="" />
       </div>
       <div className="Login__nav">
-        <Link to="/">
+        <Link to="/home">
           <button className="Login__btn_volver">Volver</button>
         </Link>
       </div>
