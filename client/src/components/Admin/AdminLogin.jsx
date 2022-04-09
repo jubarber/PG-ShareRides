@@ -25,6 +25,7 @@ export default function Admin() {
     if (response.data === "Admin inicia sesion") {
       navigate("/adminusuarios");
       cookies.set("admin", "true")
+
     } else {
       swal({
         title: "Alto!",
