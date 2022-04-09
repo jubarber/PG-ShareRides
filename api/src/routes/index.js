@@ -4,7 +4,8 @@ const { Router } = require("express");
 const usuarioRouter = require('./usuario.js');
 const vehiculoRouter = require('./vehiculo.js');
 const viajeRouter = require('./viaje.js');
-const localidadRouter = require('./localidad.js')
+const localidadRouter = require('./localidad.js');
+const adminRouter = require('./admin.js');
 
 const router = Router();
 
@@ -13,7 +14,8 @@ const router = Router();
 router.use("/usuario", usuarioRouter);
 router.use("/vehiculo", vehiculoRouter);
 router.use("/viaje", viajeRouter);
-router.use('/localidad', localidadRouter)
+router.use('/localidad', localidadRouter);
+router.use('/admin', adminRouter);
 
 
 module.exports = router;

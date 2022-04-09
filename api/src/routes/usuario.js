@@ -3,6 +3,7 @@ const router = Router();
 const { Usuario, Viaje } = require("../db.js");
 const { API_KEY } = process.env;
 
+
 router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
   try {
     const { email, password } = req.params;
@@ -49,7 +50,7 @@ router.post("/registro", async (req, res, next) => {
     const { email, nombre, apellido, password } = req.body;
     let nuevoUsuario;
     nuevoUsuario = await Usuario.findOrCreate({
-      where: { email, nombre, apellido, password }
+      where: { email, nombre, apellido, password },
     });
     res.json(nuevoUsuario);
 
@@ -77,7 +78,7 @@ router.post("/registro", async (req, res, next) => {
       <h3>Buenas rutas!</h3>
       </body>
       </html>
-      `
+      `,
     };
     sgMail
       .send(message)
@@ -125,7 +126,7 @@ router.post("/mailnuevapassword", async (req, res, next) => {
       <h3>Buenas rutas!</h3>
       </body>
       </html>
-      `
+      `,
     };
     sgMail
       .send(message)
@@ -144,7 +145,7 @@ router.put("/modificarperfil", async (req, res, next) => {
       acercaDeMi: acercaDeMi,
       telefono: telefono,
       avatar: avatar,
-      dni: dni
+      dni: dni,
     });
     usuario.save();
   } catch (err) {
@@ -177,7 +178,7 @@ router.post("/emailmodificarperfil", async (req, res, next) => {
       <h3>Buenas rutas!</h3>
       </body>
       </html>
-      `
+      `,
     };
     sgMail
       .send(message)
