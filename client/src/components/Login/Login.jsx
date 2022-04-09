@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../redux/actions/actions";
 import swal from "sweetalert";
 import fondo from "../../assets/fondo perfil.jpg";
@@ -13,6 +13,7 @@ import NavBarSinLogin from "../NavBar/NavBarSinLogin";
 export default function Login() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [usuario, setUsuario] = useState("hola soy usuario vacio");
   const [input, setInput] = useState({ email: "", password: "" });
   const [error, setError] = useState({
@@ -76,7 +77,7 @@ export default function Login() {
         icon: "success",
         button: "Bienvenidx!",
       }).then(function () {
-        window.location = "/home";
+        navigate("/home");
       });
     }
   }, [inicioSesion]);

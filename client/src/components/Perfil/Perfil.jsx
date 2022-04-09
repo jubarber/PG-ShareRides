@@ -23,13 +23,13 @@ export default function Perfil() {
   const acercaDeMi = cookies.get("acercaDeMi");
 
   const [usuario, setUsuario] = useState({
-    Nombre: "",
-    Apellido: "",
-    Email: "",
-    Telefono: "",
-    DNI: "",
-    AcercaDeMi: "",
-    Imagen: "",
+    nombre: "",
+    apellido: "",
+    email: "",
+    telefono: "",
+    dni: "",
+    acercaDeMi: "",
+    imagen: "",
   });
 
   const [check, setCheck] = useState(false);
@@ -95,8 +95,8 @@ export default function Perfil() {
             <input
               type="text"
               onChange={handleChange}
-              name="AcercaDeMi"
-              value={usuario.AcercaDeMi}
+              name="acercaDeMi"
+              value={usuario.acercaDeMi}
               disabled={habilitarAcercaDeMi}
             />{" "}
             <button onClick={clickAcercaDeMi}>
@@ -121,7 +121,7 @@ export default function Perfil() {
               <input
                 type="text"
                 className="input-perfil"
-                name="Nombre"
+                name="nombre"
                 value={nombre}
                 disabled
               />
@@ -134,7 +134,7 @@ export default function Perfil() {
               <input
                 type="text"
                 className="input-perfil"
-                name="Apellido"
+                name="apellido"
                 value={apellido}
                 disabled
               />
@@ -147,7 +147,7 @@ export default function Perfil() {
               <input
                 type="text"
                 className="input-perfil"
-                name="Email"
+                name="email"
                 value={email}
                 disabled
               />
@@ -161,8 +161,8 @@ export default function Perfil() {
                 type="text"
                 className="input-perfil"
                 onChange={handleChange}
-                name="Telefono"
-                value={usuario.Telefono}
+                name="telefono"
+                value={usuario.telefono}
                 disabled={habilitarTelefono}
               />
               <button onClick={clickTelefono}>
@@ -175,7 +175,7 @@ export default function Perfil() {
                 type="text"
                 className="input-perfil"
                 onChange={handleChange}
-                name="DNI"
+                name="dni"
                 value={DNI === "null" ? "" : DNI}
                 disabled={habilitarDNI}
               />

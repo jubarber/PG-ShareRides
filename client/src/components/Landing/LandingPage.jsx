@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import GoogleLogin from "react-google-login";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./LandingPage.css";
 import Cookies from "universal-cookie";
 import { login, getUsuarioByEmail } from "../../redux/actions/actions";
@@ -10,6 +10,7 @@ import NavBarSinLogin from "../NavBar/NavBarSinLogin";
 
 export default function LandingPage() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const error = useSelector((state) => state.error);
   const usuarioReducer = useSelector((state) => state.usuario);
   const [menu, SetMenu] = useState(false);
@@ -38,12 +39,12 @@ export default function LandingPage() {
         if (Object.values(usuarioReducer).length > 0) {
           console.log("usuario reducer", usuarioReducer);
           setTimeout(() => {
-            window.location.href = "/home";
+            navigate("/home") ;
           }, 2000);
         } else {
           console.log("error");
           setTimeout(() => {
-            window.location.href = "/registrogoogle";
+            navigate("/registrogoogle");
           }, 2000);
         }
       }

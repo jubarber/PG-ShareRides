@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import fondo from "../../assets/fondo perfil.jpg";
 import "./FormViaje.css";
 import CheckBox from "@mui/material/Checkbox";
 import NavBar from "../NavBar/NavBar";
+import { useNavigate } from "react-router-dom";
 
 export default function FormViaje() {
+  const navigate = useNavigate();
   const [isChecked, setIsChecked] = useState({
     pasajero: false,
     conductor: false,
@@ -21,10 +22,10 @@ export default function FormViaje() {
   function handleSubmit(e) {
     e.preventDefault();
     if (isChecked.pasajero === true && isChecked.conductor === false) {
-      window.location.href = "/formpasajero";
+      navigate("/formpasajero");
     }
     if (isChecked.conductor === true && isChecked.pasajero === false) {
-      window.location.href = "/formvehiculo";
+      navigate("/formvehiculo");
     }
     if (isChecked.pasajero && isChecked.conductor) {
       alert("Debes selecionar uno solo");

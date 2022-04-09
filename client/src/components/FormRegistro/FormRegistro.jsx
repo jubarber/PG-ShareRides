@@ -5,14 +5,14 @@ import swal from "sweetalert";
 import { registroUsuario } from "../../redux/actions/actions";
 import "./FormRegistro.css";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NavBarSinLogin from "../NavBar/NavBarSinLogin";
-import Cookies from "universal-cookie"
-
+import Cookies from "universal-cookie";
 
 export default function FormRegistro() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [statePassword, setStatePassword] = useState(false);
   const [input, setInput] = useState({
     nombre: "",
@@ -130,7 +130,7 @@ export default function FormRegistro() {
         icon: "success",
         button: "Ingresar",
       }).then(function () {
-        window.location = "/home";
+        navigate("/home");
       });
       setInput({
         nombre: "",
