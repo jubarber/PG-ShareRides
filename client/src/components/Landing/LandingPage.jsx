@@ -4,8 +4,7 @@ import GoogleLogin from "react-google-login";
 import { Link, useNavigate } from "react-router-dom";
 import "./LandingPage.css";
 import Cookies from "universal-cookie";
-import { login, getUsuarioByEmail } from "../../redux/actions/actions";
-import axios from "axios";
+import { getUsuarioByEmail } from "../../redux/actions/actions";
 import NavBarSinLogin from "../NavBar/NavBarSinLogin";
 
 export default function LandingPage() {
@@ -55,7 +54,7 @@ export default function LandingPage() {
   useEffect(() => {
     console.log("dispatch");
     dispatch(getUsuarioByEmail(usuario.email));
-  }, [usuario]);
+  }, [usuario, dispatch]);
 
   const handleMenu = () => {
     SetMenu(!menu);
