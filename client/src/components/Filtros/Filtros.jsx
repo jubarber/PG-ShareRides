@@ -101,7 +101,7 @@ export function Filtros() {
         <div className="checkboxes">
           {filtrosArray.map((e, index) => {
             return (
-              <div>
+              <div key={e.id}>
                 <label className="mycheckbox">
                   {e.name}
                   <input
