@@ -69,7 +69,7 @@ export default function LandingPage() {
             <div className="menu">
               <h3>Share Rides</h3>
               <button onClick={handleMenu} className="btn-menu">
-                <i class="fas fa-bars" />
+                <i className="fas fa-bars" />
               </button>
               {menu && (
                 <nav className="desplegable">
