@@ -5,8 +5,10 @@ import fondo from "../../assets/fondo perfil.jpg";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
 import "./Admin.css";
 import { useNavigate } from "react-router-dom";
+import Cookies from "universal-cookie";
 
 export default function Admin() {
+  const cookies = new Cookies();
   const navigate = useNavigate();
   const [input, setInput] = useState({ email: "", password: "" });
   const [statePassword, setStatePassword] = useState(false);
@@ -22,6 +24,7 @@ export default function Admin() {
     });
     if (response.data === "Admin inicia sesion") {
       navigate("/adminusuarios");
+      cookies.set("admin", "true")
     } else {
       swal({
         title: "Alto!",

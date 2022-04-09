@@ -12,6 +12,7 @@ import { DetalleViaje } from "./components/DetalleViaje/Conductor/DetalleViaje";
 import Login from "./components/Login/Login";
 import RegistroGoogle from "./components/RegistroGoogle/RegistroGoogle";
 import Admin from "./components/Admin/AdminLogin";
+import AdminHome from "./components/Admin/AdminHome"
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/registrogoogle" element={<RegistroGoogle />} />
           <Route exact path="/admin" element={<Admin />} />
+          <Route exact path="/adminhome" element={<AdminHome />} />
         </Routes>
       </BrowserRouter>
     </div>
