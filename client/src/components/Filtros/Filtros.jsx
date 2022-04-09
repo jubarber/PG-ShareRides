@@ -20,19 +20,19 @@ export function Filtros() {
   const filtrosArray = [
     {
       id: 1,
-      name: "Fumador",
+      name: "Viajes que aceptan Fumador",
     },
     {
       id: 2,
-      name: "Mascota",
+      name: "Viajes que aceptan Mascota",
     },
     {
       id: 3,
-      name: "Equipaje",
+      name: "Viajes que aceptan Equipaje",
     },
     {
       id: 4,
-      name: "Barbijo",
+      name: "Viajes que exigen uso de Barbijo",
     },
   ];
 

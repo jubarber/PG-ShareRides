@@ -65,12 +65,12 @@ export default function NavBar() {
         {cookieEmail === "undefined" ? (
           <>
             <div className="IniciarSesion-y-Registrar">
-              <Link to="/formviaje">
+              <Link to="/login">
                 <button type="button" class="btn btn-outline-primary">
                   Iniciar Sesion
                 </button>
               </Link>
-              <Link to="/formviaje">
+              <Link to="/registro">
                 <button type="button" class="btn btn-outline-primary">
                   Registrarse
                 </button>

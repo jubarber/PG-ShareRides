@@ -135,7 +135,7 @@ export default function Login() {
         <img className="stretch" src={fondo} alt="" />
       </div>
       <div className="Login__nav">
-        <Link to="/">
+        <Link to="/home">
           <button className="Login__btn_volver">Volver</button>
         </Link>
       </div>
