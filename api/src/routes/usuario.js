@@ -3,7 +3,6 @@ const router = Router();
 const { Usuario, Viaje } = require("../db.js");
 const { API_KEY } = process.env;
 
-
 router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
   try {
     const { email, password } = req.params;
