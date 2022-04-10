@@ -417,3 +417,14 @@ export function filterPerCard(payload) {
     payload,
   };
 }
+<<<<<<< HEAD
+=======
+
+export function filterPerCard(payload) {
+  return {
+    type: FILTERTYPE,
+    payload
+    }
+  }
+
+>>>>>>> e7ecfb9618cf9b439e1a562e757b291bf970109f

@@ -44,6 +44,7 @@ module.exports = (sequelize) => {
       allowNull: false,
       defaultValue: false,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     },
     telefono: {
@@ -54,6 +55,8 @@ module.exports = (sequelize) => {
       type: DataTypes.TEXT,
       defaultValue: ""
 >>>>>>> develop
+=======
+>>>>>>> e7ecfb9618cf9b439e1a562e757b291bf970109f
     },
     telefono: {
       type: DataTypes.STRING,
