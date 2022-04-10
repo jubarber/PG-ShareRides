@@ -49,7 +49,7 @@ router.post("/registro", async (req, res, next) => {
     const { email, nombre, apellido, password } = req.body;
     let nuevoUsuario;
     nuevoUsuario = await Usuario.findOrCreate({
-      where: { email, nombre, apellido, password }
+      where: { email, nombre, apellido, password },
     });
     res.json(nuevoUsuario);
 
@@ -225,6 +225,7 @@ router.put("/modificarperfil", async (req, res, next) => {
         acercaDeMi: acercaDeMi,
       });
       usuario.save();
+<<<<<<< HEAD
     }
   } catch (err) {
     next(err);
@@ -249,6 +250,8 @@ router.put("/comentarios", async (req, res, next) => {
         comentarios: comentarios,
       });
       nuevoComentario.save();
+=======
+>>>>>>> develop
     }
   } catch (err) {
     next(err);

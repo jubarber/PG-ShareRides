@@ -3,12 +3,13 @@ import { useDispatch } from "react-redux";
 import swal from "sweetalert";
 import { postVehiculo } from "../../redux/actions/actions";
 import fondo from "../../assets/fondo perfil.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
 import "./FormVehiculo.css";
 
 export default function FormVehiculo() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [auto, setAuto] = useState({
     patente: "",
     marca: "",
@@ -96,7 +97,7 @@ export default function FormVehiculo() {
         icon: "success",
         button: "Crea tu viaje!",
       }).then(function () {
-        window.location = "/formconductor";
+        navigate("/formconductor");
       });
       setAuto({
         patente: "",

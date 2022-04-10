@@ -10,11 +10,13 @@ import "./FormPasajero.css";
 import fondo from "../../assets/fondo perfil.jpg";
 import NavBar from "../NavBar/NavBar";
 import "./FormPasajero.css";
-import Cookies from "universal-cookie"
+import Cookies from "universal-cookie";
+import { useNavigate } from "react-router-dom";
 
 export default function FormPasajero() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [isChecked, setIsChecked] = useState(new Array(5).fill(false));
   const [errors, setErrors] = useState({});
@@ -145,7 +147,7 @@ export default function FormPasajero() {
         icon: "success",
         button: "Buen viaje!",
       }).then(function () {
-        window.location = "/home";
+        navigate("/home");
       });
 
       dispatch(postViajePasajero(isChecked, viaje));

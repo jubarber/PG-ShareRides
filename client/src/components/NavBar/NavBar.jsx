@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./NavBar.css";
 import logo from "../../assets/Icono shareRides.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "universal-cookie";
 import Box from "@mui/material/Box";
@@ -20,6 +20,7 @@ import { FaHome } from "react-icons/fa";
 
 export default function NavBar() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cookies = new Cookies();
   const cookieNombre = cookies.get("nombre");
   const cookieAvatar = cookies.get("avatar");
@@ -37,7 +38,7 @@ export default function NavBar() {
 
   const handleLogout = () => {
     dispatch(logout(cookieEmail));
-    window.location.href = "/";
+    navigate("/");
   };
 
   return (
@@ -51,12 +52,12 @@ export default function NavBar() {
         </div>
         <div className="panel-botones">
           <Link to="/home">
-            <button class="btn btn-outline-primary" type="button">
+            <button className="btn btn-outline-primary" type="button">
               <FaHome />
             </button>
           </Link>
           <Link to="/formviaje">
-            <button type="button" class="btn btn-outline-primary">
+            <button type="button" className="btn btn-outline-primary">
               Crear Viaje
             </button>
           </Link>
@@ -65,12 +66,12 @@ export default function NavBar() {
           <>
             <div className="IniciarSesion-y-Registrar">
               <Link to="/login">
-                <button type="button" class="btn btn-outline-primary">
+                <button type="button" className="btn btn-outline-primary">
                   Iniciar Sesion
                 </button>
               </Link>
               <Link to="/registro">
-                <button type="button" class="btn btn-outline-primary">
+                <button type="button" className="btn btn-outline-primary">
                   Registrarse
                 </button>
               </Link>

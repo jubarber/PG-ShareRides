@@ -43,6 +43,17 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,
+<<<<<<< HEAD
+=======
+    },
+    telefono: {
+      type: DataTypes.STRING,
+      defaultValue: ""
+    },
+    comentarios: {
+      type: DataTypes.TEXT,
+      defaultValue: ""
+>>>>>>> develop
     },
     telefono: {
       type: DataTypes.STRING,

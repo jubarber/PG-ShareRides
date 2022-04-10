@@ -157,7 +157,7 @@ export default function Perfil() {
                 type="text"
                 className="input-perfil"
                 name="nombre"
-                value={miUsuario.nombre}
+                value={miUsuario.nombre || ""}
                 disabled
               />
             </div>
@@ -167,7 +167,7 @@ export default function Perfil() {
                 type="text"
                 className="input-perfil"
                 name="apellido"
-                value={miUsuario.apellido}
+                value={miUsuario.apellido || ""}
                 disabled
               />
             </div>
@@ -177,7 +177,7 @@ export default function Perfil() {
                 type="text"
                 className="input-perfil"
                 name="email"
-                value={miUsuario.email}
+                value={miUsuario.email || ""}
                 disabled
               />
             </div>
@@ -188,7 +188,10 @@ export default function Perfil() {
                 className="input-perfil"
                 onChange={handleChange}
                 name="telefono"
-                value={usuario.telefono ? usuario.telefono : miUsuario.telefono}
+                value={
+                  (usuario.telefono ? usuario.telefono : miUsuario.telefono) ||
+                  ""
+                }
                 disabled={habilitarTelefono}
               />
             </div>
@@ -199,7 +202,7 @@ export default function Perfil() {
                 className="input-perfil"
                 onChange={handleChange}
                 name="dni"
-                value={usuario.dni ? usuario.dni : miUsuario.dni}
+                value={(usuario.dni ? usuario.dni : miUsuario.dni) || ""}
                 disabled={habilitarDNI}
               />
             </div>
@@ -235,7 +238,7 @@ export default function Perfil() {
               <Rating
                 onChange={handleChangeReviews}
                 name="calificacion"
-                value={reviews.calificacion}
+                value={parseInt(reviews.calificacion)}
                 precision={0.5}
               />
             </div>
