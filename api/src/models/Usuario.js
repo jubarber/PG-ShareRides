@@ -48,10 +48,6 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       defaultValue: ""
     },
-    comentarios: {
-      type: DataTypes.TEXT,
-      defaultValue: ""
-    },
     telefono: {
       type: DataTypes.INTEGER,
       allowNull: true
