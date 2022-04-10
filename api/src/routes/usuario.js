@@ -3,6 +3,7 @@ const router = Router();
 const { Usuario, Viaje } = require("../db.js");
 const { API_KEY } = process.env;
 
+
 router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
   try {
     const { email, password } = req.params;
@@ -223,14 +224,6 @@ router.put("/modificarperfil", async (req, res, next) => {
     if (acercaDeMi) {
       usuario.update({
         acercaDeMi: acercaDeMi,
-      });
-      usuario.save();
-    } else {
-      usuario.update({
-        acercaDeMi: acercaDeMi,
-        telefono: telefono,
-        avatar: avatar,
-        dni: dni,
       });
       usuario.save();
     }

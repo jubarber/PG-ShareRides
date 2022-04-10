@@ -233,7 +233,7 @@
 }
 
 .comentarios-card {
-  width: 18rem;
+  width: 100%;
   margin-top: 1em;
   margin-bottom: 2em;
   display: flex;
@@ -249,18 +249,22 @@
   word-wrap: break-word;
 }
 
-.comentario label {
-  margin-left: 2rem;
+.comentario {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.comentario input {
+.comentario label {
+  margin-bottom: 1rem;
+}
+
+.comentario textarea {
   height: 8rem;
-  width: 16rem;
-  border-radius: 10px;
+  width: 17rem;
   border: 1px solid black;
-  padding-bottom: 6rem;
-  margin-left: 2rem;
-  margin-top: 1rem;
+  border-radius: 20px;
+  padding: 0.8rem;
 }
 
 .comentarios Button {

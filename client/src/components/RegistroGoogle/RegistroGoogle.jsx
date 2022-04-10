@@ -4,7 +4,7 @@ import Cookies from "universal-cookie";
 import { registroUsuario } from "../../redux/actions/actions";
 import swal from "sweetalert";
 import fondo from "../../assets/fondo perfil.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
 import "./RegistroGoogle.css";
 import NavBarSinLogin from "../NavBar/NavBarSinLogin";
@@ -13,6 +13,7 @@ export default function RegistroGoogle() {
   const cookies = new Cookies();
   const [statePassword, setStatePassword] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   let cookieEmail = cookies.get("email");
   let cookieNombre = cookies.get("nombre");
   let cookieApellido = cookies.get("apellido");
@@ -80,7 +81,7 @@ export default function RegistroGoogle() {
         icon: "success",
         button: "Bienvenidx!",
       }).then(function () {
-        // window.location = "/home";
+        navigate("/home");
       });
     }
   }
