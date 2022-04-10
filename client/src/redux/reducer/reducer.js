@@ -6,7 +6,11 @@ import {
   SEARCHORIGEN,
   SEARCHDESTINO,
   GET_USUARIOS,
-  USUARIO_MAIL
+  USUARIO_MAIL,
+  FILTERTYPE,
+  MODIFICAR_PERFIL,
+  COMENTARIOS,
+  GET_COMENTARIOS,
 } from "../actions/actions.js";
 
 const initialState = {
@@ -15,7 +19,8 @@ const initialState = {
   viajesFiltrados: [],
   usuarios: [],
   usuario: [],
-  error: ""
+  error: "",
+  comentarios: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -23,39 +28,38 @@ function rootReducer(state = initialState, action) {
     case GET_DETALLE_VIAJE:
       return {
         ...state,
-        viajePorId: action.payload
+        viajePorId: action.payload,
       };
     case GET_VIAJES_TOTAL:
       return {
         ...state,
         viajes: action.payload,
-        viajesFiltrados: action.payload
+        viajesFiltrados: action.payload,
       };
     case GET_USUARIOS:
       return {
         ...state,
-        usuarios: action.payload
+        usuarios: action.payload,
       };
-
     case FILTRO_CHECKS:
       return {
         ...state,
-        viajesFiltrados: action.payload
+        viajesFiltrados: action.payload,
       };
     case REGISTRO_USUARIO:
       return {
         ...state,
-        usuarios: action.payload
+        usuarios: action.payload,
       };
     case SEARCHDESTINO:
       return {
         ...state,
-        viajesFiltrados: action.payload
+        viajesFiltrados: action.payload,
       };
     case SEARCHORIGEN:
       return {
         ...state,
-        viajesFiltrados: action.payload
+        viajesFiltrados: action.payload,
       };
     case USUARIO_MAIL:
       if (action.payload === "error") {
@@ -63,6 +67,20 @@ function rootReducer(state = initialState, action) {
       } else {
         return { ...state, usuario: action.payload };
       }
+    case GET_COMENTARIOS:
+      return {
+        ...state,
+        comentarios: action.payload,
+      };
+
+    case FILTERTYPE:
+      const viajes_usuario = state.viajes.filter(
+        (e) => e.status === action.payload
+      );
+      return {
+        ...state,
+        viajesFiltrados: viajes_usuario,
+      };
     default:
       return { ...state };
   }

@@ -49,7 +49,7 @@ router.post("/registro", async (req, res, next) => {
     const { email, nombre, apellido, password } = req.body;
     let nuevoUsuario;
     nuevoUsuario = await Usuario.findOrCreate({
-      where: { email, nombre, apellido, password }
+      where: { email, nombre, apellido, password },
     });
     res.json(nuevoUsuario);
 
@@ -77,7 +77,7 @@ router.post("/registro", async (req, res, next) => {
       <h3>Buenas rutas!</h3>
       </body>
       </html>
-      `
+      `,
     };
     sgMail
       .send(message)
@@ -125,7 +125,7 @@ router.post("/mailnuevapassword", async (req, res, next) => {
       <h3>Buenas rutas!</h3>
       </body>
       </html>
-      `
+      `,
     };
     sgMail
       .send(message)
@@ -133,22 +133,6 @@ router.post("/mailnuevapassword", async (req, res, next) => {
       .catch((err) => console.log(err.message));
   } catch (error) {
     next(error);
-  }
-});
-
-router.put("/modificarperfil", async (req, res, next) => {
-  const { email, acercaDeMi, telefono, avatar, dni } = req.body;
-  try {
-    let usuario = await Usuario.findByPk(email);
-    usuario.update({
-      acercaDeMi: acercaDeMi,
-      telefono: telefono,
-      avatar: avatar,
-      dni: dni
-    });
-    usuario.save();
-  } catch (err) {
-    next(err);
   }
 });
 
@@ -177,7 +161,7 @@ router.post("/emailmodificarperfil", async (req, res, next) => {
       <h3>Buenas rutas!</h3>
       </body>
       </html>
-      `
+      `,
     };
     sgMail
       .send(message)
@@ -207,6 +191,41 @@ router.put("/deslogueado", async (req, res, next) => {
     usuario.update({ logueado: false });
     usuario.save();
     res.send("usuario deslogueado");
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.put("/modificarperfil", async (req, res, next) => {
+  const { email, acercaDeMi, telefono, avatar, dni } = req.body;
+  try {
+    let usuario = await Usuario.findByPk(email);
+    if (dni) {
+      console.log("entre a dni");
+      usuario.update({
+        dni: dni,
+      });
+      usuario.save();
+    }
+    if (telefono) {
+      console.log("entre a telefono");
+      usuario.update({
+        telefono: telefono,
+      });
+      usuario.save();
+    }
+    if (avatar) {
+      usuario.update({
+        avatar: avatar,
+      });
+      usuario.save();
+    }
+    if (acercaDeMi) {
+      usuario.update({
+        acercaDeMi: acercaDeMi,
+      });
+      usuario.save();
+    }
   } catch (err) {
     next(err);
   }

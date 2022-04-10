@@ -21,6 +21,7 @@ export default function Card({
   nombre,
   apellido,
   id,
+  status
 }) {
   //get de usuario (nombre, apellido y valoracion). foto usuario. Provincias/localidades como llegan y si se puede mostras cada una independiente de la otra. Iniciar sesion con aut 0 y con las cuquis trabajar con la info.
   return (
@@ -30,7 +31,9 @@ export default function Card({
           <div class="div1">
             <img src={link} alt="" />
             <div className="info-personal-card">
-              <span>nombre apellido</span>
+              <span>
+                {nombre + " "} {apellido}
+              </span>
               <div className="puntuacion">
                 <ImStarFull className="black" />
                 <ImStarFull className="black" />
@@ -59,10 +62,6 @@ export default function Card({
             )}
           </div>
           <div class="div3">
-            {/* <MdPets />
-            <FaSuitcaseRolling />
-            <MdMasks />
-            <MdSmokingRooms /> */}
             {aceptaMascota ? <MdPets /> : <></>}
             {aceptaFumador ? <MdSmokingRooms /> : <MdSmokeFree />}
             {aceptaEquipaje ? <FaSuitcaseRolling /> : <></>}
@@ -72,41 +71,4 @@ export default function Card({
       </div>
     </div>
   );
-}
-{
-  /* <div className="card-usuario-infper-detalle">
-          <div className="card-usuario-img-detalle">
-            <img src={link} alt="" />
-          </div>
-          <div className="card-usuario-nombre-val-detalle text-xl">
-            <span className="text-white">Jorge Martin</span>
-            <span>Valoracion estrellas</span>
-          </div>
-          <div className="detalle-cardviaje">
-            
-          </div>
-        </div>         
-      </div>
-      <div id="nueva-clase">
-        <div className="card-usuario-infper-detalle">
-          <div className="card-usuario-img-detalle">
-            <img src={link} alt="" />
-          </div>
-          <div className="card-usuario-nombre-val-detalle">
-            <span className="text-white my-9">Jorge Martin</span>
-            <span>Valoracion estrellas</span>
-          </div>
-        </div>
-      </div>
-      <div id="nueva-clase">
-        <div className="card-usuario-infper-detalle">
-          <div className="card-usuario-img-detalle">
-            <img src={link} alt="" />
-          </div>
-          <div className="card-usuario-nombre-val-detalle text-xl">
-            <span className="text-white my-9">Jorge Martin</span>
-            <span>Valoracion estrellas</span>
-          </div>
-        </div>
-      </div> */
 }

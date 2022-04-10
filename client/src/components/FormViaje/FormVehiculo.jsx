@@ -3,17 +3,19 @@ import { useDispatch } from "react-redux";
 import swal from "sweetalert";
 import { postVehiculo } from "../../redux/actions/actions";
 import fondo from "../../assets/fondo perfil.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import NavBar from "../NavBar/NavBar";
 import "./FormVehiculo.css";
 
 export default function FormVehiculo() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [auto, setAuto] = useState({
     patente: "",
     marca: "",
     modelo: "",
     dni: "",
-    email: ""
+    email: "",
   });
   const [errors, setErrors] = useState({});
 
@@ -22,7 +24,7 @@ export default function FormVehiculo() {
     marca: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
     modelo: /^[0-9]*$/,
     email: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
-    dni: /^(?!^0+$)[a-zA-Z0-9]{3,20}$/
+    dni: /^(?!^0+$)[a-zA-Z0-9]{3,20}$/,
   };
 
   function validacion(auto) {
@@ -58,12 +60,12 @@ export default function FormVehiculo() {
   function handleOnChange(e) {
     setAuto({
       ...auto,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
     setErrors(
       validacion({
         ...auto,
-        [e.target.name]: e.target.value
+        [e.target.name]: e.target.value,
       })
     );
   }
@@ -94,13 +96,15 @@ export default function FormVehiculo() {
         title: "El registro ha sido exitoso!",
         icon: "success",
         button: "Crea tu viaje!",
-      }).then(function(){window.location = "/formconductor"});
+      }).then(function () {
+        navigate("/formconductor");
+      });
       setAuto({
         patente: "",
         marca: "",
         modelo: "",
         dni: "",
-        email: ""
+        email: "",
       });
     }
     //history.push('/') //quiero q me envie a la seccion completar mi perfil?
@@ -108,6 +112,7 @@ export default function FormVehiculo() {
 
   return (
     <div>
+      <NavBar />
       <div className="Vehiculo__nav">
         <Link to="/formviaje">
           <button className="Vehiculo__btn_volver">Volver</button>

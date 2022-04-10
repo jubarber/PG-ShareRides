@@ -3,13 +3,13 @@ import "./PaginacionComentarios.css";
 import { BiFirstPage, BiLastPage } from "react-icons/bi";
 export default function PaginacionComentarios({
   comentariosPorPagina,
-  array,
+  comentarios,
   paginacion,
   pagina,
   setPagina,
 }) {
   const pageNum = [];
-  const totalPages = Math.ceil(array / comentariosPorPagina);
+  const totalPages = Math.ceil(comentarios / comentariosPorPagina);
 
   for (let i = 1; i <= totalPages; i++) {
     pageNum.push(i);

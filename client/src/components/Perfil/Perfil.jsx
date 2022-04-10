@@ -4,12 +4,20 @@ import { useDispatch, useSelector } from "react-redux";
 import fondo from "../../assets/fondo perfil.jpg";
 import "./Perfil.css";
 import { FaEdit } from "react-icons/fa";
+import { AiFillCheckSquare } from "react-icons/ai";
 import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
-import PaginacionComentarios from "./PaginacionComentarios";
-import foto from "../../assets/userRojo.jpg";
-import { getUsuarios } from "../../redux/actions/actions";
+import {
+  getComentarios,
+  getUsuarioByEmail,
+  modificacionPerfil,
+  postComentarios,
+} from "../../redux/actions/actions";
 import Cookies from "universal-cookie";
+import NavBar from "../NavBar/NavBar";
+import user from "../../assets/user.png";
+import Rating from "@mui/material/Rating";
+import PaginacionComentarios from "./PaginacionComentarios";
+
 
 export default function Perfil() {
   const dispatch = useDispatch();
@@ -21,15 +29,34 @@ export default function Perfil() {
   const avatar = cookies.get("avatar");
   const acercaDeMi = cookies.get("acercaDeMi");
 
+  //---------------- Comentarios ---------------------
+  const comentarios = useSelector((state) => state.comentarios);
+  useEffect(() => {
+    dispatch(getComentarios());
+  }, [dispatch]);
+
+  const miUsuario = useSelector((state) => state.usuario);
+  useEffect(() => {
+    dispatch(getUsuarioByEmail(email));
+  }, []);
+
   const [usuario, setUsuario] = useState({
-    Nombre: "",
-    Apellido: "",
-    Email: "",
-    Telefono: "",
-    DNI: "",
-    AcercaDeMi: "",
-    Imagen: "",
+    nombre: "",
+    apellido: "",
+    email: email,
+    telefono: "",
+    dni: "",
+    acercaDeMi: "",
+    imagen: "",
   });
+
+  const [reviews, setReviews] = useState({
+    calificacion: "",
+    comentarios: "",
+    email: email,
+  });
+
+  console.log(reviews);
 
   const [check, setCheck] = useState(false);
   const [habilitarTelefono, setHabilitarTelefono] = useState(true);
@@ -37,40 +64,30 @@ export default function Perfil() {
   const [habilitarAcercaDeMi, setHabilitarAcercaDeMi] = useState(true);
   const [habilitarImagen, setHabilitarImagen] = useState(true);
 
-  // const [pagina, setPagina] = useState(1);
-  // const [comentariosPorPagina, setComentariosPorPagina] = useState(3);
-  // const ultimoComentario = pagina * comentariosPorPagina;
-  // const primerComentario = ultimoComentario - comentariosPorPagina;
-  // const personitas = array?.slice(primerComentario, ultimoComentario);
+  const [pagina, setPagina] = useState(1);
+  const [comentariosPorPagina, setComentariosPorPagina] = useState(3);
+  const ultimoComentario = pagina * comentariosPorPagina;
+  const primerComentario = ultimoComentario - comentariosPorPagina;
+  const ComentariosTotales = comentarios?.slice(
+    primerComentario,
+    ultimoComentario
+  );
 
-  // const paginacion = (pageNum) => {
-  //   setPagina(pageNum);
-  // };
-
-  const handleCheck = (e) => {
-    setCheck(!check);
+  const paginacion = (pageNum) => {
+    setPagina(pageNum);
   };
 
-  const clickTelefono = (e) => {
-    e.preventDefault();
-    setHabilitarTelefono(!habilitarTelefono);
-  };
-  const clickDNI = (e) => {
+  const habilitarInputs = (e) => {
     e.preventDefault();
     setHabilitarDNI(!habilitarDNI);
-  };
-  const clickAcercaDeMi = (e) => {
-    e.preventDefault();
+    setHabilitarTelefono(!habilitarTelefono);
     setHabilitarAcercaDeMi(!habilitarAcercaDeMi);
   };
-  const clickImagen = (e) => {
+  const deshabilitarInputs = (e) => {
     e.preventDefault();
-    setHabilitarImagen(!habilitarImagen);
+    setHabilitarDNI(!habilitarDNI);
+    setHabilitarTelefono(!habilitarTelefono);
   };
-
-  useEffect(() => {
-    dispatch(getUsuarios());
-  }, [dispatch]);
 
   const handleChange = (e) => {
     setUsuario({
@@ -79,27 +96,48 @@ export default function Perfil() {
     });
   };
 
+  const handleChangeReviews = (e) => {
+    setReviews({
+      ...reviews,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmitComentarios = (e) => {
+    e.preventDefault();
+    dispatch(postComentarios(reviews));
+    setReviews({
+      calificacion: "",
+      comentarios: "",
+    });
+  };
+
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    dispatch(modificacionPerfil(usuario));
+  };
+
   return (
     <div className="perfil">
+      <NavBar />
       <div className="contenedor-perfil">
         <div className="contenedor-imagen">
           <div className="img-perfil">
-            <img src={avatar} alt="" />
+            <img src={avatar === "null" ? user : avatar} alt="" />
           </div>
           <div className="bio-perfil">
             <h1>
               {nombre} {apellido}
-            </h1>
-            <input
+            </h1>{" "}
+            <textarea
               type="text"
               onChange={handleChange}
-              name="AcercaDeMi"
-              value={usuario.AcercaDeMi}
+              name="acercaDeMi"
+              value={
+                miUsuario.acercaDeMi ? miUsuario.acercaDeMi : usuario.acercaDeMi
+              }
               disabled={habilitarAcercaDeMi}
             />{" "}
-            <button onClick={clickAcercaDeMi}>
-              <FaEdit />
-            </button>
             <div className="btn-perfil">
               <Button color="secondary" size="medium">
                 Seguir
@@ -113,45 +151,36 @@ export default function Perfil() {
         </div>
 
         <div>
-          <form className="contenedor-form">
+          <form className="contenedor-form" onSubmit={(e) => handleUpdate(e)}>
             <div className="nombre">
-              <h5>Nombre__</h5>
+              <h5>Nombre</h5>
               <input
                 type="text"
                 className="input-perfil"
-                name="Nombre"
-                value={nombre}
+                name="nombre"
+                value={miUsuario.nombre || ""}
                 disabled
               />
-              <button disabled>
-                <FaEdit />
-              </button>
             </div>
             <div className="nombre">
               <h5>Apellido</h5>
               <input
                 type="text"
                 className="input-perfil"
-                name="Apellido"
-                value={apellido}
+                name="apellido"
+                value={miUsuario.apellido || ""}
                 disabled
               />
-              <button disabled>
-                <FaEdit />
-              </button>
             </div>
             <div className="nombre">
-              <h5>Email___</h5>
+              <h5>Email</h5>
               <input
                 type="text"
                 className="input-perfil"
-                name="Email"
-                value={email}
+                name="email"
+                value={miUsuario.email || ""}
                 disabled
               />
-              <button disabled>
-                <FaEdit />
-              </button>
             </div>
             <div className="nombre">
               <h5>Telefono</h5>
@@ -159,25 +188,40 @@ export default function Perfil() {
                 type="text"
                 className="input-perfil"
                 onChange={handleChange}
-                name="Telefono"
-                value={usuario.Telefono}
+                name="telefono"
+                value={(usuario.telefono ? usuario.telefono : miUsuario.telefono) || ""}
                 disabled={habilitarTelefono}
               />
-              <button onClick={clickTelefono}>
-                <FaEdit />
-              </button>
             </div>
             <div className="nombre">
-              <h5>DNI_____</h5>
+              <h5>DNI</h5>
               <input
                 type="text"
                 className="input-perfil"
                 onChange={handleChange}
-                name="DNI"
-                value={DNI === "null" ? "" : DNI}
+                name="dni"
+                value={(usuario.dni ? usuario.dni : miUsuario.dni) || ""}
                 disabled={habilitarDNI}
               />
-              <button onClick={clickDNI}>
+            </div>
+            <div className="btn-modificacion-perfil">
+              {habilitarTelefono === false &&
+              habilitarDNI === false &&
+              habilitarAcercaDeMi === false ? (
+                <input
+                  type="submit"
+                  value="Guardar Cambios"
+                  className="btn-modificacion-perfil-active"
+                ></input>
+              ) : (
+                <input
+                  type="button"
+                  value="Guardar Cambios"
+                  disabled
+                  className="btn-modificacion-perfil-disabled"
+                />
+              )}
+              <button onClick={(e) => habilitarInputs(e)}>
                 <FaEdit />
               </button>
             </div>
@@ -185,51 +229,58 @@ export default function Perfil() {
         </div>
       </div>
       <div className="resenas">
-        <form>
+        <form onSubmit={handleSubmitComentarios}>
           <div className="comentarios">
             <h1>Comentarios</h1>
             <div className="comentarios-card">
-              <label>
-                Punturacion:
-                <input
-                  type="number"
-                  min="1"
-                  max="10"
-                  classname="input-number"
-                />{" "}
-              </label>
+              <Rating
+                onChange={handleChangeReviews}
+                name="calificacion"
+                value={parseInt(reviews.calificacion)}
+                precision={0.5}
+              />
             </div>
             <div className="comentario">
               <label>Deja tu comentario:</label>
-              <input type="text" />
+              <textarea
+                type="text"
+                onChange={handleChangeReviews}
+                name="comentarios"
+                value={reviews.comentarios}
+              />
             </div>
-            <Button color="secondary" size="medium" className="btn-enviar">
-              Enviar
-            </Button>
+            <input
+              color="secondary"
+              size="medium"
+              value="Enviar"
+              type="submit"
+            />
           </div>
         </form>
-        {/* {personitas &&
-          personitas.map((e) => (
+        {ComentariosTotales &&
+          ComentariosTotales.map((e) => (
             <div className="resenas-card">
               <div className="encabezado">
-                <img src={foto} alt="" />
-                <h1>{e.Nombre}</h1>
+                <img src={avatar} alt="" />
+                <h1>
+                  {nombre} {apellido}
+                </h1>
               </div>
-              <h3>Punturacion: {e.Estrellas}</h3>
+              <Rating value={e.calificacion} />
               <div className="texto">
-                <p>{e.Comentario}</p>
+                <p>{e.comentarios}</p>
               </div>
             </div>
-          ))} */}
+          ))}
       </div>
       <div className="pag">
-        {/* <PaginacionComentarios
+        <PaginacionComentarios
           comentariosPorPagina={comentariosPorPagina}
-          array={array.length}
+          comentarios={comentarios.length}
           paginacion={paginacion}
           pagina={pagina}
           setPagina={setPagina}
-        /> */}
+        />
       </div>
       <div className="wallpaper">
         <img className="stretch" src={fondo} alt="" />

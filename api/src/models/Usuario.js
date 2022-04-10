@@ -5,35 +5,35 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define("usuario", {
     dni: {
-      type: DataTypes.INTEGER,
-      unique: true
+      type: DataTypes.STRING,
+      unique: true,
       // allowNull: false
     },
     email: {
       type: DataTypes.TEXT,
       unique: true,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
     },
     nombre: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     apellido: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     password: {
       type: DataTypes.TEXT,
-      allowNull: false
+      allowNull: false,
     },
     acercaDeMi: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: true,
     },
     avatar: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: true,
     },
     vehiculo: {
       type: DataTypes.STRING,
@@ -42,9 +42,9 @@ module.exports = (sequelize) => {
     logueado: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: false
+      defaultValue: false,
     },
-    calificacion: {
+    telefono: {
       type: DataTypes.STRING,
       defaultValue: ""
     },

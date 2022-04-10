@@ -1,26 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import GoogleLogin from "react-google-login";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./LandingPage.css";
 import Cookies from "universal-cookie";
-import { login, getUsuarioByEmail } from "../../redux/actions/actions";
-import axios from "axios";
+import { getUsuarioByEmail } from "../../redux/actions/actions";
+import NavBarSinLogin from "../NavBar/NavBarSinLogin";
 
 export default function LandingPage() {
   const dispatch = useDispatch();
-  const error = useSelector(state => state.error);
-  const usuarioReducer = useSelector(state => state.usuario);
+  const navigate = useNavigate();
+  const error = useSelector((state) => state.error);
+  const usuarioReducer = useSelector((state) => state.usuario);
   const [menu, SetMenu] = useState(false);
   const cookies = new Cookies();
   const [usuario, setUsuario] = useState("hola soy usuario de google");
 
-  const responseGoogle = response => {
+  const responseGoogle = (response) => {
     setUsuario({
       nombre: response.profileObj.givenName,
       apellido: response.profileObj.familyName,
       email: response.profileObj.email,
-      avatar: response.profileObj.imageUrl
+      avatar: response.profileObj.imageUrl,
     });
   };
 
@@ -37,12 +38,12 @@ export default function LandingPage() {
         if (Object.values(usuarioReducer).length > 0) {
           console.log("usuario reducer", usuarioReducer);
           setTimeout(() => {
-            window.location.href = "/home";
+            navigate("/home") ;
           }, 2000);
         } else {
           console.log("error");
           setTimeout(() => {
-            window.location.href = "/registrogoogle";
+            navigate("/registrogoogle");
           }, 2000);
         }
       }
@@ -50,28 +51,26 @@ export default function LandingPage() {
     [usuarioReducer] //fin use effect
   ); //fin de verdad use effect
 
-  useEffect(
-    () => {
-      console.log("dispatch");
-      dispatch(getUsuarioByEmail(usuario.email));
-    },
-    [usuario]
-  );
+  useEffect(() => {
+    console.log("dispatch");
+    dispatch(getUsuarioByEmail(usuario.email));
+  }, [usuario, dispatch]);
 
   const handleMenu = () => {
     SetMenu(!menu);
   };
   return (
     <div>
+      <NavBarSinLogin />
       <div className="page">
         <div className="card">
           <div className="container">
             <div className="menu">
               <h3>Share Rides</h3>
               <button onClick={handleMenu} className="btn-menu">
-                <i class="fas fa-bars" />
+                <i className="fas fa-bars" />
               </button>
-              {menu &&
+              {menu && (
                 <nav className="desplegable">
                   <Link to={"#"} className="login-registro">
                     Acerca De
@@ -83,7 +82,8 @@ export default function LandingPage() {
                     Donacion
                   </Link>
                   <div className="animation start-home" />
-                </nav>}
+                </nav>
+              )}
             </div>
             <div className="content">
               <div className="text">

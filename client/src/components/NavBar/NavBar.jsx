@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./NavBar.css";
 import logo from "../../assets/Icono shareRides.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "universal-cookie";
 import Box from "@mui/material/Box";
@@ -20,6 +20,7 @@ import { FaHome } from "react-icons/fa";
 
 export default function NavBar() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cookies = new Cookies();
   const cookieNombre = cookies.get("nombre");
   const cookieAvatar = cookies.get("avatar");
@@ -37,7 +38,7 @@ export default function NavBar() {
 
   const handleLogout = () => {
     dispatch(logout(cookieEmail));
-    window.location.href = "/";
+    navigate("/");
   };
 
   return (
@@ -50,101 +51,120 @@ export default function NavBar() {
           </h1>
         </div>
         <div className="panel-botones">
-          <button class="btn btn-outline-primary" type="button">
-            <Link to="/home">
+          <Link to="/home">
+            <button className="btn btn-outline-primary" type="button">
               <FaHome />
-            </Link>
-          </button>
-          <button type="button" class="btn btn-outline-primary">
-            <Link to="/formviaje">Crear Viaje</Link>
-          </button>
+            </button>
+          </Link>
+          <Link to="/formviaje">
+            <button type="button" className="btn btn-outline-primary">
+              Crear Viaje
+            </button>
+          </Link>
         </div>
-        <div className="info-usuario">
-          <h3>Hola, {cookieNombre}</h3>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              textAlign: "center",
-            }}
-          >
-            <Tooltip title="Perfil">
-              <IconButton
-                onClick={handleClick}
-                size="small"
-                sx={{ ml: 2 }}
-                aria-controls={open ? "account-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-              >
-                <img
-                  src={cookieAvatar === "null" ? user : cookieAvatar}
-                  alt=""
-                  style={{ width: 52, height: 52 }}
-                />
-              </IconButton>
-            </Tooltip>
-          </Box>
-          <Menu
-            anchorEl={anchorEl}
-            id="account-menu"
-            open={open}
-            onClose={handleClose}
-            onClick={handleClose}
-            PaperProps={{
-              elevation: 0,
-              sx: {
-                overflow: "visible",
-                filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                mt: 1.5,
-                "& .MuiAvatar-root": {
-                  width: 32,
-                  height: 32,
-                  ml: -0.5,
-                  mr: 1,
-                },
-                "&:before": {
-                  content: '""',
-                  display: "block",
-                  position: "absolute",
-                  top: 0,
-                  right: 14,
-                  width: 10,
-                  height: 10,
-                  bgcolor: "background.paper",
-                  transform: "translateY(-50%) rotate(45deg)",
-                  zIndex: 0,
-                },
-              },
-            }}
-            transformOrigin={{ horizontal: "right", vertical: "top" }}
-            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-          >
-            <Link to="/perfil">
-              <MenuItem>
-                <img
-                  src={cookieAvatar === "null" ? user : cookieAvatar}
-                  alt=""
-                  style={{
+        {cookieEmail === "undefined" ? (
+          <>
+            <div className="IniciarSesion-y-Registrar">
+              <Link to="/login">
+                <button type="button" className="btn btn-outline-primary">
+                  Iniciar Sesion
+                </button>
+              </Link>
+              <Link to="/registro">
+                <button type="button" className="btn btn-outline-primary">
+                  Registrarse
+                </button>
+              </Link>
+            </div>
+          </>
+        ) : (
+          <div className="info-usuario">
+            <h3>Hola, {cookieNombre}</h3>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                textAlign: "center",
+              }}
+            >
+              <Tooltip title="Perfil">
+                <IconButton
+                  onClick={handleClick}
+                  size="small"
+                  sx={{ ml: 2 }}
+                  aria-controls={open ? "account-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                >
+                  <img
+                    src={cookieAvatar === "null" ? user : cookieAvatar}
+                    alt=""
+                    style={{ width: 52, height: 52 }}
+                  />
+                </IconButton>
+              </Tooltip>
+            </Box>
+            <Menu
+              anchorEl={anchorEl}
+              id="account-menu"
+              open={open}
+              onClose={handleClose}
+              onClick={handleClose}
+              PaperProps={{
+                elevation: 0,
+                sx: {
+                  overflow: "visible",
+                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                  mt: 1.5,
+                  "& .MuiAvatar-root": {
                     width: 32,
                     height: 32,
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                />{" "}
-                Mi Perfil
-              </MenuItem>
-            </Link>
+                    ml: -0.5,
+                    mr: 1,
+                  },
+                  "&:before": {
+                    content: '""',
+                    display: "block",
+                    position: "absolute",
+                    top: 0,
+                    right: 14,
+                    width: 10,
+                    height: 10,
+                    bgcolor: "background.paper",
+                    transform: "translateY(-50%) rotate(45deg)",
+                    zIndex: 0,
+                  },
+                },
+              }}
+              transformOrigin={{ horizontal: "right", vertical: "top" }}
+              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+            >
+              <Link to="/perfil">
+                <MenuItem>
+                  <img
+                    src={cookieAvatar === "null" ? user : cookieAvatar}
+                    alt=""
+                    style={{
+                      width: 32,
+                      height: 32,
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  />{" "}
+                  Mi Perfil
+                </MenuItem>
+              </Link>
 
-            <Divider />
-            <MenuItem onClick={handleLogout}>
-              <ListItemIcon>
-                <BiLogOut style={{ width: 32, height: 32 }} />
-              </ListItemIcon>
-              Cerrar Sesion
-            </MenuItem>
-          </Menu>
-        </div>
+              <Divider />
+              <MenuItem onClick={handleLogout}>
+                <ListItemIcon>
+                  <BiLogOut style={{ width: 32, height: 32 }} />
+                </ListItemIcon>
+                Cerrar Sesion
+              </MenuItem>
+            </Menu>
+          </div>
+        )}
       </div>
     </div>
   );

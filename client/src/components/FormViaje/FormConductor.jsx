@@ -3,13 +3,15 @@ import { useDispatch } from "react-redux";
 import swal from "sweetalert";
 import { postViajeConductor } from "../../redux/actions/actions";
 import fondo from "../../assets/fondo perfil.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./FormConductor.css";
 import Cookies from "universal-cookie";
+import NavBar from "../NavBar/NavBar";
 
 export default function FormPasajero() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [isChecked, setIsChecked] = useState(new Array(5).fill(false));
   const [errors, setErrors] = useState({});
@@ -132,7 +134,7 @@ export default function FormPasajero() {
         icon: "success",
         button: "Buen viaje!",
       }).then(function () {
-        window.location = "/home";
+        navigate("/home");
       });
       dispatch(postViajeConductor(isChecked, viaje));
 
@@ -151,6 +153,7 @@ export default function FormPasajero() {
 
   return (
     <div>
+      <NavBar />
       <div className="Conductore__nav">
         <Link to="/formvehiculo">
           <button className="Conductore__btn_volver">Volver</button>
