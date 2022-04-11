@@ -1,32 +1,62 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { getDetalleViaje } from "../../../redux/actions/actions";
-import Navbar from "../../NavBar/NavBar";
+import { getDetalleViaje, postOrder } from "../../../redux/actions/actions";
+import NavBar from "../../NavBar/NavBar";
 import "./DetalleViaje.css";
 import link from "../../CardViaje/Links";
 import { MdSmokeFree, MdMasks, MdPets } from "react-icons/md";
 import { FaSuitcaseRolling } from "react-icons/fa";
-import { ImStarEmpty, ImStarHalf, ImStarFull } from "react-icons/im";
 import { VscLocation } from "react-icons/vsc";
 import fondo from "../../../assets/fondo perfil.jpg";
-import NavBar from "../../NavBar/NavBar";
+import Cookies from "universal-cookie";
+import axios from "axios";
 
 export const DetalleViaje = () => {
+  const cookies = new Cookies();
   const dispatch = useDispatch();
-  const params = useParams();
-  const viaje = useSelector((state) => state.viajePorId);
+  const viaje = useSelector(state => state.viajePorId);
   const { id } = useParams();
-  // console.log(id)
-  // console.log(viaje);
+  const cookieMail = cookies.get("email");
+  useEffect(
+    () => {
+      dispatch(getDetalleViaje(id));
+    },
+    [id]
+  );
 
-  useEffect(() => {
-    //   //para que sea dinamico, descomentar linea 8 y linea 18
-    //   //hacerlo SOLO cuando el componente de la tarjeta del viaje YA TENGA el Link to hecho que redireccione a este componente.
-    //   //sino no funcionará jeje
+  const [datosMp, setDatosMp] = useState({
+    unit_price: "",
+    orderId: ""
+  });
 
-    dispatch(getDetalleViaje(id));
-  }, [dispatch, id]);
+  const handleColaborar = async () => {
+    await dispatch(postOrder(cookieMail)).then(data => {
+      // console.log(data.payload[0])
+      setDatosMp({ ...datosMp, orderId: data?.payload[0].id });
+    });
+    console.log("handle colaborar", datosMp);
+  };
+
+  const [redirect, setRedirect] = useState("");
+
+  function handleSubmit(e) {
+    e.preventDefault()(
+      axios
+        .get(
+          `http://localhost:3001/api/mercadopago/${datosMp?.orderId}/${datosMp?.unit_price}`
+        )
+        .then(r => setRedirect(r.data))
+    );
+  }
+
+  function handleChange(e) {
+    e.preventDefault();
+    setDatosMp({
+      ...datosMp,
+      unit_price: parseInt(e.target.value)
+    });
+  }
 
   return (
     <div className="container-detalle">
@@ -41,6 +71,7 @@ export const DetalleViaje = () => {
               <span className="text-white my-9">
                 Hard code{viaje.nombre} {viaje.apellido}
               </span>
+
               <span>Valoracion estrellas</span>
             </div>
           </div>
@@ -63,6 +94,84 @@ export const DetalleViaje = () => {
               <Link to="/login">Enviar mensaje</Link>
             </button>
           </div>
+          <br />
+          {!redirect
+            ? <button
+                onClick={() => {
+                  handleColaborar();
+                }}
+                class="btn btn-success"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
+                Quiero Colaborar!
+              </button>
+            : <button
+                onClick={() => {
+                  handleColaborar();
+                }}
+                class="btn btn-success"
+                disabled="disabled"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
+                Quiero Colaborar!
+              </button>}
+
+          <div
+            class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel" />
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  />
+                </div>
+                <div class="modal-body">
+                  <h3>Por favor, especificá el monto que deseas aportar</h3>
+                  <br />
+                  <input
+                    class="form-control"
+                    type="number"
+                    placeholder="Monto a cobrar"
+                    name="unit_price"
+                    value={datosMp.unit_price}
+                    onChange={e => handleChange(e)}
+                  />
+                </div>
+                <div class="modal-footer">
+                  <form onSubmit={e => handleSubmit(e)}>
+                    <button
+                      type="submit"
+                      class="btn btn-primary"
+                      data-bs-dismiss="modal"
+                    >
+                      Continuar
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+          {redirect !== "" &&
+            <a href={`${redirect}`}>
+              <input
+                class="btn btn-success"
+                type="submit"
+                value="Continuar a MercadoPago"
+                name="Continuar a MercadoPago"
+              />
+            </a>}
         </div>
         <div className="card-viaje-detalle text-xl">
           <div className="flex flex-col justify-evenly w-full ml-4">
@@ -87,13 +196,11 @@ export const DetalleViaje = () => {
             <span>
               Cantidad de asientos disponibles:{" "}
               <span
-                className={`font-bold text-2xl ${
-                  viaje.asientosAOcupar > 3
-                    ? "text-sky-600"
-                    : viaje.asientosAOcupar < 1
+                className={`font-bold text-2xl ${viaje.asientosAOcupar > 3
+                  ? "text-sky-600"
+                  : viaje.asientosAOcupar < 1
                     ? "text-amber-500"
-                    : "text-orange-700"
-                }`}
+                    : "text-orange-700"}`}
               >
                 {viaje.asientosAOcupar}
               </span>
