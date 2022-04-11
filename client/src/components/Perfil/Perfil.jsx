@@ -18,7 +18,6 @@ import user from "../../assets/user.png";
 import Rating from "@mui/material/Rating";
 import PaginacionComentarios from "./PaginacionComentarios";
 
-
 export default function Perfil() {
   const dispatch = useDispatch();
   const cookies = new Cookies();
@@ -28,17 +27,7 @@ export default function Perfil() {
   const DNI = cookies.get("dni");
   const avatar = cookies.get("avatar");
   const acercaDeMi = cookies.get("acercaDeMi");
-
-  //---------------- Comentarios ---------------------
-  const comentarios = useSelector((state) => state.comentarios);
-  useEffect(() => {
-    dispatch(getComentarios());
-  }, [dispatch]);
-
-  const miUsuario = useSelector((state) => state.usuario);
-  useEffect(() => {
-    dispatch(getUsuarioByEmail(email));
-  }, []);
+  const [count, setCount] = useState(0);
 
   const [usuario, setUsuario] = useState({
     nombre: "",
@@ -56,13 +45,30 @@ export default function Perfil() {
     email: email,
   });
 
-  console.log(reviews);
+  const comentarios = useSelector((state) => state.comentarios);
 
-  const [check, setCheck] = useState(false);
+  const miUsuario = useSelector((state) => state.usuario);
+
+  useEffect(() => {
+    dispatch(getComentarios());
+  }, [reviews]);
+
+  useEffect(() => {
+    dispatch(getUsuarioByEmail(email));
+  }, []);
+
   const [habilitarTelefono, setHabilitarTelefono] = useState(true);
   const [habilitarDNI, setHabilitarDNI] = useState(true);
   const [habilitarAcercaDeMi, setHabilitarAcercaDeMi] = useState(true);
-  const [habilitarImagen, setHabilitarImagen] = useState(true);
+
+  const habilitarInputs = (e) => {
+    e.preventDefault();
+    setHabilitarDNI(!habilitarDNI);
+    setHabilitarTelefono(!habilitarTelefono);
+    setHabilitarAcercaDeMi(!habilitarAcercaDeMi);
+  };
+
+  //--------------Paginado--------------------
 
   const [pagina, setPagina] = useState(1);
   const [comentariosPorPagina, setComentariosPorPagina] = useState(3);
@@ -77,17 +83,7 @@ export default function Perfil() {
     setPagina(pageNum);
   };
 
-  const habilitarInputs = (e) => {
-    e.preventDefault();
-    setHabilitarDNI(!habilitarDNI);
-    setHabilitarTelefono(!habilitarTelefono);
-    setHabilitarAcercaDeMi(!habilitarAcercaDeMi);
-  };
-  const deshabilitarInputs = (e) => {
-    e.preventDefault();
-    setHabilitarDNI(!habilitarDNI);
-    setHabilitarTelefono(!habilitarTelefono);
-  };
+  //-----------------------------------
 
   const handleChange = (e) => {
     setUsuario({
@@ -101,6 +97,7 @@ export default function Perfil() {
       ...reviews,
       [e.target.name]: e.target.value,
     });
+    setCount(e.target.value.length);
   };
 
   const handleSubmitComentarios = (e) => {
@@ -152,7 +149,7 @@ export default function Perfil() {
 
         <div>
           <form className="contenedor-form" onSubmit={(e) => handleUpdate(e)}>
-            <div className="nombre">
+            <div className="contenedor-input">
               <h5>Nombre</h5>
               <input
                 type="text"
@@ -162,7 +159,7 @@ export default function Perfil() {
                 disabled
               />
             </div>
-            <div className="nombre">
+            <div className="contenedor-input">
               <h5>Apellido</h5>
               <input
                 type="text"
@@ -172,7 +169,7 @@ export default function Perfil() {
                 disabled
               />
             </div>
-            <div className="nombre">
+            <div className="contenedor-input">
               <h5>Email</h5>
               <input
                 type="text"
@@ -182,18 +179,21 @@ export default function Perfil() {
                 disabled
               />
             </div>
-            <div className="nombre">
+            <div className="contenedor-input">
               <h5>Telefono</h5>
               <input
                 type="text"
                 className="input-perfil"
                 onChange={handleChange}
                 name="telefono"
-                value={(usuario.telefono ? usuario.telefono : miUsuario.telefono) || ""}
+                value={
+                  (usuario.telefono ? usuario.telefono : miUsuario.telefono) ||
+                  ""
+                }
                 disabled={habilitarTelefono}
               />
             </div>
-            <div className="nombre">
+            <div className="contenedor-input">
               <h5>DNI</h5>
               <input
                 type="text"
@@ -237,7 +237,6 @@ export default function Perfil() {
                 onChange={handleChangeReviews}
                 name="calificacion"
                 value={parseInt(reviews.calificacion)}
-                precision={0.5}
               />
             </div>
             <div className="comentario">
@@ -247,14 +246,14 @@ export default function Perfil() {
                 onChange={handleChangeReviews}
                 name="comentarios"
                 value={reviews.comentarios}
+                maxLength="144"
               />
+              <p>{count}/144</p>
             </div>
-            <input
-              color="secondary"
-              size="medium"
-              value="Enviar"
-              type="submit"
-            />
+            <Button color="secondary" size="medium" type="submit">
+              {" "}
+              Enviar{" "}
+            </Button>
           </div>
         </form>
         {ComentariosTotales &&
@@ -266,7 +265,11 @@ export default function Perfil() {
                   {nombre} {apellido}
                 </h1>
               </div>
-              <Rating value={e.calificacion} />
+              <Rating
+                className="calificacion"
+                value={e.calificacion}
+                readOnly
+              />
               <div className="texto">
                 <p>{e.comentarios}</p>
               </div>

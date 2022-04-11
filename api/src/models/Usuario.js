@@ -46,7 +46,7 @@ module.exports = (sequelize) => {
     },
     telefono: {
       type: DataTypes.STRING,
-      allowNull: true,
+      defaultValue: "",
     },
     reportado: {
       type: DataTypes.BOOLEAN,
