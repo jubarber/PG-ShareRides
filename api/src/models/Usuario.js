@@ -37,24 +37,16 @@ module.exports = (sequelize) => {
     },
     vehiculo: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: true
     },
     logueado: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,
     },
-    calificacion: {
-      type: DataTypes.STRING,
-      defaultValue: "",
-    },
-    comentarios: {
-      type: DataTypes.TEXT,
-      defaultValue: "",
-    },
     telefono: {
       type: DataTypes.STRING,
-      allowNull: true,
+      defaultValue: "",
     },
     reportado: {
       type: DataTypes.BOOLEAN,

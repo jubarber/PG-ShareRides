@@ -11,6 +11,8 @@ export const GET_USUARIOS = "GET_USUARIOS";
 export const USUARIO_MAIL = "USUARIO_MAIL";
 export const FILTERTYPE = "FILTERTYPE";
 export const MODIFICAR_PERFIL = "MODIFICAR_PERFIL";
+export const COMENTARIOS = "COMENTARIOS";
+export const GET_COMENTARIOS = "GET_COMENTARIOS";
 
 export function getDetalleViaje(viajeId) {
   return function (dispatch) {
@@ -54,7 +56,7 @@ export function filtroChecks(payload, asiento) {
   return async function (dispatch) {
     let viajes = await axios({
       method: "get",
-      url: `http://localhost:3001/api/viaje/filtro/${payload[0]}/${payload[1]}/${payload[2]}/${payload[3]}?asientosAOcupar=${asiento}`,
+      url: `http://localhost:3001/api/viaje/filtro/${payload[0]}/${payload[1]}/${payload[2]}/${payload[3]}?asientosAOcupar=${asiento}`
     });
     return dispatch({ type: "FILTRO_CHECKS", payload: viajes.data });
   };
@@ -80,7 +82,7 @@ export function registroUsuario(payload) {
       });
       return dispatch({
         type: "REGISTRO_USUARIO",
-        payload: nuevoUsuario,
+        payload: nuevoUsuario
       });
     } catch (error) {
       console.log(error);
@@ -108,8 +110,8 @@ export function postViajePasajero(checkboxes, viaje) {
           destino: viaje.destino,
           asientosAOcupar: viaje.asiento,
           email: viaje.email,
-          dni: viaje.dni,
-        },
+          dni: viaje.dni
+        }
       });
       return dispatch({ type: "POST_VIAJE_PASAJERO", payload: pasajero.data });
     } catch (err) {
@@ -129,8 +131,8 @@ export function postVehiculo(payload) {
           marca: payload.marca,
           modelo: payload.modelo,
           dni: payload.dni,
-          email: payload.email,
-        },
+          email: payload.email
+        }
       });
       return dispatch({ type: "POST_VEHICULO", payload: viaje.data });
     } catch (err) {
@@ -160,12 +162,12 @@ export function postViajeConductor(checkboxes, viaje) {
           destino: viaje.destino,
           asientosAOcupar: viaje.asiento,
           email: viaje.email,
-          dni: viaje.dni,
-        },
+          dni: viaje.dni
+        }
       });
       return dispatch({
         type: "POST_VIASJE_CONDUCTOR",
-        payload: conductor.data,
+        payload: conductor.data
       });
     } catch (err) {
       console.log(err);
@@ -181,8 +183,8 @@ export function mailNuevaPassword(payload) {
         url: "http://localhost:3001/api/usuario/mailnuevapassword",
         data: {
           email: payload.email,
-          nombre: payload.nombre,
-        },
+          nombre: payload.nombre
+        }
       });
       return dispatch({ type: "MAIL_PASS", payload: mail.data });
     } catch (err) {
@@ -199,12 +201,12 @@ export function mailModificarPerfil(payload) {
         url: "http://localhost:3001/api/usuario/emailmodificarperfil",
         data: {
           email: payload.email,
-          nombre: payload.nombre,
-        },
+          nombre: payload.nombre
+        }
       });
       return dispatch({
         type: "MAIL_MOD_PERFIL",
-        payload: modificarPerfil.data,
+        payload: modificarPerfil.data
       });
     } catch (err) {
       console.log(err);
@@ -214,7 +216,6 @@ export function mailModificarPerfil(payload) {
 
 export function modificacionPerfil(payload) {
   return async function (dispatch) {
-    console.log("perfil", payload);
     try {
       let perfilModificado = await axios({
         method: "put",
@@ -224,12 +225,12 @@ export function modificacionPerfil(payload) {
           acercaDeMi: payload.acercaDeMi,
           telefono: payload.telefono,
           avatar: payload.avatar,
-          dni: payload.dni,
-        },
+          dni: payload.dni
+        }
       });
       return dispatch({
         type: "MODIFICAR_PERFIL",
-        payload: perfilModificado.data,
+        payload: perfilModificado.data
       });
     } catch (err) {
       console.log(err);
@@ -244,8 +245,8 @@ export function login(payload) {
         method: "put",
         url: "http://localhost:3001/api/usuario/logueado",
         data: {
-          email: payload,
-        },
+          email: payload
+        }
       });
       return dispatch({ type: "LOGGED", payload: logueado.data });
     } catch (err) {
@@ -261,8 +262,8 @@ export function logout(payload) {
         method: "put",
         url: "http://localhost:3001/api/usuario/deslogueado",
         data: {
-          email: payload,
-        },
+          email: payload
+        }
       });
       console.log("deslogueado");
       return dispatch({ type: "LOGGED_OUT", payload: deslogueado.data });
@@ -314,10 +315,144 @@ export function getUsuarioByEmail(email) {
   };
 }
 
+export function postComentarios(payload) {
+  return async function (dispatch) {
+    console.log("post comentarios action", payload);
+    try {
+      let comentario = await axios({
+        method: "post",
+        url: "http://localhost:3001/api/comentarios/postComentarios",
+        data: {
+          email: payload.email,
+          calificacion: payload.calificacion,
+          comentarios: payload.comentarios,
+        },
+      });
+      return dispatch({ type: "COMENTARIOS", payload: comentario.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function getComentarios() {
+  return async function (dispatch) {
+    try {
+      let comentarios = await axios(
+        "http://localhost:3001/api/comentarios/comentarios"
+      );
+      return dispatch({ type: "GET_COMENTARIOS", payload: comentarios.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
 export function filterPerCard(payload) {
   return {
     type: FILTERTYPE,
-    payload
-    }
-  }
+    payload,
+  };
+}
 
+export function postOrder(usuarioId) {
+  return async function (dispatch) {
+    try {
+      const newOrder = await axios({
+        method: "post",
+        url: "http://localhost:3001/api/order",
+        data: { usuarioId: usuarioId }
+      });
+      return dispatch({
+        type: "NEW_ORDER",
+        payload: newOrder.data
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
+
+export function postColaboracion(input) {
+  return async function (dispatch) {
+    try {
+      await axios({
+        method: "post",
+        url: "http://localhost:3001/api/colaboracion/nuevaColaboracion",
+        data: {
+          title: input.title,
+          unit_price: input.unit_price,
+          quantity: input.quantity,
+          usuarioId: input.usuarioId,
+          orderId: input.orderId
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
+
+export function getColaboracion(email) {
+  return async function (dispatch) {
+    try {
+      const colaboracion = await axios.get(
+        `http://localhost:3001/api/colaboracion/usuario/${email}`
+      );
+      return dispatch({ type: "GET_COLABORACION", payload: colaboracion.data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
+
+export function postOrder(usuarioId) {
+  return async function (dispatch) {
+    try {
+      const newOrder = await axios({
+        method: "post",
+        url: "http://localhost:3001/api/order",
+        data: { usuarioId: usuarioId }
+      });
+      return dispatch({
+        type: "NEW_ORDER",
+        payload: newOrder.data
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
+
+export function postColaboracion(input) {
+  return async function (dispatch) {
+    try {
+      await axios({
+        method: "post",
+        url: "http://localhost:3001/api/colaboracion/nuevaColaboracion",
+        data: {
+          title: input.title,
+          unit_price: input.unit_price,
+          quantity: input.quantity,
+          usuarioId: input.usuarioId,
+          orderId: input.orderId
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
+
+export function getColaboracion(email) {
+  return async function (dispatch) {
+    try {
+      const colaboracion = await axios.get(
+        `http://localhost:3001/api/colaboracion/usuario/${email}`
+      );
+      return dispatch({ type: "GET_COLABORACION", payload: colaboracion.data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
