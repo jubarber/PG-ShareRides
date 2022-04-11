@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import fondo from "../../assets/fondo perfil.jpg";
 import "./Perfil.css";
@@ -20,22 +20,27 @@ import PaginacionComentarios from "./PaginacionComentarios";
 
 export default function Perfil() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cookies = new Cookies();
   const nombre = cookies.get("nombre");
   const apellido = cookies.get("apellido");
   const email = cookies.get("email");
-  const DNI = cookies.get("dni");
+  const dni = cookies.get("dni");
   const avatar = cookies.get("avatar");
+  const telefono = cookies.get("telefono");
   const acercaDeMi = cookies.get("acercaDeMi");
   const [count, setCount] = useState(0);
+  const miUsuario = useSelector((state) => state.usuario);
+  const comentarios = useSelector((state) => state.comentarios);
+
 
   const [usuario, setUsuario] = useState({
     nombre: "",
     apellido: "",
     email: email,
-    telefono: "",
-    dni: "",
-    acercaDeMi: "",
+    telefono: miUsuario.telefono,
+    dni: miUsuario.dni,
+    acercaDeMi: miUsuario.acercaDeMi,
     imagen: "",
   });
 
@@ -112,6 +117,7 @@ export default function Perfil() {
   const handleUpdate = (e) => {
     e.preventDefault();
     dispatch(modificacionPerfil(usuario));
+    navigate("/home");
   };
 
   return (
@@ -126,16 +132,18 @@ export default function Perfil() {
             <h1>
               {nombre} {apellido}
             </h1>{" "}
-            <textarea
-              type="text"
-              onChange={handleChange}
-              name="acercaDeMi"
-              value={
-                miUsuario.acercaDeMi ? miUsuario.acercaDeMi : usuario.acercaDeMi
-              }
-              disabled={habilitarAcercaDeMi}
-            />{" "}
-            <div className="btn-perfil">
+            {!habilitarAcercaDeMi ? (
+              <textarea
+                type="text"
+                onChange={handleChange}
+                name="acercaDeMi"
+                value={usuario.acercaDeMi}
+                disabled={habilitarAcercaDeMi}
+              />
+            ) : (
+              <label>{miUsuario.acercaDeMi}</label>
+            )}
+            {/* <div cla}ssName="btn-perfil">
               <Button color="secondary" size="medium">
                 Seguir
               </Button>
@@ -143,7 +151,7 @@ export default function Perfil() {
               <Button color="secondary" size="medium">
                 Mensaje
               </Button>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -181,28 +189,33 @@ export default function Perfil() {
             </div>
             <div className="contenedor-input">
               <h5>Telefono</h5>
-              <input
-                type="text"
-                className="input-perfil"
-                onChange={handleChange}
-                name="telefono"
-                value={
-                  (usuario.telefono ? usuario.telefono : miUsuario.telefono) ||
-                  ""
-                }
-                disabled={habilitarTelefono}
-              />
+              {!habilitarTelefono ? (
+                <input
+                  type="text"
+                  className="input-perfil"
+                  onChange={handleChange}
+                  name="telefono"
+                  value={usuario.telefono}
+                  disabled={habilitarTelefono}
+                />
+              ) : (
+                <label>{miUsuario.telefono}</label>
+              )}
             </div>
             <div className="contenedor-input">
               <h5>DNI</h5>
-              <input
-                type="text"
-                className="input-perfil"
-                onChange={handleChange}
-                name="dni"
-                value={(usuario.dni ? usuario.dni : miUsuario.dni) || ""}
-                disabled={habilitarDNI}
-              />
+              {!habilitarDNI ? (
+                <input
+                  type="text"
+                  className="input-perfil"
+                  onChange={handleChange}
+                  name="dni"
+                  value={usuario.dni}
+                  disabled={habilitarDNI}
+                />
+              ) : (
+                <label>{miUsuario.dni}</label>
+              )}
             </div>
             <div className="btn-modificacion-perfil">
               {habilitarTelefono === false &&
@@ -273,6 +286,7 @@ export default function Perfil() {
               <div className="texto">
                 <p>{e.comentarios}</p>
               </div>
+              <p className="dia">{e.dia}</p>
             </div>
           ))}
       </div>

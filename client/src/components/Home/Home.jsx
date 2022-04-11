@@ -33,13 +33,17 @@ export default function Home() {
     //se monta home y despacho la accion para obtener los viajes
     dispatch(login(cookieMail));
     /* dispatch(getViajesTotal());*/
-    console.log('entre en effect')
+    console.log("entre en effect");
     dispatch(filterPerCard(render));
   }, [dispatch]);
-  function handleChange (e) {
-    dispatch(filterPerCard(e.target.value));    
-    setRender(e.target.value)
-   };
+  function handleChange(e) {
+    dispatch(filterPerCard(e.target.value));
+    setRender(e.target.value);
+  }
+
+  function handleSubmitLimpiar(e) {
+    dispatch(getViajesTotal());
+  }
   return (
     <div>
       <NavBar />
