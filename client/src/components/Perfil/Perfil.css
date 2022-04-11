@@ -29,6 +29,16 @@
   padding-bottom: 0.5rem;
 }
 
+.bio-perfil label {
+  height: 10rem;
+  width: 17rem;
+  text-align: center;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
 .bio-perfil h1 {
   margin-bottom: 1rem;
 }
@@ -101,6 +111,14 @@
   border: 1px solid black;
   border-radius: 10px;
   padding-left: 1rem;
+  width: 13rem;
+}
+
+.contenedor-input label {
+  border: 1px solid black;
+  border-radius: 10px;
+  padding-left: 1rem;
+  width: 13rem;
 }
 
 .btn-modificacion-perfil {
@@ -232,6 +250,14 @@
 
 .texto p::-webkit-scrollbar-thumb:active {
   background-color: #555;
+}
+
+.dia {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: bold;
 }
 
 .pag {
