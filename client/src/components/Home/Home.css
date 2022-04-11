@@ -1,0 +1,57 @@
+.home-general {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+#general-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.container-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  width: 100%;
+}
+.card-home {
+  margin: 1em;
+}
+
+.label-formControl {
+  color: white;
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+}
+#root
+  > div
+  > div:nth-child(2)
+  > div.home-general
+  > div:nth-child(1)
+  > div
+  > div
+  > div:nth-child(1)
+  > label
+  > div
+  > div {
+  color: white;
+}
+
+#root
+  > div
+  > div:nth-child(2)
+  > div.home-general
+  > div:nth-child(1)
+  > div
+  > div
+  > div:nth-child(1)
+  > label
+  > div
+  > div
+  > fieldset {
+  border-color: white;
+}

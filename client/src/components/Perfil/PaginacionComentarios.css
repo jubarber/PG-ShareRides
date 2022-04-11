@@ -1,0 +1,52 @@
+.contenedor-paginacion {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  backdrop-filter: blur(6px);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding-bottom: 3em;
+}
+
+.navegacion {
+  color: black;
+  background: #fdf4ff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: none;
+  box-shadow: 0.5em 0.5em 0.5em 0 black;
+  font-family: "Rowdies", cursive;
+}
+#prev {
+  margin-right: 1rem;
+  font-family: "Montserrat Alternates", sans-serif;
+}
+
+#next {
+  margin-left: 1rem;
+  font-family: "Montserrat Alternates", sans-serif;
+}
+
+.navegacion:active:hover {
+  background-color: gray;
+}
+
+.paginacion {
+  display: flex;
+  padding-right: 0.5rem;
+}
+.paginacion .active {
+  color: black;
+  background: #fdf4ff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: none;
+  box-shadow: 0.5em 0.5em 0.5em 0 black;
+  font-family: "Montserrat Alternates", sans-serif;
+}
+
+.active:active:hover,
+.active:focus,
+.active:active {
+  background-color: gray;
+}
