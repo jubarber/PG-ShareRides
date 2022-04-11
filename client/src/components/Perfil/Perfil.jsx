@@ -33,6 +33,7 @@ export default function Perfil() {
   const miUsuario = useSelector((state) => state.usuario);
   const comentarios = useSelector((state) => state.comentarios);
 
+
   const [usuario, setUsuario] = useState({
     nombre: "",
     apellido: "",
@@ -48,6 +49,10 @@ export default function Perfil() {
     comentarios: "",
     email: email,
   });
+
+  const comentarios = useSelector((state) => state.comentarios);
+
+  const miUsuario = useSelector((state) => state.usuario);
 
   useEffect(() => {
     dispatch(getComentarios());
