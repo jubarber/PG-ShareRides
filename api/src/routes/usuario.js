@@ -225,8 +225,6 @@ router.put("/modificarperfil", async (req, res, next) => {
         acercaDeMi: acercaDeMi,
       });
       usuario.save();
-<<<<<<< HEAD
-<<<<<<< HEAD
     }
   } catch (err) {
     next(err);
@@ -251,10 +249,6 @@ router.put("/comentarios", async (req, res, next) => {
         comentarios: comentarios,
       });
       nuevoComentario.save();
-=======
->>>>>>> develop
-=======
->>>>>>> e7ecfb9618cf9b439e1a562e757b291bf970109f
     }
   } catch (err) {
     next(err);

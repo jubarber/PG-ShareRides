@@ -43,24 +43,10 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
     },
     telefono: {
       type: DataTypes.STRING,
-      defaultValue: ""
-    },
-    comentarios: {
-      type: DataTypes.TEXT,
-      defaultValue: ""
->>>>>>> develop
-=======
->>>>>>> e7ecfb9618cf9b439e1a562e757b291bf970109f
-    },
-    telefono: {
-      type: DataTypes.STRING,
-      allowNull: true,
+      defaultValue: "",
     },
     reportado: {
       type: DataTypes.BOOLEAN,
