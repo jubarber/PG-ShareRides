@@ -51,8 +51,8 @@ export default function NavBar() {
           </h1>
         </div>
         <div className="panel-botones">
-          <Link to="/home">
-            <button className="btn btn-outline-primary" type="button">
+          <button className="btn btn-outline-primary" type="button">
+            <Link to="/home">
               <FaHome />
             </button>
           </Link>
