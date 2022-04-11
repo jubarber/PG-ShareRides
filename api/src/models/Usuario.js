@@ -37,7 +37,7 @@ module.exports = (sequelize) => {
     },
     vehiculo: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: true,
     },
     logueado: {
       type: DataTypes.BOOLEAN,
@@ -46,11 +46,7 @@ module.exports = (sequelize) => {
     },
     telefono: {
       type: DataTypes.STRING,
-      defaultValue: ""
-    },
-    telefono: {
-      type: DataTypes.INTEGER,
-      allowNull: true
+      defaultValue: "",
     },
     reportado: {
       type: DataTypes.BOOLEAN,
