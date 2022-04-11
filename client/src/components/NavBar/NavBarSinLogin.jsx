@@ -54,8 +54,8 @@ export default function NavBar() {
           <button className="btn btn-outline-primary" type="button">
             <Link to="/home">
               <FaHome />
-            </Link>
-          </button>
+            </button>
+          </Link>
         </div>
       </div>
     </div>
