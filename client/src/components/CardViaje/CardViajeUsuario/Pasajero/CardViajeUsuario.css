@@ -76,3 +76,7 @@
   border-radius: 50%;
   width: 6em;
 }
+.parent .person{
+  width: 100%;
+  height: 1.5em;
+}

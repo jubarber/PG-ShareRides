@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import {BsPersonFill} from "react-icons/bs"
 import "./CardViajeUsuario.css";
 import { VscLocation } from "react-icons/vsc";
 import { MdSmokeFree, MdSmokingRooms, MdMasks, MdPets } from "react-icons/md";
@@ -28,6 +29,7 @@ export default function Card({
     <div className="container-cardviaje">
       <div id="nueva-clase">
         <div class="parent">
+        <BsPersonFill className="person"/>
           <div class="div1">
             <img src={link} alt="" />
             <div className="info-personal-card">
