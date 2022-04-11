@@ -23,7 +23,7 @@ export default function Admin() {
       },
     });
     if (response.data === "Admin inicia sesion") {
-      navigate("/adminusuarios");
+      navigate("/adminhome");
       cookies.set("admin", "true")
     } else {
       swal({
