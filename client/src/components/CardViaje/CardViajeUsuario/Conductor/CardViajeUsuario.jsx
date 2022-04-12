@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import {RiSteering2Fill} from "react-icons/ri"
 import "./CardViajeUsuario.css";
 import { VscLocation } from "react-icons/vsc";
 import { MdSmokeFree, MdSmokingRooms, MdMasks, MdPets } from "react-icons/md";
@@ -29,7 +30,11 @@ export default function Card({
     <div className="container-cardviaje">
       <div id="nueva-clase">
         <div class="parent">
+<<<<<<< HEAD
           <RiSteering2Fill className="steering"/>
+=======
+        <RiSteering2Fill className="steering"/>
+>>>>>>> develop
           <div class="div1">
             <img src={link} alt="" />
             <div className="info-personal-card">

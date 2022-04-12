@@ -57,7 +57,6 @@ export const DetalleViaje = () => {
       unit_price: parseInt(e.target.value)
     });
   }
-
   return (
     <div className="container-detalle">
       <NavBar />
