@@ -26,6 +26,7 @@ export default function FormPasajero() {
     asiento: "",
     formaDePago: "",
     email: cookieMail,
+    detalles: "",
   });
   const expresiones = {
     fecha: /^.{4,18}$/,
@@ -147,10 +148,11 @@ export default function FormPasajero() {
         asiento: "",
         formaDePago: "",
         email: "",
+        detalles: "",
       });
     }
   }
-
+  console.log("esto llega a viaje", viaje)
   return (
     <div>
       <NavBar />
@@ -160,111 +162,124 @@ export default function FormPasajero() {
         </Link>
       </div>
       <form onSubmit={handleSubmit}>
-        <div className="Conductore__form">
-          <div className="Conductore__input_1">
-            <label className="Conductore__formulario_label">Fecha</label>
-            <input
-              className="Conductore__input"
-              type="text"
-              name="fecha"
-              value={viaje.fecha}
-              onChange={(e) => handleOnChange(e)}
-            />
-            {errors.fecha && (
-              <span className="Conductore__error">{errors.fecha}</span>
-            )}
+        <div className="order-form">
+          <div className="Conductore__form">
+            <div className="Conductore__input_1">
+              <label className="Conductore__formulario_label">Fecha</label>
+              <input
+                className="Conductore__input"
+                type="text"
+                name="fecha"
+                value={viaje.fecha}
+                onChange={(e) => handleOnChange(e)}
+              />
+              {errors.fecha && (
+                <span className="Conductore__error">{errors.fecha}</span>
+              )}
 
-            <label className="Conductore__formulario_label">Hora</label>
-            <input
-              className="Conductore__input"
-              type="text"
-              name="hora"
-              value={viaje.hora}
-              onChange={(e) => handleOnChange(e)}
-            />
-            {errors.hora && (
-              <span className="Conductore__error">{errors.hora}</span>
-            )}
+              <label className="Conductore__formulario_label">Hora</label>
+              <input
+                className="Conductore__input"
+                type="text"
+                name="hora"
+                value={viaje.hora}
+                onChange={(e) => handleOnChange(e)}
+              />
+              {errors.hora && (
+                <span className="Conductore__error">{errors.hora}</span>
+              )}
 
-            <label className="Conductore__formulario_label">Origen</label>
-            <input
-              className="Conductore__input"
-              type="text"
-              name="origen"
-              value={viaje.origen}
-              onChange={(e) => handleOnChange(e)}
-            />
-            {errors.origen && (
-              <span className="Conductore__error">{errors.origen}</span>
-            )}
+              <label className="Conductore__formulario_label">Origen</label>
+              <input
+                className="Conductore__input"
+                type="text"
+                name="origen"
+                value={viaje.origen}
+                onChange={(e) => handleOnChange(e)}
+              />
+              {errors.origen && (
+                <span className="Conductore__error">{errors.origen}</span>
+              )}
 
-            <label className="Conductore__formulario_label">Destino</label>
-            <input
-              className="Conductore__input"
-              type="text"
-              name="destino"
-              value={viaje.destino}
-              onChange={(e) => handleOnChange(e)}
-            />
-            {errors.destino && (
-              <span className="Conductore__error">{errors.destino}</span>
-            )}
+              <label className="Conductore__formulario_label">Destino</label>
+              <input
+                className="Conductore__input"
+                type="text"
+                name="destino"
+                value={viaje.destino}
+                onChange={(e) => handleOnChange(e)}
+              />
+              {errors.destino && (
+                <span className="Conductore__error">{errors.destino}</span>
+              )}
 
-            <label className="Conductore__formulario_label">
-              Dni/Pasaporte
-            </label>
-            <input
-              className="Conductore__input"
-              type="text"
-              name="dni"
-              value={viaje.dni}
-              onChange={(e) => handleOnChange(e)}
-            />
-          </div>
-          <div className="Conductore__input_2">
-            <div>
               <label className="Conductore__formulario_label">
-                Asientos disponibles
+                Dni/Pasaporte
               </label>
               <input
                 className="Conductore__input"
-                type="number"
-                name="asiento"
-                placeholder="entre 1 y 7"
-                value={viaje.asiento}
+                type="text"
+                name="dni"
+                value={viaje.dni}
                 onChange={(e) => handleOnChange(e)}
               />
-              {errors.asiento && (
-                <span className="Conductore__error">{errors.asiento}</span>
+            </div>
+            <div className="Conductore__input_2">
+              <div>
+                <label className="Conductore__formulario_label">
+                  Asientos disponibles
+                </label>
+                <input
+                  className="Conductore__input"
+                  type="number"
+                  name="asiento"
+                  placeholder="entre 1 y 7"
+                  value={viaje.asiento}
+                  onChange={(e) => handleOnChange(e)}
+                />
+                {errors.asiento && (
+                  <span className="Conductore__error">{errors.asiento}</span>
+                )}
+              </div>
+
+              {filtrosArray.map((e, index) => {
+                return (
+                  <div>
+                    <label className="Conductore__mycheckbox">
+                      {e.name}
+                      <input
+                        type="checkbox"
+                        key={e.id}
+                        name={e.name}
+                        value={e.name}
+                        checked={isChecked[index]}
+                        onChange={() => {
+                          handleCheckBox(index);
+                        }}
+                      />
+                      <span></span>
+                    </label>
+                  </div>
+                );
+              })}
+              {isChecked[4] && (
+                <select>
+                  <option value="Efecto">Efectivo</option>
+                  <option value="MP">Mercado Pago</option>
+                </select>
               )}
             </div>
-
-            {filtrosArray.map((e, index) => {
-              return (
-                <div>
-                  <label className="Conductore__mycheckbox">
-                    {e.name}
-                    <input
-                      type="checkbox"
-                      key={e.id}
-                      name={e.name}
-                      value={e.name}
-                      checked={isChecked[index]}
-                      onChange={() => {
-                        handleCheckBox(index);
-                      }}
-                    />
-                    <span></span>
-                  </label>
-                </div>
-              );
-            })}
-            {isChecked[4] && (
-              <select>
-                <option value="Efecto">Efectivo</option>
-                <option value="MP">Mercado Pago</option>
-              </select>
-            )}
+          </div>
+          
+          <div className="label-detalles">
+            <label className="Conductore__formulario_label">Detalles</label>
+            <textarea
+              type="text"
+              name="detalles"
+              value={viaje.detalles}
+              onChange={(e) => handleOnChange(e)}
+              className="input-text-detalle"
+            />
           </div>
         </div>
         <div className="Conductore_btn">

@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import {BsPersonFill} from "react-icons/bs"
 import "./CardViajeUsuario.css";
 import { VscLocation } from "react-icons/vsc";
 import { MdSmokeFree, MdSmokingRooms, MdMasks, MdPets } from "react-icons/md";
 import { FaSuitcaseRolling } from "react-icons/fa";
 import { ImStarEmpty, ImStarHalf, ImStarFull } from "react-icons/im";
+import {BsPersonFill} from "react-icons/bs"
 import link from "../../Links";
 
 export default function Card({
@@ -49,7 +49,7 @@ export default function Card({
             <i className="flex">
               <VscLocation className="text-green-400" />
               <i>
-                {origen} <p>{">"}</p> {destino}
+                {origen} <p>{">"}</p>{destino}
               </i>
             </i>
             <i>

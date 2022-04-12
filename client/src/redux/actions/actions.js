@@ -111,6 +111,7 @@ export function postViajePasajero(checkboxes, viaje) {
           asientosAOcupar: viaje.asiento,
           email: viaje.email,
           dni: viaje.dni,
+          detalles: viaje.detalles
         },
       });
       return dispatch({ type: "POST_VIAJE_PASAJERO", payload: pasajero.data });
@@ -163,6 +164,7 @@ export function postViajeConductor(checkboxes, viaje) {
           asientosAOcupar: viaje.asiento,
           email: viaje.email,
           dni: viaje.dni,
+          detalles: viaje.detalles
         },
       });
       return dispatch({

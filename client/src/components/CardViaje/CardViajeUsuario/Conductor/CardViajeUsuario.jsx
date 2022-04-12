@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import {RiSteering2Fill} from "react-icons/ri"
 import "./CardViajeUsuario.css";
 import { VscLocation } from "react-icons/vsc";
 import { MdSmokeFree, MdSmokingRooms, MdMasks, MdPets } from "react-icons/md";
 import { FaSuitcaseRolling } from "react-icons/fa";
 import { ImStarEmpty, ImStarHalf, ImStarFull } from "react-icons/im";
 import link from "../../Links";
+import {RiSteering2Fill} from "react-icons/ri"
 
 export default function Card({
   origen,

@@ -19,7 +19,8 @@ router.post("/conductor", async (req, res, next) => {
       aceptaEquipaje,
       email,
       dni,
-      nombre
+      nombre,
+      detalles
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
@@ -36,6 +37,7 @@ router.post("/conductor", async (req, res, next) => {
         aceptaEquipaje,
         usaBarbijo,
         pagoCompartido,
+        detalles,
         status: "conductor"
       });
       await nuevoViaje.addUsuario(email);
@@ -91,6 +93,7 @@ router.post("/pasajero", async (req, res, next) => {
       aceptaEquipaje,
       email,
       dni,
+      detalles,
       nombre
     } = req.body;
     let nuevoViaje;
@@ -108,6 +111,7 @@ router.post("/pasajero", async (req, res, next) => {
         aceptaEquipaje,
         usaBarbijo,
         pagoCompartido,
+        detalles,
         status: "pasajero"
       });
       await nuevoViaje.addUsuario(email);

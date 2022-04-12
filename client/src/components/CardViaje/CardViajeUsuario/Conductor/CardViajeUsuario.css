@@ -30,7 +30,10 @@
   width: 100%;
   height: auto;
 }
-
+.steering{
+  width: 100%;
+  height: 1.5em;
+}
 .div1 {
   grid-area: 2 / 2 / 5 / 3;
   display: flex;

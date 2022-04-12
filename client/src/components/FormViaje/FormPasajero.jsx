@@ -31,6 +31,7 @@ export default function FormPasajero() {
     dni: "",
     asiento: "",
     formaDePago: "A coordinar",
+    detalles: "",
   });
 
   const expresiones = {
@@ -162,6 +163,7 @@ export default function FormPasajero() {
         dni: "",
         asiento: "",
         formaDePago: "A coordinar",
+        detalles: "",
       });
     }
   }
@@ -170,135 +172,147 @@ export default function FormPasajero() {
     <div>
       <NavBar />
       <form onSubmit={handleSubmit}>
-        <div className="form-formpasajero">
-          <div className="form-parte-1">
-            <label className="label-formpasajero">Fecha</label>
+        <div className="order-form">
+          <div className="form-formpasajero">
+            <div className="form-parte-1">
+              <label className="label-formpasajero">Fecha</label>
 
-            <input
-              type="text"
-              name="fecha"
-              value={viaje.fecha}
-              onChange={(e) => handleOnChange(e)}
-              className="input-text"
-            />
-            {errors.fecha && (
-              <span className="Registro__error">{errors.fecha}</span>
-            )}
-
-            <label className="label-formpasajero">Hora</label>
-
-            <input
-              type="text"
-              name="hora"
-              value={viaje.hora}
-              onChange={(e) => handleOnChange(e)}
-              className="input-text"
-            />
-            {errors.hora && (
-              <span className="Registro__error">{errors.hora}</span>
-            )}
-
-            <label className="label-formpasajero">Origen</label>
-
-            <input
-              type="text"
-              name="origen"
-              value={viaje.origen}
-              onChange={(e) => handleOnChange(e)}
-              className="input-text"
-            />
-            {errors.origen && (
-              <span className="Registro__error">{errors.origen}</span>
-            )}
-
-            <label className="label-formpasajero">Destino</label>
-            <input
-              type="text"
-              name="destino"
-              value={viaje.destino}
-              onChange={(e) => handleOnChange(e)}
-              className="input-text"
-            />
-            {errors.destino && (
-              <span className="Registro__error">{errors.destino}</span>
-            )}
-
-            <label className="label-formpasajero">Email</label>
-            <input
-              type="text"
-              name="email"
-              value={viaje.email}
-              onChange={(e) => handleOnChange(e)}
-              className="input-text"
-            />
-            {errors.email && (
-              <span className="Registro__error">{errors.email}</span>
-            )}
-
-            <label className="label-formpasajero">Dni/Pasaporte</label>
-            <input
-              type="text"
-              name="dni"
-              value={viaje.dni}
-              onChange={(e) => handleOnChange(e)}
-              className="input-text"
-            />
-          </div>
-          <div className="form-parte-2">
-            <label className="label-formpasajero">Asientos a ocupar</label>
-            <input
-              type="number"
-              name="asiento"
-              placeholder="entre 1 y 7"
-              value={viaje.asiento}
-              onChange={(e) => handleOnChange(e)}
-              className="input-text"
-            />
-            {errors.asiento && (
-              <span className="Registro__error">{errors.asiento}</span>
-            )}
-
-            <div className="Pasajere__checkboxes">
-              {filtrosArray.map((e, index) => {
-                return (
-                  <div>
-                    <label className="Pasajere__mycheckbox">
-                      {e.name}
-                      <input
-                        type="checkbox"
-                        key={e.id}
-                        name={e.name}
-                        value={e.name}
-                        checked={isChecked[index]}
-                        onChange={() => {
-                          handleCheckBox(index);
-                        }}
-                      />
-                      <span></span>
-                    </label>
-                  </div>
-                );
-              })}
-
-              {isChecked[4] && (
-                <FormControl variant="standard" sx={{ m: 1, minWidth: 160 }}>
-                  <InputLabel
-                    id="demo-simple-select-standard-label"
-                    sx={{ color: "white" }}
-                  >
-                    Medio de pago
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                  >
-                    <MenuItem value="">Acordar</MenuItem>
-                    <MenuItem value="Efecto">Efectivo</MenuItem>
-                    <MenuItem value="MP">Mercado Pago</MenuItem>
-                  </Select>
-                </FormControl>
+              <input
+                type="text"
+                name="fecha"
+                value={viaje.fecha}
+                onChange={(e) => handleOnChange(e)}
+                className="input-text"
+              />
+              {errors.fecha && (
+                <span className="Registro__error">{errors.fecha}</span>
               )}
+
+              <label className="label-formpasajero">Hora</label>
+
+              <input
+                type="text"
+                name="hora"
+                value={viaje.hora}
+                onChange={(e) => handleOnChange(e)}
+                className="input-text"
+              />
+              {errors.hora && (
+                <span className="Registro__error">{errors.hora}</span>
+              )}
+
+              <label className="label-formpasajero">Origen</label>
+
+              <input
+                type="text"
+                name="origen"
+                value={viaje.origen}
+                onChange={(e) => handleOnChange(e)}
+                className="input-text"
+              />
+              {errors.origen && (
+                <span className="Registro__error">{errors.origen}</span>
+              )}
+
+              <label className="label-formpasajero">Destino</label>
+              <input
+                type="text"
+                name="destino"
+                value={viaje.destino}
+                onChange={(e) => handleOnChange(e)}
+                className="input-text"
+              />
+              {errors.destino && (
+                <span className="Registro__error">{errors.destino}</span>
+              )}
+
+              <label className="label-formpasajero">Email</label>
+              <input
+                type="text"
+                name="email"
+                value={viaje.email}
+                onChange={(e) => handleOnChange(e)}
+                className="input-text"
+              />
+              {errors.email && (
+                <span className="Registro__error">{errors.email}</span>
+              )}
+
+              <label className="label-formpasajero">Dni/Pasaporte</label>
+              <input
+                type="text"
+                name="dni"
+                value={viaje.dni}
+                onChange={(e) => handleOnChange(e)}
+                className="input-text"
+              />
             </div>
+            <div className="form-parte-2">
+              <label className="label-formpasajero">Asientos a ocupar</label>
+              <input
+                type="number"
+                name="asiento"
+                placeholder="entre 1 y 7"
+                value={viaje.asiento}
+                onChange={(e) => handleOnChange(e)}
+                className="input-text"
+              />
+              {errors.asiento && (
+                <span className="Registro__error">{errors.asiento}</span>
+              )}
+
+              <div className="Pasajere__checkboxes">
+                {filtrosArray.map((e, index) => {
+                  return (
+                    <div>
+                      <label className="Pasajere__mycheckbox">
+                        {e.name}
+                        <input
+                          type="checkbox"
+                          key={e.id}
+                          name={e.name}
+                          value={e.name}
+                          checked={isChecked[index]}
+                          onChange={() => {
+                            handleCheckBox(index);
+                          }}
+                        />
+                        <span></span>
+                      </label>
+                    </div>
+                  );
+                })}
+
+                {isChecked[4] && (
+                  <FormControl variant="standard" sx={{ m: 1, minWidth: 160 }}>
+                    <InputLabel
+                      id="demo-simple-select-standard-label"
+                      sx={{ color: "white" }}
+                    >
+                      Medio de pago
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-standard-label"
+                      id="demo-simple-select-standard"
+                    >
+                      <MenuItem value="">Acordar</MenuItem>
+                      <MenuItem value="Efecto">Efectivo</MenuItem>
+                      <MenuItem value="MP">Mercado Pago</MenuItem>
+                    </Select>
+                  </FormControl>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="label-detalles">
+            <label className="label-formpasajero">Detalles</label>
+            <input
+              type="text"
+              name="detalles"
+              value={viaje.detalles}
+              onChange={(e) => handleOnChange(e)}
+              className="input-text-detalle"
+            />
           </div>
         </div>
         <div className="btn-registrar-formpasajero">
