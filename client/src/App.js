@@ -12,7 +12,8 @@ import { DetalleViaje } from "./components/DetalleViaje/Conductor/DetalleViaje";
 import Login from "./components/Login/Login";
 import RegistroGoogle from "./components/RegistroGoogle/RegistroGoogle";
 import Admin from "./components/Admin/AdminLogin";
-import AdminHome from "./components/Admin/AdminHome"
+import AdminHome from "./components/Admin/AdminHome";
+// import Card from "./components/CardViaje/CardViajeUsuario/Conductor/CardViajeUsuario"
 
 function App() {
   return (

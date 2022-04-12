@@ -69,7 +69,7 @@ export const DetalleViaje = () => {
             </div>
             <div className="card-usuario-nombre-val-detalle text-xl">
               <span className="text-white my-9">
-                Hard code{viaje.nombre} {viaje.apellido}
+               {viaje.nombre} {viaje.apellido}
               </span>
 
               <span>Valoracion estrellas</span>
