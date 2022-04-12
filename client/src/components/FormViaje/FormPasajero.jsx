@@ -1,4 +1,3 @@
-import React from "react";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
@@ -21,13 +20,14 @@ export default function FormPasajero() {
 
   const [isChecked, setIsChecked] = useState(new Array(5).fill(false));
   const [errors, setErrors] = useState({});
+  const cookieMail = cookies.get("email");
   const [viaje, setViaje] = useState({
     nombre: cookies.get("nombre"),
     fecha: "",
     hora: "",
     origen: "",
     destino: "",
-    email: "",
+    email: cookieMail,
     dni: "",
     asiento: "",
     formaDePago: "A coordinar",

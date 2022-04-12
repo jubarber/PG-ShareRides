@@ -50,10 +50,6 @@ export default function Perfil() {
     email: email,
   });
 
-  const comentarios = useSelector((state) => state.comentarios);
-
-  const miUsuario = useSelector((state) => state.usuario);
-
   useEffect(() => {
     dispatch(getComentarios());
   }, [reviews]);
