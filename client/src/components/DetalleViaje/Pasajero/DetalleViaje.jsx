@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { getDetalleViaje } from "../../redux/actions/actions";
+import { getDetalleViaje, postOrder } from "../../../redux/actions/actions";
 import "./DetalleViaje.css";
 import link from "../../CardViaje/Links";
 import { MdSmokeFree, MdMasks, MdPets } from "react-icons/md";
@@ -12,7 +12,7 @@ import NavBar from "../../NavBar/NavBar";
 import Cookies from "universal-cookie";
 import axios from "axios";
 
-export const DetalleViaje = () => {
+export const DetalleViajep = () => {
   const cookies = new Cookies();
   const dispatch = useDispatch();
   const viaje = useSelector(state => state.viajePorId);
@@ -58,7 +58,7 @@ export const DetalleViaje = () => {
       unit_price: parseInt(e.target.value)
     });
   }
-
+  console.log("esto llega a detaill",viaje)
   return (
     <div className="container-detalle">
       <NavBar />
@@ -70,7 +70,7 @@ export const DetalleViaje = () => {
             </div>
             <div className="card-usuario-nombre-val-detalle text-xl">
               <span className="text-white my-9">
-                {viaje.nombre} {viaje.apellido}
+              {viaje.usuarios? viaje.usuarios[0].nombre + " "+ viaje.usuarios[0].apellido: <></>}               
               </span>
               <span>Valoracion estrellas</span>
             </div>
@@ -82,11 +82,10 @@ export const DetalleViaje = () => {
               seguido a funes
             </span>
           </div>
+          <span>Detalles del viaje</span>
           <div className="card-usuario-resumen-detalle rounded-sm">
             <span className="m-2">
-              Viajo con dos valijas y un perrito chiquito, estoy dispuesto a
-              compartir gastos! vamos a escrtibir mucho para ver como queda esto
-              creo que son demasiados caracteres
+              {viaje.detalles}
             </span>
           </div>
           <div className="btn-detalle">

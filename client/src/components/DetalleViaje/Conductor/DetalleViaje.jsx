@@ -12,7 +12,7 @@ import fondo from "../../../assets/fondo perfil.jpg";
 import Cookies from "universal-cookie";
 import axios from "axios";
 
-export const DetalleViaje = () => {
+export const DetalleViajec = () => {
   const cookies = new Cookies();
   const dispatch = useDispatch();
   const viaje = useSelector(state => state.viajePorId);
@@ -24,7 +24,6 @@ export const DetalleViaje = () => {
     },
     [id]
   );
-
   const [datosMp, setDatosMp] = useState({
     unit_price: "",
     orderId: ""
@@ -32,7 +31,6 @@ export const DetalleViaje = () => {
 
   const handleColaborar = async () => {
     await dispatch(postOrder(cookieMail)).then(data => {
-      // console.log(data.payload[0])
       setDatosMp({ ...datosMp, orderId: data?.payload[0].id });
     });
     console.log("handle colaborar", datosMp);
@@ -57,6 +55,7 @@ export const DetalleViaje = () => {
       unit_price: parseInt(e.target.value)
     });
   }
+  console.log("esto llega a card conductor", viaje)
   return (
     <div className="container-detalle">
       <NavBar />
@@ -68,9 +67,8 @@ export const DetalleViaje = () => {
             </div>
             <div className="card-usuario-nombre-val-detalle text-xl">
               <span className="text-white my-9">
-               {viaje.nombre} {viaje.apellido}
+                {viaje.usuarios? viaje.usuarios[0].nombre + " "+ viaje.usuarios[0].apellido: <></>}               
               </span>
-
               <span>Valoracion estrellas</span>
             </div>
           </div>
@@ -81,11 +79,10 @@ export const DetalleViaje = () => {
               seguido a funes
             </span>
           </div>
+          <span>Detalles del viaje</span>
           <div className="card-usuario-resumen-detalle rounded-sm">
             <span className="m-2">
-              Viajo con dos valijas y un perrito chiquito, estoy dispuesto a
-              compartir gastos! vamos a escrtibir mucho para ver como queda esto
-              creo que son demasiados caracteres
+              {viaje.detalles}
             </span>
           </div>
           <div className="btn-detalle">
