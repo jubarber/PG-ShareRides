@@ -24,7 +24,7 @@ export default function FormPasajero() {
     destino: "",
     dni: cookies.get("dni"),
     asiento: "",
-    formaDePago: "",
+    formaDePago: "A charlar",
     email: cookieMail,
     detalles: "",
   });
@@ -86,7 +86,7 @@ export default function FormPasajero() {
     },
     {
       id: 5,
-      name: "Pago compartido",
+      name: "Quiero compartir gastos",
     },
   ];
 
@@ -146,13 +146,13 @@ export default function FormPasajero() {
         destino: "",
         dni: "",
         asiento: "",
-        formaDePago: "",
+        formaDePago: "A charlar",
         email: "",
         detalles: "",
       });
     }
   }
-  console.log("esto llega a viaje", viaje)
+  console.log("esto llega a viaje", viaje);
   return (
     <div>
       <NavBar />
@@ -263,16 +263,23 @@ export default function FormPasajero() {
                 );
               })}
               {isChecked[4] && (
-                <select>
-                  <option value="Efecto">Efectivo</option>
-                  <option value="MP">Mercado Pago</option>
+                <select
+                  name="formaDePago"
+                  value={viaje.formaDePago}
+                  onChange={(e) => handleOnChange(e)}
+                >
+                  <option value="A coordinar">Acordar</option>
+                  <option value="Efectivo">Efectivo</option>
+                  <option value="Mercado Pago">Mercado Pago</option>
                 </select>
               )}
             </div>
           </div>
-          
+
           <div className="label-detalles">
-            <label className="Conductore__formulario_label">Detalles</label>
+            <label className="Conductore__formulario_label">
+              Detalles del viaje
+            </label>
             <textarea
               type="text"
               name="detalles"

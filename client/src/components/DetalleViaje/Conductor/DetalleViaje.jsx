@@ -202,7 +202,7 @@ export const DetalleViajec = () => {
               </span>
             </span>
             <span>
-              Forma de pago:{" "}
+              Medios de pago:{" "}
               <span className="font-bold">
                 {/* no llega bien forma de pago */}
                 {viaje.formaDePago ? viaje.formaDePago : "no"}

@@ -205,11 +205,11 @@ export const DetalleViajep = () => {
               </span>
             </span>
             <span>
-              Forma de pago:{" "}
+              Medios de pago:{" "}
               <span className="font-bold">{viaje.formaDePago}</span>
             </span>
             <span>
-              **Comparte gastos:
+              Puede colaborar con los gastos:
               <span className="font-bold">
                 {viaje.pagoCompartido ? "sí" : "no"}
               </span>
