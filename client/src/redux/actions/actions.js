@@ -361,7 +361,6 @@ export function filterPerCard(payload) {
   };
 }
 
-<<<<<<< HEAD
 export function postOrder(usuarioId) {
   return async function (dispatch) {
     try {
@@ -413,11 +412,7 @@ export function getColaboracion(email) {
   };
 }
 
-export function getLocalidades() {
-=======
-
 export function postOrder(usuarioId) {
->>>>>>> e9d0a9c1128672d13ca73c577376f387e3dbca26
   return async function (dispatch) {
     try {
       const localidades = await axios.get(
