@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getDetalleViaje, sumarseAlViaje } from "../../redux/actions/actions";
+import {
+  getDetalleViaje,
+  sumarseAlViaje,
+  postOrder,
+  modificarViaje,
+} from "../../../redux/actions/actions";
 import "./DetalleViaje.css";
 import link from "../../CardViaje/Links";
 import { MdSmokeFree, MdMasks, MdPets } from "react-icons/md";
@@ -12,7 +17,7 @@ import NavBar from "../../NavBar/NavBar";
 import Cookies from "universal-cookie";
 import axios from "axios";
 
-export const DetalleViaje = () => {
+export const DetalleViajep = () => {
   const cookies = new Cookies();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -62,15 +67,10 @@ export const DetalleViaje = () => {
     });
   }
 
-  const [asientos, setAsientos] = useState({
-    lugares: viaje.asientosAOcupar,
-  });
-
-  console.log("asientos", viaje);
-
   function handleSumarse(e) {
     e.preventDefault();
     dispatch(sumarseAlViaje(sumarse));
+    dispatch(modificarViaje(viaje));
   }
 
   let viajeUsuarios = viaje.usuarios?.map((e) => e.email);
@@ -87,7 +87,11 @@ export const DetalleViaje = () => {
             </div>
             <div className="card-usuario-nombre-val-detalle text-xl">
               <span className="text-white my-9">
-                {viaje.nombre} {viaje.apellido}
+                {viaje.usuarios ? (
+                  viaje.usuarios[0].nombre + " " + viaje.usuarios[0].apellido
+                ) : (
+                  <></>
+                )}
               </span>
               <span>Valoracion estrellas</span>
             </div>
@@ -99,12 +103,9 @@ export const DetalleViaje = () => {
               seguido a funes
             </span>
           </div>
+          <span>Detalles del viaje</span>
           <div className="card-usuario-resumen-detalle rounded-sm">
-            <span className="m-2">
-              Viajo con dos valijas y un perrito chiquito, estoy dispuesto a
-              compartir gastos! vamos a escrtibir mucho para ver como queda esto
-              creo que son demasiados caracteres
-            </span>
+            <span className="m-2">{viaje.detalles}</span>
           </div>
           <div className="btn-detalle">
             <button className="detalle-mensaje">
@@ -237,11 +238,11 @@ export const DetalleViaje = () => {
               </span>
             </span>
             <span>
-              Forma de pago:{" "}
+              Medios de pago:{" "}
               <span className="font-bold">{viaje.formaDePago}</span>
             </span>
             <span>
-              **Comparte gastos:
+              Puede colaborar con los gastos:
               <span className="font-bold">
                 {viaje.pagoCompartido ? "sí" : "no"}
               </span>

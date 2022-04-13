@@ -112,6 +112,7 @@ export function postViajePasajero(checkboxes, viaje) {
           asientosAOcupar: viaje.asiento,
           email: viaje.email,
           dni: viaje.dni,
+          detalles: viaje.detalles,
         },
       });
       return dispatch({ type: "POST_VIAJE_PASAJERO", payload: pasajero.data });
@@ -164,6 +165,7 @@ export function postViajeConductor(checkboxes, viaje) {
           asientosAOcupar: viaje.asiento,
           email: viaje.email,
           dni: viaje.dni,
+          detalles: viaje.detalles,
         },
       });
       return dispatch({
@@ -436,6 +438,23 @@ export function sumarseAlViaje(payload) {
         },
       });
       return dispatch({ type: "SUMARSE", payload: sumarse.data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
+
+export function modificarViaje(payload) {
+  return async function (dispatch) {
+    try {
+      const viaje = await axios({
+        method: "PUT",
+        url: "http://localhost:3001/api/viaje/modificarViaje",
+        data: {
+          asientosAOcupar: payload.asientosAOcupar,
+          id: payload.id,
+        },
+      });
     } catch (err) {
       console.log(err);
     }

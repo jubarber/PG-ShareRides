@@ -20,6 +20,7 @@ router.post("/conductor", async (req, res, next) => {
       email,
       dni,
       nombre,
+      detalles,
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
@@ -36,40 +37,41 @@ router.post("/conductor", async (req, res, next) => {
         aceptaEquipaje,
         usaBarbijo,
         pagoCompartido,
+        detalles,
         status: "conductor",
       });
       await nuevoViaje.addUsuario(email);
       res.json(nuevoViaje);
     }
-    // const sgMail = require("@sendgrid/mail");
+    const sgMail = require("@sendgrid/mail");
 
-    // sgMail.setApiKey(API_KEY);
+    sgMail.setApiKey(API_KEY);
 
-    // const message = {
-    //   to: email,
-    //   from: "pgsharerides@gmail.com",
+    const message = {
+      to: email,
+      from: "pgsharerides@gmail.com",
 
-    //   subject: "Viaje creado",
-    //   html: `<html>
-    //   <head>
-    //   <h2>
-    //   Hola ${nombre}!
-    //   </h2>
-    //   </head>
-    //   <body>
-    //   <h4>
-    //   Te agradecemos por crear tu viaje. Esperamos que tengas una buena experiencia.
-    //   Recorda, que vas a tener la posibilidad de hacer una reseña sobre tu conductore/pasajere.
-    //   </h4>
-    //   <h3>Buenas rutas!</h3>
-    //   </body>
-    //   </html>
-    //   `
-    // };
-    // sgMail
-    //   .send(message)
-    //   .then((r) => console.log("mail enviado"))
-    //   .catch((err) => console.log(err.message));
+      subject: "Viaje creado",
+      html: `<html>
+      <head>
+      <h2>
+      Hola ${nombre}! 
+      </h2>
+      </head>
+      <body>
+      <h4>
+      Te agradecemos por crear tu viaje. Esperamos que tengas una buena experiencia. 
+      Recorda, que vas a tener la posibilidad de hacer una reseña sobre tu conductore/pasajere.
+      </h4>
+      <h3>Buenas rutas!</h3>
+      </body>
+      </html>
+      `,
+    };
+    sgMail
+      .send(message)
+      .then((r) => console.log("mail enviado"))
+      .catch((err) => console.log(err.message));
   } catch (error) {
     next(error);
   }
@@ -91,6 +93,7 @@ router.post("/pasajero", async (req, res, next) => {
       aceptaEquipaje,
       email,
       dni,
+      detalles,
       nombre,
     } = req.body;
     let nuevoViaje;
@@ -108,40 +111,42 @@ router.post("/pasajero", async (req, res, next) => {
         aceptaEquipaje,
         usaBarbijo,
         pagoCompartido,
+        detalles,
         status: "pasajero",
       });
       await nuevoViaje.addUsuario(email);
-      res.json(nuevoViaje);
     }
-    // const sgMail = require("@sendgrid/mail");
+    const sgMail = require("@sendgrid/mail");
 
-    // sgMail.setApiKey(API_KEY);
+    sgMail.setApiKey(API_KEY);
 
-    // const message = {
-    //   to: email,
-    //   from: "pgsharerides@gmail.com",
+    const message = {
+      to: email,
+      from: "pgsharerides@gmail.com",
 
-    //   subject: "Viaje creado",
-    //   html: `<html>
-    //   <head>
-    //   <h2>
-    //   Hola ${nombre}!
-    //   </h2>
-    //   </head>
-    //   <body>
-    //   <h4>
-    //   Te agradecemos por crear tu viaje. Esperamos que tengas una buena experiencia.
-    //   Recorda, que vas a tener la posibilidad de hacer una reseña sobre tu conductore/pasajere.
-    //   </h4>
-    //   <h3>Buenas rutas!</h3>
-    //   </body>
-    //   </html>
-    //   `
-    // };
-    // sgMail
-    //   .send(message)
-    //   .then((r) => console.log("mail enviado"))
-    //   .catch((err) => console.log(err.message));
+      subject: "Viaje creado",
+      html: `<html>
+      <head>
+      <h2>
+      Hola ${nombre}! 
+      </h2>
+      </head>
+      <body>
+      <h4>
+      Te agradecemos por crear tu viaje. Esperamos que tengas una buena experiencia. 
+      Recorda, que vas a tener la posibilidad de hacer una reseña sobre tu conductore/pasajere.
+      </h4>
+      <h3>Buenas rutas!</h3>
+      </body>
+      </html>
+      `,
+    };
+
+    sgMail
+      .send(message)
+      .then((r) => console.log("mail enviado"))
+      .catch((err) => console.log(err.message));
+    res.json(nuevoViaje);
   } catch (error) {
     next(error);
   }
@@ -252,4 +257,17 @@ router.put("/sumarse", async (req, res, next) => {
   }
 });
 
+router.put("/modificarViaje", async (req, res, next) => {
+  const { asientosAOcupar, id } = req.body;
+  try {
+    let asientos = await Viaje.findByPk(id);
+    asientos.update({
+      asientosAOcupar: asientosAOcupar - 1,
+    });
+    asientos.save();
+    res.send(asientos);
+  } catch (err) {
+    next(err);
+  }
+});
 module.exports = router;

@@ -41,7 +41,6 @@ export function Filtros() {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log("viajes filtrados", viajesFiltrados);
   }, [viajesTotal, viajesFiltrados]);
 
   const handleOnChange = (position) => {

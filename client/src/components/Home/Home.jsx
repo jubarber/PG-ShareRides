@@ -35,7 +35,8 @@ export default function Home() {
     //se monta home y despacho la accion para obtener los viajes
     dispatch(login(cookieMail));
     /* dispatch(getViajesTotal());*/
-    console.log("entre en effect");
+    // console.log("entre en effect");
+
     dispatch(filterPerCard(render));
     dispatch(getUsuarios());
   }, [dispatch]);
@@ -47,7 +48,6 @@ export default function Home() {
   function handleSubmitLimpiar(e) {
     dispatch(getViajesTotal());
   }
-
   return (
     <div>
       <NavBar />
@@ -73,7 +73,6 @@ export default function Home() {
                   value={render}
                   onChange={(e) => handleChange(e)}
                 >
-                  {/* <MenuItem value="seleccionar viaje" disabled selected> </MenuItem> */}
                   <MenuItem value="conductor">Conductore</MenuItem>
                   <MenuItem value="pasajero">Pasajere</MenuItem>
                 </Select>
@@ -84,9 +83,9 @@ export default function Home() {
             {viajes.map(
               (e) =>
                 e && (
-                  <Link to={"/detalle/" + e.id}>
-                    <div className="card-home">
-                      {e.status === "pasajero" ? (
+                  <div className="card-home">
+                    {e.status === "pasajero" ? (
+                      <Link to={"/detallep/" + e.id}>
                         <CardViajeUsuarioPasajere
                           origen={e.origen}
                           destino={e.destino}
@@ -98,6 +97,7 @@ export default function Home() {
                           aceptaMascota={e.aceptaMascota}
                           usaBarbijo={e.usaBarbijo}
                           viajeDisponible={e.viajeDisponible}
+                          detalles={e.detalles}
                           key={e.id}
                           id={e.id}
                           nombre={
@@ -114,7 +114,9 @@ export default function Home() {
                             e.usuarios.length > 0 ? e.usuarios[0].email : <></>
                           }
                         />
-                      ) : (
+                      </Link>
+                    ) : (
+                      <Link to={"/detallec/" + e.id}>
                         <CardViajeUsuarioConductore
                           origen={e.origen}
                           destino={e.destino}
@@ -142,9 +144,9 @@ export default function Home() {
                             e.usuarios.length > 0 ? e.usuarios[0].email : <></>
                           }
                         />
-                      )}
-                    </div>
-                  </Link>
+                      </Link>
+                    )}
+                  </div>
                 )
             )}
           </div>
