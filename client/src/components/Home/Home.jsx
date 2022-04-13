@@ -70,7 +70,6 @@ export default function Home() {
                   value={render}
                   onChange={(e) => handleChange(e)}
                 >
-                  {/* <MenuItem value="seleccionar viaje" disabled selected> </MenuItem> */}
                   <MenuItem value="conductor">Conductore</MenuItem>
                   <MenuItem value="pasajero">Pasajere</MenuItem>
                 </Select>

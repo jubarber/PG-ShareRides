@@ -100,7 +100,7 @@ export default function FormPasajero() {
     },
     {
       id: 5,
-      name: "Pago compartido",
+      name: "Puedo colaborar",
     },
   ];
 
@@ -151,7 +151,7 @@ export default function FormPasajero() {
       }).then(function () {
         navigate("/home");
       });
-
+      
       dispatch(postViajePasajero(isChecked, viaje));
 
       setViaje({
@@ -294,10 +294,13 @@ export default function FormPasajero() {
                     <Select
                       labelId="demo-simple-select-standard-label"
                       id="demo-simple-select-standard"
+                      name="formaDePago"
+                      value={viaje.formaDePago}
+                      onChange={(e) => handleOnChange(e)}
                     >
-                      <MenuItem value="">Acordar</MenuItem>
-                      <MenuItem value="Efecto">Efectivo</MenuItem>
-                      <MenuItem value="MP">Mercado Pago</MenuItem>
+                      <MenuItem value="A coordinar">Acordar</MenuItem>
+                      <MenuItem value="Efectivo">Efectivo</MenuItem>
+                      <MenuItem value="Mercado Pago">Mercado Pago</MenuItem>
                     </Select>
                   </FormControl>
                 )}
@@ -305,7 +308,7 @@ export default function FormPasajero() {
             </div>
           </div>
           <div className="label-detalles">
-            <label className="label-formpasajero">Detalles</label>
+            <label className="label-formpasajero">Detalles del viaje</label>
             <input
               type="text"
               name="detalles"
