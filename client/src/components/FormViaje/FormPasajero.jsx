@@ -151,7 +151,7 @@ export default function FormPasajero() {
       }).then(function () {
         navigate("/home");
       });
-      
+
       dispatch(postViajePasajero(isChecked, viaje));
 
       setViaje({

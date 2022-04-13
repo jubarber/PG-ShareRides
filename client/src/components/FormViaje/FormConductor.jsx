@@ -24,7 +24,7 @@ export default function FormPasajero() {
     destino: "",
     dni: cookies.get("dni"),
     asiento: "",
-    formaDePago: "",
+    formaDePago: "A charlar",
     email: cookieMail,
     detalles: "",
   });
@@ -268,6 +268,7 @@ export default function FormPasajero() {
                   value={viaje.formaDePago}
                   onChange={(e) => handleOnChange(e)}
                 >
+                  <option value="A coordinar">Acordar</option>
                   <option value="Efectivo">Efectivo</option>
                   <option value="Mercado Pago">Mercado Pago</option>
                 </select>
