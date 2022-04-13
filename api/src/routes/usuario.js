@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const { Usuario, Viaje } = require("../db.js");
+const { Usuario, Viaje, Comentarios } = require("../db.js");
 const { API_KEY } = process.env;
 
 router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
@@ -26,7 +26,7 @@ router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
 
 router.get("/usuarios", async (req, res, next) => {
   try {
-    let usuarios = await Usuario.findAll();
+    let usuarios = await Usuario.findAll({ include: Comentarios });
     res.send(usuarios);
   } catch (err) {
     next(err);
@@ -36,7 +36,7 @@ router.get("/usuarios", async (req, res, next) => {
 router.get("/usuarios/:email", async (req, res, next) => {
   const { email } = req.params;
   try {
-    let usuario = await Usuario.findByPk(email);
+    let usuario = await Usuario.findByPk(email, { include: Comentarios });
     if (usuario) res.send(usuario);
     else res.send("error");
   } catch (err) {
@@ -66,13 +66,13 @@ router.post("/registro", async (req, res, next) => {
     //   <html>
     //   <head>
     //   <h2>
-    //   Hola ${nombre}! 
+    //   Hola ${nombre}!
     //   </h2>
     //   </head>
     //   <body>
     //   <h4>
     //   Desde Share Rides queremos darte la bienvenida a nuestra plataforma! Tu registro se ha llevado a cabo con éxito.
-    //   Esperamos que te sientas segure para compartir tu viaje. 
+    //   Esperamos que te sientas segure para compartir tu viaje.
     //   </h4>
     //   <h3>Buenas rutas!</h3>
     //   </body>
@@ -104,18 +104,15 @@ router.post("/mailnuevapassword", async (req, res, next) => {
   const { nombre, email } = req.body;
   try {
     // const sgMail = require("@sendgrid/mail");
-
     // sgMail.setApiKey(API_KEY);
-
     // const message = {
     //   to: email,
     //   from: "pgsharerides@gmail.com",
-
     //   subject: "Viaje creado",
     //   html: `<html>
     //   <head>
     //   <h2>
-    //   Hola ${nombre}! 
+    //   Hola ${nombre}!
     //   </h2>
     //   </head>
     //   <body>
@@ -140,18 +137,15 @@ router.post("/emailmodificarperfil", async (req, res, next) => {
   const { nombre, email } = req.body;
   try {
     // const sgMail = require("@sendgrid/mail");
-
     // sgMail.setApiKey(API_KEY);
-
     // const message = {
     //   to: email,
     //   from: "pgsharerides@gmail.com",
-
     //   subject: "Viaje creado",
     //   html: `<html>
     //   <head>
     //   <h2>
-    //   Hola ${nombre}! 
+    //   Hola ${nombre}!
     //   </h2>
     //   </head>
     //   <body>
@@ -225,30 +219,6 @@ router.put("/modificarperfil", async (req, res, next) => {
         acercaDeMi: acercaDeMi,
       });
       usuario.save();
-    }
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.put("/comentarios", async (req, res, next) => {
-  const { email, calificacion, comentarios } = req.body;
-  try {
-    let nuevoComentario;
-    nuevoComentario = await Usuario.findByPk(email);
-    if (calificacion) {
-      console.log("entre a calificacion");
-      nuevoComentario.update({
-        calificacion: calificacion,
-      });
-      nuevoComentario.save();
-    }
-    if (comentarios) {
-      console.log("entre a comentarios");
-      nuevoComentario.update({
-        comentarios: comentarios,
-      });
-      nuevoComentario.save();
     }
   } catch (err) {
     next(err);

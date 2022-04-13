@@ -19,7 +19,7 @@ router.post("/conductor", async (req, res, next) => {
       aceptaEquipaje,
       email,
       dni,
-      nombre
+      nombre,
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
@@ -36,7 +36,7 @@ router.post("/conductor", async (req, res, next) => {
         aceptaEquipaje,
         usaBarbijo,
         pagoCompartido,
-        status: "conductor"
+        status: "conductor",
       });
       await nuevoViaje.addUsuario(email);
       res.json(nuevoViaje);
@@ -53,12 +53,12 @@ router.post("/conductor", async (req, res, next) => {
     //   html: `<html>
     //   <head>
     //   <h2>
-    //   Hola ${nombre}! 
+    //   Hola ${nombre}!
     //   </h2>
     //   </head>
     //   <body>
     //   <h4>
-    //   Te agradecemos por crear tu viaje. Esperamos que tengas una buena experiencia. 
+    //   Te agradecemos por crear tu viaje. Esperamos que tengas una buena experiencia.
     //   Recorda, que vas a tener la posibilidad de hacer una reseña sobre tu conductore/pasajere.
     //   </h4>
     //   <h3>Buenas rutas!</h3>
@@ -91,7 +91,7 @@ router.post("/pasajero", async (req, res, next) => {
       aceptaEquipaje,
       email,
       dni,
-      nombre
+      nombre,
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
@@ -108,7 +108,7 @@ router.post("/pasajero", async (req, res, next) => {
         aceptaEquipaje,
         usaBarbijo,
         pagoCompartido,
-        status: "pasajero"
+        status: "pasajero",
       });
       await nuevoViaje.addUsuario(email);
       res.json(nuevoViaje);
@@ -125,12 +125,12 @@ router.post("/pasajero", async (req, res, next) => {
     //   html: `<html>
     //   <head>
     //   <h2>
-    //   Hola ${nombre}! 
+    //   Hola ${nombre}!
     //   </h2>
     //   </head>
     //   <body>
     //   <h4>
-    //   Te agradecemos por crear tu viaje. Esperamos que tengas una buena experiencia. 
+    //   Te agradecemos por crear tu viaje. Esperamos que tengas una buena experiencia.
     //   Recorda, que vas a tener la posibilidad de hacer una reseña sobre tu conductore/pasajere.
     //   </h4>
     //   <h3>Buenas rutas!</h3>
@@ -171,9 +171,9 @@ router.get(
             aceptaMascota: aceptaMascota,
             aceptaEquipaje: aceptaEquipaje,
             usaBarbijo: usaBarbijo,
-            asientosAOcupar: asientosAOcupar
+            asientosAOcupar: asientosAOcupar,
           },
-          include: Usuario
+          include: Usuario,
         });
       } else {
         viajesTotal = await Viaje.findAll({
@@ -181,9 +181,9 @@ router.get(
             aceptaFumador: aceptaFumador,
             aceptaMascota: aceptaMascota,
             aceptaEquipaje: aceptaEquipaje,
-            usaBarbijo: usaBarbijo
+            usaBarbijo: usaBarbijo,
           },
-          include: Usuario
+          include: Usuario,
         });
       }
       res.send(viajesTotal);
@@ -236,6 +236,17 @@ router.get("/:viajeId", async (req, res, next) => {
   try {
     let viajeEncontrado = await Viaje.findByPk(viajeId, { include: Usuario });
     res.send(viajeEncontrado);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.put("/sumarse", async (req, res, next) => {
+  const { email, id } = req.body;
+  try {
+    const viajeUsuario = await Viaje.findByPk(id, { include: Usuario });
+    await viajeUsuario.addUsuario(email);
+    res.send(viajeUsuario);
   } catch (err) {
     next(err);
   }

@@ -12,7 +12,7 @@ import { DetalleViaje } from "./components/DetalleViaje/Conductor/DetalleViaje";
 import Login from "./components/Login/Login";
 import RegistroGoogle from "./components/RegistroGoogle/RegistroGoogle";
 import Admin from "./components/Admin/AdminLogin";
-import AdminHome from "./components/Admin/AdminHome"
+import AdminHome from "./components/Admin/AdminHome";
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
           <Route exact path="/home" element={<Home />} />
-          <Route exact path="/perfil" element={<Perfil />} />
+          <Route exact path="/perfil/:email" element={<Perfil />} />
           <Route exact path="/registro" element={<FormRegistro />} />
           <Route exact path="/formviaje" element={<FormViaje />} />
           <Route exact path="/formpasajero" element={<FormPasajero />} />

@@ -117,13 +117,13 @@ export default function FormRegistro() {
         dangerMode: true,
       });
     } else {
-        cookies.set("dni", input.dni, { path: "/" });
-        cookies.set("email", input.email, { path: "/" });
-        cookies.set("nombre", input.nombre, { path: "/" });
-        cookies.set("apellido", input.apellido, { path: "/" });
-        console.log("COOKIES REGISTRO ", cookies.get("nombre"));
+      cookies.set("dni", input.dni, { path: "/" });
+      cookies.set("email", input.email, { path: "/" });
+      cookies.set("nombre", input.nombre, { path: "/" });
+      cookies.set("apellido", input.apellido, { path: "/" });
+      console.log("COOKIES REGISTRO ", cookies.get("nombre"));
       dispatch(registroUsuario(input));
-     let cookieNombre = cookies.get("nombre");
+      let cookieNombre = cookies.get("nombre");
       swal({
         title: "El registro ha sido exitoso!",
         text: `Gracias por registrarte! Bienvenide ${cookieNombre}`,

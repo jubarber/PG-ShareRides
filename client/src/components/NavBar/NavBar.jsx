@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./NavBar.css";
 import logo from "../../assets/Icono shareRides.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "universal-cookie";
 import Box from "@mui/material/Box";
@@ -15,16 +15,22 @@ import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import { BiLogOut } from "react-icons/bi";
 import user from "../../assets/user.png";
-import { logout } from "../../redux/actions/actions";
+import { getUsuarioByEmail, logout } from "../../redux/actions/actions";
 import { FaHome } from "react-icons/fa";
 
 export default function NavBar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { email } = useParams();
   const cookies = new Cookies();
   const cookieNombre = cookies.get("nombre");
   const cookieAvatar = cookies.get("avatar");
   const cookieEmail = cookies.get("email");
+  const miUsuario = useSelector((state) => state.usuario);
+
+  useEffect(() => {
+    dispatch(getUsuarioByEmail(cookieEmail));
+  }, []);
 
   // ------Menu------
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -96,11 +102,19 @@ export default function NavBar() {
                   aria-haspopup="true"
                   aria-expanded={open ? "true" : undefined}
                 >
-                  <img
-                    src={cookieAvatar === "null" ? user : cookieAvatar}
-                    alt=""
-                    style={{ width: 52, height: 52 }}
-                  />
+                  {cookieAvatar ? (
+                    <img
+                      src={cookieAvatar === "null" ? user : cookieAvatar}
+                      alt=""
+                      style={{ width: 52, height: 52 }}
+                    />
+                  ) : (
+                    <img
+                      src={miUsuario.avatar === null ? user : miUsuario.avatar}
+                      alt=""
+                      style={{ width: 52, height: 52 }}
+                    />
+                  )}
                 </IconButton>
               </Tooltip>
             </Box>
@@ -139,7 +153,7 @@ export default function NavBar() {
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-              <Link to="/perfil">
+              <Link to={`/perfil/${cookieEmail}`}>
                 <MenuItem>
                   <img
                     src={cookieAvatar === "null" ? user : cookieAvatar}

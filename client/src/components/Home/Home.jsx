@@ -6,6 +6,7 @@ import {
   getViajesTotal,
   login,
   filterPerCard,
+  getUsuarios,
 } from "../../redux/actions/actions";
 import { Filtros } from "../Filtros/Filtros";
 import CardViajeUsuarioPasajere from "../CardViaje/CardViajeUsuario/Pasajero/CardViajeUsuario";
@@ -22,6 +23,7 @@ import NavBar from "../NavBar/NavBar";
 export default function Home() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
+
   const [render, setRender] = useState("");
   const viajes = useSelector(
     (state) => state.viajesFiltrados //me traigo el estado de los viajes para poder mostrarlos
@@ -35,6 +37,7 @@ export default function Home() {
     /* dispatch(getViajesTotal());*/
     console.log("entre en effect");
     dispatch(filterPerCard(render));
+    dispatch(getUsuarios());
   }, [dispatch]);
   function handleChange(e) {
     dispatch(filterPerCard(e.target.value));
@@ -44,6 +47,7 @@ export default function Home() {
   function handleSubmitLimpiar(e) {
     dispatch(getViajesTotal());
   }
+
   return (
     <div>
       <NavBar />
@@ -106,6 +110,9 @@ export default function Home() {
                               <></>
                             )
                           }
+                          email={
+                            e.usuarios.length > 0 ? e.usuarios[0].email : <></>
+                          }
                         />
                       ) : (
                         <CardViajeUsuarioConductore
@@ -130,6 +137,9 @@ export default function Home() {
                             ) : (
                               <></>
                             )
+                          }
+                          email={
+                            e.usuarios.length > 0 ? e.usuarios[0].email : <></>
                           }
                         />
                       )}

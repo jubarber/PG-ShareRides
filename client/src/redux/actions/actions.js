@@ -13,6 +13,7 @@ export const FILTERTYPE = "FILTERTYPE";
 export const MODIFICAR_PERFIL = "MODIFICAR_PERFIL";
 export const COMENTARIOS = "COMENTARIOS";
 export const GET_COMENTARIOS = "GET_COMENTARIOS";
+export const GET_LOCALIDADES = "GET_LOCALIDADES";
 
 export function getDetalleViaje(viajeId) {
   return function (dispatch) {
@@ -175,7 +176,6 @@ export function postViajeConductor(checkboxes, viaje) {
   };
 }
 
-
 export function mailNuevaPassword(payload) {
   return async function (dispatch) {
     try {
@@ -217,6 +217,7 @@ export function mailModificarPerfil(payload) {
 
 export function modificacionPerfil(payload) {
   return async function (dispatch) {
+    console.log("modificar action", payload);
     try {
       let perfilModificado = await axios({
         method: "put",
@@ -325,6 +326,8 @@ export function postComentarios(payload) {
         url: "http://localhost:3001/api/comentarios/postComentarios",
         data: {
           email: payload.email,
+          nombre: payload.nombre,
+          apellido: payload.apellido,
           calificacion: payload.calificacion,
           comentarios: payload.comentarios,
         },
@@ -362,11 +365,11 @@ export function postOrder(usuarioId) {
       const newOrder = await axios({
         method: "post",
         url: "http://localhost:3001/api/order",
-        data: { usuarioId: usuarioId }
+        data: { usuarioId: usuarioId },
       });
       return dispatch({
         type: "NEW_ORDER",
-        payload: newOrder.data
+        payload: newOrder.data,
       });
     } catch (e) {
       console.log(e);
@@ -385,8 +388,8 @@ export function postColaboracion(input) {
           unit_price: input.unit_price,
           quantity: input.quantity,
           usuarioId: input.usuarioId,
-          orderId: input.orderId
-        }
+          orderId: input.orderId,
+        },
       });
     } catch (err) {
       console.log(err);
@@ -407,3 +410,34 @@ export function getColaboracion(email) {
   };
 }
 
+export function getLocalidades() {
+  return async function (dispatch) {
+    try {
+      const localidades = await axios.get(
+        "http://localhost:3001/api/localidad/localidades"
+      );
+      return dispatch({ type: "GET_LOCALIDADES", payload: localidades.data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
+
+export function sumarseAlViaje(payload) {
+  console.log("sumarse", payload);
+  return async function (dispatch) {
+    try {
+      const sumarse = await axios({
+        method: "PUT",
+        url: "http://localhost:3001/api/viaje/sumarse",
+        data: {
+          id: payload.id,
+          email: payload.email,
+        },
+      });
+      return dispatch({ type: "SUMARSE", payload: sumarse.data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
