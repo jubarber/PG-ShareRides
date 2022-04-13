@@ -22,7 +22,8 @@ export default function Card({
   nombre,
   apellido,
   id,
-  status
+  status,
+  email,
 }) {
   //get de usuario (nombre, apellido y valoracion). foto usuario. Provincias/localidades como llegan y si se puede mostras cada una independiente de la otra. Iniciar sesion con aut 0 y con las cuquis trabajar con la info.
   return (
@@ -33,9 +34,11 @@ export default function Card({
           <div class="div1">
             <img src={link} alt="" />
             <div className="info-personal-card">
-              <span>
-                {nombre + " "} {apellido}
-              </span>
+              <Link to={`/perfil/${email}`}>
+                <span>
+                  {nombre + " "} {apellido}
+                </span>
+              </Link>
               <div className="puntuacion">
                 <ImStarFull className="black" />
                 <ImStarFull className="black" />

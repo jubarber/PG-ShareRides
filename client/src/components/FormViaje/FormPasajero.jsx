@@ -2,16 +2,17 @@ import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
-import { postViajePasajero } from "../../redux/actions/actions";
+import { getLocalidades, postViajePasajero } from "../../redux/actions/actions";
 import "./FormPasajero.css";
 import fondo from "../../assets/fondo perfil.jpg";
 import NavBar from "../NavBar/NavBar";
 import "./FormPasajero.css";
 import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
+import ReactSelect from "react-select";
 
 export default function FormPasajero() {
   const cookies = new Cookies();
