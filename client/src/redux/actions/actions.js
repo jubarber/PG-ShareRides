@@ -306,6 +306,7 @@ export function searchDestino(destino) {
 }
 
 export function getUsuarioByEmail(email) {
+  // console.log(email)
   return async function (dispatch) {
     try {
       let usuario = await axios({
@@ -447,24 +448,3 @@ export function modificarViaje(payload) {
     }
   };
 }
-
-// export function iniciarSesion(payload) {
-//   return async function (dispatch) {
-//     try {
-//       const loginUsuario = axios({
-//         method: "GET",
-//         url: `http://localhost:3001/api/usuario/iniciarsesion/${payload.email}/${payload.password}`,
-//         data: {
-//           email: payload.email,
-//           password: payload.password,
-//         },
-//       });
-//       return dispatch({
-//         type: "INICIAR_SESION",
-//         payload: loginUsuario.data,
-//       });
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   };
-// }

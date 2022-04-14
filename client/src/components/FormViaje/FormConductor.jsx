@@ -7,6 +7,10 @@ import { Link, useNavigate } from "react-router-dom";
 import "./FormConductor.css";
 import Cookies from "universal-cookie";
 import NavBar from "../NavBar/NavBar";
+import DatePicker, { registerLocale } from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import es from "date-fns/locale/es";
+registerLocale("es", es);
 
 export default function FormPasajero() {
   const cookies = new Cookies();
@@ -152,7 +156,7 @@ export default function FormPasajero() {
       });
     }
   }
-  console.log("esto llega a viaje", viaje);
+
   return (
     <div>
       <NavBar />
@@ -166,12 +170,17 @@ export default function FormPasajero() {
           <div className="Conductore__form">
             <div className="Conductore__input_1">
               <label className="Conductore__formulario_label">Fecha</label>
-              <input
-                className="Conductore__input"
-                type="text"
-                name="fecha"
-                value={viaje.fecha}
-                onChange={(e) => handleOnChange(e)}
+              <DatePicker
+                className="input-text"
+                locale="es"
+                dateFormat="dd-MM-yyyy"
+                selected={viaje.fecha}
+                minDate={new Date()}
+                onChange={nuevaFecha =>
+                  setViaje({
+                    ...viaje,
+                    fecha: nuevaFecha
+                  })}
               />
               {errors.fecha && (
                 <span className="Conductore__error">{errors.fecha}</span>

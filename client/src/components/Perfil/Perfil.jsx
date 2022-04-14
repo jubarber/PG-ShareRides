@@ -35,9 +35,11 @@ export default function Perfil() {
   const { email } = useParams();
 
   useEffect(() => {
-    dispatch(getUsuarioByEmail(email));
+    if (email) {
+      dispatch(getUsuarioByEmail(email));
+    }
     dispatch(getViajesTotal());
-  }, [dispatch, email]);
+  }, [email]);
 
   const [subiendo, setSubiendo] = useState("");
   const [imagen, setImagen] = useState("");
@@ -67,7 +69,7 @@ export default function Perfil() {
 
   useEffect(() => {
     dispatch(getComentarios());
-  }, [dispatch, reviews]);
+  }, [reviews]);
 
   //-----------------------Inputs--------------------------
 

@@ -96,8 +96,6 @@ export const DetalleViajep = () => {
 
   let arrayPasajeres = viaje.usuarios?.map((e) => e);
 
-  console.log("hola", arrayPasajeres);
-
   return (
     <div className="container-detalle">
       <NavBar />
@@ -105,7 +103,10 @@ export const DetalleViajep = () => {
         <div className="card-usuario-detalle">
           <div className="card-usuario-infper-detalle">
             <div className="card-usuario-img-detalle">
-              <img src={link} alt="" />
+              <img
+                src={viaje.usuarios ? viaje.usuarios[0].avatar : null}
+                alt=""
+              />
             </div>
             <div className="card-usuario-nombre-val-detalle text-xl">
               <span className="text-white my-9">
