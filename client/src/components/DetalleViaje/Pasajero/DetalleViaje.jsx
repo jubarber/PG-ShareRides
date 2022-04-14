@@ -6,6 +6,7 @@ import {
   sumarseAlViaje,
   postOrder,
   modificarViaje,
+  getUsuarioByEmail,
 } from "../../../redux/actions/actions";
 import "./DetalleViaje.css";
 import link from "../../CardViaje/Links";
@@ -16,6 +17,13 @@ import fondo from "../../../assets/fondo perfil.jpg";
 import NavBar from "../../NavBar/NavBar";
 import Cookies from "universal-cookie";
 import axios from "axios";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import { FaUserCircle } from "react-icons/fa";
+
+import IconButton from "@mui/material/IconButton";
+import swal from "sweetalert";
 
 export const DetalleViajep = () => {
   const cookies = new Cookies();
@@ -24,9 +32,12 @@ export const DetalleViajep = () => {
   const viaje = useSelector((state) => state.viajePorId);
   const { id } = useParams();
   const cookieMail = cookies.get("email");
+  const usuario = useSelector((state) => state.usuario);
+  const { email } = useParams();
 
   useEffect(() => {
     dispatch(getDetalleViaje(id));
+    dispatch(getUsuarioByEmail(email));
   }, [id]);
 
   const [datosMp, setDatosMp] = useState({
@@ -71,10 +82,19 @@ export const DetalleViajep = () => {
     e.preventDefault();
     dispatch(sumarseAlViaje(sumarse));
     dispatch(modificarViaje(viaje));
+    swal({
+      title: "Te has sumado al viaje correctamente!",
+      icon: "success",
+      button: "Bienvenidx!",
+    }).then(() => {
+      navigate("/home");
+    });
   }
 
   let viajeUsuarios = viaje.usuarios?.map((e) => e.email);
   let viajesTotales = viajeUsuarios?.map((e) => e.includes(cookieMail));
+
+  let arrayPasajeres = viaje.usuarios?.map((e) => e);
 
   return (
     <div className="container-detalle">
@@ -83,7 +103,10 @@ export const DetalleViajep = () => {
         <div className="card-usuario-detalle">
           <div className="card-usuario-infper-detalle">
             <div className="card-usuario-img-detalle">
-              <img src={viaje.usuarios?viaje.usuarios[0].avatar:null} alt="" />
+              <img
+                src={viaje.usuarios ? viaje.usuarios[0].avatar : null}
+                alt=""
+              />
             </div>
             <div className="card-usuario-nombre-val-detalle text-xl">
               <span className="text-white my-9">
@@ -236,6 +259,30 @@ export const DetalleViajep = () => {
               >
                 {viaje.asientosAOcupar}
               </span>
+            </span>
+            <span>
+              <List
+                sx={{
+                  width: "100%",
+                  maxWidth: 360,
+                }}
+              >
+                {arrayPasajeres?.map((e) => (
+                  <ListItem
+                    key={e.email}
+                    disableGutters
+                    secondaryAction={
+                      <IconButton>
+                        <Link to={`/perfil/${e.email}`}>
+                          <FaUserCircle />
+                        </Link>
+                      </IconButton>
+                    }
+                  >
+                    <ListItemText primary={`🔴 ${e.nombre} ${e.apellido}`} />
+                  </ListItem>
+                ))}
+              </List>
             </span>
             <span>
               Medios de pago:{" "}

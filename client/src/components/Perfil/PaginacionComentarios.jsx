@@ -30,9 +30,11 @@ export default function PaginacionComentarios({
   return (
     <>
       <div className="contenedor-paginacion">
-        <button onClick={prevPage} className="navegacion" id="prev">
-          <BiFirstPage />
-        </button>
+        {pageNum.length === 0 ? null : (
+          <button onClick={prevPage} className="navegacion" id="prev">
+            <BiFirstPage />
+          </button>
+        )}
         {pageNum &&
           pageNum.map((e) => (
             <span key={e} className="paginacion">
@@ -41,9 +43,11 @@ export default function PaginacionComentarios({
               </button>
             </span>
           ))}
-        <button onClick={nextPage} className="navegacion" id="next">
-          <BiLastPage />
-        </button>
+        {pageNum.length === 0 ? null : (
+          <button onClick={nextPage} className="navegacion" id="next">
+            <BiLastPage />
+          </button>
+        )}
       </div>
     </>
   );

@@ -32,9 +32,14 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.mycheckbox input:checked ~ span::after {
+  background: blue;
+  transform: scale(0.8) translate(-3rem);
+}
 .mycheckbox input:checked ~ span::after {
   background: rgb(87, 149, 87);
-  transform: scale(0.8) translate(31px);
+  transform: scale(0.8) translate(3rem);
 }
 
 .mycheckbox input {
@@ -43,7 +48,8 @@
 
 .mycheckbox span {
   display: inline-block;
-  width: 50px;
+  padding-left: 3rem;
+  width: 9rem;
   height: 25px;
   border-radius: 25px;
   background: white;
