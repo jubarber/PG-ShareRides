@@ -5,7 +5,7 @@ import { VscLocation } from "react-icons/vsc";
 import { MdSmokeFree, MdSmokingRooms, MdMasks, MdPets } from "react-icons/md";
 import { FaSuitcaseRolling } from "react-icons/fa";
 import { ImStarEmpty, ImStarHalf, ImStarFull } from "react-icons/im";
-import {BsPersonFill} from "react-icons/bs"
+import { BsPersonFill } from "react-icons/bs";
 import link from "../../Links";
 
 export default function Card({
@@ -30,7 +30,7 @@ export default function Card({
     <div className="container-cardviaje">
       <div id="nueva-clase">
         <div class="parent">
-        <BsPersonFill className="person"/>
+          <BsPersonFill className="person" />
           <div class="div1">
             <img src={link} alt="" />
             <div className="info-personal-card">
@@ -52,7 +52,8 @@ export default function Card({
             <i className="flex">
               <VscLocation className="text-green-400" />
               <i>
-                {origen} <p>{">"}</p>{destino}
+                {origen} <p>{">"}</p>
+                {destino}
               </i>
             </i>
             <i>
@@ -62,9 +63,9 @@ export default function Card({
               <i>{asientosAOcupar + " "}Lugares Requeridos</i>
             ) : asientosAOcupar === 1 ? (
               <i>{asientosAOcupar + " "}Lugar Requerido</i>
-            ) : (
-              <></>
-            )}
+            ) : asientosAOcupar === 0 ? (
+              <i>Viaje Completo</i>
+            ) : null}
           </div>
           <div class="div3">
             {aceptaMascota ? <MdPets /> : <></>}

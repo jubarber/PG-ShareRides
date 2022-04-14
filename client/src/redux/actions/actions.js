@@ -412,19 +412,6 @@ export function getColaboracion(email) {
   };
 }
 
-export function postOrder(usuarioId) {
-  return async function (dispatch) {
-    try {
-      const localidades = await axios.get(
-        "http://localhost:3001/api/localidad/localidades"
-      );
-      return dispatch({ type: "GET_LOCALIDADES", payload: localidades.data });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-}
-
 export function sumarseAlViaje(payload) {
   console.log("sumarse", payload);
   return async function (dispatch) {
@@ -460,3 +447,24 @@ export function modificarViaje(payload) {
     }
   };
 }
+
+// export function iniciarSesion(payload) {
+//   return async function (dispatch) {
+//     try {
+//       const loginUsuario = axios({
+//         method: "GET",
+//         url: `http://localhost:3001/api/usuario/iniciarsesion/${payload.email}/${payload.password}`,
+//         data: {
+//           email: payload.email,
+//           password: payload.password,
+//         },
+//       });
+//       return dispatch({
+//         type: "INICIAR_SESION",
+//         payload: loginUsuario.data,
+//       });
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   };
+// }
