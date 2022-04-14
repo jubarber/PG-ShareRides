@@ -20,6 +20,8 @@ import Rating from "@mui/material/Rating";
 import PaginacionComentarios from "./PaginacionComentarios";
 import axios from "axios";
 
+
+
 export default function Perfil() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,12 +35,12 @@ export default function Perfil() {
   const comentarios = useSelector((state) => state.comentarios);
   const viajes = useSelector((state) => state.viajes);
   const { email } = useParams();
-  console.log("dni", miUsuario.dni);
-  console.log("telefono", miUsuario.telefono);
-  useEffect(() => {
-    dispatch(getUsuarioByEmail(email));
-    dispatch(getViajesTotal());
-  }, [dispatch, email]);
+
+  useEffect(()=>{
+    if(email){
+  dispatch(getUsuarioByEmail(email))
+    }
+  }, [email])
 
   const [subiendo, setSubiendo] = useState("");
   const [imagen, setImagen] = useState("");
@@ -87,8 +89,9 @@ export default function Perfil() {
   //----------------------------------------------------------
 
   //--------------Paginado--------------------
-
-  const MisComentarios = [...miUsuario.comentarios];
+  
+    const MisComentarios = miUsuario.comentarios //saqué el spread porque rompía el montaje del componente
+  
 
   const [pagina, setPagina] = useState(1);
   const [comentariosPorPagina, setComentariosPorPagina] = useState(3);
@@ -102,7 +105,7 @@ export default function Perfil() {
   const paginacion = (pageNum) => {
     setPagina(pageNum);
   };
-
+  
   //-----------------------------------
 
   const handleChange = (e) => {

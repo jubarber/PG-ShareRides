@@ -306,6 +306,7 @@ export function searchDestino(destino) {
 }
 
 export function getUsuarioByEmail(email) {
+  // console.log(email)
   return async function (dispatch) {
     try {
       let usuario = await axios({

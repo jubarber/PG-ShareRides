@@ -64,6 +64,7 @@ function rootReducer(state = initialState, action) {
         viajesFiltrados: action.payload,
       };
     case USUARIO_MAIL:
+      // console.log(action.payload)
       if (action.payload === "error") {
         return { ...state, error: action.payload, usuario: {} };
       } else {
