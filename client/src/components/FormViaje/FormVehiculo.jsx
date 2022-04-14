@@ -6,8 +6,10 @@ import fondo from "../../assets/fondo perfil.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
 import "./FormVehiculo.css";
+import Cookies from "universal-cookie"
 
 export default function FormVehiculo() {
+  const cookies = new Cookies();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [auto, setAuto] = useState({
@@ -15,7 +17,7 @@ export default function FormVehiculo() {
     marca: "",
     modelo: "",
     dni: "",
-    email: "",
+    email: cookies.get("email"),
   });
   const [errors, setErrors] = useState({});
 
@@ -96,7 +98,9 @@ export default function FormVehiculo() {
         title: "El registro ha sido exitoso!",
         icon: "success",
         button: "Crea tu viaje!",
-      }).then(function () {
+      })
+      .then(cookies.set("dni", auto.dni, { path: "/" }))
+      .then(function () {
         navigate("/formconductor");
       });
       setAuto({

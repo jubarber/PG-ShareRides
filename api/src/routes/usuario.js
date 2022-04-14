@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const { Usuario, Viaje } = require("../db.js");
+const { Usuario, Viaje, Comentarios } = require("../db.js");
 const { API_KEY } = process.env;
 
 router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
@@ -26,7 +26,7 @@ router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
 
 router.get("/usuarios", async (req, res, next) => {
   try {
-    let usuarios = await Usuario.findAll();
+    let usuarios = await Usuario.findAll({ include: Comentarios });
     res.send(usuarios);
   } catch (err) {
     next(err);
@@ -36,7 +36,7 @@ router.get("/usuarios", async (req, res, next) => {
 router.get("/usuarios/:email", async (req, res, next) => {
   const { email } = req.params;
   try {
-    let usuario = await Usuario.findByPk(email);
+    let usuario = await Usuario.findByPk(email, { include: Comentarios });
     if (usuario) res.send(usuario);
     else res.send("error");
   } catch (err) {
@@ -52,6 +52,37 @@ router.post("/registro", async (req, res, next) => {
       where: { email, nombre, apellido, password },
     });
     res.json(nuevoUsuario);
+
+    // const sgMail = require("@sendgrid/mail");
+
+    // sgMail.setApiKey(API_KEY);
+
+    // const message = {
+    //   to: email,
+    //   from: "pgsharerides@gmail.com",
+
+    //   subject: "Bienvenide a Share Rides!",
+    //   html: `
+    //   <html>
+    //   <head>
+    //   <h2>
+    //   Hola ${nombre}!
+    //   </h2>
+    //   </head>
+    //   <body>
+    //   <h4>
+    //   Desde Share Rides queremos darte la bienvenida a nuestra plataforma! Tu registro se ha llevado a cabo con éxito.
+    //   Esperamos que te sientas segure para compartir tu viaje.
+    //   </h4>
+    //   <h3>Buenas rutas!</h3>
+    //   </body>
+    //   </html>
+    //   `,
+    // };
+    // sgMail
+    //   .send(message)
+    //   .then((r) => console.log("mail enviado"))
+    //   .catch((err) => console.log(err.message));
 
     // const sgMail = require("@sendgrid/mail");
 

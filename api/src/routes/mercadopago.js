@@ -41,8 +41,8 @@ router.get("/:orderId/:unit_price", (req, res) => {
     .create(preference)
 
     .then(function (response) {
-     let sandbox = response.body.sandbox_init_point;
-     res.send(sandbox)
+      let sandbox = response.body.sandbox_init_point;
+      res.send(sandbox);
     })
     .catch(function (error) {
       console.log(error);
@@ -54,8 +54,6 @@ router.get("/pagos", async (req, res) => {
   const payment_status = req.query.status;
   const external_reference = req.query.external_reference;
   const merchant_order_id = req.query.merchant_order_id;
-
-
 
   Order.findByPk(external_reference)
     .then((order) => {

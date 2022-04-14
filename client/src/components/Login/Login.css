@@ -11,9 +11,9 @@
 }
 
 .Login__input_box {
-    width: 70%;
-    margin: auto;
-    position: relative; /* esto es para poder usar position: absolute en el ojo */
+  width: 70%;
+  margin: auto;
+  position: relative; /* esto es para poder usar position: absolute en el ojo */
 }
 
 .Login__input_login {
@@ -45,8 +45,8 @@
   font-size: 30px;
 }
 
-.Login__btn_login{
-  display:block;
+.Login__btn_login {
+  display: block;
   margin: auto;
   margin-top: 20px;
 
@@ -81,4 +81,15 @@
 }
 .Login__btn_volver:hover {
   box-shadow: 3px 0px 30px rgb(66, 65, 65);
+}
+
+.google-login {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-google-login {
+  width: 12.5rem;
+  display: flex;
+  justify-content: center;
 }
