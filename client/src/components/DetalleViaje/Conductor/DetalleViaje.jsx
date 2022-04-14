@@ -81,7 +81,7 @@ export const DetalleViajec = () => {
         <div className="card-usuario-detalle">
           <div className="card-usuario-infper-detalle">
             <div className="card-usuario-img-detalle">
-              <img src={link} alt="" />
+              <img src={viaje.usuarios[0].avatar} alt="" />
             </div>
             <div className="card-usuario-nombre-val-detalle text-xl">
               <span className="text-white my-9">

@@ -31,7 +31,6 @@ export default function Perfil() {
   const [count, setCount] = useState(0);
   const miUsuario = useSelector((state) => state.usuario);
   const comentarios = useSelector((state) => state.comentarios);
-<<<<<<< HEAD
   const viajes = useSelector((state) => state.viajes);
   const { email } = useParams();
   console.log("dni", miUsuario.dni);
@@ -40,9 +39,6 @@ export default function Perfil() {
     dispatch(getUsuarioByEmail(email));
     dispatch(getViajesTotal());
   }, [dispatch, email]);
-=======
-
->>>>>>> e9d0a9c1128672d13ca73c577376f387e3dbca26
 
   const [subiendo, setSubiendo] = useState("");
   const [imagen, setImagen] = useState("");
@@ -70,13 +66,6 @@ export default function Perfil() {
     apellido: cookieApellido,
   });
 
-<<<<<<< HEAD
-=======
-  const comentarios = useSelector((state) => state.comentarios);
-
-  const miUsuario = useSelector((state) => state.usuario);
-
->>>>>>> e9d0a9c1128672d13ca73c577376f387e3dbca26
   useEffect(() => {
     dispatch(getComentarios());
   }, [dispatch, reviews]);
@@ -99,13 +88,12 @@ export default function Perfil() {
 
   //--------------Paginado--------------------
 
-  const MisComentarios = [...miUsuario.comentarios];
 
   const [pagina, setPagina] = useState(1);
   const [comentariosPorPagina, setComentariosPorPagina] = useState(3);
   const ultimoComentario = pagina * comentariosPorPagina;
   const primerComentario = ultimoComentario - comentariosPorPagina;
-  const ComentariosTotales = MisComentarios?.slice(
+  const ComentariosTotales = miUsuario.comentarios?.slice(
     primerComentario,
     ultimoComentario
   );
