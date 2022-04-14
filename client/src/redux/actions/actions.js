@@ -57,7 +57,7 @@ export function filtroChecks(payload, asiento) {
   return async function (dispatch) {
     let viajes = await axios({
       method: "get",
-      url: `http://localhost:3001/api/viaje/filtro/${payload[0]}/${payload[1]}/${payload[2]}/${payload[3]}?asientosAOcupar=${asiento}`,
+      url: `http://localhost:3001/api/viaje/filtro/${payload[0]}/${payload[1]}/${payload[2]}/${payload[3]}?asientosAOcupar=${asiento}`
     });
     return dispatch({ type: "FILTRO_CHECKS", payload: viajes.data });
   };
@@ -83,7 +83,7 @@ export function registroUsuario(payload) {
       });
       return dispatch({
         type: "REGISTRO_USUARIO",
-        payload: nuevoUsuario,
+        payload: nuevoUsuario
       });
     } catch (error) {
       console.log(error);
@@ -133,8 +133,8 @@ export function postVehiculo(payload) {
           marca: payload.marca,
           modelo: payload.modelo,
           dni: payload.dni,
-          email: payload.email,
-        },
+          email: payload.email
+        }
       });
       return dispatch({ type: "POST_VEHICULO", payload: viaje.data });
     } catch (err) {
@@ -170,7 +170,7 @@ export function postViajeConductor(checkboxes, viaje) {
       });
       return dispatch({
         type: "POST_VIASJE_CONDUCTOR",
-        payload: conductor.data,
+        payload: conductor.data
       });
     } catch (err) {
       console.log(err);
@@ -186,8 +186,8 @@ export function mailNuevaPassword(payload) {
         url: "http://localhost:3001/api/usuario/mailnuevapassword",
         data: {
           email: payload.email,
-          nombre: payload.nombre,
-        },
+          nombre: payload.nombre
+        }
       });
       return dispatch({ type: "MAIL_PASS", payload: mail.data });
     } catch (err) {
@@ -204,12 +204,12 @@ export function mailModificarPerfil(payload) {
         url: "http://localhost:3001/api/usuario/emailmodificarperfil",
         data: {
           email: payload.email,
-          nombre: payload.nombre,
-        },
+          nombre: payload.nombre
+        }
       });
       return dispatch({
         type: "MAIL_MOD_PERFIL",
-        payload: modificarPerfil.data,
+        payload: modificarPerfil.data
       });
     } catch (err) {
       console.log(err);
@@ -229,12 +229,12 @@ export function modificacionPerfil(payload) {
           acercaDeMi: payload.acercaDeMi,
           telefono: payload.telefono,
           avatar: payload.avatar,
-          dni: payload.dni,
-        },
+          dni: payload.dni
+        }
       });
       return dispatch({
         type: "MODIFICAR_PERFIL",
-        payload: perfilModificado.data,
+        payload: perfilModificado.data
       });
     } catch (err) {
       console.log(err);
@@ -249,8 +249,8 @@ export function login(payload) {
         method: "put",
         url: "http://localhost:3001/api/usuario/logueado",
         data: {
-          email: payload,
-        },
+          email: payload
+        }
       });
       return dispatch({ type: "LOGGED", payload: logueado.data });
     } catch (err) {
@@ -266,8 +266,8 @@ export function logout(payload) {
         method: "put",
         url: "http://localhost:3001/api/usuario/deslogueado",
         data: {
-          email: payload,
-        },
+          email: payload
+        }
       });
       console.log("deslogueado");
       return dispatch({ type: "LOGGED_OUT", payload: deslogueado.data });
@@ -306,6 +306,7 @@ export function searchDestino(destino) {
 }
 
 export function getUsuarioByEmail(email) {
+  // console.log(email)
   return async function (dispatch) {
     try {
       let usuario = await axios({
