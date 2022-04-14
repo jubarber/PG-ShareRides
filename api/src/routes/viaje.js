@@ -20,7 +20,7 @@ router.post("/conductor", async (req, res, next) => {
       email,
       dni,
       nombre,
-      detalles
+      detalles,
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
@@ -38,7 +38,7 @@ router.post("/conductor", async (req, res, next) => {
         usaBarbijo,
         pagoCompartido,
         detalles,
-        status: "conductor"
+        status: "conductor",
       });
       await nuevoViaje.addUsuario(email);
       res.json(nuevoViaje);
@@ -66,7 +66,7 @@ router.post("/conductor", async (req, res, next) => {
       <h3>Buenas rutas!</h3>
       </body>
       </html>
-      `
+      `,
     };
     sgMail
       .send(message)
@@ -94,7 +94,7 @@ router.post("/pasajero", async (req, res, next) => {
       email,
       dni,
       detalles,
-      nombre
+      nombre,
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
@@ -112,10 +112,9 @@ router.post("/pasajero", async (req, res, next) => {
         usaBarbijo,
         pagoCompartido,
         detalles,
-        status: "pasajero"
+        status: "pasajero",
       });
       await nuevoViaje.addUsuario(email);
-      
     }
     const sgMail = require("@sendgrid/mail");
 
@@ -140,14 +139,14 @@ router.post("/pasajero", async (req, res, next) => {
       <h3>Buenas rutas!</h3>
       </body>
       </html>
-      `
+      `,
     };
-    
+
     sgMail
       .send(message)
       .then((r) => console.log("mail enviado"))
       .catch((err) => console.log(err.message));
-      res.json(nuevoViaje);
+    res.json(nuevoViaje);
   } catch (error) {
     next(error);
   }
@@ -177,9 +176,9 @@ router.get(
             aceptaMascota: aceptaMascota,
             aceptaEquipaje: aceptaEquipaje,
             usaBarbijo: usaBarbijo,
-            asientosAOcupar: asientosAOcupar
+            asientosAOcupar: asientosAOcupar,
           },
-          include: Usuario
+          include: Usuario,
         });
       } else {
         viajesTotal = await Viaje.findAll({
@@ -187,9 +186,9 @@ router.get(
             aceptaFumador: aceptaFumador,
             aceptaMascota: aceptaMascota,
             aceptaEquipaje: aceptaEquipaje,
-            usaBarbijo: usaBarbijo
+            usaBarbijo: usaBarbijo,
           },
-          include: Usuario
+          include: Usuario,
         });
       }
       res.send(viajesTotal);
@@ -247,4 +246,28 @@ router.get("/:viajeId", async (req, res, next) => {
   }
 });
 
+router.put("/sumarse", async (req, res, next) => {
+  const { email, id } = req.body;
+  try {
+    const viajeUsuario = await Viaje.findByPk(id, { include: Usuario });
+    await viajeUsuario.addUsuario(email);
+    res.send(viajeUsuario);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.put("/modificarViaje", async (req, res, next) => {
+  const { asientosAOcupar, id } = req.body;
+  try {
+    let asientos = await Viaje.findByPk(id);
+    asientos.update({
+      asientosAOcupar: asientosAOcupar - 1,
+    });
+    asientos.save();
+    res.send(asientos);
+  } catch (err) {
+    next(err);
+  }
+});
 module.exports = router;

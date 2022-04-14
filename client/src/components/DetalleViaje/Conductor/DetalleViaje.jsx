@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
-import { getDetalleViaje, postOrder } from "../../../redux/actions/actions";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  getDetalleViaje,
+  postOrder,
+  sumarseAlViaje,
+} from "../../../redux/actions/actions";
 import NavBar from "../../NavBar/NavBar";
 import "./DetalleViaje.css";
 import link from "../../CardViaje/Links";
@@ -15,22 +19,26 @@ import axios from "axios";
 export const DetalleViajec = () => {
   const cookies = new Cookies();
   const dispatch = useDispatch();
-  const viaje = useSelector(state => state.viajePorId);
+  const navigate = useNavigate();
+  const viaje = useSelector((state) => state.viajePorId);
   const { id } = useParams();
   const cookieMail = cookies.get("email");
-  useEffect(
-    () => {
-      dispatch(getDetalleViaje(id));
-    },
-    [id]
-  );
+
+  useEffect(() => {
+    dispatch(getDetalleViaje(id));
+  }, [id]);
   const [datosMp, setDatosMp] = useState({
     unit_price: "",
-    orderId: ""
+    orderId: "",
+  });
+
+  const [sumarse, setSumarse] = useState({
+    id: id,
+    email: cookieMail,
   });
 
   const handleColaborar = async () => {
-    await dispatch(postOrder(cookieMail)).then(data => {
+    await dispatch(postOrder(cookieMail)).then((data) => {
       setDatosMp({ ...datosMp, orderId: data?.payload[0].id });
     });
     console.log("handle colaborar", datosMp);
@@ -44,7 +52,7 @@ export const DetalleViajec = () => {
         .get(
           `http://localhost:3001/api/mercadopago/${datosMp?.orderId}/${datosMp?.unit_price}`
         )
-        .then(r => setRedirect(r.data))
+        .then((r) => setRedirect(r.data))
     );
   }
 
@@ -52,10 +60,20 @@ export const DetalleViajec = () => {
     e.preventDefault();
     setDatosMp({
       ...datosMp,
-      unit_price: parseInt(e.target.value)
+      unit_price: parseInt(e.target.value),
     });
   }
-  console.log("esto llega a card conductor", viaje)
+
+  function handleSumarse(e) {
+    e.preventDefault();
+    dispatch(sumarseAlViaje(sumarse));
+    navigate("/home");
+  }
+
+  let viajeUsuarios = viaje.usuarios?.map((e) => e.email);
+
+  let viajesTotales = viajeUsuarios?.map((e) => e.includes(cookieMail));
+
   return (
     <div className="container-detalle">
       <NavBar />
@@ -67,7 +85,11 @@ export const DetalleViajec = () => {
             </div>
             <div className="card-usuario-nombre-val-detalle text-xl">
               <span className="text-white my-9">
-                {viaje.usuarios? viaje.usuarios[0].nombre + " "+ viaje.usuarios[0].apellido: <></>}               
+                {viaje.usuarios ? (
+                  viaje.usuarios[0].nombre + " " + viaje.usuarios[0].apellido
+                ) : (
+                  <></>
+                )}
               </span>
               <span>Valoracion estrellas</span>
             </div>
@@ -81,38 +103,47 @@ export const DetalleViajec = () => {
           </div>
           <span>Detalles del viaje</span>
           <div className="card-usuario-resumen-detalle rounded-sm">
-            <span className="m-2">
-              {viaje.detalles}
-            </span>
+            <span className="m-2">{viaje.detalles}</span>
           </div>
           <div className="btn-detalle">
             <button className="detalle-mensaje">
               <Link to="/login">Enviar mensaje</Link>
             </button>
+            {viajesTotales?.includes(true) ? null : (
+              <form onSubmit={(e) => handleSumarse(e)}>
+                <input
+                  className="detalle-mensaje"
+                  type="submit"
+                  value="Sumarse al viaje"
+                ></input>
+              </form>
+            )}
           </div>
           <br />
-          {!redirect
-            ? <button
-                onClick={() => {
-                  handleColaborar();
-                }}
-                class="btn btn-success"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-              >
-                Quiero Colaborar!
-              </button>
-            : <button
-                onClick={() => {
-                  handleColaborar();
-                }}
-                class="btn btn-success"
-                disabled="disabled"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-              >
-                Quiero Colaborar!
-              </button>}
+          {!redirect ? (
+            <button
+              onClick={() => {
+                handleColaborar();
+              }}
+              class="btn btn-success"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            >
+              Quiero Colaborar!
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                handleColaborar();
+              }}
+              class="btn btn-success"
+              disabled="disabled"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            >
+              Quiero Colaborar!
+            </button>
+          )}
 
           <div
             class="modal fade"
@@ -141,11 +172,11 @@ export const DetalleViajec = () => {
                     placeholder="Monto a cobrar"
                     name="unit_price"
                     value={datosMp.unit_price}
-                    onChange={e => handleChange(e)}
+                    onChange={(e) => handleChange(e)}
                   />
                 </div>
                 <div class="modal-footer">
-                  <form onSubmit={e => handleSubmit(e)}>
+                  <form onSubmit={(e) => handleSubmit(e)}>
                     <button
                       type="submit"
                       class="btn btn-primary"
@@ -159,7 +190,7 @@ export const DetalleViajec = () => {
             </div>
           </div>
           <br />
-          {redirect !== "" &&
+          {redirect !== "" && (
             <a href={`${redirect}`}>
               <input
                 class="btn btn-success"
@@ -167,7 +198,8 @@ export const DetalleViajec = () => {
                 value="Continuar a MercadoPago"
                 name="Continuar a MercadoPago"
               />
-            </a>}
+            </a>
+          )}
         </div>
         <div className="card-viaje-detalle text-xl">
           <div className="flex flex-col justify-evenly w-full ml-4">
@@ -192,11 +224,13 @@ export const DetalleViajec = () => {
             <span>
               Cantidad de asientos disponibles:{" "}
               <span
-                className={`font-bold text-2xl ${viaje.asientosAOcupar > 3
-                  ? "text-sky-600"
-                  : viaje.asientosAOcupar < 1
+                className={`font-bold text-2xl ${
+                  viaje.asientosAOcupar > 3
+                    ? "text-sky-600"
+                    : viaje.asientosAOcupar < 1
                     ? "text-amber-500"
-                    : "text-orange-700"}`}
+                    : "text-orange-700"
+                }`}
               >
                 {viaje.asientosAOcupar}
               </span>

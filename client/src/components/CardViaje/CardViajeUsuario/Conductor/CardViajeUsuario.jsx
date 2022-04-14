@@ -6,7 +6,7 @@ import { MdSmokeFree, MdSmokingRooms, MdMasks, MdPets } from "react-icons/md";
 import { FaSuitcaseRolling } from "react-icons/fa";
 import { ImStarEmpty, ImStarHalf, ImStarFull } from "react-icons/im";
 import link from "../../Links";
-import {RiSteering2Fill} from "react-icons/ri"
+import { RiSteering2Fill } from "react-icons/ri";
 
 export default function Card({
   origen,
@@ -23,20 +23,23 @@ export default function Card({
   apellido,
   id,
   avatar,
-  status
+  status,
+  email,
 }) {
   //get de usuario (nombre, apellido y valoracion). foto usuario. Provincias/localidades como llegan y si se puede mostras cada una independiente de la otra. Iniciar sesion con aut 0 y con las cuquis trabajar con la info.
   return (
     <div className="container-cardviaje">
       <div id="nueva-clase">
         <div class="parent">
-        <RiSteering2Fill className="steering"/>
+          <RiSteering2Fill className="steering" />
           <div class="div1">
             <img src={avatar} alt="" />
             <div className="info-personal-card">
-              <span>
-                {nombre + " "} {apellido}
-              </span>
+              <Link to={`/perfil/${email}`}>
+                <span>
+                  {nombre + " "} {apellido}
+                </span>
+              </Link>
               <div className="puntuacion">
                 <ImStarFull className="black" />
                 <ImStarFull className="black" />
