@@ -33,7 +33,7 @@ export default function Perfil() {
   const miUsuario = useSelector((state) => state.usuario);
   const comentarios = useSelector((state) => state.comentarios);
 
-
+  console.log("esto es la foto", avatar)
   const [usuario, setUsuario] = useState({
     nombre: "",
     apellido: "",

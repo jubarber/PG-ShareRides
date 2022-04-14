@@ -22,8 +22,10 @@ export default function Card({
   nombre,
   apellido,
   id,
+  avatar,
   status
 }) {
+  console.log("esto llega como avatar:",avatar)
   //get de usuario (nombre, apellido y valoracion). foto usuario. Provincias/localidades como llegan y si se puede mostras cada una independiente de la otra. Iniciar sesion con aut 0 y con las cuquis trabajar con la info.
   return (
     <div className="container-cardviaje">
@@ -31,7 +33,7 @@ export default function Card({
         <div class="parent">
         <BsPersonFill className="person"/>
           <div class="div1">
-            <img src={link} alt="" />
+            <img src={avatar} alt="" />
             <div className="info-personal-card">
               <span>
                 {nombre + " "} {apellido}

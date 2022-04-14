@@ -22,6 +22,7 @@ export default function Card({
   nombre,
   apellido,
   id,
+  avatar,
   status
 }) {
   //get de usuario (nombre, apellido y valoracion). foto usuario. Provincias/localidades como llegan y si se puede mostras cada una independiente de la otra. Iniciar sesion con aut 0 y con las cuquis trabajar con la info.
@@ -31,7 +32,7 @@ export default function Card({
         <div class="parent">
         <RiSteering2Fill className="steering"/>
           <div class="div1">
-            <img src={link} alt="" />
+            <img src={avatar} alt="" />
             <div className="info-personal-card">
               <span>
                 {nombre + " "} {apellido}
