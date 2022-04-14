@@ -412,19 +412,6 @@ export function getColaboracion(email) {
   };
 }
 
-export function postOrder(usuarioId) {
-  return async function (dispatch) {
-    try {
-      const localidades = await axios.get(
-        "http://localhost:3001/api/localidad/localidades"
-      );
-      return dispatch({ type: "GET_LOCALIDADES", payload: localidades.data });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-}
-
 export function sumarseAlViaje(payload) {
   console.log("sumarse", payload);
   return async function (dispatch) {

@@ -83,7 +83,7 @@ export const DetalleViajep = () => {
         <div className="card-usuario-detalle">
           <div className="card-usuario-infper-detalle">
             <div className="card-usuario-img-detalle">
-              <img src={viaje.usuarios[0].avatar} alt="" />
+              <img src={viaje.usuarios?viaje.usuarios[0].avatar:null} alt="" />
             </div>
             <div className="card-usuario-nombre-val-detalle text-xl">
               <span className="text-white my-9">

@@ -12,7 +12,6 @@ import NavBar from "../NavBar/NavBar";
 import "./FormPasajero.css";
 import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
-import ReactSelect from "react-select";
 
 export default function FormPasajero() {
   const cookies = new Cookies();

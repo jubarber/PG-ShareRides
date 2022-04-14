@@ -88,13 +88,12 @@ export default function Perfil() {
 
   //--------------Paginado--------------------
 
-  const MisComentarios = [...miUsuario.comentarios];
 
   const [pagina, setPagina] = useState(1);
   const [comentariosPorPagina, setComentariosPorPagina] = useState(3);
   const ultimoComentario = pagina * comentariosPorPagina;
   const primerComentario = ultimoComentario - comentariosPorPagina;
-  const ComentariosTotales = MisComentarios?.slice(
+  const ComentariosTotales = miUsuario.comentarios?.slice(
     primerComentario,
     ultimoComentario
   );
