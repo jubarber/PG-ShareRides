@@ -16,10 +16,7 @@ import { VscLocation } from "react-icons/vsc";
 import fondo from "../../../assets/fondo perfil.jpg";
 import Cookies from "universal-cookie";
 import axios from "axios";
-<<<<<<< HEAD
-=======
 import { ImStarEmpty, ImStarFull } from "react-icons/im";
->>>>>>> develop
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
