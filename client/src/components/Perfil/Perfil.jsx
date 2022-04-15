@@ -20,6 +20,8 @@ import Rating from "@mui/material/Rating";
 import PaginacionComentarios from "./PaginacionComentarios";
 import axios from "axios";
 
+
+
 export default function Perfil() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -101,7 +103,7 @@ export default function Perfil() {
   const paginacion = (pageNum) => {
     setPagina(pageNum);
   };
-
+  
   //-----------------------------------
 
   const handleChange = (e) => {
