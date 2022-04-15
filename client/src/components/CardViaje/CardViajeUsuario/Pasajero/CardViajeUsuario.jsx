@@ -25,6 +25,7 @@ export default function Card({
   id,
   status,
   email,
+  puntuacion,
   avatar,
 }) {
   console.log("esto llega como avatar:", avatar);
@@ -43,11 +44,50 @@ export default function Card({
                 </span>
               </Link>
               <div className="puntuacion">
-                <ImStarFull className="black" />
-                <ImStarFull className="black" />
-                <ImStarFull className="black " />
-                <ImStarHalf className="black" />
-                <ImStarEmpty className="black" />
+                {puntuacion === 5 ? (
+                  <>
+                    <ImStarFull className="black" />
+                    <ImStarFull className="black" />
+                    <ImStarFull className="black " />
+                    <ImStarFull className="black" />
+                    <ImStarFull className="black " />
+                  </>
+                ) : puntuacion === 4 ? (
+                  <>
+                    {" "}
+                    <ImStarFull className="black" />
+                    <ImStarFull className="black " />
+                    <ImStarFull className="black" />
+                    <ImStarFull className="black " />
+                    <ImStarEmpty className="black" />
+                  </>
+                ) : puntuacion === 3 ? (
+                  <>
+                    <ImStarFull className="black " />
+                    <ImStarFull className="black" />
+                    <ImStarFull className="black " />
+                    <ImStarEmpty className="black" />
+                    <ImStarEmpty className="black" />
+                  </>
+                ) : puntuacion === 2 ? (
+                  <>
+                    <ImStarFull className="black" />
+                    <ImStarFull className="black " />
+                    <ImStarEmpty className="black" />
+                    <ImStarEmpty className="black" />
+                    <ImStarEmpty className="black" />
+                  </>
+                ) : puntuacion === 1 ? (
+                  <>
+                    <ImStarFull className="black " />
+                    <ImStarEmpty className="black" />
+                    <ImStarEmpty className="black" />
+                    <ImStarEmpty className="black" />
+                    <ImStarEmpty className="black" />
+                  </>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
           </div>

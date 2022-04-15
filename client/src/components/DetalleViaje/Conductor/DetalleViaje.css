@@ -87,3 +87,7 @@
   background-color: white;
   color: #3ce84f;
 }
+.puntuacion {
+  display: flex;
+  justify-content: center;
+}
