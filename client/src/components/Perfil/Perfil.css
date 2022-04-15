@@ -29,6 +29,16 @@
   padding-bottom: 0.5rem;
 }
 
+.bio-perfil label {
+  height: 10rem;
+  width: 17rem;
+  text-align: center;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
 .bio-perfil h1 {
   margin-bottom: 1rem;
 }
@@ -95,12 +105,22 @@
   border: 1px solid white;
   border-radius: 10px;
   padding: 0.5em;
+  height: 3rem;
 }
 
 .input-perfil {
   border: 1px solid black;
   border-radius: 10px;
   padding-left: 1rem;
+  width: 13rem;
+}
+
+.contenedor-input label {
+  border: 1px solid black;
+  border-radius: 10px;
+  padding-left: 1rem;
+  width: 13rem;
+  height: 1.9rem;
 }
 
 .btn-modificacion-perfil {
@@ -143,7 +163,7 @@
 }
 
 /* -------------------------------------- COMENTARIOS ------------------------------------ */
-
+/*-------Crear Comentarios -----------*/
 .resenas {
   display: flex;
   flex-direction: row;
@@ -151,11 +171,84 @@
   height: 26rem;
   border-radius: 20px;
   margin-bottom: 3em;
+  justify-content: space-around;
 }
 
-.resenas form {
+.resenas .form {
   width: 25rem;
+  display: flex;
 }
+
+.comentarios {
+  width: 20rem;
+  height: 26rem;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  border-radius: 20px;
+  background-color: #fdf4ff;
+  margin-right: 8em;
+  box-shadow: 0.5em 0.5em 0.5em 0 black;
+  margin-left: 3em;
+}
+
+.comentarios h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.comentarios-card {
+  width: 100%;
+  margin-top: 1em;
+  margin-bottom: 2em;
+  display: flex;
+  justify-content: center;
+}
+
+.comentarios-card input {
+  width: 3rem;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding-left: 1.2rem;
+  margin-left: 1em;
+  word-wrap: break-word;
+}
+
+.comentario {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.comentario p {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  margin-right: 3rem;
+}
+
+.comentario label {
+  margin-bottom: 1rem;
+}
+
+.comentario textarea {
+  height: 10rem;
+  width: 17rem;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 0.8rem;
+}
+
+.comentarios Button {
+  display: flex;
+  justify-content: center;
+  margin-top: 1em;
+}
+
+/*----------------- Muestra de comentarios---------------------------- */
 
 .resenas-card {
   width: 18rem;
@@ -234,79 +327,29 @@
   background-color: #555;
 }
 
+.dia {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.tableroComentarios {
+  display: flex;
+  flex-direction: column;
+  height: 35rem;
+}
+
+.contenedor-comentarios {
+  display: flex;
+  height: 26rem;
+}
 .pag {
   display: flex;
-  flex-direction: column;
-  margin-left: 20em;
-}
-
-.comentarios {
-  width: 20rem;
-  height: 26rem;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid black;
-  border-radius: 20px;
-  background-color: #fdf4ff;
-  margin-right: 8em;
-  box-shadow: 0.5em 0.5em 0.5em 0 black;
-  margin-left: 3em;
-}
-
-.comentarios h1 {
-  font-size: 2rem;
-  font-weight: bold;
-  display: flex;
+  flex-direction: row;
+  margin-top: 3em;
   justify-content: center;
-  margin-top: 1rem;
-}
-
-.comentarios-card {
-  width: 100%;
-  margin-top: 1em;
-  margin-bottom: 2em;
-  display: flex;
-  justify-content: center;
-}
-
-.comentarios-card input {
-  width: 3rem;
-  border: 1px solid black;
-  border-radius: 10px;
-  padding-left: 1.2rem;
-  margin-left: 1em;
-  word-wrap: break-word;
-}
-
-.comentario {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.comentario p {
-  display: flex;
-  width: 100%;
-  justify-content: flex-end;
-  margin-right: 3rem;
-}
-
-.comentario label {
-  margin-bottom: 1rem;
-}
-
-.comentario textarea {
-  height: 10rem;
-  width: 17rem;
-  border: 1px solid black;
-  border-radius: 20px;
-  padding: 0.8rem;
-}
-
-.comentarios Button {
-  display: flex;
-  justify-content: center;
-  margin-top: 1em;
 }
 
 .wallpaper {

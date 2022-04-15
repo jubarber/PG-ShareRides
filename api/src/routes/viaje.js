@@ -19,7 +19,8 @@ router.post("/conductor", async (req, res, next) => {
       aceptaEquipaje,
       email,
       dni,
-      nombre
+      nombre,
+      detalles,
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
@@ -36,40 +37,41 @@ router.post("/conductor", async (req, res, next) => {
         aceptaEquipaje,
         usaBarbijo,
         pagoCompartido,
-        status: "conductor"
+        detalles,
+        status: "conductor",
       });
       await nuevoViaje.addUsuario(email);
       res.json(nuevoViaje);
     }
-    // const sgMail = require("@sendgrid/mail");
+    const sgMail = require("@sendgrid/mail");
 
-    // sgMail.setApiKey(API_KEY);
+    sgMail.setApiKey(API_KEY);
 
-    // const message = {
-    //   to: email,
-    //   from: "pgsharerides@gmail.com",
+    const message = {
+      to: email,
+      from: "pgsharerides@gmail.com",
 
-    //   subject: "Viaje creado",
-    //   html: `<html>
-    //   <head>
-    //   <h2>
-    //   Hola ${nombre}! 
-    //   </h2>
-    //   </head>
-    //   <body>
-    //   <h4>
-    //   Te agradecemos por crear tu viaje. Esperamos que tengas una buena experiencia. 
-    //   Recorda, que vas a tener la posibilidad de hacer una reseña sobre tu conductore/pasajere.
-    //   </h4>
-    //   <h3>Buenas rutas!</h3>
-    //   </body>
-    //   </html>
-    //   `
-    // };
-    // sgMail
-    //   .send(message)
-    //   .then((r) => console.log("mail enviado"))
-    //   .catch((err) => console.log(err.message));
+      subject: "Viaje creado",
+      html: `<html>
+      <head>
+      <h2>
+      Hola ${nombre}! 
+      </h2>
+      </head>
+      <body>
+      <h4>
+      Te agradecemos por crear tu viaje. Esperamos que tengas una buena experiencia. 
+      Recorda, que vas a tener la posibilidad de hacer una reseña sobre tu conductore/pasajere.
+      </h4>
+      <h3>Buenas rutas!</h3>
+      </body>
+      </html>
+      `,
+    };
+    sgMail
+      .send(message)
+      .then((r) => console.log("mail enviado"))
+      .catch((err) => console.log(err.message));
   } catch (error) {
     next(error);
   }
@@ -91,7 +93,8 @@ router.post("/pasajero", async (req, res, next) => {
       aceptaEquipaje,
       email,
       dni,
-      nombre
+      detalles,
+      nombre,
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
@@ -108,40 +111,42 @@ router.post("/pasajero", async (req, res, next) => {
         aceptaEquipaje,
         usaBarbijo,
         pagoCompartido,
-        status: "pasajero"
+        detalles,
+        status: "pasajero",
       });
       await nuevoViaje.addUsuario(email);
-      res.json(nuevoViaje);
     }
-    // const sgMail = require("@sendgrid/mail");
+    const sgMail = require("@sendgrid/mail");
 
-    // sgMail.setApiKey(API_KEY);
+    sgMail.setApiKey(API_KEY);
 
-    // const message = {
-    //   to: email,
-    //   from: "pgsharerides@gmail.com",
+    const message = {
+      to: email,
+      from: "pgsharerides@gmail.com",
 
-    //   subject: "Viaje creado",
-    //   html: `<html>
-    //   <head>
-    //   <h2>
-    //   Hola ${nombre}! 
-    //   </h2>
-    //   </head>
-    //   <body>
-    //   <h4>
-    //   Te agradecemos por crear tu viaje. Esperamos que tengas una buena experiencia. 
-    //   Recorda, que vas a tener la posibilidad de hacer una reseña sobre tu conductore/pasajere.
-    //   </h4>
-    //   <h3>Buenas rutas!</h3>
-    //   </body>
-    //   </html>
-    //   `
-    // };
-    // sgMail
-    //   .send(message)
-    //   .then((r) => console.log("mail enviado"))
-    //   .catch((err) => console.log(err.message));
+      subject: "Viaje creado",
+      html: `<html>
+      <head>
+      <h2>
+      Hola ${nombre}! 
+      </h2>
+      </head>
+      <body>
+      <h4>
+      Te agradecemos por crear tu viaje. Esperamos que tengas una buena experiencia. 
+      Recorda, que vas a tener la posibilidad de hacer una reseña sobre tu conductore/pasajere.
+      </h4>
+      <h3>Buenas rutas!</h3>
+      </body>
+      </html>
+      `,
+    };
+
+    sgMail
+      .send(message)
+      .then((r) => console.log("mail enviado"))
+      .catch((err) => console.log(err.message));
+    res.json(nuevoViaje);
   } catch (error) {
     next(error);
   }
@@ -171,9 +176,9 @@ router.get(
             aceptaMascota: aceptaMascota,
             aceptaEquipaje: aceptaEquipaje,
             usaBarbijo: usaBarbijo,
-            asientosAOcupar: asientosAOcupar
+            asientosAOcupar: asientosAOcupar,
           },
-          include: Usuario
+          include: Usuario,
         });
       } else {
         viajesTotal = await Viaje.findAll({
@@ -181,9 +186,9 @@ router.get(
             aceptaFumador: aceptaFumador,
             aceptaMascota: aceptaMascota,
             aceptaEquipaje: aceptaEquipaje,
-            usaBarbijo: usaBarbijo
+            usaBarbijo: usaBarbijo,
           },
-          include: Usuario
+          include: Usuario,
         });
       }
       res.send(viajesTotal);
@@ -241,4 +246,28 @@ router.get("/:viajeId", async (req, res, next) => {
   }
 });
 
+router.put("/sumarse", async (req, res, next) => {
+  const { email, id } = req.body;
+  try {
+    const viajeUsuario = await Viaje.findByPk(id, { include: Usuario });
+    await viajeUsuario.addUsuario(email);
+    res.send(viajeUsuario);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.put("/modificarViaje", async (req, res, next) => {
+  const { asientosAOcupar, id } = req.body;
+  try {
+    let asientos = await Viaje.findByPk(id);
+    asientos.update({
+      asientosAOcupar: asientosAOcupar - 1,
+    });
+    asientos.save();
+    res.send(asientos);
+  } catch (err) {
+    next(err);
+  }
+});
 module.exports = router;

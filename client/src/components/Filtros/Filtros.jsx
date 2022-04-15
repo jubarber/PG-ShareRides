@@ -40,9 +40,7 @@ export function Filtros() {
     dispatch(getViajesTotal());
   }, [dispatch]);
 
-  useEffect(() => {
-    console.log("viajes filtrados", viajesFiltrados);
-  }, [viajesTotal, viajesFiltrados]);
+  useEffect(() => {}, [viajesTotal, viajesFiltrados]);
 
   const handleOnChange = (position) => {
     const updatedCheckedState = isChecked.map((item, index) =>

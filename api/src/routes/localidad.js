@@ -17,7 +17,7 @@ router.get("/localidades", async (req, res, next) => {
       let apiLocalidades;
       if (localidadesDb.length === 0) {
         const apiUrl = await axios.get(
-          "https://apis.datos.gob.ar/georef/api/localidades?aplanar=true&campos=estandar&max=5000&formato=json"
+          "https://apis.datos.gob.ar/georef/api/localidades?aplanar=true&campos=estandar&max=1500&formato=json"
         );
         if (apiUrl) {
           apiLocalidades = apiUrl.data.localidades.map((e) => {
@@ -48,7 +48,6 @@ router.get("/localidades", async (req, res, next) => {
   }
 });
 
-
-// 
+//
 
 module.exports = router;
