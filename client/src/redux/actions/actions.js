@@ -362,13 +362,13 @@ export function filterPerCard(payload) {
   };
 }
 
-export function postOrder(usuarioId) {
+export function postOrder(usuarioPagador) {
   return async function (dispatch) {
     try {
       const newOrder = await axios({
         method: "post",
         url: "http://localhost:3001/api/order",
-        data: { usuarioId: usuarioId },
+        data: { usuarioPagador: usuarioPagador },
       });
       return dispatch({
         type: "NEW_ORDER",
@@ -390,7 +390,7 @@ export function postColaboracion(input) {
           title: input.title,
           unit_price: input.unit_price,
           quantity: input.quantity,
-          usuarioId: input.usuarioId,
+          usuarioPagador: input.usuarioPagador,
           orderId: input.orderId,
         },
       });

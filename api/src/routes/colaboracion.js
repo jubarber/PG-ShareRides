@@ -3,12 +3,12 @@ const { Colaboracion } = require("../db.js");
 
 router.post("/nuevaColaboracion", async (req, res, next) => {
   try {
-    const { unit_price, usuarioId, title, quantity, orderId } = req.body;
+    const { unit_price, usuarioPagador, title, quantity, orderId } = req.body;
     let nuevaColaboracion;
-    if (orderId && quantity && title && usuarioId && unit_price) {
+    if (orderId && quantity && title && usuarioPagador && unit_price) {
       nuevaColaboracion = await Colaboracion?.create({
         unit_price: parseInt(unit_price),
-        usuarioId: usuarioId,
+        usuarioPagador: usuarioPagador,
         title: title,
         quantity: quantity,
         orderId: orderId
@@ -35,7 +35,7 @@ router.get("/usuario/:email", async (req, res, next) => {
   try {
     const { email } = req.params;
     const colaboracion = await Colaboracion?.findOne({
-      where: { usuarioId: email, abonado: false }
+      where: { usuarioPagador: email, abonado: false }
     });
     if (colaboracion) res.send(colaboracion);
     else res.send("no hay colaboracion");
