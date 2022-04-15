@@ -35,12 +35,13 @@ export default function Perfil() {
   const comentarios = useSelector((state) => state.comentarios);
   const viajes = useSelector((state) => state.viajes);
   const { email } = useParams();
-
-  useEffect(()=>{
-    if(email){
-  dispatch(getUsuarioByEmail(email))
+  useEffect(() => {
+    if (email) {
+      dispatch(getUsuarioByEmail(email));
     }
-  }, [email])
+    dispatch(getViajesTotal());
+  }, [email]);
+
 
   const [subiendo, setSubiendo] = useState("");
   const [imagen, setImagen] = useState("");
@@ -70,7 +71,7 @@ export default function Perfil() {
 
   useEffect(() => {
     dispatch(getComentarios());
-  }, [dispatch, reviews]);
+  }, [reviews]);
 
   //-----------------------Inputs--------------------------
 
@@ -332,7 +333,7 @@ export default function Perfil() {
               ComentariosTotales.map((e) => (
                 <div className="resenas-card">
                   <div className="encabezado">
-                    <img src={e.avatar} alt="" />
+                    <img src={e.avatar ? e.avatar : user} alt="" />
                     <h1>
                       {e.nombre} {e.apellido}
                     </h1>

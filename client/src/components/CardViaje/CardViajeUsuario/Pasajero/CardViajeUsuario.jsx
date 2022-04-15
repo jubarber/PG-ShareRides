@@ -7,6 +7,7 @@ import { FaSuitcaseRolling } from "react-icons/fa";
 import { ImStarEmpty, ImStarHalf, ImStarFull } from "react-icons/im";
 import { BsPersonFill } from "react-icons/bs";
 import link from "../../Links";
+import user from "../../../../assets/user.png";
 
 export default function Card({
   origen,
@@ -22,10 +23,10 @@ export default function Card({
   nombre,
   apellido,
   id,
-  avatar,
   status,
   email,
   puntuacion,
+  avatar,
 }) {
   console.log("esto llega como avatar:", avatar);
   //get de usuario (nombre, apellido y valoracion). foto usuario. Provincias/localidades como llegan y si se puede mostras cada una independiente de la otra. Iniciar sesion con aut 0 y con las cuquis trabajar con la info.
@@ -35,7 +36,7 @@ export default function Card({
         <div class="parent">
           <BsPersonFill className="person" />
           <div class="div1">
-            <img src={avatar} alt="" />
+            <img src={avatar ? avatar : user} alt="" />
             <div className="info-personal-card">
               <Link to={`/perfil/${email}`}>
                 <span>
@@ -105,9 +106,9 @@ export default function Card({
               <i>{asientosAOcupar + " "}Lugares Requeridos</i>
             ) : asientosAOcupar === 1 ? (
               <i>{asientosAOcupar + " "}Lugar Requerido</i>
-            ) : (
-              <></>
-            )}
+            ) : asientosAOcupar === 0 ? (
+              <i>Viaje Completo</i>
+            ) : null}
           </div>
           <div class="div3">
             {aceptaMascota ? <MdPets /> : <></>}

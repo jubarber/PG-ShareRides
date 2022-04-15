@@ -5,6 +5,7 @@ import {
   getDetalleViaje,
   postOrder,
   sumarseAlViaje,
+  modificarViaje,
 } from "../../../redux/actions/actions";
 import NavBar from "../../NavBar/NavBar";
 import "./DetalleViaje.css";
@@ -16,6 +17,13 @@ import fondo from "../../../assets/fondo perfil.jpg";
 import Cookies from "universal-cookie";
 import axios from "axios";
 import { ImStarEmpty, ImStarFull } from "react-icons/im";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import { FaUserCircle } from "react-icons/fa";
+
+import IconButton from "@mui/material/IconButton";
+import swal from "sweetalert";
 
 export const DetalleViajec = () => {
   const cookies = new Cookies();
@@ -68,12 +76,21 @@ export const DetalleViajec = () => {
   function handleSumarse(e) {
     e.preventDefault();
     dispatch(sumarseAlViaje(sumarse));
-    navigate("/home");
+    dispatch(modificarViaje(viaje));
+    swal({
+      title: "Te has sumado al viaje correctamente!",
+      icon: "success",
+      button: "Bienvenidx!",
+    }).then(() => {
+      navigate("/home");
+    });
   }
 
   let viajeUsuarios = viaje.usuarios?.map((e) => e.email);
 
   let viajesTotales = viajeUsuarios?.map((e) => e.includes(cookieMail));
+
+  let arrayPasajeres = viaje.usuarios?.map((e) => e);
 
   return (
     <div className="container-detalle">
@@ -288,6 +305,30 @@ export const DetalleViajec = () => {
               >
                 {viaje.asientosAOcupar}
               </span>
+            </span>
+            <span>
+              <List
+                sx={{
+                  width: "100%",
+                  maxWidth: 360,
+                }}
+              >
+                {arrayPasajeres?.map((e) => (
+                  <ListItem
+                    key={e.email}
+                    disableGutters
+                    secondaryAction={
+                      <IconButton>
+                        <Link to={`/perfil/${e.email}`}>
+                          <FaUserCircle />
+                        </Link>
+                      </IconButton>
+                    }
+                  >
+                    <ListItemText primary={`🔴 ${e.nombre} ${e.apellido}`} />
+                  </ListItem>
+                ))}
+              </List>
             </span>
             <span>
               Medios de pago:{" "}
