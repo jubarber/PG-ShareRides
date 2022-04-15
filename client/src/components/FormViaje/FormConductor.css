@@ -184,7 +184,7 @@
 
 .Conductore__mycheckbox {
   font-size: 20px;
-  color: white;
+  /* color: white; */
   margin-top: 3rem;
 }
 .Conductore__mycheckbox input:checked ~ span::after {
