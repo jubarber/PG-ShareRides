@@ -16,7 +16,6 @@ export default function FormPasajero() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const [isChecked, setIsChecked] = useState(new Array(5).fill(false));
   const [errors, setErrors] = useState({});
   const cookieMail = cookies.get("email");
@@ -33,7 +32,7 @@ export default function FormPasajero() {
     detalles: "",
   });
   const expresiones = {
-    fecha: /^.{4,18}$/,
+    // fecha: /^.{4,18}$/,
     hora: /^.{4,12}$/,
     asiento: /^.{1,7}$/,
     origen: /^[a-zA-ZÀ-ÿ\s]{4,30}$/,
@@ -176,11 +175,12 @@ export default function FormPasajero() {
                 dateFormat="dd-MM-yyyy"
                 selected={viaje.fecha}
                 minDate={new Date()}
-                onChange={nuevaFecha =>
+                onChange={(nuevaFecha) =>
                   setViaje({
                     ...viaje,
-                    fecha: nuevaFecha
-                  })}
+                    fecha: nuevaFecha,
+                  })
+                }
               />
               {errors.fecha && (
                 <span className="Conductore__error">{errors.fecha}</span>

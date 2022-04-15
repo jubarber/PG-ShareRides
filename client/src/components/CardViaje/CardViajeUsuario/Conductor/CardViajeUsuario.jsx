@@ -4,7 +4,7 @@ import "./CardViajeUsuario.css";
 import { VscLocation } from "react-icons/vsc";
 import { MdSmokeFree, MdSmokingRooms, MdMasks, MdPets } from "react-icons/md";
 import { FaSuitcaseRolling } from "react-icons/fa";
-import { ImStarEmpty, ImStarHalf, ImStarFull } from "react-icons/im";
+import { ImStarEmpty, ImStarFull } from "react-icons/im";
 import link from "../../Links";
 import { RiSteering2Fill } from "react-icons/ri";
 import user from "../../../../assets/user.png";
@@ -25,6 +25,7 @@ export default function Card({
   id,
   status,
   email,
+  puntuacion,
   avatar,
 }) {
   //get de usuario (nombre, apellido y valoracion). foto usuario. Provincias/localidades como llegan y si se puede mostras cada una independiente de la otra. Iniciar sesion con aut 0 y con las cuquis trabajar con la info.
@@ -42,11 +43,50 @@ export default function Card({
                 </span>
               </Link>
               <div className="puntuacion">
-                <ImStarFull className="black" />
-                <ImStarFull className="black" />
-                <ImStarFull className="black " />
-                <ImStarHalf className="black" />
-                <ImStarEmpty className="black" />
+                {puntuacion === 5 ? (
+                  <>
+                    <ImStarFull className="black" />
+                    <ImStarFull className="black" />
+                    <ImStarFull className="black " />
+                    <ImStarFull className="black" />
+                    <ImStarFull className="black " />
+                  </>
+                ) : puntuacion === 4 ? (
+                  <>
+                    {" "}
+                    <ImStarFull className="black" />
+                    <ImStarFull className="black " />
+                    <ImStarFull className="black" />
+                    <ImStarFull className="black " />
+                    <ImStarEmpty className="black" />
+                  </>
+                ) : puntuacion === 3 ? (
+                  <>
+                    <ImStarFull className="black " />
+                    <ImStarFull className="black" />
+                    <ImStarFull className="black " />
+                    <ImStarEmpty className="black" />
+                    <ImStarEmpty className="black" />
+                  </>
+                ) : puntuacion === 2 ? (
+                  <>
+                    <ImStarFull className="black" />
+                    <ImStarFull className="black " />
+                    <ImStarEmpty className="black" />
+                    <ImStarEmpty className="black" />
+                    <ImStarEmpty className="black" />
+                  </>
+                ) : puntuacion === 1 ? (
+                  <>
+                    <ImStarFull className="black " />
+                    <ImStarEmpty className="black" />
+                    <ImStarEmpty className="black" />
+                    <ImStarEmpty className="black" />
+                    <ImStarEmpty className="black" />
+                  </>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
           </div>

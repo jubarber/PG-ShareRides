@@ -80,6 +80,7 @@ export default function Home() {
             </label>
           </div>
           <div className="container-cards">
+            {console.log("esto es viajes", viajes)}
             {viajes.map(
               (e) =>
                 e && (
@@ -100,7 +101,9 @@ export default function Home() {
                           detalles={e.detalles}
                           key={e.id}
                           id={e.id}
-                          avatar={e.usuarios.length > 0 ? e.usuarios[0].avatar : <></>}
+                          avatar={
+                            e.usuarios.length > 0 ? e.usuarios[0].avatar : <></>
+                          }
                           nombre={
                             e.usuarios.length > 0 ? e.usuarios[0].nombre : <></>
                           }
@@ -113,6 +116,13 @@ export default function Home() {
                           }
                           email={
                             e.usuarios.length > 0 ? e.usuarios[0].email : <></>
+                          }
+                          puntuacion={
+                            e.usuarios.length > 0 ? (
+                              e.usuarios[0].puntuacion
+                            ) : (
+                              <></>
+                            )
                           }
                         />
                       </Link>
@@ -131,7 +141,9 @@ export default function Home() {
                           viajeDisponible={e.viajeDisponible}
                           key={e.id}
                           id={e.id}
-                          avatar={e.usuarios.length > 0 ? e.usuarios[0].avatar : <></>}
+                          avatar={
+                            e.usuarios.length > 0 ? e.usuarios[0].avatar : <></>
+                          }
                           nombre={
                             e.usuarios.length > 0 ? e.usuarios[0].nombre : <></>
                           }
@@ -144,6 +156,13 @@ export default function Home() {
                           }
                           email={
                             e.usuarios.length > 0 ? e.usuarios[0].email : <></>
+                          }
+                          puntuacion={
+                            e.usuarios.length > 0 ? (
+                              e.usuarios[0].puntuacion
+                            ) : (
+                              <></>
+                            )
                           }
                         />
                       </Link>
