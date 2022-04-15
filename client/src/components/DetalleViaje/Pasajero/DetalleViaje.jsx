@@ -17,6 +17,10 @@ import fondo from "../../../assets/fondo perfil.jpg";
 import NavBar from "../../NavBar/NavBar";
 import Cookies from "universal-cookie";
 import axios from "axios";
+<<<<<<< HEAD
+=======
+import { ImStarEmpty, ImStarFull } from "react-icons/im";
+>>>>>>> develop
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -116,14 +120,64 @@ export const DetalleViajep = () => {
                   <></>
                 )}
               </span>
-              <span>Valoracion estrellas</span>
+              <span>
+                <div className="puntuacion">
+                  {viaje.usuarios ? (
+                    viaje.usuarios[0].puntuacion === 5 ? (
+                      <>
+                        <ImStarFull className="black" />
+                        <ImStarFull className="black" />
+                        <ImStarFull className="black " />
+                        <ImStarFull className="black" />
+                        <ImStarFull className="black " />
+                      </>
+                    ) : viaje.usuarios[0].puntuacion === 4 ? (
+                      <>
+                        {" "}
+                        <ImStarFull className="black" />
+                        <ImStarFull className="black " />
+                        <ImStarFull className="black" />
+                        <ImStarFull className="black " />
+                        <ImStarEmpty className="black" />
+                      </>
+                    ) : viaje.usuarios[0].puntuacion === 3 ? (
+                      <>
+                        <ImStarFull className="black " />
+                        <ImStarFull className="black" />
+                        <ImStarFull className="black " />
+                        <ImStarEmpty className="black" />
+                        <ImStarEmpty className="black" />
+                      </>
+                    ) : viaje.usuarios[0].puntuacion === 2 ? (
+                      <>
+                        <ImStarFull className="black" />
+                        <ImStarFull className="black " />
+                        <ImStarEmpty className="black" />
+                        <ImStarEmpty className="black" />
+                        <ImStarEmpty className="black" />
+                      </>
+                    ) : viaje.usuarios[0].puntuacion === 1 ? (
+                      <>
+                        <ImStarFull className="black " />
+                        <ImStarEmpty className="black" />
+                        <ImStarEmpty className="black" />
+                        <ImStarEmpty className="black" />
+                        <ImStarEmpty className="black" />
+                      </>
+                    ) : (
+                      <></>
+                    )
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              </span>
             </div>
           </div>
           <span className="ml-4 text-xl">Acerca de mi</span>
           <div className="card-usuario-resumen-detalle rounded-sm">
             <span className="m-2">
-              Trabajo en un local, que queda en rosario y necesito viajar
-              seguido a funes
+              {viaje.usuarios ? viaje.usuarios[0].acercaDeMi : <></>}
             </span>
           </div>
           <span>Detalles del viaje</span>

@@ -84,8 +84,6 @@ export default function Perfil() {
     apellido: cookieApellido,
   });
 
-  console.log(reportes);
-
   //-----------------------Inputs--------------------------
 
   const [habilitarTelefono, setHabilitarTelefono] = useState(true);
