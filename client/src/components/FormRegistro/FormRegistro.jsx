@@ -22,6 +22,7 @@ export default function FormRegistro() {
     password: "",
     nuevo_password: "",
     terminos: "",
+    avatar: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -121,6 +122,7 @@ export default function FormRegistro() {
       cookies.set("email", input.email, { path: "/" });
       cookies.set("nombre", input.nombre, { path: "/" });
       cookies.set("apellido", input.apellido, { path: "/" });
+      cookies.set("avatar", input.avatar, { path: "/" });
       console.log("COOKIES REGISTRO ", cookies.get("nombre"));
       dispatch(registroUsuario(input));
       let cookieNombre = cookies.get("nombre");

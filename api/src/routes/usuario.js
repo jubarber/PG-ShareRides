@@ -46,10 +46,10 @@ router.get("/usuarios/:email", async (req, res, next) => {
 
 router.post("/registro", async (req, res, next) => {
   try {
-    const { email, nombre, apellido, password } = req.body;
+    const { email, nombre, apellido, password, avatar } = req.body;
     let nuevoUsuario;
     nuevoUsuario = await Usuario.findOrCreate({
-      where: { email, nombre, apellido, password },
+      where: { email, nombre, apellido, password, avatar },
     });
     res.json(nuevoUsuario);
 
@@ -97,13 +97,13 @@ router.post("/registro", async (req, res, next) => {
     //   <html>
     //   <head>
     //   <h2>
-    //   Hola ${nombre}! 
+    //   Hola ${nombre}!
     //   </h2>
     //   </head>
     //   <body>
     //   <h4>
     //   Desde Share Rides queremos darte la bienvenida a nuestra plataforma! Tu registro se ha llevado a cabo con éxito.
-    //   Esperamos que te sientas segure para compartir tu viaje. 
+    //   Esperamos que te sientas segure para compartir tu viaje.
     //   </h4>
     //   <h3>Buenas rutas!</h3>
     //   </body>
@@ -135,18 +135,15 @@ router.post("/mailnuevapassword", async (req, res, next) => {
   const { nombre, email } = req.body;
   try {
     // const sgMail = require("@sendgrid/mail");
-
     // sgMail.setApiKey(API_KEY);
-
     // const message = {
     //   to: email,
     //   from: "pgsharerides@gmail.com",
-
     //   subject: "Viaje creado",
     //   html: `<html>
     //   <head>
     //   <h2>
-    //   Hola ${nombre}! 
+    //   Hola ${nombre}!
     //   </h2>
     //   </head>
     //   <body>
@@ -171,18 +168,15 @@ router.post("/emailmodificarperfil", async (req, res, next) => {
   const { nombre, email } = req.body;
   try {
     // const sgMail = require("@sendgrid/mail");
-
     // sgMail.setApiKey(API_KEY);
-
     // const message = {
     //   to: email,
     //   from: "pgsharerides@gmail.com",
-
     //   subject: "Viaje creado",
     //   html: `<html>
     //   <head>
     //   <h2>
-    //   Hola ${nombre}! 
+    //   Hola ${nombre}!
     //   </h2>
     //   </head>
     //   <body>

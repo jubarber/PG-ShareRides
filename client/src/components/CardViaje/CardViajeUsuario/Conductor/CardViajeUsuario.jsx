@@ -6,7 +6,8 @@ import { MdSmokeFree, MdSmokingRooms, MdMasks, MdPets } from "react-icons/md";
 import { FaSuitcaseRolling } from "react-icons/fa";
 import { ImStarEmpty, ImStarHalf, ImStarFull } from "react-icons/im";
 import link from "../../Links";
-import {RiSteering2Fill} from "react-icons/ri"
+import { RiSteering2Fill } from "react-icons/ri";
+import user from "../../../../assets/user.png";
 
 export default function Card({
   origen,
@@ -24,15 +25,16 @@ export default function Card({
   id,
   status,
   email,
+  avatar,
 }) {
   //get de usuario (nombre, apellido y valoracion). foto usuario. Provincias/localidades como llegan y si se puede mostras cada una independiente de la otra. Iniciar sesion con aut 0 y con las cuquis trabajar con la info.
   return (
     <div className="container-cardviaje">
       <div id="nueva-clase">
         <div class="parent">
-        <RiSteering2Fill className="steering"/>
+          <RiSteering2Fill className="steering" />
           <div class="div1">
-            <img src={link} alt="" />
+            <img src={avatar ? avatar : user} alt="" />
             <div className="info-personal-card">
               <Link to={`/perfil/${email}`}>
                 <span>
@@ -59,12 +61,12 @@ export default function Card({
               {fecha} - {hora} hs
             </i>
             {asientosAOcupar > 1 ? (
-              <i>{asientosAOcupar + " "}Lugares Libres</i>
+              <i>{asientosAOcupar + " "}Lugares Requeridos</i>
             ) : asientosAOcupar === 1 ? (
-              <i>{asientosAOcupar + " "}Lugar Libre</i>
-            ) : (
-              <i>Lleno!</i>
-            )}
+              <i>{asientosAOcupar + " "}Lugar Requerido</i>
+            ) : asientosAOcupar === 0 ? (
+              <i>Viaje Completo</i>
+            ) : null}
           </div>
           <div class="div3">
             {aceptaMascota ? <MdPets className="line-through" /> : <></>}

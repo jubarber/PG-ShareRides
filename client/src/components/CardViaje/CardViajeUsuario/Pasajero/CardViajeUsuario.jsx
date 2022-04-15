@@ -5,8 +5,9 @@ import { VscLocation } from "react-icons/vsc";
 import { MdSmokeFree, MdSmokingRooms, MdMasks, MdPets } from "react-icons/md";
 import { FaSuitcaseRolling } from "react-icons/fa";
 import { ImStarEmpty, ImStarHalf, ImStarFull } from "react-icons/im";
-import {BsPersonFill} from "react-icons/bs"
+import { BsPersonFill } from "react-icons/bs";
 import link from "../../Links";
+import user from "../../../../assets/user.png";
 
 export default function Card({
   origen,
@@ -24,15 +25,17 @@ export default function Card({
   id,
   status,
   email,
+  avatar,
 }) {
+  console.log("esto llega como avatar:", avatar);
   //get de usuario (nombre, apellido y valoracion). foto usuario. Provincias/localidades como llegan y si se puede mostras cada una independiente de la otra. Iniciar sesion con aut 0 y con las cuquis trabajar con la info.
   return (
     <div className="container-cardviaje">
       <div id="nueva-clase">
         <div class="parent">
-        <BsPersonFill className="person"/>
+          <BsPersonFill className="person" />
           <div class="div1">
-            <img src={link} alt="" />
+            <img src={avatar ? avatar : user} alt="" />
             <div className="info-personal-card">
               <Link to={`/perfil/${email}`}>
                 <span>
@@ -52,7 +55,8 @@ export default function Card({
             <i className="flex">
               <VscLocation className="text-green-400" />
               <i>
-                {origen} <p>{">"}</p>{destino}
+                {origen} <p>{">"}</p>
+                {destino}
               </i>
             </i>
             <i>
@@ -62,9 +66,9 @@ export default function Card({
               <i>{asientosAOcupar + " "}Lugares Requeridos</i>
             ) : asientosAOcupar === 1 ? (
               <i>{asientosAOcupar + " "}Lugar Requerido</i>
-            ) : (
-              <></>
-            )}
+            ) : asientosAOcupar === 0 ? (
+              <i>Viaje Completo</i>
+            ) : null}
           </div>
           <div class="div3">
             {aceptaMascota ? <MdPets /> : <></>}

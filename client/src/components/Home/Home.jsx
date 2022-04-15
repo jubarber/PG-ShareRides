@@ -100,6 +100,7 @@ export default function Home() {
                           detalles={e.detalles}
                           key={e.id}
                           id={e.id}
+                          avatar={e.usuarios.length > 0 ? e.usuarios[0].avatar : <></>}
                           nombre={
                             e.usuarios.length > 0 ? e.usuarios[0].nombre : <></>
                           }
@@ -130,6 +131,7 @@ export default function Home() {
                           viajeDisponible={e.viajeDisponible}
                           key={e.id}
                           id={e.id}
+                          avatar={e.usuarios.length > 0 ? e.usuarios[0].avatar : <></>}
                           nombre={
                             e.usuarios.length > 0 ? e.usuarios[0].nombre : <></>
                           }
