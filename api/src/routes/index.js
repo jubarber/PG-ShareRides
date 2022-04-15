@@ -11,6 +11,7 @@ const comentariosRouter = require("./comentarios.js");
 const orderRouter = require("./order.js");
 const colaboracionRouter = require("./colaboracion.js");
 const mercadopagoRouter = require("./mercadopago.js");
+const reportesRouter = require("./reportes");
 
 const router = Router();
 
@@ -25,5 +26,6 @@ router.use("/comentarios", comentariosRouter);
 router.use("/order", orderRouter);
 router.use("/colaboracion", colaboracionRouter);
 router.use("/mercadopago", mercadopagoRouter);
+router.use("/reportes", reportesRouter);
 
 module.exports = router;

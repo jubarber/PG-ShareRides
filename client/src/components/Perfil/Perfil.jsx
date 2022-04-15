@@ -7,11 +7,14 @@ import { FaEdit } from "react-icons/fa";
 import { AiFillCheckSquare } from "react-icons/ai";
 import Button from "@mui/material/Button";
 import {
+  eliminarPerfil,
   getComentarios,
   getUsuarioByEmail,
   getViajesTotal,
+  logout,
   modificacionPerfil,
   postComentarios,
+  postReporte,
 } from "../../redux/actions/actions";
 import Cookies from "universal-cookie";
 import NavBar from "../NavBar/NavBar";
@@ -19,6 +22,7 @@ import user from "../../assets/user.png";
 import Rating from "@mui/material/Rating";
 import PaginacionComentarios from "./PaginacionComentarios";
 import axios from "axios";
+import Swal from "sweetalert2/dist/sweetalert2.js";
 
 export default function Perfil() {
   const dispatch = useDispatch();
@@ -71,6 +75,17 @@ export default function Perfil() {
     dispatch(getComentarios());
   }, [reviews]);
 
+  const [NumReportes, setNumReportes] = useState(0);
+
+  const [reportes, setReportes] = useState({
+    justificacion: "",
+    email: email,
+    nombre: cookieNombre,
+    apellido: cookieApellido,
+  });
+
+  console.log(reportes);
+
   //-----------------------Inputs--------------------------
 
   const [habilitarTelefono, setHabilitarTelefono] = useState(true);
@@ -119,8 +134,22 @@ export default function Perfil() {
     setCount(e.target.value.length);
   };
 
-  const handleSubmitComentarios = (e) => {
+  const handleChangeReportes = (e) => {
+    setReportes({
+      ...reportes,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmitReportes = (e) => {
     e.preventDefault();
+    dispatch(postReporte(reportes));
+    setReportes({
+      justificacion: "",
+    });
+  };
+
+  const handleSubmitComentarios = (e) => {
     dispatch(postComentarios(reviews));
     setReviews({
       calificacion: "",
@@ -150,6 +179,26 @@ export default function Perfil() {
     setSubiendo(e.target.files[0]);
   };
 
+  const handleEliminado = (e) => {
+    Swal.fire({
+      title: "Estas Seguro?🥺",
+      text: "Luego podras restaurar tu cuenta!",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, borrar!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(eliminarPerfil(cookieEmail));
+        dispatch(logout(cookieEmail));
+        navigate("/");
+        Swal.fire("Borrada!", "Tu cuenta ha sido eliminada!", "success");
+      }
+    });
+  };
+
   return (
     <div className="perfil">
       <NavBar />
@@ -173,15 +222,29 @@ export default function Perfil() {
             ) : (
               <label>{miUsuario.acercaDeMi}</label>
             )}
-            {/* <div cla}ssName="btn-perfil">
-              <Button color="secondary" size="medium">
-                Seguir
-              </Button>
-
-              <Button color="secondary" size="medium">
-                Mensaje
-              </Button>
-            </div> */}
+            <div className="btn-perfil">
+              {cookieEmail === email ? (
+                <Button
+                  onClick={handleEliminado}
+                  type="submit"
+                  variant="contained"
+                  color="error"
+                  size="medium"
+                >
+                  Eliminar cuenta
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="error"
+                  size="medium"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                >
+                  Reportar Usuario
+                </Button>
+              )}
+            </div>
           </div>
         </div>
 
@@ -268,28 +331,30 @@ export default function Perfil() {
                 <label>{miUsuario.avatar}</label>
               )}
             </div>
-            <div className="btn-modificacion-perfil">
-              {habilitarTelefono === false &&
-              habilitarDNI === false &&
-              habilitarAcercaDeMi === false &&
-              habilitarAvatar === false ? (
-                <input
-                  type="submit"
-                  value="Guardar Cambios"
-                  className="btn-modificacion-perfil-active"
-                ></input>
-              ) : (
-                <input
-                  type="button"
-                  value="Guardar Cambios"
-                  disabled
-                  className="btn-modificacion-perfil-disabled"
-                />
-              )}
-              <button onClick={(e) => habilitarInputs(e)}>
-                <FaEdit />
-              </button>
-            </div>
+            {cookieEmail !== email ? null : (
+              <div className="btn-modificacion-perfil">
+                {habilitarTelefono === false &&
+                habilitarDNI === false &&
+                habilitarAcercaDeMi === false &&
+                habilitarAvatar === false ? (
+                  <input
+                    type="submit"
+                    value="Guardar Cambios"
+                    className="btn-modificacion-perfil-active"
+                  ></input>
+                ) : (
+                  <input
+                    type="button"
+                    value="Guardar Cambios"
+                    disabled
+                    className="btn-modificacion-perfil-disabled"
+                  />
+                )}
+                <button onClick={(e) => habilitarInputs(e)}>
+                  <FaEdit />
+                </button>
+              </div>
+            )}
           </form>
         </div>
       </div>
@@ -362,6 +427,52 @@ export default function Perfil() {
 
       <div className="wallpaper">
         <img className="stretch" src={fondo} alt="" />
+      </div>
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel" />
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              />
+            </div>
+            <div class="modal-body">
+              <h3>
+                Reportando a {miUsuario.nombre} {miUsuario.apellido}
+              </h3>
+              <br />
+              <textarea
+                class="form-control"
+                type="text"
+                placeholder="Escriba aqui su justificacion del reporte"
+                name="justificacion"
+                value={reportes.justificacion}
+                onChange={(e) => handleChangeReportes(e)}
+              />
+            </div>
+            <div class="modal-footer">
+              <form onSubmit={(e) => handleSubmitReportes(e)}>
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  data-bs-dismiss="modal"
+                >
+                  Continuar
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

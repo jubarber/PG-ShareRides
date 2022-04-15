@@ -8,6 +8,7 @@ import { BsEyeSlash, BsEye } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import NavBarSinLogin from "../NavBar/NavBarSinLogin";
 import Cookies from "universal-cookie";
+import user from "../../assets/user.png";
 
 export default function FormRegistro() {
   const cookies = new Cookies();
@@ -22,7 +23,7 @@ export default function FormRegistro() {
     password: "",
     nuevo_password: "",
     terminos: "",
-    avatar: "",
+    avatar: user,
   });
 
   const [errors, setErrors] = useState({});

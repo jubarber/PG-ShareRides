@@ -14,6 +14,7 @@ export const MODIFICAR_PERFIL = "MODIFICAR_PERFIL";
 export const COMENTARIOS = "COMENTARIOS";
 export const GET_COMENTARIOS = "GET_COMENTARIOS";
 export const GET_LOCALIDADES = "GET_LOCALIDADES";
+export const ELIMINADO = "ELIMINADO";
 
 export function getDetalleViaje(viajeId) {
   return function (dispatch) {
@@ -433,7 +434,7 @@ export function sumarseAlViaje(payload) {
 }
 
 export function modificarViaje(payload) {
-  return async function (dispatch) {
+  return async function () {
     try {
       const viaje = await axios({
         method: "PUT",
@@ -445,6 +446,70 @@ export function modificarViaje(payload) {
       });
     } catch (err) {
       console.log(err);
+    }
+  };
+}
+
+export function eliminarPerfil(payload) {
+  return async function (dispatch) {
+    console.log("eliminado", payload);
+    try {
+      const usuarioEliminado = await axios({
+        method: "put",
+        url: "http://localhost:3001/api/usuario/eliminarPerfil",
+        data: {
+          email: payload,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function activarPerfil(payload) {
+  return async function () {
+    console.log("activado", payload);
+    try {
+      const usuarioActivado = await axios({
+        method: "put",
+        url: "http://localhost:3001/api/usuario/activarPerfil",
+        data: {},
+      });
+    } catch (error) {}
+  };
+}
+
+export function postReporte(payload) {
+  return async function (dispatch) {
+    console.log("postReporte", payload);
+    try {
+      const postReporte = await axios({
+        method: "post",
+        url: "http://localhost:3001/api/reportes/postReporte",
+        data: {
+          email: payload.email,
+          nombre: payload.nombre,
+          apellido: payload.apellido,
+          justificacion: payload.justificacion,
+        },
+      });
+      return dispatch({ type: "POST_REPORTE", payload: postReporte.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function getReporte() {
+  return async function (dispatch) {
+    try {
+      const reportes = await axios(
+        "http://localhost:3001/api/reportes/reportes"
+      );
+      return dispatch({ type: "REPORTES", payload: reportes.data });
+    } catch (error) {
+      console.log(error);
     }
   };
 }

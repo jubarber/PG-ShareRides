@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const { Usuario, Viaje, Comentarios } = require("../db.js");
+const { Usuario, Viaje, Comentarios, Reportados } = require("../db.js");
 const { API_KEY } = process.env;
 
 router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
@@ -12,11 +12,20 @@ router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
         { where: { email: email } },
         { include: Viaje }
       );
-      //console.log("soy db usuario", dbUsuario);
+      console.log("soy db usuario", dbUsuario);
       if (dbUsuario) {
-        dbUsuario.password === password
-          ? res.send("ok")
-          : res.send("contraseña incorrecta");
+        if (dbUsuario.disponible === false) {
+          res.send("usuario pausado");
+        }
+        if (dbUsuario.password === password) {
+          res.send("ok");
+        }
+        if (dbUsuario.password !== password) {
+          res.send("contraseña incorrecta");
+        }
+        if (dbUsuario.eliminado === true) {
+          res.send("No puedes ingresar, comunicate con pgsharerides@gmail.com");
+        }
       } else res.send("usuario no encontrado");
     }
   } catch (err) {
@@ -26,7 +35,9 @@ router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
 
 router.get("/usuarios", async (req, res, next) => {
   try {
-    let usuarios = await Usuario.findAll({ include: Comentarios });
+    let usuarios = await Usuario.findAll({
+      include: [{ model: Comentarios }, { model: Reportados }],
+    });
     res.send(usuarios);
   } catch (err) {
     next(err);
@@ -275,6 +286,32 @@ router.put("/comentarios", async (req, res, next) => {
       });
       nuevoComentario.save();
     }
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.put("/eliminarPerfil", async (req, res, next) => {
+  const { email } = req.body;
+  console.log("back", email);
+  try {
+    let eliminado = await Usuario.findByPk(email);
+    eliminado.update({ disponible: false });
+    eliminado.save();
+    res.send(eliminado);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.put("/activarPerfil", async (req, res, next) => {
+  const { email } = req.body;
+  console.log("back", email);
+  try {
+    let activado = await Usuario.findByPk(email);
+    activado.update({ disponible: true });
+    activado.save();
+    res.send(activado);
   } catch (err) {
     next(err);
   }

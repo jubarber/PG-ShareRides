@@ -1,23 +1,34 @@
 const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   sequelize.define(
-    "vehiculo",
+    "reportados",
     {
-      patente: {
-        type: DataTypes.STRING,
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         primaryKey: true,
       },
-      marca: {
+      dia: {
+        type: DataTypes.DATEONLY,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+      },
+      nombre: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      modelo: {
+      apellido: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      dni: {
+      reportes: {
         type: DataTypes.INTEGER,
+        autoIncrement: true,
+        allowNull: false,
+      },
+      justificacion: {
+        type: DataTypes.TEXT,
         allowNull: false,
       },
     },
