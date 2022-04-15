@@ -4,17 +4,6 @@ import logo from "../../assets/Icono shareRides.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "universal-cookie";
-import Box from "@mui/material/Box";
-import Avatar from "@mui/material/Avatar";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
-import { BiLogOut } from "react-icons/bi";
-import user from "../../assets/user.png";
 import { logout } from "../../redux/actions/actions";
 import { FaHome } from "react-icons/fa";
 
@@ -54,8 +43,8 @@ export default function NavBar() {
           <button className="btn btn-outline-primary" type="button">
             <Link to="/home">
               <FaHome />
-            </button>
-          </Link>
+            </Link>
+          </button>
         </div>
       </div>
     </div>
