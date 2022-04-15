@@ -1,20 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./NavBar.css";
 import logo from "../../assets/Icono shareRides.png";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import Cookies from "universal-cookie";
-import { logout } from "../../redux/actions/actions";
+import { Link } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 
 export default function NavBar() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const cookies = new Cookies();
-  const cookieNombre = cookies.get("nombre");
-  const cookieAvatar = cookies.get("avatar");
-  const cookieEmail = cookies.get("email");
-
   // ------Menu------
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -23,11 +13,6 @@ export default function NavBar() {
   };
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const handleLogout = () => {
-    dispatch(logout(cookieEmail));
-    navigate("/");
   };
 
   return (

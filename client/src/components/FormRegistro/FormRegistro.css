@@ -155,3 +155,15 @@
     opacity: 1;
   }
 }
+
+.google-registro {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5rem;
+}
+
+.btn-google-registro {
+  width: 15rem;
+  display: flex;
+  justify-content: center;
+}

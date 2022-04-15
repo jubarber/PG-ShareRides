@@ -32,7 +32,7 @@ module.exports = (sequelize) => {
       allowNull: true,
     },
     avatar: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
     },
     vehiculo: {
@@ -51,6 +51,10 @@ module.exports = (sequelize) => {
     reportado: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
+    },
+    puntuacion: {
+      type: DataTypes.REAL,
+      defaultValue: 0,
     },
   });
 };

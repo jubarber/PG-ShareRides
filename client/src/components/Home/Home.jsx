@@ -6,6 +6,7 @@ import {
   getViajesTotal,
   login,
   filterPerCard,
+  getUsuarios,
 } from "../../redux/actions/actions";
 import { Filtros } from "../Filtros/Filtros";
 import CardViajeUsuarioPasajere from "../CardViaje/CardViajeUsuario/Pasajero/CardViajeUsuario";
@@ -22,6 +23,7 @@ import NavBar from "../NavBar/NavBar";
 export default function Home() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
+
   const [render, setRender] = useState("");
   const viajes = useSelector(
     (state) => state.viajesFiltrados //me traigo el estado de los viajes para poder mostrarlos
@@ -33,13 +35,19 @@ export default function Home() {
     //se monta home y despacho la accion para obtener los viajes
     dispatch(login(cookieMail));
     /* dispatch(getViajesTotal());*/
-    console.log('entre en effect')
+    // console.log("entre en effect");
+
     dispatch(filterPerCard(render));
+    dispatch(getUsuarios());
   }, [dispatch]);
-  function handleChange (e) {
-    dispatch(filterPerCard(e.target.value));    
-    setRender(e.target.value)
-   };
+  function handleChange(e) {
+    dispatch(filterPerCard(e.target.value));
+    setRender(e.target.value);
+  }
+
+  function handleSubmitLimpiar(e) {
+    dispatch(getViajesTotal());
+  }
   return (
     <div>
       <NavBar />
@@ -65,7 +73,6 @@ export default function Home() {
                   value={render}
                   onChange={(e) => handleChange(e)}
                 >
-                  {/* <MenuItem value="seleccionar viaje" disabled selected> </MenuItem> */}
                   <MenuItem value="conductor">Conductore</MenuItem>
                   <MenuItem value="pasajero">Pasajere</MenuItem>
                 </Select>
@@ -73,12 +80,13 @@ export default function Home() {
             </label>
           </div>
           <div className="container-cards">
+            {console.log("esto es viajes", viajes)}
             {viajes.map(
               (e) =>
                 e && (
-                  <Link to={"/detalle/" + e.id}>
-                    <div className="card-home">
-                      {e.status === "pasajero" ? (
+                  <div className="card-home">
+                    {e.status === "pasajero" ? (
+                      <Link to={"/detallep/" + e.id}>
                         <CardViajeUsuarioPasajere
                           origen={e.origen}
                           destino={e.destino}
@@ -90,8 +98,12 @@ export default function Home() {
                           aceptaMascota={e.aceptaMascota}
                           usaBarbijo={e.usaBarbijo}
                           viajeDisponible={e.viajeDisponible}
+                          detalles={e.detalles}
                           key={e.id}
                           id={e.id}
+                          avatar={
+                            e.usuarios.length > 0 ? e.usuarios[0].avatar : <></>
+                          }
                           nombre={
                             e.usuarios.length > 0 ? e.usuarios[0].nombre : <></>
                           }
@@ -102,8 +114,20 @@ export default function Home() {
                               <></>
                             )
                           }
+                          email={
+                            e.usuarios.length > 0 ? e.usuarios[0].email : <></>
+                          }
+                          puntuacion={
+                            e.usuarios.length > 0 ? (
+                              e.usuarios[0].puntuacion
+                            ) : (
+                              <></>
+                            )
+                          }
                         />
-                      ) : (
+                      </Link>
+                    ) : (
+                      <Link to={"/detallec/" + e.id}>
                         <CardViajeUsuarioConductore
                           origen={e.origen}
                           destino={e.destino}
@@ -117,6 +141,9 @@ export default function Home() {
                           viajeDisponible={e.viajeDisponible}
                           key={e.id}
                           id={e.id}
+                          avatar={
+                            e.usuarios.length > 0 ? e.usuarios[0].avatar : <></>
+                          }
                           nombre={
                             e.usuarios.length > 0 ? e.usuarios[0].nombre : <></>
                           }
@@ -127,10 +154,20 @@ export default function Home() {
                               <></>
                             )
                           }
+                          email={
+                            e.usuarios.length > 0 ? e.usuarios[0].email : <></>
+                          }
+                          puntuacion={
+                            e.usuarios.length > 0 ? (
+                              e.usuarios[0].puntuacion
+                            ) : (
+                              <></>
+                            )
+                          }
                         />
-                      )}
-                    </div>
-                  </Link>
+                      </Link>
+                    )}
+                  </div>
                 )
             )}
           </div>
