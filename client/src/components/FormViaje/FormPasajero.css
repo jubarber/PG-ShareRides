@@ -2,7 +2,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-evenly;
-  height: 45rem;
+  height: auto;
   margin-top: 3rem;
 }
 
@@ -11,6 +11,10 @@
   font-weight: 500;
   padding-top: 1rem;
   cursor: pointer;
+}
+.order-form {
+  display: flex;
+  flex-direction: column;
 }
 
 .input-text {
@@ -26,8 +30,24 @@
   border-radius: 58px;
   font-size: medium;
 }
-
+.input-text-detalle {
+  width: 27%;
+  background-color: #fff;
+  border: 3px solid;
+  height: 8em;
+  line-height: 45px;
+  padding: 0 40px 0 10px;
+  transition: 0.3s ease all;
+  border-radius: 3em;
+  font-size: medium;
+  margin-bottom: 1em;
+}
 .form-formpasajero input:focus {
+  border: 3px solid #9252ff;
+  outline: none;
+  box-shadow: 3px 0px 30px rgba(163, 163, 163, 0.4);
+}
+.input-text-detalle input:focus {
   border: 3px solid #9252ff;
   outline: none;
   box-shadow: 3px 0px 30px rgba(163, 163, 163, 0.4);
@@ -42,6 +62,11 @@
 .checkbox-formpasajero div {
   margin-bottom: 1rem;
   margin-top: 1rem;
+}
+.label-detalles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .btn-formpasajero {
@@ -88,7 +113,7 @@
 
 .Pasajere__mycheckbox {
   font-size: 20px;
-  color: white;
+  /* color: white; */
   margin-top: 3rem;
 }
 .Pasajere__mycheckbox input:checked ~ span::after {

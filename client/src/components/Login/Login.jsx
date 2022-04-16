@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { login } from "../../redux/actions/actions";
+import { getUsuarioByEmail, login } from "../../redux/actions/actions";
 import swal from "sweetalert";
 import fondo from "../../assets/fondo perfil.jpg";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
 import "./Login.css";
 import Cookies from "universal-cookie";
 import NavBarSinLogin from "../NavBar/NavBarSinLogin";
+import Swal from "sweetalert2/dist/sweetalert2.js";
 
 export default function Login() {
   const cookies = new Cookies();
@@ -37,21 +38,43 @@ export default function Login() {
     }).then((r) => setUsuario(r.data));
   } //fin function getUsuario
 
-    useEffect(() => {
-      cookies.set("dni", usuario.dni, { path: "/" });
-      cookies.set("email", usuario.email, { path: "/" });
-      cookies.set("nombre", usuario.nombre, { path: "/" });
-      cookies.set("apellido", usuario.apellido, { path: "/" });
-      cookies.set("logueado", usuario.logueado, { path: "/" });
-      cookies.set("vehiculo", usuario.vehiculo, { path: "/" });
-      cookies.set("avatar", usuario.avatar, { path: "/" });
-      cookies.set("acercaDeMi", usuario.acercaDeMi, { path: "/" });
-      cookies.set("calificacion", usuario.calificacion, { path: "/" });
-      console.log(cookies.get("nombre"));
-    }, [usuario]);
-  
   useEffect(() => {
-    if (inicioSesion === "contraseña incorrecta") {
+    cookies.set("dni", usuario.dni, { path: "/" });
+    cookies.set("email", usuario.email, { path: "/" });
+    cookies.set("nombre", usuario.nombre, { path: "/" });
+    cookies.set("apellido", usuario.apellido, { path: "/" });
+    cookies.set("logueado", usuario.logueado, { path: "/" });
+    cookies.set("vehiculo", usuario.vehiculo, { path: "/" });
+    cookies.set("avatar", usuario.avatar, { path: "/" });
+    cookies.set("acercaDeMi", usuario.acercaDeMi, { path: "/" });
+    cookies.set("calificacion", usuario.calificacion, { path: "/" });
+    console.log(cookies.get("nombre"));
+  }, [usuario]);
+
+  let algo = usuario.disponible;
+  console.log("usuarios", algo);
+
+  useEffect(() => {
+    if (inicioSesion === "usuario pausado") {
+      console.log("entre a usuarios.disponible");
+      setError({ ...error, usuario: "El usuario ha sido pausado" });
+      Swal.fire({
+        title: "Desea Restaurar la cuenta?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Restaurar!",
+        cancelButtonText: "No",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Swal.fire("Deleted!", "Your file has been deleted.", "success");
+          navigate("/login");
+        } else {
+          navigate("/");
+        }
+      });
+    } else if (inicioSesion === "contraseña incorrecta") {
       setError({ ...error, password: "Contraseña incorrecta" });
       swal({
         title: "Ups!",

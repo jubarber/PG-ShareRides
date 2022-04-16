@@ -1,32 +1,38 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { getDetalleViaje } from "../../redux/actions/actions";
-import Navbar from "../../NavBar/NavBar";
+import {
+  getDetalleViaje,
+  getUsuarioByEmail,
+} from "../../../redux/actions/actions";
 import "./DetalleViaje.css";
-import link from "../../CardViaje/Links";
 import { MdSmokeFree, MdMasks, MdPets } from "react-icons/md";
 import { FaSuitcaseRolling } from "react-icons/fa";
-import { ImStarEmpty, ImStarHalf, ImStarFull } from "react-icons/im";
 import { VscLocation } from "react-icons/vsc";
 import fondo from "../../../assets/fondo perfil.jpg";
 import NavBar from "../../NavBar/NavBar";
+import { ImStarEmpty, ImStarFull } from "react-icons/im";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import { FaUserCircle } from "react-icons/fa";
+import IconButton from "@mui/material/IconButton";
 
-export const DetalleViaje = () => {
+export const DetalleViajep = () => {
   const dispatch = useDispatch();
-  const params = useParams();
   const viaje = useSelector((state) => state.viajePorId);
   const { id } = useParams();
-  // console.log(id)
-  // console.log(viaje);
+  const { email } = useParams();
+  let fechaViaje = "";
+
+  viaje?.fecha?.includes("T")?fechaViaje = viaje?.fecha?.substring(0, 10).split("-").reverse().join("-") : fechaViaje=viaje.fecha
 
   useEffect(() => {
-    //   //para que sea dinamico, descomentar linea 8 y linea 18
-    //   //hacerlo SOLO cuando el componente de la tarjeta del viaje YA TENGA el Link to hecho que redireccione a este componente.
-    //   //sino no funcionará jeje
-
     dispatch(getDetalleViaje(id));
-  }, [dispatch, id]);
+    dispatch(getUsuarioByEmail(email));
+  }, [id]);
+
+  let arrayPasajeres = viaje.usuarios?.map((e) => e);
 
   return (
     <div className="container-detalle">
@@ -35,34 +41,89 @@ export const DetalleViaje = () => {
         <div className="card-usuario-detalle">
           <div className="card-usuario-infper-detalle">
             <div className="card-usuario-img-detalle">
-              <img src={link} alt="" />
+              <img
+                src={viaje.usuarios ? viaje.usuarios[0].avatar : null}
+                alt=""
+              />
             </div>
             <div className="card-usuario-nombre-val-detalle text-xl">
               <span className="text-white my-9">
-                {viaje.nombre} {viaje.apellido}
+                {viaje.usuarios ? (
+                  viaje.usuarios[0].nombre + " " + viaje.usuarios[0].apellido
+                ) : (
+                  <></>
+                )}
               </span>
-              <span>Valoracion estrellas</span>
+              <span>
+                <div className="puntuacion">
+                  {viaje.usuarios ? (
+                    viaje.usuarios[0].puntuacion === 5 ? (
+                      <>
+                        <ImStarFull className="black" />
+                        <ImStarFull className="black" />
+                        <ImStarFull className="black " />
+                        <ImStarFull className="black" />
+                        <ImStarFull className="black " />
+                      </>
+                    ) : viaje.usuarios[0].puntuacion === 4 ? (
+                      <>
+                        {" "}
+                        <ImStarFull className="black" />
+                        <ImStarFull className="black " />
+                        <ImStarFull className="black" />
+                        <ImStarFull className="black " />
+                        <ImStarEmpty className="black" />
+                      </>
+                    ) : viaje.usuarios[0].puntuacion === 3 ? (
+                      <>
+                        <ImStarFull className="black " />
+                        <ImStarFull className="black" />
+                        <ImStarFull className="black " />
+                        <ImStarEmpty className="black" />
+                        <ImStarEmpty className="black" />
+                      </>
+                    ) : viaje.usuarios[0].puntuacion === 2 ? (
+                      <>
+                        <ImStarFull className="black" />
+                        <ImStarFull className="black " />
+                        <ImStarEmpty className="black" />
+                        <ImStarEmpty className="black" />
+                        <ImStarEmpty className="black" />
+                      </>
+                    ) : viaje.usuarios[0].puntuacion === 1 ? (
+                      <>
+                        <ImStarFull className="black " />
+                        <ImStarEmpty className="black" />
+                        <ImStarEmpty className="black" />
+                        <ImStarEmpty className="black" />
+                        <ImStarEmpty className="black" />
+                      </>
+                    ) : (
+                      <></>
+                    )
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              </span>
             </div>
           </div>
           <span className="ml-4 text-xl">Acerca de mi</span>
           <div className="card-usuario-resumen-detalle rounded-sm">
             <span className="m-2">
-              Trabajo en un local, que queda en rosario y necesito viajar
-              seguido a funes
+              {viaje.usuarios ? viaje.usuarios[0].acercaDeMi : <></>}
             </span>
           </div>
+          <span>Detalles del viaje</span>
           <div className="card-usuario-resumen-detalle rounded-sm">
-            <span className="m-2">
-              Viajo con dos valijas y un perrito chiquito, estoy dispuesto a
-              compartir gastos! vamos a escrtibir mucho para ver como queda esto
-              creo que son demasiados caracteres
-            </span>
+            <span className="m-2">{viaje.detalles}</span>
           </div>
           <div className="btn-detalle">
             <button className="detalle-mensaje">
               <Link to="/login">Enviar mensaje</Link>
             </button>
           </div>
+          <br />
         </div>
         <div className="card-viaje-detalle text-xl">
           <div className="flex flex-col justify-evenly w-full ml-4">
@@ -77,7 +138,7 @@ export const DetalleViaje = () => {
               {viaje.destino}
             </span>
             <span>
-              Fecha: <span className="font-bold">{viaje.fecha}</span>
+              Fecha: <span className="font-bold">{fechaViaje}</span>
             </span>
             <span>
               Hora: <span className="font-bold">{viaje.hora}</span>
@@ -99,11 +160,35 @@ export const DetalleViaje = () => {
               </span>
             </span>
             <span>
-              Forma de pago:{" "}
+              <List
+                sx={{
+                  width: "100%",
+                  maxWidth: 360,
+                }}
+              >
+                {arrayPasajeres?.map((e) => (
+                  <ListItem
+                    key={e.email}
+                    disableGutters
+                    secondaryAction={
+                      <IconButton>
+                        <Link to={`/perfil/${e.email}`}>
+                          <FaUserCircle />
+                        </Link>
+                      </IconButton>
+                    }
+                  >
+                    <ListItemText primary={`🔴 ${e.nombre} ${e.apellido}`} />
+                  </ListItem>
+                ))}
+              </List>
+            </span>
+            <span>
+              Medios de pago:{" "}
               <span className="font-bold">{viaje.formaDePago}</span>
             </span>
             <span>
-              **Comparte gastos:
+              Puede colaborar con los gastos:
               <span className="font-bold">
                 {viaje.pagoCompartido ? "sí" : "no"}
               </span>

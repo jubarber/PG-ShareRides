@@ -8,6 +8,7 @@ import { BsEyeSlash, BsEye } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import NavBarSinLogin from "../NavBar/NavBarSinLogin";
 import Cookies from "universal-cookie";
+import user from "../../assets/user.png";
 
 export default function FormRegistro() {
   const cookies = new Cookies();
@@ -22,6 +23,7 @@ export default function FormRegistro() {
     password: "",
     nuevo_password: "",
     terminos: "",
+    avatar: user,
   });
 
   const [errors, setErrors] = useState({});
@@ -117,13 +119,14 @@ export default function FormRegistro() {
         dangerMode: true,
       });
     } else {
-        cookies.set("dni", input.dni, { path: "/" });
-        cookies.set("email", input.email, { path: "/" });
-        cookies.set("nombre", input.nombre, { path: "/" });
-        cookies.set("apellido", input.apellido, { path: "/" });
-        console.log("COOKIES REGISTRO ", cookies.get("nombre"));
+      cookies.set("dni", input.dni, { path: "/" });
+      cookies.set("email", input.email, { path: "/" });
+      cookies.set("nombre", input.nombre, { path: "/" });
+      cookies.set("apellido", input.apellido, { path: "/" });
+      cookies.set("avatar", input.avatar, { path: "/" });
+      console.log("COOKIES REGISTRO ", cookies.get("nombre"));
       dispatch(registroUsuario(input));
-     let cookieNombre = cookies.get("nombre");
+      let cookieNombre = cookies.get("nombre");
       swal({
         title: "El registro ha sido exitoso!",
         text: `Gracias por registrarte! Bienvenide ${cookieNombre}`,

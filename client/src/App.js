@@ -8,11 +8,16 @@ import FormViaje from "./components/FormViaje/FormViaje";
 import FormPasajero from "./components/FormViaje/FormPasajero";
 import FormVehiculo from "./components/FormViaje/FormVehiculo";
 import FormConductor from "./components/FormViaje/FormConductor";
-import { DetalleViaje } from "./components/DetalleViaje/Conductor/DetalleViaje";
+import { DetalleViajec } from "./components/DetalleViaje/Conductor/DetalleViaje";
+import { DetalleViajep } from "./components/DetalleViaje/Pasajero/DetalleViaje";
 import Login from "./components/Login/Login";
 import RegistroGoogle from "./components/RegistroGoogle/RegistroGoogle";
 import Admin from "./components/Admin/AdminLogin";
-import AdminHome from "./components/Admin/AdminHome"
+import AdminHome from "./components/Admin/AdminHome";
+import Calendario from "./components/Calendar/Calendar"
+import Temporal from "./components/TemporalColaboracion/Temporal";
+import Colaboracion from "./components/Colaboraciones/Colaboracion";
+
 
 function App() {
   return (
@@ -21,17 +26,21 @@ function App() {
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
           <Route exact path="/home" element={<Home />} />
-          <Route exact path="/perfil" element={<Perfil />} />
+          <Route exact path="/perfil/:email" element={<Perfil />} />
           <Route exact path="/registro" element={<FormRegistro />} />
           <Route exact path="/formviaje" element={<FormViaje />} />
           <Route exact path="/formpasajero" element={<FormPasajero />} />
           <Route exact path="/formvehiculo" element={<FormVehiculo />} />
           <Route exact path="/formconductor" element={<FormConductor />} />
-          <Route exact path="/detalle/:id" element={<DetalleViaje />} />
+          <Route exact path="/detallec/:id" element={<DetalleViajec />} />
+          <Route exact path="/detallep/:id" element={<DetalleViajep />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/registrogoogle" element={<RegistroGoogle />} />
           <Route exact path="/admin" element={<Admin />} />
           <Route exact path="/adminhome" element={<AdminHome />} />
+          <Route exact path="/calendario" element={<Calendario />} />
+          <Route exact path="/temporal" element={<Temporal />} />
+          <Route exact path="/colaboraciones/:email" element={<Colaboracion />} />
         </Routes>
       </BrowserRouter>
     </div>

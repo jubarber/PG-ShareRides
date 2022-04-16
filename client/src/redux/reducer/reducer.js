@@ -8,9 +8,9 @@ import {
   GET_USUARIOS,
   USUARIO_MAIL,
   FILTERTYPE,
-  MODIFICAR_PERFIL,
-  COMENTARIOS,
   GET_COMENTARIOS,
+  GET_LOCALIDADES,
+  GET_COLABORACIONES,
 } from "../actions/actions.js";
 
 const initialState = {
@@ -21,6 +21,8 @@ const initialState = {
   usuario: [],
   error: "",
   comentarios: [],
+  localidades: [],
+  colaboraciones: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -62,6 +64,7 @@ function rootReducer(state = initialState, action) {
         viajesFiltrados: action.payload,
       };
     case USUARIO_MAIL:
+      // console.log(action.payload)
       if (action.payload === "error") {
         return { ...state, error: action.payload, usuario: {} };
       } else {
@@ -72,7 +75,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         comentarios: action.payload,
       };
-
     case FILTERTYPE:
       const viajes_usuario = state.viajes.filter(
         (e) => e.status === action.payload
@@ -81,6 +83,16 @@ function rootReducer(state = initialState, action) {
         ...state,
         viajesFiltrados: viajes_usuario,
       };
+    case GET_LOCALIDADES:
+      return {
+        ...state,
+        localidades: action.payload,
+      };
+    case GET_COLABORACIONES:
+      return {
+        ...state,
+        colaboraciones: action.payload
+      }
     default:
       return { ...state };
   }

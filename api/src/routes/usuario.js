@@ -1,8 +1,7 @@
 const { Router } = require("express");
 const router = Router();
-const { Usuario, Viaje } = require("../db.js");
+const { Usuario, Viaje, Comentarios, Reportados } = require("../db.js");
 const { API_KEY } = process.env;
-
 
 router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
   try {
@@ -13,11 +12,20 @@ router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
         { where: { email: email } },
         { include: Viaje }
       );
-      //console.log("soy db usuario", dbUsuario);
+      console.log("soy db usuario", dbUsuario);
       if (dbUsuario) {
-        dbUsuario.password === password
-          ? res.send("ok")
-          : res.send("contraseña incorrecta");
+        if (dbUsuario.disponible === false) {
+          res.send("usuario pausado");
+        }
+        if (dbUsuario.password === password) {
+          res.send("ok");
+        }
+        if (dbUsuario.password !== password) {
+          res.send("contraseña incorrecta");
+        }
+        if (dbUsuario.eliminado === true) {
+          res.send("No puedes ingresar, comunicate con pgsharerides@gmail.com");
+        }
       } else res.send("usuario no encontrado");
     }
   } catch (err) {
@@ -27,7 +35,9 @@ router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
 
 router.get("/usuarios", async (req, res, next) => {
   try {
-    let usuarios = await Usuario.findAll();
+    let usuarios = await Usuario.findAll({
+      include: [{ model: Comentarios }, { model: Reportados }],
+    });
     res.send(usuarios);
   } catch (err) {
     next(err);
@@ -37,7 +47,7 @@ router.get("/usuarios", async (req, res, next) => {
 router.get("/usuarios/:email", async (req, res, next) => {
   const { email } = req.params;
   try {
-    let usuario = await Usuario.findByPk(email);
+    let usuario = await Usuario.findByPk(email, { include: Comentarios });
     if (usuario) res.send(usuario);
     else res.send("error");
   } catch (err) {
@@ -47,43 +57,74 @@ router.get("/usuarios/:email", async (req, res, next) => {
 
 router.post("/registro", async (req, res, next) => {
   try {
-    const { email, nombre, apellido, password } = req.body;
+    const { email, nombre, apellido, password, avatar } = req.body;
     let nuevoUsuario;
     nuevoUsuario = await Usuario.findOrCreate({
-      where: { email, nombre, apellido, password },
+      where: { email, nombre, apellido, password, avatar },
     });
     res.json(nuevoUsuario);
 
-    const sgMail = require("@sendgrid/mail");
+    // const sgMail = require("@sendgrid/mail");
 
-    sgMail.setApiKey(API_KEY);
+    // sgMail.setApiKey(API_KEY);
 
-    const message = {
-      to: email,
-      from: "pgsharerides@gmail.com",
+    // const message = {
+    //   to: email,
+    //   from: "pgsharerides@gmail.com",
 
-      subject: "Bienvenide a Share Rides!",
-      html: `
-      <html>
-      <head>
-      <h2>
-      Hola ${nombre}! 
-      </h2>
-      </head>
-      <body>
-      <h4>
-      Desde Share Rides queremos darte la bienvenida a nuestra plataforma! Tu registro se ha llevado a cabo con éxito.
-      Esperamos que te sientas segure para compartir tu viaje. 
-      </h4>
-      <h3>Buenas rutas!</h3>
-      </body>
-      </html>
-      `,
-    };
-    sgMail
-      .send(message)
-      .then((r) => console.log("mail enviado"))
-      .catch((err) => console.log(err.message));
+    //   subject: "Bienvenide a Share Rides!",
+    //   html: `
+    //   <html>
+    //   <head>
+    //   <h2>
+    //   Hola ${nombre}!
+    //   </h2>
+    //   </head>
+    //   <body>
+    //   <h4>
+    //   Desde Share Rides queremos darte la bienvenida a nuestra plataforma! Tu registro se ha llevado a cabo con éxito.
+    //   Esperamos que te sientas segure para compartir tu viaje.
+    //   </h4>
+    //   <h3>Buenas rutas!</h3>
+    //   </body>
+    //   </html>
+    //   `,
+    // };
+    // sgMail
+    //   .send(message)
+    //   .then((r) => console.log("mail enviado"))
+    //   .catch((err) => console.log(err.message));
+
+    // const sgMail = require("@sendgrid/mail");
+
+    // sgMail.setApiKey(API_KEY);
+
+    // const message = {
+    //   to: email,
+    //   from: "pgsharerides@gmail.com",
+
+    //   subject: "Bienvenide a Share Rides!",
+    //   html: `
+    //   <html>
+    //   <head>
+    //   <h2>
+    //   Hola ${nombre}!
+    //   </h2>
+    //   </head>
+    //   <body>
+    //   <h4>
+    //   Desde Share Rides queremos darte la bienvenida a nuestra plataforma! Tu registro se ha llevado a cabo con éxito.
+    //   Esperamos que te sientas segure para compartir tu viaje.
+    //   </h4>
+    //   <h3>Buenas rutas!</h3>
+    //   </body>
+    //   </html>
+    //   `,
+    // };
+    // sgMail
+    //   .send(message)
+    //   .then((r) => console.log("mail enviado"))
+    //   .catch((err) => console.log(err.message));
   } catch (err) {
     next(err);
   }
@@ -104,34 +145,31 @@ router.put("/cambiopassword", async (req, res, next) => {
 router.post("/mailnuevapassword", async (req, res, next) => {
   const { nombre, email } = req.body;
   try {
-    const sgMail = require("@sendgrid/mail");
-
-    sgMail.setApiKey(API_KEY);
-
-    const message = {
-      to: email,
-      from: "pgsharerides@gmail.com",
-
-      subject: "Viaje creado",
-      html: `<html>
-      <head>
-      <h2>
-      Hola ${nombre}! 
-      </h2>
-      </head>
-      <body>
-      <h4>
-      Te informamos que tu contraseña ha sido modificada de manera correcta
-      </h4>
-      <h3>Buenas rutas!</h3>
-      </body>
-      </html>
-      `,
-    };
-    sgMail
-      .send(message)
-      .then((r) => console.log("mail enviado"))
-      .catch((err) => console.log(err.message));
+    // const sgMail = require("@sendgrid/mail");
+    // sgMail.setApiKey(API_KEY);
+    // const message = {
+    //   to: email,
+    //   from: "pgsharerides@gmail.com",
+    //   subject: "Viaje creado",
+    //   html: `<html>
+    //   <head>
+    //   <h2>
+    //   Hola ${nombre}!
+    //   </h2>
+    //   </head>
+    //   <body>
+    //   <h4>
+    //   Te informamos que tu contraseña ha sido modificada de manera correcta
+    //   </h4>
+    //   <h3>Buenas rutas!</h3>
+    //   </body>
+    //   </html>
+    //   `,
+    // };
+    // sgMail
+    //   .send(message)
+    //   .then((r) => console.log("mail enviado"))
+    //   .catch((err) => console.log(err.message));
   } catch (error) {
     next(error);
   }
@@ -140,34 +178,31 @@ router.post("/mailnuevapassword", async (req, res, next) => {
 router.post("/emailmodificarperfil", async (req, res, next) => {
   const { nombre, email } = req.body;
   try {
-    const sgMail = require("@sendgrid/mail");
-
-    sgMail.setApiKey(API_KEY);
-
-    const message = {
-      to: email,
-      from: "pgsharerides@gmail.com",
-
-      subject: "Viaje creado",
-      html: `<html>
-      <head>
-      <h2>
-      Hola ${nombre}! 
-      </h2>
-      </head>
-      <body>
-      <h4>
-      Te informamos que tu perfil ha sido actualizado de manera correcta
-      </h4>
-      <h3>Buenas rutas!</h3>
-      </body>
-      </html>
-      `,
-    };
-    sgMail
-      .send(message)
-      .then((r) => console.log("mail enviado"))
-      .catch((err) => console.log(err.message));
+    // const sgMail = require("@sendgrid/mail");
+    // sgMail.setApiKey(API_KEY);
+    // const message = {
+    //   to: email,
+    //   from: "pgsharerides@gmail.com",
+    //   subject: "Viaje creado",
+    //   html: `<html>
+    //   <head>
+    //   <h2>
+    //   Hola ${nombre}!
+    //   </h2>
+    //   </head>
+    //   <body>
+    //   <h4>
+    //   Te informamos que tu perfil ha sido actualizado de manera correcta
+    //   </h4>
+    //   <h3>Buenas rutas!</h3>
+    //   </body>
+    //   </html>
+    //   `,
+    // };
+    // sgMail
+    //   .send(message)
+    //   .then((r) => console.log("mail enviado"))
+    //   .catch((err) => console.log(err.message));
   } catch (err) {
     next(err);
   }
@@ -227,6 +262,56 @@ router.put("/modificarperfil", async (req, res, next) => {
       });
       usuario.save();
     }
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.put("/comentarios", async (req, res, next) => {
+  const { email, calificacion, comentarios } = req.body;
+  try {
+    let nuevoComentario;
+    nuevoComentario = await Usuario.findByPk(email);
+    if (calificacion) {
+      console.log("entre a calificacion");
+      nuevoComentario.update({
+        calificacion: calificacion,
+      });
+      nuevoComentario.save();
+    }
+    if (comentarios) {
+      console.log("entre a comentarios");
+      nuevoComentario.update({
+        comentarios: comentarios,
+      });
+      nuevoComentario.save();
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.put("/eliminarPerfil", async (req, res, next) => {
+  const { email } = req.body;
+  console.log("back", email);
+  try {
+    let eliminado = await Usuario.findByPk(email);
+    eliminado.update({ disponible: false });
+    eliminado.save();
+    res.send(eliminado);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.put("/activarPerfil", async (req, res, next) => {
+  const { email } = req.body;
+  console.log("back", email);
+  try {
+    let activado = await Usuario.findByPk(email);
+    activado.update({ disponible: true });
+    activado.save();
+    res.send(activado);
   } catch (err) {
     next(err);
   }

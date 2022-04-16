@@ -29,6 +29,16 @@
   padding-bottom: 0.5rem;
 }
 
+.bio-perfil label {
+  height: 10rem;
+  width: 17rem;
+  text-align: center;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
 .bio-perfil h1 {
   margin-bottom: 1rem;
 }
@@ -43,7 +53,7 @@
   justify-content: space-evenly;
   align-items: center;
   padding: 1em;
-  width: 18rem;
+  width: 20rem;
   height: 30rem;
   background-color: #fdf4ff;
   border-radius: 20px;
@@ -87,7 +97,7 @@
   box-shadow: 0.5em 0.5em 0.5em 0 black;
 }
 
-.nombre {
+.contenedor-input {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -95,12 +105,22 @@
   border: 1px solid white;
   border-radius: 10px;
   padding: 0.5em;
+  height: 3rem;
 }
 
 .input-perfil {
   border: 1px solid black;
   border-radius: 10px;
   padding-left: 1rem;
+  width: 13rem;
+}
+
+.contenedor-input label {
+  border: 1px solid black;
+  border-radius: 10px;
+  padding-left: 1rem;
+  width: 13rem;
+  height: 1.9rem;
 }
 
 .btn-modificacion-perfil {
@@ -143,77 +163,25 @@
 }
 
 /* -------------------------------------- COMENTARIOS ------------------------------------ */
-
+/*-------Crear Comentarios -----------*/
 .resenas {
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 23rem;
+  height: 26rem;
   border-radius: 20px;
   margin-bottom: 3em;
+  justify-content: space-around;
 }
 
-.resenas form {
+.resenas .form {
   width: 25rem;
-}
-
-.resenas-card {
-  width: 18rem;
   display: flex;
-  flex-direction: column;
-  border: 1px solid black;
-  border-radius: 20px;
-  background-color: #fdf4ff;
-  margin-right: 1em;
-  box-shadow: 0.5em 0.5em 0.5em 0 black;
-}
-
-.resenas-card h3 {
-  margin-top: 1rem;
-  margin-left: 2rem;
-}
-
-.encabezado {
-  display: flex;
-  flex-direction: row;
-  justify-content: stretch;
-  align-items: center;
-}
-
-.encabezado img {
-  width: 5rem;
-  height: 5rem;
-  border-radius: 50%;
-  margin-top: 1rem;
-  margin-left: 1rem;
-}
-
-.encabezado h1 {
-  margin-left: 1em;
-  font-size: 2rem;
-}
-
-.texto {
-  width: 15rem;
-  display: flex;
-  margin: auto;
-}
-
-.texto p {
-  width: 10rem;
-  margin: auto;
-  word-break: break-word;
-}
-
-.pag {
-  display: flex;
-  flex-direction: column;
-  margin-left: 20em;
 }
 
 .comentarios {
   width: 20rem;
-  height: 23rem;
+  height: 26rem;
   display: flex;
   flex-direction: column;
   border: 1px solid black;
@@ -255,12 +223,19 @@
   align-items: center;
 }
 
+.comentario p {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  margin-right: 3rem;
+}
+
 .comentario label {
   margin-bottom: 1rem;
 }
 
 .comentario textarea {
-  height: 8rem;
+  height: 10rem;
   width: 17rem;
   border: 1px solid black;
   border-radius: 20px;
@@ -271,6 +246,110 @@
   display: flex;
   justify-content: center;
   margin-top: 1em;
+}
+
+/*----------------- Muestra de comentarios---------------------------- */
+
+.resenas-card {
+  width: 18rem;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  border-radius: 20px;
+  background-color: #fdf4ff;
+  margin-right: 1em;
+  box-shadow: 0.5em 0.5em 0.5em 0 black;
+}
+
+.resenas-card h3 {
+  margin-top: 1rem;
+  margin-left: 2rem;
+}
+
+.encabezado {
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+  align-items: center;
+}
+
+.encabezado img {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+
+.encabezado h1 {
+  margin-left: 1em;
+  font-size: 2rem;
+}
+
+.calificacion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.texto {
+  width: 15rem;
+  height: 10rem;
+  display: flex;
+  margin: auto;
+  border: 1px solid black;
+}
+
+.texto p {
+  width: 15rem;
+  margin-top: 0%;
+  padding: 0.4rem;
+  word-break: break-word;
+}
+.texto p::-webkit-scrollbar {
+  background: linear-gradient(
+    0deg,
+    rgba(34, 193, 195, 1) 0%,
+    rgba(253, 45, 182, 1) 100%
+  );
+  width: 0.5rem;
+}
+.texto p::-webkit-scrollbar-thumb {
+  background: #fdf4ff;
+  width: 0.3rem;
+}
+.texto p::-webkit-scrollbar-thumb:hover {
+  background-color: #333;
+}
+
+.texto p::-webkit-scrollbar-thumb:active {
+  background-color: #555;
+}
+
+.dia {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.tableroComentarios {
+  display: flex;
+  flex-direction: column;
+  height: 35rem;
+}
+
+.contenedor-comentarios {
+  display: flex;
+  height: 26rem;
+}
+.pag {
+  display: flex;
+  flex-direction: row;
+  margin-top: 3em;
+  justify-content: center;
 }
 
 .wallpaper {
@@ -285,4 +364,8 @@
 .stretch {
   width: 100%;
   height: 100%;
+}
+
+.btn-primary {
+  color: black;
 }

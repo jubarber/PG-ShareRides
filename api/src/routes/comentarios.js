@@ -1,17 +1,28 @@
 const express = require("express");
 const { Router } = require("express");
+// const { where } = require("sequelize/types");
 const router = Router();
 const { Usuario, Comentarios } = require("../db.js");
 
 router.post("/postComentarios", async (req, res, next) => {
   try {
-    const { email, calificacion, comentarios } = req.body;
+    const { email, calificacion, comentarios, nombre, apellido } = req.body;
     let nuevoComentario;
     nuevoComentario = await Comentarios.create({
       calificacion,
       comentarios,
+      nombre,
+      apellido,
     });
-    await nuevoComentario.addUsuario(email);
+    const emailRecibido = await Usuario.findByPk(email);
+    await nuevoComentario.addUsuario(emailRecibido);
+    const usuarioActualizado = await Usuario.findByPk(email, {
+      include: Comentarios,
+    });
+    let num = 0;
+    let div = usuarioActualizado.comentarios.length;
+    // console.log("numero: ",num,"divisor: ", div,"total :", num/div)
+    await emailRecibido.update({ puntuacion: Math.round(num / div) });
     res.json(nuevoComentario);
   } catch (error) {
     next(error);
