@@ -15,7 +15,9 @@ import RegistroGoogle from "./components/RegistroGoogle/RegistroGoogle";
 import Admin from "./components/Admin/AdminLogin";
 import AdminHome from "./components/Admin/AdminHome";
 import Calendario from "./components/Calendar/Calendar"
-// import Card from "./components/CardViaje/CardViajeUsuario/Conductor/CardViajeUsuario"
+import Temporal from "./components/TemporalColaboracion/Temporal";
+import Colaboracion from "./components/Colaboraciones/Colaboracion";
+
 
 function App() {
   return (
@@ -37,6 +39,8 @@ function App() {
           <Route exact path="/admin" element={<Admin />} />
           <Route exact path="/adminhome" element={<AdminHome />} />
           <Route exact path="/calendario" element={<Calendario />} />
+          <Route exact path="/temporal" element={<Temporal />} />
+          <Route exact path="/colaboraciones/:email" element={<Colaboracion />} />
         </Routes>
       </BrowserRouter>
     </div>

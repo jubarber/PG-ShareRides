@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import fondo from "../../assets/fondo perfil.jpg";
 import "./Perfil.css";
 import { FaEdit } from "react-icons/fa";
-import { AiFillCheckSquare } from "react-icons/ai";
 import Button from "@mui/material/Button";
 import {
   eliminarPerfil,
@@ -26,7 +25,6 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 
 export default function Perfil() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const cookies = new Cookies();
   const cookieNombre = cookies.get("nombre");
   const cookieApellido = cookies.get("apellido");
