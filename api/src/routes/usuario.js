@@ -214,7 +214,7 @@ router.put("/logueado", async (req, res, next) => {
     let usuario = await Usuario.findByPk(email);
     usuario.update({ logueado: true });
     usuario.save();
-    res.send("usuario logueado");
+    res.send("usuario logueado"); 
   } catch (err) {
     next(err);
   }

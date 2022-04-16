@@ -15,9 +15,9 @@ export const COMENTARIOS = "COMENTARIOS";
 export const GET_COMENTARIOS = "GET_COMENTARIOS";
 export const GET_LOCALIDADES = "GET_LOCALIDADES";
 export const ACTUALIZAR_COLABORACION = "ACTUALIZAR_COLABORACION";
-export const GET_COLABORACIONES="GET_COLABORACIONES";
+export const GET_COLABORACIONES = "GET_COLABORACIONES";
 export const ELIMINADO = "ELIMINADO";
-
+export const GET_VIAJES_TOTAL_USUARIO = "GET_VIAJES_TOTAL_USUARIO";
 
 export function getDetalleViaje(viajeId) {
   return function (dispatch) {
@@ -42,7 +42,21 @@ export function getViajesTotal() {
     }
   };
 }
-
+export function getViajesTotalUsuario(email) {
+  return async function (dispatch) {
+    try {
+      let viajesTotal = await axios.get(
+        `http://localhost:3001/api/viaje/totalviajes/${email}`
+      );
+      return dispatch({
+        type: "GET_VIAJES_TOTAL_USUARIO",
+        payload: viajesTotal.data
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
 export function getUsuarios() {
   return async function (dispatch) {
     try {
@@ -406,7 +420,6 @@ export function postColaboracion(input) {
     } catch (err) {
       console.log(err);
     }
-
   };
 }
 
@@ -425,7 +438,7 @@ export function actualizarColaboracion(email) {
       console.log(err);
     }
   };
-};
+}
 
 export function getColaboraciones(email) {
   return async function (dispatch) {
@@ -441,7 +454,7 @@ export function getColaboraciones(email) {
       console.log(err);
     }
   };
-};
+}
 
 export function sumarseAlViaje(payload) {
   // console.log("sumarse", payload);
@@ -487,8 +500,8 @@ export function eliminarPerfil(payload) {
         method: "put",
         url: "http://localhost:3001/api/usuario/eliminarPerfil",
         data: {
-          email: payload,
-        },
+          email: payload
+        }
       });
     } catch (error) {
       console.log(error);
@@ -503,7 +516,7 @@ export function activarPerfil(payload) {
       const usuarioActivado = await axios({
         method: "put",
         url: "http://localhost:3001/api/usuario/activarPerfil",
-        data: {},
+        data: {}
       });
     } catch (error) {}
   };
@@ -520,8 +533,8 @@ export function postReporte(payload) {
           email: payload.email,
           nombre: payload.nombre,
           apellido: payload.apellido,
-          justificacion: payload.justificacion,
-        },
+          justificacion: payload.justificacion
+        }
       });
       return dispatch({ type: "POST_REPORTE", payload: postReporte.data });
     } catch (error) {

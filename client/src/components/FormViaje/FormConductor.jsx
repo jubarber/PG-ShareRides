@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
-import { postViajeConductor } from "../../redux/actions/actions";
+import { postViajeConductor,getViajesTotalUsuario } from "../../redux/actions/actions";
 import fondo from "../../assets/fondo perfil.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import "./FormConductor.css";
@@ -18,6 +18,8 @@ export default function FormPasajero() {
   const navigate = useNavigate();
   const [isChecked, setIsChecked] = useState(new Array(5).fill(false));
   const [errors, setErrors] = useState({});
+    const [temporal, setTemporal] = useState({});
+  const viajesUsuario = useSelector((state) => state.viajesPorUsuario)
   const cookieMail = cookies.get("email");
   const [viaje, setViaje] = useState({
     nombre: cookies.get("nombre"),
@@ -39,6 +41,62 @@ export default function FormPasajero() {
     destino: /^[a-zA-ZÀ-ÿ\s]{4,30}$/,
     dni: /^(?!^0+$)[a-zA-Z0-9]{3,20}$/,
   };
+  useEffect(()=> {
+    dispatch(getViajesTotalUsuario(cookieMail))
+  },[])
+
+
+  useEffect(()=> {
+    if(viajesUsuario.length !== 0){
+      let mes;
+        switch (viaje?.fecha?.toString().substring(4,7)) {
+    case "Jan":
+        mes = 1
+        break
+    case "Feb":
+        mes = 2
+        break
+    case "Mar":
+        mes = 3
+        break
+    case "Apr":
+        mes = 4
+        break
+    case "May":
+        mes = 5
+        break
+    case "Jun":
+        mes = 6
+        break
+    case "Jul":
+        mes = 7
+        break
+    case "Aug":
+        mes = 8
+        break
+    case "Sep":
+        mes = 9
+        break
+    case "Oct":
+        mes = 10
+        break
+    case "Nov":
+        mes = 11
+        break
+    case "Dec":
+        mes = 12
+        break
+    default:
+        break;
+}
+
+      let fechaSi = []
+      viajesUsuario.map(e => e.fecha.substring(6,10) === mes+"-"+viaje?.fecha?.toString().substring(8,10)? fechaSi.push(e): false)
+      if(fechaSi.length !== 0){
+        fechaSi.map(e => e.hora === viaje.hora? console.log("flasheaste confianza"): false)
+      }
+    }
+  },[viaje.hora])
 
   function validacion(viaje) {
     let errors = {};
@@ -50,7 +108,7 @@ export default function FormPasajero() {
     }
     if (!viaje.fecha) {
       errors.fecha = "Debes ingresar la fecha del viaje";
-    } else if (!expresiones.fecha.test(viaje.fecha)) {
+    } else if (!expresiones.fecha?.test(viaje.fecha)) {
       errors.fecha = "Ingresa una fecha valida";
     }
     if (!viaje.origen) {
@@ -95,7 +153,7 @@ export default function FormPasajero() {
 
   function handleOnChange(e) {
     e.preventDefault();
-    console.log(viaje);
+    // console.log(viaje);
     setViaje({
       ...viaje,
       [e.target.name]: e.target.value,

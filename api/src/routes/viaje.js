@@ -151,7 +151,20 @@ router.post("/pasajero", async (req, res, next) => {
     next(error);
   }
 });
-
+router.get("/totalviajes/:email", async (req, res, next) => {
+  try {
+    const {email} = req.params
+    let totalViajes = await Viaje.findAll({ include:{
+      model:Usuario,
+      where:{
+        email,
+      }
+    } });
+    res.send(totalViajes);
+  } catch (error) {
+    next(error);
+  }
+});
 router.get("/totalviajes", async (req, res, next) => {
   try {
     let totalViajes = await Viaje.findAll({ include: Usuario });
@@ -211,7 +224,7 @@ router.get("/searchdestino", async (req, res, next) => {
           .includes(destino.toLowerCase());
       });
     }
-    console.log(filtradoDestino);
+
     res.send(filtradoDestino);
   } catch (error) {
     next(error);
@@ -220,7 +233,7 @@ router.get("/searchdestino", async (req, res, next) => {
 
 router.get("/searchorigen", async (req, res, next) => {
   const { origen } = req.query;
-  console.log("back", origen);
+
   try {
     let filtradoOrigen;
     if (origen) {
@@ -229,13 +242,13 @@ router.get("/searchorigen", async (req, res, next) => {
         return e.dataValues.origen.toLowerCase().includes(origen.toLowerCase());
       });
     }
+
     console.log(filtradoOrigen);
     res.send(filtradoOrigen);
   } catch (err) {
     next(err);
   }
 });
-
 router.get("/:viajeId", async (req, res, next) => {
   const { viajeId } = req.params;
   try {
