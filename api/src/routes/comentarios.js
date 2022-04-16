@@ -38,4 +38,31 @@ router.get("/comentarios", async (req, res, next) => {
   }
 });
 
+router.get("/comentarios/:id", async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    let comentarioById = await Comentarios.findByPk(id, { include: Usuario });
+
+    if (comentarioById) {
+      res.send(comentarioById);
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/eliminarComentarios", async (req, res, next) => {
+  const { id } = req.body;
+  try {
+    let comentarioEliminado = await Comentarios.findByPk(id);
+    comentarioEliminado.update({
+      disponible: false,
+    });
+    comentarioEliminado.save();
+    res.send(comentarioEliminado);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;

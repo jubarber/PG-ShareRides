@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   getDetalleViaje,
   getUsuarioByEmail,
+  sumarseAlViaje,
 } from "../../../redux/actions/actions";
 import "./DetalleViaje.css";
 import { MdSmokeFree, MdMasks, MdPets } from "react-icons/md";
@@ -17,15 +18,23 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { FaUserCircle } from "react-icons/fa";
 import IconButton from "@mui/material/IconButton";
+import Swal from "sweetalert2/dist/sweetalert2";
 
 export const DetalleViajep = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const viaje = useSelector((state) => state.viajePorId);
   const { id } = useParams();
   const { email } = useParams();
   let fechaViaje = "";
 
-  viaje?.fecha?.includes("T")?fechaViaje = viaje?.fecha?.substring(0, 10).split("-").reverse().join("-") : fechaViaje=viaje.fecha
+  viaje?.fecha?.includes("T")
+    ? (fechaViaje = viaje?.fecha
+        ?.substring(0, 10)
+        .split("-")
+        .reverse()
+        .join("-"))
+    : (fechaViaje = viaje.fecha);
 
   useEffect(() => {
     dispatch(getDetalleViaje(id));

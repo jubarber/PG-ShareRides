@@ -33,10 +33,15 @@ export const DetalleViajec = () => {
   const viaje = useSelector((state) => state.viajePorId);
   const { id } = useParams();
   const cookieMail = cookies.get("email");
-  const fechaViaje = "";
+  let fechaViaje = "";
 
-  viaje?.fecha.includes("T")?fechaViaje = viaje?.fecha?.substring(0, 10).split("-").reverse().join("-") : fechaViaje=viaje.fecha
-
+  viaje?.fecha?.includes("T")
+    ? (fechaViaje = viaje?.fecha
+        ?.substring(0, 10)
+        .split("-")
+        .reverse()
+        .join("-"))
+    : (fechaViaje = viaje.fecha);
 
   useEffect(() => {
     dispatch(getDetalleViaje(id));
@@ -49,18 +54,17 @@ export const DetalleViajec = () => {
     quantity: 1,
     usuarioPagador: cookieMail,
     usuarioCobrador: "",
-    viajeId: id
+    viajeId: id,
   });
-  
-  useEffect(()=>{
-    if(viaje.length!==0){
-      setDatosMp({
-      ...datosMp,
-      usuarioCobrador: viaje?.usuarios[0]?.email
-    })
-  }
-  }, [viaje])
 
+  useEffect(() => {
+    if (viaje.length !== 0) {
+      setDatosMp({
+        ...datosMp,
+        usuarioCobrador: viaje?.usuarios[0]?.email,
+      });
+    }
+  }, [viaje]);
 
   const [sumarse, setSumarse] = useState({
     id: id,
@@ -78,13 +82,13 @@ export const DetalleViajec = () => {
   const [redirect, setRedirect] = useState("");
 
   function handleSubmit(e) {
-    e.preventDefault()
-    dispatch(postColaboracion(datosMp))
-      axios
-        .get(
-          `http://localhost:3001/api/mercadopago/${datosMp?.orderId}/${datosMp?.unit_price}`
-        )
-        .then((r) => setRedirect(r.data));
+    e.preventDefault();
+    dispatch(postColaboracion(datosMp));
+    axios
+      .get(
+        `http://localhost:3001/api/mercadopago/${datosMp?.orderId}/${datosMp?.unit_price}`
+      )
+      .then((r) => setRedirect(r.data));
   }
 
   function handleChange(e) {
