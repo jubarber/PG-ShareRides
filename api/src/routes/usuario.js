@@ -12,7 +12,7 @@ router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
         { where: { email: email } },
         { include: Viaje }
       );
-      console.log("soy db usuario", dbUsuario);
+      // console.log("soy db usuario", dbUsuario);
       if (dbUsuario) {
         if (dbUsuario.disponible === false) {
           res.send("usuario pausado");
@@ -134,7 +134,7 @@ router.put("/cambiopassword", async (req, res, next) => {
   const { password, email } = req.body;
   try {
     let usuario = await Usuario.findByPk(email);
-    usuario.update({ password: password });
+    usuario.update({ password: password, disponible: true, logueado: true });
     usuario.save();
     res.send("contraseña cambiada");
   } catch (err) {
@@ -236,6 +236,7 @@ router.put("/modificarperfil", async (req, res, next) => {
   const { email, acercaDeMi, telefono, avatar, dni } = req.body;
   try {
     let usuario = await Usuario.findByPk(email);
+    console.log(usuario);
     if (dni) {
       console.log("entre a dni");
       usuario.update({
@@ -251,6 +252,7 @@ router.put("/modificarperfil", async (req, res, next) => {
       usuario.save();
     }
     if (avatar) {
+      console.log("entre a avatar");
       usuario.update({
         avatar: avatar,
       });
@@ -262,6 +264,7 @@ router.put("/modificarperfil", async (req, res, next) => {
       });
       usuario.save();
     }
+    res.send("usuario modificado");
   } catch (err) {
     next(err);
   }

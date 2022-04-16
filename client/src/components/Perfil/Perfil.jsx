@@ -7,8 +7,10 @@ import { FaEdit } from "react-icons/fa";
 import { AiFillCheckSquare } from "react-icons/ai";
 import Button from "@mui/material/Button";
 import {
+  eliminarComentarios,
   eliminarPerfil,
   getComentarios,
+  getComentariosById,
   getUsuarioByEmail,
   getViajesTotal,
   logout,
@@ -23,6 +25,7 @@ import Rating from "@mui/material/Rating";
 import PaginacionComentarios from "./PaginacionComentarios";
 import axios from "axios";
 import Swal from "sweetalert2/dist/sweetalert2.js";
+import { MdOutlineDeleteOutline } from "react-icons/md";
 
 export default function Perfil() {
   const dispatch = useDispatch();
@@ -35,6 +38,7 @@ export default function Perfil() {
   const [count, setCount] = useState(0);
   const miUsuario = useSelector((state) => state.usuario);
   const comentarios = useSelector((state) => state.comentarios);
+
   const viajes = useSelector((state) => state.viajes);
   const { email } = useParams();
 
@@ -54,8 +58,11 @@ export default function Perfil() {
     telefono: miUsuario.telefono,
     dni: miUsuario.dni,
     acercaDeMi: miUsuario.acercaDeMi,
-    avatar: cookieAvatar,
+    avatar: "",
   });
+
+  console.log("miUsuario", miUsuario);
+  console.log("usuario", usuario);
 
   let viajesUsuarios = viajes.map((e) => e.usuarios.map((e) => e.email));
 
@@ -156,26 +163,48 @@ export default function Perfil() {
   };
 
   const handleUpdate = (e) => {
-    e.preventDefault();
     dispatch(modificacionPerfil(usuario));
-    // navigate("/home");
-    console.log("datitaaa", subiendo);
-    const data = new FormData();
-    data.append("file", subiendo);
-    data.append("upload_preset", "sharerides");
-    // setLoading(true)
-    axios
-      .post("https://api.cloudinary.com/v1_1/dvmrweg0f/image/upload", data)
-      .then((r) => {
-        setImagen(r.data.url);
-        setUsuario({ avatar: r.data.url });
-      });
+    navigate("/home");
   };
 
-  const onChangeSubiendo = (e) => {
-    e.preventDefault();
-    setSubiendo(e.target.files[0]);
+  const CLOUDINARY_URL =
+    "https://api.cloudinary.com/v1_1/dvmrweg0f/image/upload";
+  const CLOUDINARY_UPLOAD_PRESETS = "sharerides";
+
+  const handleChangeUpdateImage = async (e) => {
+    console.log(e);
+    const file = e.target.files[0];
+    const data = new FormData();
+    data.append("file", file);
+    data.append("upload_preset", CLOUDINARY_UPLOAD_PRESETS);
+
+    const response = await axios
+      .post(CLOUDINARY_URL, data)
+      .then((res) => res.data);
+    console.log(response);
+
+    setUsuario({
+      ...usuario,
+      avatar: response.url,
+    });
   };
+  //   console.log("datitaaa", subiendo);
+  //   const data = new FormData();
+  //   data.append("file", subiendo);
+  //   data.append("upload_preset", "sharerides");
+  //   // setLoading(true)
+  //   await axios
+  //     .post("https://api.cloudinary.com/v1_1/dvmrweg0f/image/upload", data)
+  //     .then((r) => {
+  //       setImagen(r.data.url);
+  //       setUsuario({ avatar: r.data.url });
+  //     });
+  // };
+
+  // const onChangeSubiendo = (e) => {
+  //   e.preventDefault();
+  //   setSubiendo(e.target.files[0]);
+  // };
 
   const handleEliminado = (e) => {
     Swal.fire({
@@ -197,13 +226,35 @@ export default function Perfil() {
     });
   };
 
+  const handleBorrarComentario = (e) => {
+    console.log(e);
+    Swal.fire({
+      title: "Estas Seguro?",
+      text: "No podras revertir la decision!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, borrarlo!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(eliminarComentarios(e.target.value));
+        Swal.fire(
+          "Borrado!",
+          "Tu Comentario ha sido eliminado con exito.",
+          "success"
+        );
+      }
+    });
+  };
+
   return (
     <div className="perfil">
       <NavBar />
       <div className="contenedor-perfil">
         <div className="contenedor-imagen">
           <div className="img-perfil">
-            <img src={miUsuario.avatar ? miUsuario.avatar : user} alt="" />
+            <img src={miUsuario.avatar} alt="" />
           </div>
           <div className="bio-perfil">
             <h1>
@@ -314,11 +365,16 @@ export default function Perfil() {
                 <>
                   <input
                     type="file"
+                    name="avatar"
+                    onChange={(e) => handleChangeUpdateImage(e)}
+                  />
+                  {/* <input
+                    type="file"
                     className="input-perfil"
                     onChange={onChangeSubiendo}
                     name="avatar"
                     disabled={habilitarAvatar}
-                  />
+                  /> */}
                   {/* <input
                     type="submit"
                     onClick={uploadImage}
@@ -391,25 +447,37 @@ export default function Perfil() {
         <div className="tableroComentarios">
           <div className="contenedor-comentarios">
             {ComentariosTotales &&
-              ComentariosTotales.map((e) => (
-                <div className="resenas-card">
-                  <div className="encabezado">
-                    <img src={e.avatar ? e.avatar : user} alt="" />
-                    <h1>
-                      {e.nombre} {e.apellido}
-                    </h1>
+              ComentariosTotales.map((e) =>
+                e.disponible === true ? (
+                  <div className="resenas-card">
+                    <div className="encabezado">
+                      <img src={e.avatar ? e.avatar : user} alt="" />
+                      <h1>
+                        {e.nombre} {e.apellido}
+                      </h1>
+                    </div>
+                    <Rating
+                      className="calificacion"
+                      value={e.calificacion}
+                      readOnly
+                    />
+                    <div className="texto">
+                      <p>{e.comentarios}</p>
+                    </div>
+                    <div className="comentarios-abajo">
+                      <button
+                        type="submit"
+                        value={e.id}
+                        onClick={(e) => handleBorrarComentario(e)}
+                      >
+                        {e.id}
+                      </button>
+
+                      <p>{e.dia}</p>
+                    </div>
                   </div>
-                  <Rating
-                    className="calificacion"
-                    value={e.calificacion}
-                    readOnly
-                  />
-                  <div className="texto">
-                    <p>{e.comentarios}</p>
-                  </div>
-                  <p className="dia">{e.dia}</p>
-                </div>
-              ))}
+                ) : null
+              )}
           </div>
           <div className="pag">
             <PaginacionComentarios

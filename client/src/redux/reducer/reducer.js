@@ -12,6 +12,7 @@ import {
   COMENTARIOS,
   GET_COMENTARIOS,
   GET_LOCALIDADES,
+  GET_COMENTARIO_BY_ID,
 } from "../actions/actions.js";
 
 const initialState = {
@@ -22,6 +23,7 @@ const initialState = {
   usuario: [],
   error: "",
   comentarios: [],
+  comentarioPorId: [],
   localidades: [],
 };
 
@@ -89,6 +91,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         localidades: action.payload,
       };
+    case GET_COMENTARIO_BY_ID: {
+      return {
+        ...state,
+        comentarioPorId: action.payload,
+      };
+    }
     default:
       return { ...state };
   }

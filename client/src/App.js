@@ -14,7 +14,8 @@ import Login from "./components/Login/Login";
 import RegistroGoogle from "./components/RegistroGoogle/RegistroGoogle";
 import Admin from "./components/Admin/AdminLogin";
 import AdminHome from "./components/Admin/AdminHome";
-import Calendario from "./components/Calendar/Calendar"
+import Calendario from "./components/Calendar/Calendar";
+import RestaurarCuenta from "./components/RestaurarCuenta/RestaurarCuenta";
 // import Card from "./components/CardViaje/CardViajeUsuario/Conductor/CardViajeUsuario"
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
           <Route exact path="/admin" element={<Admin />} />
           <Route exact path="/adminhome" element={<AdminHome />} />
           <Route exact path="/calendario" element={<Calendario />} />
+          <Route exact path="/restaurarCuenta" element={<RestaurarCuenta />} />
         </Routes>
       </BrowserRouter>
     </div>

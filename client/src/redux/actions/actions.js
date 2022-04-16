@@ -15,6 +15,7 @@ export const COMENTARIOS = "COMENTARIOS";
 export const GET_COMENTARIOS = "GET_COMENTARIOS";
 export const GET_LOCALIDADES = "GET_LOCALIDADES";
 export const ELIMINADO = "ELIMINADO";
+export const GET_COMENTARIO_BY_ID = "GET_COMENTARIO_BY_ID";
 
 export function getDetalleViaje(viajeId) {
   return function (dispatch) {
@@ -358,6 +359,43 @@ export function getComentarios() {
   };
 }
 
+export function getComentariosById(id) {
+  return async function (dispatch) {
+    try {
+      let comentarioById = await axios(
+        `http://localhost:3001/api/comentarios/comentarios/${id}`
+      );
+      return dispatch({
+        type: "GET_COMENTARIO_BY_ID",
+        payload: comentarioById.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function eliminarComentarios(payload) {
+  console.log(payload);
+  return async function (dispatch) {
+    try {
+      let comentarioEliminado = await axios({
+        method: "put",
+        url: "http://localhost:3001/api/comentarios/eliminarComentarios",
+        data: {
+          id: payload,
+        },
+      });
+      return dispatch({
+        type: "COMENTARIOS_ELIMINADOS",
+        payload: comentarioEliminado.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
 export function filterPerCard(payload) {
   return {
     type: FILTERTYPE,
@@ -476,7 +514,9 @@ export function activarPerfil(payload) {
       const usuarioActivado = await axios({
         method: "put",
         url: "http://localhost:3001/api/usuario/activarPerfil",
-        data: {},
+        data: {
+          email: payload,
+        },
       });
     } catch (error) {}
   };
@@ -510,6 +550,24 @@ export function getReporte() {
         "http://localhost:3001/api/reportes/reportes"
       );
       return dispatch({ type: "REPORTES", payload: reportes.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function cambioPassword(payload) {
+  return async function (dispatch) {
+    try {
+      let cambio = await axios({
+        method: "put",
+        url: "http://localhost:3001/api/usuario/cambiopassword",
+        data: {
+          email: payload.email,
+          password: payload.password,
+        },
+      });
+      return dispatch({ type: "CAMBIO_PASSWORD", payload: cambio.data });
     } catch (error) {
       console.log(error);
     }
