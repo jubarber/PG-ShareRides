@@ -12,7 +12,7 @@ import SearchBar from "../SearchBar/SearchBar";
 
 export function Filtros() {
   const dispatch = useDispatch();
-  const viajesFiltrados = useSelector((state) => state.viajesFiltrados?.flat());
+  const viajesFiltrados = useSelector((state) => state.viajesFiltrados&&state.viajesFiltrados.flat());
   const viajesTotal = useSelector((state) => state.viajes);
   const [isChecked, setIsChecked] = useState(new Array(4).fill(false));
   const [asiento, setAsiento] = useState("");

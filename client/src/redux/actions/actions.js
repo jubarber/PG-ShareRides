@@ -18,7 +18,7 @@ export const GET_LOCALIDADES = "GET_LOCALIDADES";
 export function getDetalleViaje(viajeId) {
   return function (dispatch) {
     axios
-      .get(`http://localhost:3001/api/viaje/${viajeId}`)
+      .get(`/api/viaje/${viajeId}`)
       .then((viaje) =>
         dispatch({ type: "GET_DETALLE_VIAJE", payload: viaje.data })
       )
@@ -30,7 +30,7 @@ export function getViajesTotal() {
   return async function (dispatch) {
     try {
       let viajesTotal = await axios.get(
-        "http://localhost:3001/api/viaje/totalviajes"
+        "/api/viaje/totalviajes"
       );
       return dispatch({ type: "GET_VIAJES_TOTAL", payload: viajesTotal.data });
     } catch (err) {
@@ -43,7 +43,7 @@ export function getUsuarios() {
   return async function (dispatch) {
     try {
       let usuarios = await axios.get(
-        "http://localhost:3001/api/usuario/usuarios"
+        "/api/usuario/usuarios"
       );
       return dispatch({ type: "GET_USUARIOS", payload: usuarios.data });
     } catch (err) {
@@ -57,7 +57,7 @@ export function filtroChecks(payload, asiento) {
   return async function (dispatch) {
     let viajes = await axios({
       method: "get",
-      url: `http://localhost:3001/api/viaje/filtro/${payload[0]}/${payload[1]}/${payload[2]}/${payload[3]}?asientosAOcupar=${asiento}`
+      url: `/api/viaje/filtro/${payload[0]}/${payload[1]}/${payload[2]}/${payload[3]}?asientosAOcupar=${asiento}`
     });
     return dispatch({ type: "FILTRO_CHECKS", payload: viajes.data });
   };
@@ -70,7 +70,7 @@ export function registroUsuario(payload) {
     try {
       const nuevoUsuario = await axios({
         method: "post",
-        url: "http://localhost:3001/api/usuario/registro",
+        url: "/api/usuario/registro",
         data: {
           email: payload.email,
           nombre: payload.nombre,
@@ -96,7 +96,7 @@ export function postViajePasajero(checkboxes, viaje) {
     try {
       let pasajero = await axios({
         method: "post",
-        url: "http://localhost:3001/api/viaje/pasajero",
+        url: "/api/viaje/pasajero",
         data: {
           aceptaFumador: checkboxes[0],
           aceptaMascota: checkboxes[1],
@@ -127,7 +127,7 @@ export function postVehiculo(payload) {
     try {
       let viaje = await axios({
         method: "post",
-        url: "http://localhost:3001/api/vehiculo/",
+        url: "/api/vehiculo/",
         data: {
           patente: payload.patente,
           marca: payload.marca,
@@ -149,7 +149,7 @@ export function postViajeConductor(checkboxes, viaje) {
     try {
       let conductor = await axios({
         method: "post",
-        url: "http://localhost:3001/api/viaje/conductor",
+        url: "/api/viaje/conductor",
         data: {
           aceptaFumador: checkboxes[0],
           aceptaMascota: checkboxes[1],
@@ -183,7 +183,7 @@ export function mailNuevaPassword(payload) {
     try {
       let mail = await axios({
         method: "post",
-        url: "http://localhost:3001/api/usuario/mailnuevapassword",
+        url: "/api/usuario/mailnuevapassword",
         data: {
           email: payload.email,
           nombre: payload.nombre
@@ -201,7 +201,7 @@ export function mailModificarPerfil(payload) {
     try {
       let modificarPerfil = await axios({
         method: "post",
-        url: "http://localhost:3001/api/usuario/emailmodificarperfil",
+        url: "/api/usuario/emailmodificarperfil",
         data: {
           email: payload.email,
           nombre: payload.nombre
@@ -223,7 +223,7 @@ export function modificacionPerfil(payload) {
     try {
       let perfilModificado = await axios({
         method: "put",
-        url: "http://localhost:3001/api/usuario/modificarperfil",
+        url: "/api/usuario/modificarperfil",
         data: {
           email: payload.email,
           acercaDeMi: payload.acercaDeMi,
@@ -247,7 +247,7 @@ export function login(payload) {
     try {
       let logueado = await axios({
         method: "put",
-        url: "http://localhost:3001/api/usuario/logueado",
+        url: "/api/usuario/logueado",
         data: {
           email: payload
         }
@@ -264,7 +264,7 @@ export function logout(payload) {
     try {
       let deslogueado = await axios({
         method: "put",
-        url: "http://localhost:3001/api/usuario/deslogueado",
+        url: "/api/usuario/deslogueado",
         data: {
           email: payload
         }
@@ -283,7 +283,7 @@ export function searchOrigen(origen) {
     try {
       console.log("action origen", origen);
       let search = await axios.get(
-        `http://localhost:3001/api/viaje/searchorigen?origen=${origen}`
+        `/api/viaje/searchorigen?origen=${origen}`
       );
       return dispatch({ type: "SEARCHORIGEN", payload: search.data });
     } catch (error) {
@@ -296,7 +296,7 @@ export function searchDestino(destino) {
     console.log("action destino", destino);
     try {
       let search = await axios.get(
-        `http://localhost:3001/api/viaje/searchdestino?destino=${destino}`
+        `/api/viaje/searchdestino?destino=${destino}`
       );
       return dispatch({ type: "SEARCHDESTINO", payload: search.data });
     } catch (error) {
@@ -311,7 +311,7 @@ export function getUsuarioByEmail(email) {
     try {
       let usuario = await axios({
         method: "get",
-        url: `http://localhost:3001/api/usuario/usuarios/${email}`,
+        url: `/api/usuario/usuarios/${email}`,
       });
       return dispatch({ type: "USUARIO_MAIL", payload: usuario.data });
     } catch (err) {
@@ -326,7 +326,7 @@ export function postComentarios(payload) {
     try {
       let comentario = await axios({
         method: "post",
-        url: "http://localhost:3001/api/comentarios/postComentarios",
+        url: "/api/comentarios/postComentarios",
         data: {
           email: payload.email,
           nombre: payload.nombre,
@@ -346,7 +346,7 @@ export function getComentarios() {
   return async function (dispatch) {
     try {
       let comentarios = await axios(
-        "http://localhost:3001/api/comentarios/comentarios"
+        "/api/comentarios/comentarios"
       );
       return dispatch({ type: "GET_COMENTARIOS", payload: comentarios.data });
     } catch (error) {
@@ -367,7 +367,7 @@ export function postOrder(usuarioId) {
     try {
       const newOrder = await axios({
         method: "post",
-        url: "http://localhost:3001/api/order",
+        url: "/api/order",
         data: { usuarioId: usuarioId },
       });
       return dispatch({
@@ -385,7 +385,7 @@ export function postColaboracion(input) {
     try {
       await axios({
         method: "post",
-        url: "http://localhost:3001/api/colaboracion/nuevaColaboracion",
+        url: "/api/colaboracion/nuevaColaboracion",
         data: {
           title: input.title,
           unit_price: input.unit_price,
@@ -404,7 +404,7 @@ export function getColaboracion(email) {
   return async function (dispatch) {
     try {
       const colaboracion = await axios.get(
-        `http://localhost:3001/api/colaboracion/usuario/${email}`
+        `/api/colaboracion/usuario/${email}`
       );
       return dispatch({ type: "GET_COLABORACION", payload: colaboracion.data });
     } catch (err) {
@@ -419,7 +419,7 @@ export function sumarseAlViaje(payload) {
     try {
       const sumarse = await axios({
         method: "PUT",
-        url: "http://localhost:3001/api/viaje/sumarse",
+        url: "/api/viaje/sumarse",
         data: {
           id: payload.id,
           email: payload.email,
@@ -437,7 +437,7 @@ export function modificarViaje(payload) {
     try {
       const viaje = await axios({
         method: "PUT",
-        url: "http://localhost:3001/api/viaje/modificarViaje",
+        url: "/api/viaje/modificarViaje",
         data: {
           asientosAOcupar: payload.asientosAOcupar,
           id: payload.id,

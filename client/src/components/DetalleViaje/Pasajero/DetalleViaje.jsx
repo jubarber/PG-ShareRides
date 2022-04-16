@@ -53,7 +53,7 @@ export const DetalleViajep = () => {
   const handleColaborar = async () => {
     await dispatch(postOrder(cookieMail)).then((data) => {
       // console.log(data.payload[0])
-      setDatosMp({ ...datosMp, orderId: data?.payload[0].id });
+      setDatosMp({ ...datosMp, orderId: data&&data.payload[0].id});
     });
     console.log("handle colaborar", datosMp);
   };
@@ -64,7 +64,7 @@ export const DetalleViajep = () => {
     e.preventDefault()(
       axios
         .get(
-          `http://localhost:3001/api/mercadopago/${datosMp?.orderId}/${datosMp?.unit_price}`
+          `http://localhost:3001/api/mercadopago/${datosMp&&datosMp.orderId}/${datosMp&&datosMp.unit_price}`
         )
         .then((r) => setRedirect(r.data))
     );
@@ -90,11 +90,11 @@ export const DetalleViajep = () => {
       navigate("/home");
     });
   }
-
-  let viajeUsuarios = viaje.usuarios?.map((e) => e.email);
-  let viajesTotales = viajeUsuarios?.map((e) => e.includes(cookieMail));
-
-  let arrayPasajeres = viaje.usuarios?.map((e) => e);
+  
+  let viajeUsuarios =viaje.usuarios&&viaje.usuarios.map((e)=>e.email);
+  let viajesTotales = viajeUsuarios&& viajeUsuarios.map((e) => e.includes(cookieMail));
+  
+  let arrayPasajeres = viaje.usuarios && viaje.usuarios.map((e) => e);
 
   return (
     <div className="container-detalle">
@@ -134,7 +134,7 @@ export const DetalleViajep = () => {
             <button className="detalle-mensaje">
               <Link to="/login">Enviar mensaje</Link>
             </button>
-            {viajesTotales?.includes(true) ? null : (
+            {viajesTotales && viajesTotales.includes(true) ? null : (
               <form onSubmit={(e) => handleSumarse(e)}>
                 <input
                   className="detalle-mensaje"
@@ -267,7 +267,7 @@ export const DetalleViajep = () => {
                   maxWidth: 360,
                 }}
               >
-                {arrayPasajeres?.map((e) => (
+                {arrayPasajeres && arrayPasajeres.map((e) => (
                   <ListItem
                     key={e.email}
                     disableGutters

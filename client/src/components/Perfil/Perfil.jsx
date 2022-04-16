@@ -95,10 +95,10 @@ export default function Perfil() {
   const [comentariosPorPagina, setComentariosPorPagina] = useState(3);
   const ultimoComentario = pagina * comentariosPorPagina;
   const primerComentario = ultimoComentario - comentariosPorPagina;
-  const ComentariosTotales = miUsuario.comentarios?.slice(
+  const ComentariosTotales = miUsuario.comentarios&&miUsuario.comentarios.slice(
     primerComentario,
     ultimoComentario
-  );
+  )
 
   const paginacion = (pageNum) => {
     setPagina(pageNum);
@@ -353,7 +353,7 @@ export default function Perfil() {
           <div className="pag">
             <PaginacionComentarios
               comentariosPorPagina={comentariosPorPagina}
-              comentarios={comentarios?.length}
+              comentarios={comentarios&&comentarios.length}
               paginacion={paginacion}
               pagina={pagina}
               setPagina={setPagina}

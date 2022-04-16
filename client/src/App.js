@@ -1,3 +1,4 @@
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "./components/Landing/LandingPage";
 import Home from "./components/Home/Home";
@@ -14,10 +15,10 @@ import Login from "./components/Login/Login";
 import RegistroGoogle from "./components/RegistroGoogle/RegistroGoogle";
 import Admin from "./components/Admin/AdminLogin";
 import AdminHome from "./components/Admin/AdminHome";
-import Calendario from "./components/Calendar/Calendar"
+import Calendario from "./components/Calendar/Calendar";
 // import Card from "./components/CardViaje/CardViajeUsuario/Conductor/CardViajeUsuario"
 
-function App() {
+export default function App() {
   return (
     <div className="App">
       <BrowserRouter>
@@ -42,4 +43,3 @@ function App() {
     </div>
   );
 }
-export default App;
