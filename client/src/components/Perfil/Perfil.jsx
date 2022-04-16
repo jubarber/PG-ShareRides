@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import fondo from "../../assets/fondo perfil.jpg";
 import "./Perfil.css";
@@ -176,23 +176,23 @@ export default function Perfil() {
   };
 
   const handleEliminado = (e) => {
-    Swal.fire({
-      title: "Estas Seguro?🥺",
-      text: "Luego podras restaurar tu cuenta!",
-      icon: "warning",
-      showCancelButton: true,
-      cancelButtonText: "Cancelar",
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Si, borrar!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        dispatch(eliminarPerfil(cookieEmail));
-        dispatch(logout(cookieEmail));
-        navigate("/");
-        Swal.fire("Borrada!", "Tu cuenta ha sido eliminada!", "success");
-      }
-    });
+    // Swal.fire({
+    //   title: "Estas Seguro?🥺",
+    //   text: "Luego podras restaurar tu cuenta!",
+    //   icon: "warning",
+    //   showCancelButton: true,
+    //   cancelButtonText: "Cancelar",
+    //   confirmButtonColor: "#3085d6",
+    //   cancelButtonColor: "#d33",
+    //   confirmButtonText: "Si, borrar!",
+    // }).then((result) => {
+    //   if (result.isConfirmed) {
+    //     dispatch(eliminarPerfil(cookieEmail));
+    //     dispatch(logout(cookieEmail));
+    //     navigate("/");
+    //     Swal.fire("Borrada!", "Tu cuenta ha sido eliminada!", "success");
+    //   }
+    // });
   };
 
   return (
