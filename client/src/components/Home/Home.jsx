@@ -90,7 +90,7 @@ export default function Home() {
                         <CardViajeUsuarioPasajere
                           origen={e.origen}
                           destino={e.destino}
-                          fecha={e.fecha}
+                          fecha={e?.fecha?.includes("T")? e?.fecha?.substring(0, 10).split("-").reverse().join("-") : e.fecha}
                           hora={e.hora}
                           asientosAOcupar={e.asientosAOcupar}
                           aceptaEquipaje={e.aceptaEquipaje}
@@ -131,7 +131,7 @@ export default function Home() {
                         <CardViajeUsuarioConductore
                           origen={e.origen}
                           destino={e.destino}
-                          fecha={e.fecha}
+                          fecha={  e?.fecha?.includes("T")? e?.fecha?.substring(0, 10).split("-").reverse().join("-") : e.fecha}
                           hora={e.hora}
                           asientosAOcupar={e.asientosAOcupar}
                           aceptaEquipaje={e.aceptaEquipaje}

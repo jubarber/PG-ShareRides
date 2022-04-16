@@ -14,8 +14,10 @@ export const MODIFICAR_PERFIL = "MODIFICAR_PERFIL";
 export const COMENTARIOS = "COMENTARIOS";
 export const GET_COMENTARIOS = "GET_COMENTARIOS";
 export const GET_LOCALIDADES = "GET_LOCALIDADES";
-export const ELIMINADO = "ELIMINADO";
 export const GET_COMENTARIO_BY_ID = "GET_COMENTARIO_BY_ID";
+export const ACTUALIZAR_COLABORACION = "ACTUALIZAR_COLABORACION";
+export const GET_COLABORACIONES = "GET_COLABORACIONES";
+export const ELIMINADO = "ELIMINADO";
 
 export function getDetalleViaje(viajeId) {
   return function (dispatch) {
@@ -376,7 +378,7 @@ export function getComentariosById(id) {
 }
 
 export function eliminarComentarios(payload) {
-  console.log(payload);
+  console.log("elimianar", payload);
   return async function (dispatch) {
     try {
       let comentarioEliminado = await axios({
@@ -403,13 +405,13 @@ export function filterPerCard(payload) {
   };
 }
 
-export function postOrder(usuarioId) {
+export function postOrder(usuarioPagador) {
   return async function (dispatch) {
     try {
       const newOrder = await axios({
         method: "post",
         url: "http://localhost:3001/api/order",
-        data: { usuarioId: usuarioId },
+        data: { usuarioPagador: usuarioPagador },
       });
       return dispatch({
         type: "NEW_ORDER",
@@ -424,6 +426,7 @@ export function postOrder(usuarioId) {
 export function postColaboracion(input) {
   return async function (dispatch) {
     try {
+      console.log(input);
       await axios({
         method: "post",
         url: "http://localhost:3001/api/colaboracion/nuevaColaboracion",
@@ -431,8 +434,10 @@ export function postColaboracion(input) {
           title: input.title,
           unit_price: input.unit_price,
           quantity: input.quantity,
-          usuarioId: input.usuarioId,
+          usuarioPagador: input.usuarioPagador,
           orderId: input.orderId,
+          usuarioCobrador: input.usuarioCobrador,
+          viajeId: input.viajeId,
         },
       });
     } catch (err) {
@@ -441,13 +446,33 @@ export function postColaboracion(input) {
   };
 }
 
-export function getColaboracion(email) {
+export function actualizarColaboracion(email) {
   return async function (dispatch) {
     try {
-      const colaboracion = await axios.get(
-        `http://localhost:3001/api/colaboracion/usuario/${email}`
+      const colaboracion = await axios({
+        method: "put",
+        url: `http://localhost:3001/api/colaboracion/${email}`,
+      });
+      return dispatch({
+        type: "ACTUALIZAR_COLABORACION",
+        payload: colaboracion.data,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
+
+export function getColaboraciones(email) {
+  return async function (dispatch) {
+    try {
+      let colaboraciones = await axios.get(
+        `http://localhost:3001/api/colaboracion/colaboraciones/${email}`
       );
-      return dispatch({ type: "GET_COLABORACION", payload: colaboracion.data });
+      return dispatch({
+        type: "GET_COLABORACIONES",
+        payload: colaboraciones.data,
+      });
     } catch (err) {
       console.log(err);
     }
@@ -455,7 +480,7 @@ export function getColaboracion(email) {
 }
 
 export function sumarseAlViaje(payload) {
-  console.log("sumarse", payload);
+  // console.log("sumarse", payload);
   return async function (dispatch) {
     try {
       const sumarse = await axios({
@@ -501,6 +526,10 @@ export function eliminarPerfil(payload) {
           email: payload,
         },
       });
+      return dispatch({
+        type: "ELIMINAR_PERFIL",
+        payload: usuarioEliminado.data,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -518,7 +547,9 @@ export function activarPerfil(payload) {
           email: payload,
         },
       });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 }
 

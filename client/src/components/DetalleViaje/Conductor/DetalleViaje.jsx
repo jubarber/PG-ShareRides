@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   getDetalleViaje,
   postOrder,
+  postColaboracion,
   sumarseAlViaje,
   modificarViaje,
 } from "../../../redux/actions/actions";
@@ -32,14 +33,38 @@ export const DetalleViajec = () => {
   const viaje = useSelector((state) => state.viajePorId);
   const { id } = useParams();
   const cookieMail = cookies.get("email");
+  let fechaViaje = "";
+
+  viaje?.fecha?.includes("T")
+    ? (fechaViaje = viaje?.fecha
+        ?.substring(0, 10)
+        .split("-")
+        .reverse()
+        .join("-"))
+    : (fechaViaje = viaje.fecha);
 
   useEffect(() => {
     dispatch(getDetalleViaje(id));
   }, [id]);
+
   const [datosMp, setDatosMp] = useState({
     unit_price: "",
     orderId: "",
+    title: "Colaboracion Viaje",
+    quantity: 1,
+    usuarioPagador: cookieMail,
+    usuarioCobrador: "",
+    viajeId: id,
   });
+
+  useEffect(() => {
+    if (viaje.length !== 0) {
+      setDatosMp({
+        ...datosMp,
+        usuarioCobrador: viaje?.usuarios[0]?.email,
+      });
+    }
+  }, [viaje]);
 
   const [sumarse, setSumarse] = useState({
     id: id,
@@ -47,22 +72,23 @@ export const DetalleViajec = () => {
   });
 
   const handleColaborar = async () => {
+    // console.log(viaje.usuarios[0])
     await dispatch(postOrder(cookieMail)).then((data) => {
       setDatosMp({ ...datosMp, orderId: data?.payload[0].id });
     });
-    console.log("handle colaborar", datosMp);
+    // console.log("handle colaborar", datosMp);
   };
 
   const [redirect, setRedirect] = useState("");
 
   function handleSubmit(e) {
-    e.preventDefault()(
-      axios
-        .get(
-          `http://localhost:3001/api/mercadopago/${datosMp?.orderId}/${datosMp?.unit_price}`
-        )
-        .then((r) => setRedirect(r.data))
-    );
+    e.preventDefault();
+    dispatch(postColaboracion(datosMp));
+    axios
+      .get(
+        `http://localhost:3001/api/mercadopago/${datosMp?.orderId}/${datosMp?.unit_price}`
+      )
+      .then((r) => setRedirect(r.data));
   }
 
   function handleChange(e) {

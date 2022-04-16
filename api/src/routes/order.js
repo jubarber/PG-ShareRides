@@ -3,10 +3,10 @@ const { Order, Order_detail } = require("../db.js");
 
 router.post("/", async (req, res, next) => {
   try {
-    const { usuarioId } = req.body;
-    console.log(usuarioId);
+    const { usuarioPagador } = req.body;
+    console.log(usuarioPagador);
     const newOrder = await Order.findOrCreate({
-      where: { usuarioId: usuarioId }
+      where: { usuarioPagador: usuarioPagador }
     });
     res.send(newOrder);
   } catch (err) {

@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import fondo from "../../assets/fondo perfil.jpg";
 import "./Perfil.css";
 import { FaEdit } from "react-icons/fa";
-import { AiFillCheckSquare } from "react-icons/ai";
 import Button from "@mui/material/Button";
 import {
   eliminarComentarios,
@@ -61,7 +60,7 @@ export default function Perfil() {
     avatar: "",
   });
 
-  console.log("miUsuario", miUsuario);
+  console.log("miUsuario", cookieEmail);
   console.log("usuario", usuario);
 
   let viajesUsuarios = viajes.map((e) => e.usuarios.map((e) => e.email));
@@ -147,11 +146,11 @@ export default function Perfil() {
   };
 
   const handleSubmitReportes = (e) => {
-    e.preventDefault();
     dispatch(postReporte(reportes));
     setReportes({
       justificacion: "",
     });
+    navigate("/home");
   };
 
   const handleSubmitComentarios = (e) => {
@@ -188,23 +187,6 @@ export default function Perfil() {
       avatar: response.url,
     });
   };
-  //   console.log("datitaaa", subiendo);
-  //   const data = new FormData();
-  //   data.append("file", subiendo);
-  //   data.append("upload_preset", "sharerides");
-  //   // setLoading(true)
-  //   await axios
-  //     .post("https://api.cloudinary.com/v1_1/dvmrweg0f/image/upload", data)
-  //     .then((r) => {
-  //       setImagen(r.data.url);
-  //       setUsuario({ avatar: r.data.url });
-  //     });
-  // };
-
-  // const onChangeSubiendo = (e) => {
-  //   e.preventDefault();
-  //   setSubiendo(e.target.files[0]);
-  // };
 
   const handleEliminado = (e) => {
     Swal.fire({
@@ -243,7 +225,9 @@ export default function Perfil() {
           "Borrado!",
           "Tu Comentario ha sido eliminado con exito.",
           "success"
-        );
+        ).then(() => {
+          navigate("/home");
+        });
       }
     });
   };
@@ -368,18 +352,6 @@ export default function Perfil() {
                     name="avatar"
                     onChange={(e) => handleChangeUpdateImage(e)}
                   />
-                  {/* <input
-                    type="file"
-                    className="input-perfil"
-                    onChange={onChangeSubiendo}
-                    name="avatar"
-                    disabled={habilitarAvatar}
-                  /> */}
-                  {/* <input
-                    type="submit"
-                    onClick={uploadImage}
-                    value="Cargar imagen"
-                  /> */}
                 </>
               ) : (
                 <label>{miUsuario.avatar}</label>
@@ -470,7 +442,7 @@ export default function Perfil() {
                         value={e.id}
                         onClick={(e) => handleBorrarComentario(e)}
                       >
-                        {e.id}
+                        Eliminar
                       </button>
 
                       <p>{e.dia}</p>
