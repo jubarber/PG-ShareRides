@@ -1,6 +1,7 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
+
     sequelize.define('order', {
         //Mercado pago 👇
         payment_id: {
@@ -25,3 +26,4 @@ module.exports = (sequelize) => {
     });
 
 };
+
