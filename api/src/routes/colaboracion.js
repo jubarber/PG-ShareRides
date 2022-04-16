@@ -3,47 +3,66 @@ const { Colaboracion } = require("../db.js");
 
 router.post("/nuevaColaboracion", async (req, res, next) => {
   try {
-    const { unit_price, usuarioPagador, title, quantity, orderId } = req.body;
+    const {
+      unit_price,
+      usuarioPagador,
+      title,
+      quantity,
+      orderId,
+      usuarioCobrador,
+      viajeId
+    } = req.body;
+    console.log(unit_price, orderId)
     let nuevaColaboracion;
     if (orderId && quantity && title && usuarioPagador && unit_price) {
-      nuevaColaboracion = await Colaboracion?.create({
-        unit_price: parseInt(unit_price),
-        usuarioPagador: usuarioPagador,
-        title: title,
-        quantity: quantity,
-        orderId: orderId
+      let colabSinPagar = await Colaboracion.findAll({
+        where: { usuarioPagador: usuarioPagador, abonado: false }
       });
-    }
-    // console.log("pago", nuevaColaboracion);
-    res.send(nuevaColaboracion);
+      if (colabSinPagar.length!==0) res.send(colabSinPagar);
+      else {
+        nuevaColaboracion = await Colaboracion?.create({
+          unit_price: parseInt(unit_price),
+          usuarioPagador: usuarioPagador,
+          title: title,
+          quantity: quantity,
+          orderId: orderId,
+          usuarioCobrador: usuarioCobrador,
+          viajeId: viajeId
+        });
+      }
+      res.send(nuevaColaboracion);
+    } //fin del else
   } catch (err) {
     next(err);
   }
 });
 
-router.get("/colaboraciones", async (req, res, next) => {
+router.get("/colaboraciones/:email", async (req, res, next) => {
   try {
-    const colaboracion = await Colaboracion?.findAll({ where: { abonado: false } });
-    if(colaboracion)res.send(colaboracion)
-    else res.send("no hay colaboraciones")
+    const { email } = req.params;
+    const colaboraciones = await Colaboracion?.findAll({
+      where: { usuarioPagador: email }
+    });
+    res.send(colaboraciones)
   } catch (err) {
     next(err);
   }
 });
 
-router.get("/usuario/:email", async (req, res, next) => {
+router.put("/:email", async (req, res, next) => {
   try {
     const { email } = req.params;
     const colaboracion = await Colaboracion?.findOne({
       where: { usuarioPagador: email, abonado: false }
     });
-    if (colaboracion) res.send(colaboracion);
-    else res.send("no hay colaboracion");
+    if (colaboracion) {
+      colaboracion.update({ abonado: true });
+      colaboracion.save();
+      res.send(colaboracion);
+    } else res.status(404).send("no hay colaboracion");
   } catch (err) {
     next(err);
   }
 });
-
-
 
 module.exports = router;

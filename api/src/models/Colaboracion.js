@@ -29,6 +29,10 @@ module.exports = (sequelize) => {
     usuarioCobrador: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    viajeId: {
+      type: DataTypes.STRING,
+      allowNull: false
     }
   });
 };

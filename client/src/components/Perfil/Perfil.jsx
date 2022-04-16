@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import fondo from "../../assets/fondo perfil.jpg";
 import "./Perfil.css";
 import { FaEdit } from "react-icons/fa";
-import { AiFillCheckSquare } from "react-icons/ai";
 import Button from "@mui/material/Button";
 import {
   getComentarios,
@@ -24,7 +23,6 @@ import axios from "axios";
 
 export default function Perfil() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const cookies = new Cookies();
   const cookieNombre = cookies.get("nombre");
   const cookieApellido = cookies.get("apellido");
@@ -35,6 +33,7 @@ export default function Perfil() {
   const comentarios = useSelector((state) => state.comentarios);
   const viajes = useSelector((state) => state.viajes);
   const { email } = useParams();
+
   useEffect(() => {
     if (email) {
       dispatch(getUsuarioByEmail(email));
