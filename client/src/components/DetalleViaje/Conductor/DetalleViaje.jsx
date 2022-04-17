@@ -24,12 +24,14 @@ import ListItemText from "@mui/material/ListItemText";
 import { FaUserCircle } from "react-icons/fa";
 import IconButton from "@mui/material/IconButton";
 import swal from "sweetalert";
+import Swal from "sweetalert2";
 
 export const DetalleViajec = () => {
   const cookies = new Cookies();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const viaje = useSelector(state => state.viajePorId);
+  const viaje = useSelector((state) => state.viajePorId);
+  const viajesUsuario = useSelector((state) => state.viajesPorUsuario);
   const { id } = useParams();
   const cookieMail = cookies.get("email");
   let fechaViaje = "";
@@ -72,27 +74,24 @@ export const DetalleViajec = () => {
     viajeId: id,
   });
 
-  useEffect(
-    () => {
-      if (viaje.length !== 0) {
-        if (viaje.usuarios.length !== 0) {
-          setDatosMp({
-            ...datosMp,
-            usuarioCobrador: viaje.usuarios[0].email
-          });
-        }
+  useEffect(() => {
+    if (viaje.length !== 0) {
+      if (viaje.usuarios.length !== 0) {
+        setDatosMp({
+          ...datosMp,
+          usuarioCobrador: viaje.usuarios[0].email,
+        });
       }
-    },
-    [viaje]
-  );
+    }
+  }, [viaje]);
 
   const [sumarse, setSumarse] = useState({
     id: id,
-    email: cookieMail
+    email: cookieMail,
   });
 
   const handleColaborar = async () => {
-    await dispatch(postOrder(cookieMail)).then(data => {
+    await dispatch(postOrder(cookieMail)).then((data) => {
       if (data.length !== 0) {
         setDatosMp({ ...datosMp, orderId: data.payload[0].id });
       }
@@ -104,12 +103,12 @@ export const DetalleViajec = () => {
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(postColaboracion(datosMp));
-    if (datosMp.length!==0) {
+    if (datosMp.length !== 0) {
       axios
         .get(
           `http://localhost:3001/api/mercadopago/${datosMp.orderId}/${datosMp.unit_price}`
         )
-        .then(r => setRedirect(r.data));
+        .then((r) => setRedirect(r.data));
     }
   }
 
@@ -117,21 +116,68 @@ export const DetalleViajec = () => {
     e.preventDefault();
     setDatosMp({
       ...datosMp,
-      unit_price: parseInt(e.target.value)
+      unit_price: parseInt(e.target.value),
     });
   }
 
   function handleSumarse(e) {
     e.preventDefault();
-    dispatch(sumarseAlViaje(sumarse));
-    dispatch(modificarViaje(viaje));
-    swal({
-      title: "Te has sumado al viaje correctamente!",
-      icon: "success",
-      button: "Bienvenidx!"
-    }).then(() => {
-      navigate("/home");
-    });
+    let newArr = [];
+    if (viajesUsuario.length !== 0) {
+      viajesUsuario.map((e) => {
+        if (
+          e.fecha.substring(0, 10).split("-").reverse().join("-") ===
+          viaje.fecha.substring(0, 10).split("-").reverse().join("-")
+        ) {
+          newArr.push(e);
+        }
+      });
+      if (newArr.length !== 0) {
+        Swal.fire({
+          title: "Ya tienes un viaje programado para este día",
+          icon: "warning",
+          text: "No puedes participar de dos viajes el mismo día. Serás redireccionade al inicio",
+          confirmButtonText: "Ok",
+        }).then(() => {
+          navigate("/home");
+        });
+      } else {
+        Swal.fire({
+          title: "Estás a punto de sumarte a este viaje",
+          icon: "warning",
+          text: "Por favor, revisá bien todos los detalles antes de confirmar",
+          confirmButtonText: "Sumarme!",
+          showCancelButton: true,
+          cancelButtonText: "Cancelar",
+        })
+          .then((r) => {
+            if (r.isConfirmed) {
+              dispatch(sumarseAlViaje(sumarse));
+              dispatch(modificarViaje(viaje));
+            }
+          })
+          .then(() => {
+            Swal.fire({
+              title: "Te has sumado al viaje correctamente!",
+              icon: "success",
+              timer: 1500,
+              showConfirmButton: false,
+            }).then(() => {
+              navigate("/home");
+            });
+          });
+      }
+    }
+
+    // dispatch(sumarseAlViaje(sumarse));
+    // dispatch(modificarViaje(viaje));
+    // swal({
+    //   title: "Te has sumado al viaje correctamente!",
+    //   icon: "success",
+    //   button: "Bienvenidx!",
+    // }).then(() => {
+    //   navigate("/home");
+    // });
   }
   if (viaje.length!==0 && viaje.usuarios.length!==0) {
     var viajeUsuarios = viaje.usuarios.map(e => e.email);
@@ -158,57 +204,64 @@ export const DetalleViajec = () => {
                 </div>
                 <div className="card-usuario-nombre-val-detalle text-xl">
                   <span className="text-white my-9">
-                    {viaje.usuarios
-                      ? viaje.usuarios[0].nombre +
-                        " " +
-                        viaje.usuarios[0].apellido
-                      : <div />}
+                    {viaje.usuarios ? (
+                      viaje.usuarios[0].nombre +
+                      " " +
+                      viaje.usuarios[0].apellido
+                    ) : (
+                      <div />
+                    )}
                   </span>
                   <span>
                     <div className="puntuacion">
-                      {viaje.usuarios
-                        ? viaje.usuarios[0].puntuacion === 5
-                          ? <div>
-                              <ImStarFull className="black" />
-                              <ImStarFull className="black" />
-                              <ImStarFull className="black " />
-                              <ImStarFull className="black" />
-                              <ImStarFull className="black " />
-                            </div>
-                          : viaje.usuarios[0].puntuacion === 4
-                            ? <div>
-                                {" "}<ImStarFull className="black" />
-                                <ImStarFull className="black " />
-                                <ImStarFull className="black" />
-                                <ImStarFull className="black " />
-                                <ImStarEmpty className="black" />
-                              </div>
-                            : viaje.usuarios[0].puntuacion === 3
-                              ? <div>
-                                  <ImStarFull className="black " />
-                                  <ImStarFull className="black" />
-                                  <ImStarFull className="black " />
-                                  <ImStarEmpty className="black" />
-                                  <ImStarEmpty className="black" />
-                                </div>
-                              : viaje.usuarios[0].puntuacion === 2
-                                ? <div>
-                                    <ImStarFull className="black" />
-                                    <ImStarFull className="black " />
-                                    <ImStarEmpty className="black" />
-                                    <ImStarEmpty className="black" />
-                                    <ImStarEmpty className="black" />
-                                  </div>
-                                : viaje.usuarios[0].puntuacion === 1
-                                  ? <div>
-                                      <ImStarFull className="black " />
-                                      <ImStarEmpty className="black" />
-                                      <ImStarEmpty className="black" />
-                                      <ImStarEmpty className="black" />
-                                      <ImStarEmpty className="black" />
-                                    </div>
-                                  : <div />
-                        : <div />}
+                      {viaje.usuarios ? (
+                        viaje.usuarios[0].puntuacion === 5 ? (
+                          <div>
+                            <ImStarFull className="black" />
+                            <ImStarFull className="black" />
+                            <ImStarFull className="black " />
+                            <ImStarFull className="black" />
+                            <ImStarFull className="black " />
+                          </div>
+                        ) : viaje.usuarios[0].puntuacion === 4 ? (
+                          <div>
+                            {" "}
+                            <ImStarFull className="black" />
+                            <ImStarFull className="black " />
+                            <ImStarFull className="black" />
+                            <ImStarFull className="black " />
+                            <ImStarEmpty className="black" />
+                          </div>
+                        ) : viaje.usuarios[0].puntuacion === 3 ? (
+                          <div>
+                            <ImStarFull className="black " />
+                            <ImStarFull className="black" />
+                            <ImStarFull className="black " />
+                            <ImStarEmpty className="black" />
+                            <ImStarEmpty className="black" />
+                          </div>
+                        ) : viaje.usuarios[0].puntuacion === 2 ? (
+                          <div>
+                            <ImStarFull className="black" />
+                            <ImStarFull className="black " />
+                            <ImStarEmpty className="black" />
+                            <ImStarEmpty className="black" />
+                            <ImStarEmpty className="black" />
+                          </div>
+                        ) : viaje.usuarios[0].puntuacion === 1 ? (
+                          <div>
+                            <ImStarFull className="black " />
+                            <ImStarEmpty className="black" />
+                            <ImStarEmpty className="black" />
+                            <ImStarEmpty className="black" />
+                            <ImStarEmpty className="black" />
+                          </div>
+                        ) : (
+                          <div />
+                        )
+                      ) : (
+                        <div />
+                      )}
                     </div>
                   </span>
                 </div>
@@ -221,23 +274,21 @@ export const DetalleViajec = () => {
               </div>
               <span>Detalles del viaje</span>
               <div className="card-usuario-resumen-detalle rounded-sm">
-                <span className="m-2">
-                  {viaje.detalles}
-                </span>
+                <span className="m-2">{viaje.detalles}</span>
               </div>
               <div className="btn-detalle">
                 <button className="detalle-mensaje">
                   <Link to="/login">Enviar mensaje</Link>
                 </button>
-                {viajesTotales !== [] && viajesTotales.includes(true)
-                  ? null
-                  : <form onSubmit={e => handleSumarse(e)}>
-                      <input
-                        className="detalle-mensaje"
-                        type="submit"
-                        value="Sumarse al viaje"
-                      />
-                    </form>}
+                {viajesTotales !== [] && viajesTotales.includes(true) ? null : (
+                  <form onSubmit={(e) => handleSumarse(e)}>
+                    <input
+                      className="detalle-mensaje"
+                      type="submit"
+                      value="Sumarse al viaje"
+                    />
+                  </form>
+                )}
               </div>
               <br />
               {ocultarBoton !== true &&
@@ -290,11 +341,11 @@ export const DetalleViajec = () => {
                         placeholder="Monto a cobrar"
                         name="unit_price"
                         value={datosMp.unit_price}
-                        onChange={e => handleChange(e)}
+                        onChange={(e) => handleChange(e)}
                       />
                     </div>
                     <div class="modal-footer">
-                      <form onSubmit={e => handleSubmit(e)}>
+                      <form onSubmit={(e) => handleSubmit(e)}>
                         <button
                           type="submit"
                           class="btn btn-primary"
@@ -308,7 +359,7 @@ export const DetalleViajec = () => {
                 </div>
               </div>
               <br />
-              {redirect !== "" &&
+              {redirect !== "" && (
                 <a href={`${redirect}`}>
                   <input
                     class="btn btn-success"
@@ -316,7 +367,8 @@ export const DetalleViajec = () => {
                     value="Continuar a MercadoPago"
                     name="Continuar a MercadoPago"
                   />
-                </a>}
+                </a>
+              )}
             </div>
             <div className="card-viaje-detalle text-xl">
               <div className="flex flex-col justify-evenly w-full ml-4">
@@ -350,11 +402,13 @@ export const DetalleViajec = () => {
                 <span>
                   Cantidad de asientos disponibles:{" "}
                   <span
-                    className={`font-bold text-2xl ${viaje.asientosAOcupar > 3
-                      ? "text-sky-600"
-                      : viaje.asientosAOcupar < 1
+                    className={`font-bold text-2xl ${
+                      viaje.asientosAOcupar > 3
+                        ? "text-sky-600"
+                        : viaje.asientosAOcupar < 1
                         ? "text-amber-500"
-                        : "text-orange-700"}`}
+                        : "text-orange-700"
+                    }`}
                   >
                     {viaje.asientosAOcupar}
                   </span>
@@ -363,11 +417,11 @@ export const DetalleViajec = () => {
                   <List
                     sx={{
                       width: "100%",
-                      maxWidth: 360
+                      maxWidth: 360,
                     }}
                   >
-                    {arrayPasajeres.length!==0 &&
-                      arrayPasajeres.map(e =>
+                    {arrayPasajeres.length !== 0 &&
+                      arrayPasajeres.map((e) => (
                         <ListItem
                           key={e.email}
                           disableGutters
@@ -383,7 +437,7 @@ export const DetalleViajec = () => {
                             primary={`🔴 ${e.nombre} ${e.apellido}`}
                           />
                         </ListItem>
-                      )}
+                      ))}
                   </List>
                 </span>
                 <span>
@@ -432,7 +486,8 @@ export const DetalleViajec = () => {
           <div className="wallpaper">
             <img className="stretch" src={fondo} alt="" />
           </div>
-        </div>}
+        </div>
+      }
     </div>
   );
 };

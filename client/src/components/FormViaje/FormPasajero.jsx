@@ -56,7 +56,7 @@ export default function FormPasajero() {
     if(viajesUsuario?.length !== 0 && 
       viaje?.fecha?.length!==0){
       let mes;
-        switch (viaje.length!==0 && viaje.fecha.toString().substring(4,7)) {
+        switch (viaje.length!==0 && viaje.fecha?.toString().substring(4,7)) {
     case "Jan":
         mes = 1
         break
@@ -97,17 +97,18 @@ export default function FormPasajero() {
         break;
 }
       let fechaSi = []
-      {viaje.length !== 0 && viajesUsuario.map(e => e.fecha.substring(6,10) === mes+"-"+viaje.fecha.toString().substring(8,10)? fechaSi.push(e): console.log("no hay nada"))
+      {viaje.length !== 0 && (viajesUsuario.map(e => e.fecha.substring(6,10) === mes+"-"+viaje.fecha?.toString().substring(8,10)? fechaSi.push(e): console.log("no hay nada")))
+      console.log(fechaSi, viaje.fecha)
       if(fechaSi.length !== 0){
-        fechaSi.map(e => e.hora === viaje.hora? Swal.fire({
+        Swal.fire({
           title: "Ya tienes un viaje programado para este día",
           icon: "warning",
           text: "No puedes programar dos viajes para el mismo día. Por favor, selecciona otra fecha.",
           confirmButtonText: "Ok"
-        }) && setViaje({...viaje, fecha: "", hora: ""}) : false)
+        }) && setViaje({...viaje, fecha: "", hora: ""})
       }}
     }
-  },[viaje.hora])
+  },[viaje.fecha])
 
   function validacion(viaje) {
     let errors = {};

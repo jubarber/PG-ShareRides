@@ -42,7 +42,7 @@ export const DetalleViajep = () => {
 
   return (
     <div>
-      {arrayPasajeres.length!==0 ? 
+      {arrayPasajeres?.length!==0 ? 
     <div className="container-detalle">
       <NavBar />
       <div className="card-detalle">
