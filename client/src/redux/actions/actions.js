@@ -18,6 +18,8 @@ export const GET_COMENTARIO_BY_ID = "GET_COMENTARIO_BY_ID";
 export const ACTUALIZAR_COLABORACION = "ACTUALIZAR_COLABORACION";
 export const GET_COLABORACIONES = "GET_COLABORACIONES";
 export const ELIMINADO = "ELIMINADO";
+export const GET_VIAJES_TOTAL_USUARIO = "GET_VIAJES_TOTAL_USUARIO";
+export const GET_VEHICULOS = "GET_VEHICULOS"
 
 export function getDetalleViaje(viajeId) {
   return function (dispatch) {
@@ -42,7 +44,21 @@ export function getViajesTotal() {
     }
   };
 }
-
+export function getViajesTotalUsuario(email) {
+  return async function (dispatch) {
+    try {
+      let viajesTotal = await axios.get(
+        `http://localhost:3001/api/viaje/totalviajes/${email}`
+      );
+      return dispatch({
+        type: "GET_VIAJES_TOTAL_USUARIO",
+        payload: viajesTotal.data
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+}
 export function getUsuarios() {
   return async function (dispatch) {
     try {
@@ -172,7 +188,8 @@ export function postViajeConductor(checkboxes, viaje) {
           dni: viaje.dni,
           detalles: viaje.detalles,
           puntuacion: viaje.puntuacion,
-        },
+          patente: viaje.patente,
+        }
       });
       return dispatch({
         type: "POST_VIASJE_CONDUCTOR",
@@ -523,8 +540,8 @@ export function eliminarPerfil(payload) {
         method: "put",
         url: "http://localhost:3001/api/usuario/eliminarPerfil",
         data: {
-          email: payload,
-        },
+          email: payload
+        }
       });
       return dispatch({
         type: "ELIMINAR_PERFIL",
@@ -564,8 +581,8 @@ export function postReporte(payload) {
           email: payload.email,
           nombre: payload.nombre,
           apellido: payload.apellido,
-          justificacion: payload.justificacion,
-        },
+          justificacion: payload.justificacion
+        }
       });
       return dispatch({ type: "POST_REPORTE", payload: postReporte.data });
     } catch (error) {
@@ -585,6 +602,17 @@ export function getReporte() {
       console.log(error);
     }
   };
+};
+
+export function getVehiculos(email){
+  return async function (dispatch){
+    try{
+      const vehiculos = await axios.get(`http://localhost:3001/api/vehiculo/${email}`);
+      return dispatch({type: "GET_VEHICULOS", payload: vehiculos.data})
+    }catch(err){
+      console.log(err)
+    }
+  }
 }
 
 export function cambioPassword(payload) {

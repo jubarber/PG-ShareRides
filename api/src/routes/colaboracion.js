@@ -20,7 +20,8 @@ router.post("/nuevaColaboracion", async (req, res, next) => {
       });
       if (colabSinPagar.length!==0) res.send(colabSinPagar);
       else {
-        nuevaColaboracion = await Colaboracion?.create({
+        if(Colaboracion .length!==0){
+        nuevaColaboracion = await Colaboracion.create({
           unit_price: parseInt(unit_price),
           usuarioPagador: usuarioPagador,
           title: title,
@@ -29,7 +30,7 @@ router.post("/nuevaColaboracion", async (req, res, next) => {
           usuarioCobrador: usuarioCobrador,
           viajeId: viajeId
         });
-      }
+      }}
       res.send(nuevaColaboracion);
     } //fin del else
   } catch (err) {
@@ -40,10 +41,12 @@ router.post("/nuevaColaboracion", async (req, res, next) => {
 router.get("/colaboraciones/:email", async (req, res, next) => {
   try {
     const { email } = req.params;
-    const colaboraciones = await Colaboracion?.findAll({
+    let colaboraciones;
+    if(Colaboracion.length!==0){
+    colaboraciones = await Colaboracion.findAll({
       where: { usuarioPagador: email }
     });
-    res.send(colaboraciones)
+    }res.send(colaboraciones)
   } catch (err) {
     next(err);
   }
@@ -52,10 +55,12 @@ router.get("/colaboraciones/:email", async (req, res, next) => {
 router.put("/:email", async (req, res, next) => {
   try {
     const { email } = req.params;
-    const colaboracion = await Colaboracion?.findOne({
+    let colaboracion;{
+    if(Colaboracion .length!==0)
+     colaboracion = await Colaboracion.findOne({
       where: { usuarioPagador: email, abonado: false }
     });
-    if (colaboracion) {
+    }if (colaboracion) {
       colaboracion.update({ abonado: true });
       colaboracion.save();
       res.send(colaboracion);

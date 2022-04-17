@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
-import { postViajeConductor } from "../../redux/actions/actions";
+import { postViajeConductor,getViajesTotalUsuario } from "../../redux/actions/actions";
 import fondo from "../../assets/fondo perfil.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import "./FormConductor.css";
@@ -9,6 +9,7 @@ import Cookies from "universal-cookie";
 import NavBar from "../NavBar/NavBar";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Swal from "sweetalert2"
 import es from "date-fns/locale/es";
 registerLocale("es", es);
 
@@ -18,7 +19,9 @@ export default function FormPasajero() {
   const navigate = useNavigate();
   const [isChecked, setIsChecked] = useState(new Array(5).fill(false));
   const [errors, setErrors] = useState({});
+  const viajesUsuario = useSelector((state) => state.viajesPorUsuario)
   const cookieMail = cookies.get("email");
+  const cookiePatente = cookies.get("patente")
   const [viaje, setViaje] = useState({
     nombre: cookies.get("nombre"),
     fecha: "",
@@ -30,6 +33,7 @@ export default function FormPasajero() {
     formaDePago: "A charlar",
     email: cookieMail,
     detalles: "",
+    patente: cookiePatente
   });
   const expresiones = {
     // fecha: /^.{4,18}$/,
@@ -39,6 +43,66 @@ export default function FormPasajero() {
     destino: /^[a-zA-ZÀ-ÿ\s]{4,30}$/,
     dni: /^(?!^0+$)[a-zA-Z0-9]{3,20}$/,
   };
+  useEffect(()=> {
+    dispatch(getViajesTotalUsuario(cookieMail))
+  },[])
+  
+  useEffect(()=> {
+    if(viajesUsuario.length !== 0){
+      let mes;
+        switch (viaje.length!==0 && viaje.fecha.toString().substring(4,7)) {
+    case "Jan":
+        mes = 1
+        break
+    case "Feb":
+        mes = 2
+        break
+    case "Mar":
+        mes = 3
+        break
+    case "Apr":
+        mes = 4
+        break
+    case "May":
+        mes = 5
+        break
+    case "Jun":
+        mes = 6
+        break
+    case "Jul":
+        mes = 7
+        break
+    case "Aug":
+        mes = 8
+        break
+    case "Sep":
+        mes = 9
+        break
+    case "Oct":
+        mes = 10
+        break
+    case "Nov":
+        mes = 11
+        break
+    case "Dec":
+        mes = 12
+        break
+    default:
+        break;
+}
+
+      let fechaSi = []
+      {viaje.length !== 0 && viajesUsuario.map(e => e.fecha.substring(6,10) === mes+"-"+viaje.fecha.toString().substring(8,10)? fechaSi.push(e): console.log("no hay nada"))
+      if(fechaSi.length !== 0){
+        fechaSi.map(e => e.hora === viaje.hora? Swal.fire({
+          title: "Ya tienes un viaje programado para este día",
+          icon: "warning",
+          text: "No puedes programar dos viajes para el mismo día. Por favor, selecciona otra fecha.",
+          confirmButtonText: "Ok"
+        }) && setViaje({...viaje, fecha: "", hora: ""}) : false)
+      }}
+    }
+  },[viaje.hora])
 
   function validacion(viaje) {
     let errors = {};
@@ -47,12 +111,11 @@ export default function FormPasajero() {
       errors.hora = "Debes ingresar la hora del viaje";
     } else if (!expresiones.hora.test(viaje.hora)) {
       errors.hora = "Ingresa una hora valida";
+
     }
     if (!viaje.fecha) {
       errors.fecha = "Debes ingresar la fecha del viaje";
-    } else if (!expresiones.fecha.test(viaje.fecha)) {
-      errors.fecha = "Ingresa una fecha valida";
-    }
+    } 
     if (!viaje.origen) {
       errors.origen = "Debes ingresar el origen del viaje";
     } else if (!expresiones.origen.test(viaje.origen)) {
@@ -95,7 +158,6 @@ export default function FormPasajero() {
 
   function handleOnChange(e) {
     e.preventDefault();
-    console.log(viaje);
     setViaje({
       ...viaje,
       [e.target.name]: e.target.value,

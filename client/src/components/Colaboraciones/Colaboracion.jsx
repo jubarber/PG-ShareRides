@@ -10,7 +10,6 @@ export default function Colaboracion() {
   const usuarios = useSelector(state => state.usuarios);
   const viajes = useSelector(state => state.viajes);
   const cookieMail = cookies.get("email");
-  const mailOtroUsuario = ""
 
   useEffect(
     () => {
@@ -27,18 +26,22 @@ export default function Colaboracion() {
     <div>
       {colaboraciones.length !== 0
         ? colaboraciones.map(c => {
-            let viaje = viajes?.find(v => v.id === c.viajeId)
-            let usuarioCobrador = usuarios?.find(u => u.email === c.usuarioCobrador)
+            let viaje;
+            if(viajes.length!==0) viaje = viajes.find(v => v.id === c.viajeId)
+            let usuarioCobrador;
+           if(usuarios.length!==0) usuarioCobrador = usuarios.find(u => u.email === c.usuarioCobrador)
+          if(usuarioCobrador.length !==0 && viaje.length!==0){  
             return (
               <div>
                 Monto de la colaboración: ${c.unit_price}
                 <br/>
-                Persona con quien colaboraste: {usuarioCobrador?.nombre} {usuarioCobrador?.apellido}
+                Persona con quien colaboraste: {usuarioCobrador.nombre} {usuarioCobrador.apellido}
                 
                 <br/>
-                El <a href={`/detallec/${viaje?.id}`}> viaje </a> fue de {viaje?.origen} a {viaje?.destino} el {viaje?.fecha}
+                El <a href={`/detallec/${viaje.id}`}> viaje </a> fue de {viaje.origen} a {viaje.destino} el {viaje.fecha}
               </div>
             );
+          }
           })
         : <h2>Aún no hay colaboraciones</h2>}
     </div>
