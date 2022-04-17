@@ -57,7 +57,7 @@ export const DetalleViajec = () => {
     quantity: 1,
     usuarioPagador: cookieMail,
     usuarioCobrador: "",
-    viajeId: id
+    viajeId: id,
   });
 
   useEffect(

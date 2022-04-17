@@ -10,6 +10,7 @@ import {
   FILTERTYPE,
   GET_COMENTARIOS,
   GET_LOCALIDADES,
+  GET_COMENTARIO_BY_ID,
   GET_COLABORACIONES,
   GET_VIAJES_TOTAL_USUARIO,
   GET_VEHICULOS
@@ -23,6 +24,7 @@ const initialState = {
   usuario: [],
   error: "",
   comentarios: [],
+  comentarioPorId: [],
   localidades: [],
   colaboraciones: [],
   viajesPorUsuario: [],
@@ -92,6 +94,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         localidades: action.payload,
       };
+    case GET_COMENTARIO_BY_ID: {
+      return {
+        ...state,
+        comentarioPorId: action.payload,
+      };
+    }
     case GET_COLABORACIONES:
       return {
         ...state,
