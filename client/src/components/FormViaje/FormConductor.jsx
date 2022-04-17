@@ -92,7 +92,7 @@ export default function FormPasajero() {
 }
 
       let fechaSi = []
-      {viaje.length !== 0 && viajesUsuario.map(e => e.fecha.substring(6,10) === mes+"-"+viaje.fecha.toString().substring(8,10)? fechaSi.push(e): console.log("no hay nada"))
+      {viaje.length !== 0 && viajesUsuario.map(e => e.fecha.substring(6,10) === mes+"-"+viaje.fecha.toString().substring(8,10)? fechaSi.push(e) : console.log("no hay nada"))
       if(fechaSi.length !== 0){
         fechaSi.map(e => e.hora === viaje.hora? Swal.fire({
           title: "Ya tienes un viaje programado para este día",
