@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { getUsuarioByEmail, login } from "../../redux/actions/actions";
+import {
+  activarPerfil,
+  getUsuarioByEmail,
+  login,
+} from "../../redux/actions/actions";
 import swal from "sweetalert";
 import fondo from "../../assets/fondo perfil.jpg";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
@@ -59,17 +63,32 @@ export default function Login() {
       console.log("entre a usuarios.disponible");
       setError({ ...error, usuario: "El usuario ha sido pausado" });
       Swal.fire({
-        title: "Desea Restaurar la cuenta?",
-        icon: "warning",
+        title: "Su cuenta ha sido eliminada!",
+        showDenyButton: true,
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Restaurar!",
-        cancelButtonText: "No",
+        denyButtonColor: "#6BFF43 ",
+        confirmButtonText: "Conservar contraseña",
+        denyButtonText: `Cambiar contraseña`,
+        cancelButtonText: "Volver al inicio",
       }).then((result) => {
         if (result.isConfirmed) {
-          // Swal.fire("Deleted!", "Your file has been deleted.", "success");
-          navigate("/login");
+          dispatch(activarPerfil(input.email));
+          getUsuarioByEmail(input.email);
+          dispatch(login(input.email));
+          swal({
+            title: "Se ha restaurado exitosamente!",
+            icon: "success",
+            button: "Bienvenidx de nuevo!",
+          }).then(function () {
+            navigate("/home");
+          });
+        } else if (result.isDenied) {
+          dispatch(activarPerfil(input.email));
+          getUsuarioByEmail(input.email);
+          dispatch(login(input.email));
+          navigate("/restaurarCuenta");
         } else {
           navigate("/");
         }

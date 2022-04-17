@@ -1,0 +1,155 @@
+.Google__titulos {
+  font-size: 25px;
+  text-align: center;
+}
+
+.Google__nav {
+  margin-top: 50px;
+}
+
+.Google__formulario-login {
+  max-width: 800px;
+  width: 100%;
+  margin: auto;
+  padding: 40px;
+  font-size: 20px;
+}
+
+.Google__input_box {
+  width: 70%;
+  margin: auto;
+  position: relative; /* esto es para poder usar position: absolute en el ojo */
+}
+
+.Google__input_login {
+  width: 100%;
+  background-color: #fff;
+  margin-top: 20px;
+  border: 3px solid;
+  border-radius: 3px;
+  height: 45px;
+  line-height: 45px;
+  padding: 0 40px 0 10px;
+  transition: 0.3s ease all;
+  border-radius: 20px;
+  border-radius: 58px;
+  font-size: medium;
+}
+
+.Google__input_login:focus {
+  border: 3px solid #9252ff;
+  outline: none;
+  box-shadow: 3px 0px 30px rgba(163, 163, 163, 0.4);
+}
+
+.Google__ojo {
+  position: absolute;
+  right: -40px;
+  bottom: 8px;
+  z-index: 1000;
+  font-size: 30px;
+}
+
+.Google__btn_entrar {
+  display: block;
+  margin: auto;
+  margin-top: 20px;
+  height: 45x;
+  line-height: 45px;
+  width: 200px;
+  background-color: #9252ff;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.1s easy all;
+}
+
+.Google__btn_entrar:hover {
+  box-shadow: 3px 0px 30px rgba(163, 163, 163, 1);
+}
+
+.Google__disabled {
+  height: 45x;
+  line-height: 45px;
+  width: 15rem;
+  background: rgb(154, 153, 153);
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 3px;
+  transition: 0.1s easy all;
+}
+
+.Google__btn_volver {
+  height: 45x;
+  line-height: 45px;
+  width: 150px;
+  margin-left: 10%;
+  background-color: #9252ff;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.1s easy all;
+}
+.Google__btn_volver:hover {
+  box-shadow: 3px 0px 30px rgb(66, 65, 65);
+}
+
+.Google__error {
+  color: rgb(201, 25, 25);
+  padding: 5px;
+  display: flex;
+  text-align: left;
+  justify-content: left;
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  animation-name: error;
+  animation-duration: 3s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+
+  -webkit-animation-name: error;
+  -webkit-animation-duration: 3s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+}
+@-moz-keyframes error {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes error {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes error {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
