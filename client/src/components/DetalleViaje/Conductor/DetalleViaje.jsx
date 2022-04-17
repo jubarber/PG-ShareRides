@@ -7,7 +7,11 @@ import {
   postColaboracion,
   sumarseAlViaje,
   modificarViaje,
+<<<<<<< HEAD
   getViajesTotalUsuario,
+=======
+  getViajesTotalUsuario
+>>>>>>> fe3326313012a55d998f79765b0c0592acad876f
 } from "../../../redux/actions/actions";
 import NavBar from "../../NavBar/NavBar";
 import "./DetalleViaje.css";
@@ -35,7 +39,11 @@ export const DetalleViajec = () => {
   const { id } = useParams();
   const cookieMail = cookies.get("email");
   let fechaViaje = "";
+  let viajesPorUsuario = useSelector(state => state.viajesPorUsuario)
+  console.log(viajesPorUsuario)
+  const [ocultarBoton, setOcultarBoton] = useState(null)
 
+<<<<<<< HEAD
   useEffect(() => {
     dispatch(getViajesTotalUsuario(cookieMail));
   }, []);
@@ -45,6 +53,24 @@ export const DetalleViajec = () => {
   }, [id]);
 
   if (viaje.length !== 0 && viaje.fecha.length !== 0) {
+=======
+  useEffect(
+    () => {
+      dispatch(getDetalleViaje(id));
+      dispatch(getViajesTotalUsuario(cookieMail))
+    },
+    [id]
+  );
+
+  useEffect(() => {
+    if(viajesPorUsuario.length!==0){
+      let array = viajesPorUsuario.map(v => console.log(v.usuarios.map(u=>u.email.includes(cookieMail))));
+      if(array.map(e => e === true)) setOcultarBoton(true)
+    } 
+  }, [viajesPorUsuario])
+
+  if (viaje.length!==0 && viaje.fecha.length!==0) {
+>>>>>>> fe3326313012a55d998f79765b0c0592acad876f
     viaje.fecha.includes("T")
       ? (fechaViaje = viaje.fecha
           .substring(0, 10)
@@ -169,18 +195,18 @@ export const DetalleViajec = () => {
     //   navigate("/home");
     // });
   }
-  if (viaje.length !== 0 && viaje.usuarios.length !== 0) {
-    var viajeUsuarios = viaje.usuarios.map((e) => e.email);
+  if (viaje.length!==0 && viaje.usuarios.length!==0) {
+    var viajeUsuarios = viaje.usuarios.map(e => e.email);
     // console.log(viajeUsuarios);
-    var viajesTotales = viajeUsuarios.map((e) => e.includes(cookieMail));
+    var viajesTotales = viajeUsuarios.map(e => e.includes(cookieMail));
     // console.log(viajesTotales);
-    var arrayPasajeres = viaje.usuarios.map((e) => e);
+    var arrayPasajeres = viaje.usuarios.map(e => e);
     // console.log(arrayPasajeres);
   }
 
   return (
     <div>
-      {viaje.length !== 0 && (
+      {viaje?.length !== 0 &&
         <div className="container-detalle">
           <NavBar />
           <div className="card-detalle">
@@ -281,31 +307,29 @@ export const DetalleViajec = () => {
                 )}
               </div>
               <br />
-              {!redirect ? (
-                <button
-                  onClick={() => {
-                    handleColaborar();
-                  }}
-                  class="btn btn-success"
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
-                >
-                  Quiero Colaborar!
-                </button>
-              ) : (
-                <button
-                  onClick={() => {
-                    handleColaborar();
-                  }}
-                  class="btn btn-success"
-                  disabled="disabled"
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
-                >
-                  Quiero Colaborar!
-                </button>
-              )}
-
+              {ocultarBoton !== true &&
+              (!redirect
+                ? <button
+                    onClick={() => {
+                      handleColaborar();
+                    }}
+                    class="btn btn-success"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                  >
+                    Quiero Colaborar!
+                  </button>
+                : <button
+                    onClick={() => {
+                      handleColaborar();
+                    }}
+                    class="btn btn-success"
+                    disabled="disabled"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                  >
+                    Quiero Colaborar!
+                  </button>)}
               <div
                 class="modal fade"
                 id="exampleModal"

@@ -49,7 +49,7 @@ export default function FormViaje() {
           if (r.isConfirmed) {
             console.log(vehiculos[0])
             cookies.set("patente", vehiculos[0].patente, { path: "/" });
-            console.log(cookies.get("patente"));
+            cookies.set("dni", vehiculos[0].dni, { path: "/"})
             setTimeout(() => {
               navigate("/formconductor");
             }, 1500)
