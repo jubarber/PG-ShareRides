@@ -25,9 +25,7 @@ export default function Home() {
   const dispatch = useDispatch();
 
   const [render, setRender] = useState("");
-  const viajes = useSelector(
-    (state) => state.viajesFiltrados 
-  );
+  const viajes = useSelector((state) => state.viajesFiltrados);
   const cookieMail = cookies.get("email");
   useEffect(() => {
     dispatch(login(cookieMail));

@@ -6,7 +6,8 @@ import {
   postOrder,
   postColaboracion,
   sumarseAlViaje,
-  modificarViaje
+  modificarViaje,
+  getViajesTotalUsuario
 } from "../../../redux/actions/actions";
 import NavBar from "../../NavBar/NavBar";
 import "./DetalleViaje.css";
@@ -32,13 +33,24 @@ export const DetalleViajec = () => {
   const { id } = useParams();
   const cookieMail = cookies.get("email");
   let fechaViaje = "";
+  let viajesPorUsuario = useSelector(state => state.viajesPorUsuario)
+  console.log(viajesPorUsuario)
+  const [ocultarBoton, setOcultarBoton] = useState(null)
 
   useEffect(
     () => {
       dispatch(getDetalleViaje(id));
+      dispatch(getViajesTotalUsuario(cookieMail))
     },
     [id]
   );
+
+  useEffect(() => {
+    if(viajesPorUsuario.length!==0){
+      let array = viajesPorUsuario.map(v => console.log(v.usuarios.map(u=>u.email.includes(cookieMail))));
+      if(array.map(e => e === true)) setOcultarBoton(true)
+    } 
+  }, [viajesPorUsuario])
 
   if (viaje.length!==0 && viaje.fecha.length!==0) {
     viaje.fecha.includes("T")
@@ -123,16 +135,16 @@ export const DetalleViajec = () => {
   }
   if (viaje.length!==0 && viaje.usuarios.length!==0) {
     var viajeUsuarios = viaje.usuarios.map(e => e.email);
-    console.log(viajeUsuarios);
+    // console.log(viajeUsuarios);
     var viajesTotales = viajeUsuarios.map(e => e.includes(cookieMail));
-    console.log(viajesTotales);
+    // console.log(viajesTotales);
     var arrayPasajeres = viaje.usuarios.map(e => e);
-    console.log(arrayPasajeres);
+    // console.log(arrayPasajeres);
   }
 
   return (
     <div>
-      {viaje.length !== 0 &&
+      {viaje?.length !== 0 &&
         <div className="container-detalle">
           <NavBar />
           <div className="card-detalle">
@@ -228,7 +240,8 @@ export const DetalleViajec = () => {
                     </form>}
               </div>
               <br />
-              {!redirect
+              {ocultarBoton !== true &&
+              (!redirect
                 ? <button
                     onClick={() => {
                       handleColaborar();
@@ -249,8 +262,7 @@ export const DetalleViajec = () => {
                     data-bs-target="#exampleModal"
                   >
                     Quiero Colaborar!
-                  </button>}
-
+                  </button>)}
               <div
                 class="modal fade"
                 id="exampleModal"
