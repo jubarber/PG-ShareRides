@@ -49,7 +49,7 @@ export default function FormPasajero() {
   useEffect(() => {
     dispatch(getViajesTotalUsuario(cookieMail));
   }, []);
-
+console.log(viajesUsuario)
   useEffect(() => {
     if (viajesUsuario.length !== 0) {
       let mes;
@@ -104,21 +104,16 @@ export default function FormPasajero() {
               ? fechaSi.push(e)
               : console.log("no hay nada")
           );
-        if (fechaSi.length !== 0) {
-          fechaSi.map((e) =>
-            e.hora === viaje.hora
-              ? Swal.fire({
-                  title: "Ya tienes un viaje programado para este día",
-                  icon: "warning",
-                  text: "No puedes programar dos viajes para el mismo día. Por favor, selecciona otra fecha.",
-                  confirmButtonText: "Ok",
-                }) && setViaje({ ...viaje, fecha: "", hora: "" })
-              : false
-          );
+          if(fechaSi.length !== 0){
+            Swal.fire({
+              title: "Ya tienes un viaje programado para este día",
+              icon: "warning",
+              text: "No puedes programar dos viajes para el mismo día. Por favor, selecciona otra fecha.",
+              confirmButtonText: "Ok"
+            }) && setViaje({...viaje, fecha: "", hora: ""})
+          }}
         }
-      }
-    }
-  }, [viaje.hora]);
+      },[viaje.fecha])
 
   function validacion(viaje) {
     let errors = {};

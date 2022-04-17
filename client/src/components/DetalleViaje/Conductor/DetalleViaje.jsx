@@ -7,11 +7,7 @@ import {
   postColaboracion,
   sumarseAlViaje,
   modificarViaje,
-<<<<<<< HEAD
-  getViajesTotalUsuario,
-=======
   getViajesTotalUsuario
->>>>>>> fe3326313012a55d998f79765b0c0592acad876f
 } from "../../../redux/actions/actions";
 import NavBar from "../../NavBar/NavBar";
 import "./DetalleViaje.css";
@@ -43,17 +39,6 @@ export const DetalleViajec = () => {
   console.log(viajesPorUsuario)
   const [ocultarBoton, setOcultarBoton] = useState(null)
 
-<<<<<<< HEAD
-  useEffect(() => {
-    dispatch(getViajesTotalUsuario(cookieMail));
-  }, []);
-
-  useEffect(() => {
-    dispatch(getDetalleViaje(id));
-  }, [id]);
-
-  if (viaje.length !== 0 && viaje.fecha.length !== 0) {
-=======
   useEffect(
     () => {
       dispatch(getDetalleViaje(id));
@@ -70,7 +55,6 @@ export const DetalleViajec = () => {
   }, [viajesPorUsuario])
 
   if (viaje.length!==0 && viaje.fecha.length!==0) {
->>>>>>> fe3326313012a55d998f79765b0c0592acad876f
     viaje.fecha.includes("T")
       ? (fechaViaje = viaje.fecha
           .substring(0, 10)
@@ -503,7 +487,7 @@ export const DetalleViajec = () => {
             <img className="stretch" src={fondo} alt="" />
           </div>
         </div>
-      )}
+      }
     </div>
   );
 };
