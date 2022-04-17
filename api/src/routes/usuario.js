@@ -1,12 +1,17 @@
 const { Router } = require("express");
 const router = Router();
-const { Usuario, Viaje, Comentarios, Reportados } = require("../db.js");
+const {
+  Usuario,
+  Viaje,
+  Comentarios,
+  Reportados,
+  Vehiculo
+} = require("../db.js");
 const { API_KEY } = process.env;
 
 router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
   try {
     const { email, password } = req.params;
-    //console.log("soy email" , email);
     if (email) {
       var dbUsuario = await Usuario.findOne(
         { where: { email: email } },
@@ -36,7 +41,12 @@ router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
 router.get("/usuarios", async (req, res, next) => {
   try {
     let usuarios = await Usuario.findAll({
-      include: [{ model: Comentarios }, { model: Reportados }],
+      include: [
+        { model: Comentarios },
+        { model: Reportados },
+        { model: Viaje },
+        { model: Vehiculo }
+      ]
     });
     res.send(usuarios);
   } catch (err) {
@@ -47,7 +57,12 @@ router.get("/usuarios", async (req, res, next) => {
 router.get("/usuarios/:email", async (req, res, next) => {
   const { email } = req.params;
   try {
-    let usuario = await Usuario.findByPk(email, { include: Comentarios });
+    let usuario = await Usuario.findByPk(email, { include: [
+      { model: Comentarios },
+      { model: Reportados },
+      { model: Viaje },
+      { model: Vehiculo }
+    ] });
     if (usuario) res.send(usuario);
     else res.send("error");
   } catch (err) {
@@ -60,7 +75,7 @@ router.post("/registro", async (req, res, next) => {
     const { email, nombre, apellido, password, avatar } = req.body;
     let nuevoUsuario;
     nuevoUsuario = await Usuario.findOrCreate({
-      where: { email, nombre, apellido, password, avatar },
+      where: { email, nombre, apellido, password, avatar }
     });
     res.json(nuevoUsuario);
 
@@ -214,7 +229,7 @@ router.put("/logueado", async (req, res, next) => {
     let usuario = await Usuario.findByPk(email);
     usuario.update({ logueado: true });
     usuario.save();
-    res.send("usuario logueado"); 
+    res.send("usuario logueado");
   } catch (err) {
     next(err);
   }
@@ -239,26 +254,26 @@ router.put("/modificarperfil", async (req, res, next) => {
     if (dni) {
       console.log("entre a dni");
       usuario.update({
-        dni: dni,
+        dni: dni
       });
       usuario.save();
     }
     if (telefono) {
       console.log("entre a telefono");
       usuario.update({
-        telefono: telefono,
+        telefono: telefono
       });
       usuario.save();
     }
     if (avatar) {
       usuario.update({
-        avatar: avatar,
+        avatar: avatar
       });
       usuario.save();
     }
     if (acercaDeMi) {
       usuario.update({
-        acercaDeMi: acercaDeMi,
+        acercaDeMi: acercaDeMi
       });
       usuario.save();
     }
@@ -275,14 +290,14 @@ router.put("/comentarios", async (req, res, next) => {
     if (calificacion) {
       console.log("entre a calificacion");
       nuevoComentario.update({
-        calificacion: calificacion,
+        calificacion: calificacion
       });
       nuevoComentario.save();
     }
     if (comentarios) {
       console.log("entre a comentarios");
       nuevoComentario.update({
-        comentarios: comentarios,
+        comentarios: comentarios
       });
       nuevoComentario.save();
     }

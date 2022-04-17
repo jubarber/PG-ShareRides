@@ -25,14 +25,17 @@ export const DetalleViajep = () => {
   const { email } = useParams();
   let fechaViaje = "";
 
-  viaje?.fecha?.includes("T")?fechaViaje = viaje?.fecha?.substring(0, 10).split("-").reverse().join("-") : fechaViaje=viaje.fecha
+  if (viaje.length!==0 && viaje.fecha.length!==0){
+    viaje.fecha.includes("T")?fechaViaje = viaje.fecha.substring(0, 10).split("-").reverse().join("-") : fechaViaje=viaje.fecha
+  }
 
   useEffect(() => {
     dispatch(getDetalleViaje(id));
     dispatch(getUsuarioByEmail(email));
   }, [id]);
 
-  let arrayPasajeres = viaje.usuarios?.map((e) => e);
+  let arrayPasajeres;
+  if(viaje.length!==0 && viaje.usuarios.length!==0) arrayPasajeres = viaje.usuarios.map((e) => e);
 
   return (
     <div className="container-detalle">
@@ -166,7 +169,7 @@ export const DetalleViajep = () => {
                   maxWidth: 360,
                 }}
               >
-                {arrayPasajeres?.map((e) => (
+                {arrayPasajeres.length!==0 && arrayPasajeres.map((e) => (
                   <ListItem
                     key={e.email}
                     disableGutters

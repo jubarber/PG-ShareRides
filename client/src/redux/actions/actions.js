@@ -18,6 +18,7 @@ export const ACTUALIZAR_COLABORACION = "ACTUALIZAR_COLABORACION";
 export const GET_COLABORACIONES = "GET_COLABORACIONES";
 export const ELIMINADO = "ELIMINADO";
 export const GET_VIAJES_TOTAL_USUARIO = "GET_VIAJES_TOTAL_USUARIO";
+export const GET_VEHICULOS = "GET_VEHICULOS"
 
 export function getDetalleViaje(viajeId) {
   return function (dispatch) {
@@ -185,7 +186,8 @@ export function postViajeConductor(checkboxes, viaje) {
           email: viaje.email,
           dni: viaje.dni,
           detalles: viaje.detalles,
-          puntuacion: viaje.puntuacion
+          puntuacion: viaje.puntuacion,
+          patente: viaje.patente,
         }
       });
       return dispatch({
@@ -554,4 +556,15 @@ export function getReporte() {
       console.log(error);
     }
   };
+};
+
+export function getVehiculos(email){
+  return async function (dispatch){
+    try{
+      const vehiculos = await axios.get(`http://localhost:3001/api/vehiculo/${email}`);
+      return dispatch({type: "GET_VEHICULOS", payload: vehiculos.data})
+    }catch(err){
+      console.log(err)
+    }
+  }
 }

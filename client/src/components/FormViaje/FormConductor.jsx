@@ -9,6 +9,7 @@ import Cookies from "universal-cookie";
 import NavBar from "../NavBar/NavBar";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Swal from "sweetalert2"
 import es from "date-fns/locale/es";
 registerLocale("es", es);
 
@@ -18,9 +19,9 @@ export default function FormPasajero() {
   const navigate = useNavigate();
   const [isChecked, setIsChecked] = useState(new Array(5).fill(false));
   const [errors, setErrors] = useState({});
-    const [temporal, setTemporal] = useState({});
   const viajesUsuario = useSelector((state) => state.viajesPorUsuario)
   const cookieMail = cookies.get("email");
+  const cookiePatente = cookies.get("patente")
   const [viaje, setViaje] = useState({
     nombre: cookies.get("nombre"),
     fecha: "",
@@ -32,6 +33,7 @@ export default function FormPasajero() {
     formaDePago: "A charlar",
     email: cookieMail,
     detalles: "",
+    patente: cookiePatente
   });
   const expresiones = {
     // fecha: /^.{4,18}$/,
@@ -44,12 +46,11 @@ export default function FormPasajero() {
   useEffect(()=> {
     dispatch(getViajesTotalUsuario(cookieMail))
   },[])
-
-
+  
   useEffect(()=> {
     if(viajesUsuario.length !== 0){
       let mes;
-        switch (viaje?.fecha?.toString().substring(4,7)) {
+        switch (viaje.length!==0 && viaje.fecha.toString().substring(4,7)) {
     case "Jan":
         mes = 1
         break
@@ -91,10 +92,15 @@ export default function FormPasajero() {
 }
 
       let fechaSi = []
-      viajesUsuario.map(e => e.fecha.substring(6,10) === mes+"-"+viaje?.fecha?.toString().substring(8,10)? fechaSi.push(e): false)
+      {viaje.length !== 0 && viajesUsuario.map(e => e.fecha.substring(6,10) === mes+"-"+viaje.fecha.toString().substring(8,10)? fechaSi.push(e): console.log("no hay nada"))
       if(fechaSi.length !== 0){
-        fechaSi.map(e => e.hora === viaje.hora? console.log("flasheaste confianza"): false)
-      }
+        fechaSi.map(e => e.hora === viaje.hora? Swal.fire({
+          title: "Ya tienes un viaje programado para este día",
+          icon: "warning",
+          text: "No puedes programar dos viajes para el mismo día. Por favor, selecciona otra fecha.",
+          confirmButtonText: "Ok"
+        }) && setViaje({...viaje, fecha: "", hora: ""}) : false)
+      }}
     }
   },[viaje.hora])
 
@@ -105,12 +111,11 @@ export default function FormPasajero() {
       errors.hora = "Debes ingresar la hora del viaje";
     } else if (!expresiones.hora.test(viaje.hora)) {
       errors.hora = "Ingresa una hora valida";
+
     }
     if (!viaje.fecha) {
       errors.fecha = "Debes ingresar la fecha del viaje";
-    } else if (!expresiones.fecha?.test(viaje.fecha)) {
-      errors.fecha = "Ingresa una fecha valida";
-    }
+    } 
     if (!viaje.origen) {
       errors.origen = "Debes ingresar el origen del viaje";
     } else if (!expresiones.origen.test(viaje.origen)) {
@@ -153,7 +158,6 @@ export default function FormPasajero() {
 
   function handleOnChange(e) {
     e.preventDefault();
-    // console.log(viaje);
     setViaje({
       ...viaje,
       [e.target.name]: e.target.value,

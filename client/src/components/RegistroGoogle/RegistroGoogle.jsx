@@ -19,7 +19,6 @@ export default function RegistroGoogle() {
   let cookieNombre = cookies.get("nombre");
   let cookieApellido = cookies.get("apellido");
   let cookieAvatar = cookies.get("avatar");
-  console.log(cookieAvatar);
   const [input, setInput] = useState({ password: "", confirmPassword: "" });
   const [usuario, setUsuario] = useState({
     email: cookieEmail,

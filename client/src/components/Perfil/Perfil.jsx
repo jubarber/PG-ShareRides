@@ -104,7 +104,7 @@ export default function Perfil() {
   const [comentariosPorPagina, setComentariosPorPagina] = useState(3);
   const ultimoComentario = pagina * comentariosPorPagina;
   const primerComentario = ultimoComentario - comentariosPorPagina;
-  const ComentariosTotales = miUsuario.comentarios?.slice(
+  const ComentariosTotales = miUsuario.comentarios.length!==0 && miUsuario.comentarios.slice(
     primerComentario,
     ultimoComentario
   );
@@ -127,7 +127,7 @@ export default function Perfil() {
       ...reviews,
       [e.target.name]: e.target.value,
     });
-    setCount(e.target.value.length);
+    setCount(e.target.value.length!==0);
   };
 
   const handleChangeReportes = (e) => {
@@ -410,13 +410,14 @@ export default function Perfil() {
               ))}
           </div>
           <div className="pag">
+            {comentarios.length!==0 && 
             <PaginacionComentarios
               comentariosPorPagina={comentariosPorPagina}
-              comentarios={comentarios?.length}
+              comentarios={comentarios.length}
               paginacion={paginacion}
               pagina={pagina}
               setPagina={setPagina}
-            />
+            />}
           </div>
         </div>
       </div>
