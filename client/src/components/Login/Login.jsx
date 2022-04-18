@@ -2,13 +2,18 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { login } from "../../redux/actions/actions";
+import {
+  activarPerfil,
+  getUsuarioByEmail,
+  login,
+} from "../../redux/actions/actions";
 import swal from "sweetalert";
 import fondo from "../../assets/fondo perfil.jpg";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
 import "./Login.css";
 import Cookies from "universal-cookie";
 import NavBarSinLogin from "../NavBar/NavBarSinLogin";
+import Swal from "sweetalert2/dist/sweetalert2.js";
 
 export default function Login() {
   const cookies = new Cookies();
@@ -47,11 +52,46 @@ export default function Login() {
     cookies.set("avatar", usuario.avatar, { path: "/" });
     cookies.set("acercaDeMi", usuario.acercaDeMi, { path: "/" });
     cookies.set("calificacion", usuario.calificacion, { path: "/" });
-    console.log(cookies.get("nombre"));
+    // console.log(cookies.get("nombre"));
   }, [usuario]);
 
+  let algo = usuario.disponible;
+  // console.log("usuarios", algo);
+
   useEffect(() => {
-    if (inicioSesion === "contraseña incorrecta") {
+    if (inicioSesion === "usuario pausado") {
+      // console.log("entre a usuarios.disponible");
+      setError({ ...error, usuario: "El usuario ha sido pausado" });
+      Swal.fire({
+        title: "Su cuenta ha sido eliminada!",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        denyButtonColor: "#6BFF43 ",
+        confirmButtonText: "Conservar contraseña",
+        denyButtonText: `Cambiar contraseña`,
+        cancelButtonText: "Volver al inicio",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch(activarPerfil(input.email));
+          getUsuarioByEmail(input.email);
+          dispatch(login(input.email));
+          swal({
+            title: "Se ha restaurado exitosamente!",
+            icon: "success",
+            button: "Bienvenidx de nuevo!",
+          }).then(function () {
+            navigate("/home");
+          });
+        } else if (result.isDenied) {
+          // console.log(cookies.get("email"))
+          navigate("/restaurarCuenta");
+        } else {
+          navigate("/");
+        }
+      });
+    } else if (inicioSesion === "contraseña incorrecta") {
       setError({ ...error, password: "Contraseña incorrecta" });
       swal({
         title: "Ups!",

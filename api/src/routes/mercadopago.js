@@ -31,7 +31,7 @@ router.get("/:orderId/:unit_price", (req, res) => {
       installments: 3, //Cantidad máximo de cuotas
     },
     back_urls: {
-      success: "http://localhost:3000/home",
+      success: "http://localhost:3000/temporal",
       failure: "http://localhost:3000/home",
       pending: "http://localhost:3000/home",
     },

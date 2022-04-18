@@ -29,6 +29,8 @@ export default function Card({
   avatar,
 }) {
   //get de usuario (nombre, apellido y valoracion). foto usuario. Provincias/localidades como llegan y si se puede mostras cada una independiente de la otra. Iniciar sesion con aut 0 y con las cuquis trabajar con la info.
+
+  
   return (
     <div className="container-cardviaje">
       <div id="nueva-clase">

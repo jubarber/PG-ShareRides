@@ -1,34 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Cookies from "universal-cookie";
-import { registroUsuario } from "../../redux/actions/actions";
+import {
+  cambioPassword,
+  getUsuarioByEmail,
+  registroUsuario,
+} from "../../redux/actions/actions";
 import swal from "sweetalert";
 import fondo from "../../assets/fondo perfil.jpg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
-import "./RegistroGoogle.css";
+import "./RestaurarCuenta.css";
 import NavBarSinLogin from "../NavBar/NavBarSinLogin";
 
-export default function RegistroGoogle() {
+export default function RestaurarCuenta() {
   const cookies = new Cookies();
   const [statePassword, setStatePassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  let cookieEmail = cookies.get("email");
-  let cookieNombre = cookies.get("nombre");
-  let cookieApellido = cookies.get("apellido");
-  let cookieAvatar = cookies.get("avatar");
+
+  const cookieEmail = cookies.get("email");
+  // console.log("mail", cookieEmail);
+
   const [input, setInput] = useState({ password: "", confirmPassword: "" });
   const [usuario, setUsuario] = useState({
-    email: cookieEmail,
-    nombre: cookieNombre,
-    apellido: cookieApellido,
-    avatar: cookieAvatar,
+    email: "",
+    nombre: "",
+    apellido: "",
+    avatar: "",
     password: "",
     confirmPassword: "",
   });
 
+  // console.log("usuario", usuario);
   function handleChange(e) {
     setUsuario({
       ...usuario,
@@ -75,11 +80,11 @@ export default function RegistroGoogle() {
         dangerMode: true,
       });
     } else {
-      dispatch(registroUsuario(usuario));
+      //   dispatch(cambioPassword());
       swal({
-        title: "El registro ha sido exitoso!",
+        title: "Se ha cambiado exitosamente la contraseña!",
         icon: "success",
-        button: "Bienvenidx!",
+        button: "Bienvenidx de nuevo!",
       }).then(function () {
         navigate("/home");
       });
@@ -99,8 +104,8 @@ export default function RegistroGoogle() {
       </div>
       <div>
         <div className="Google__titulos">
-          <h1>Coloca una contraseña para usar la plataforma</h1>
-          <h2>Será tu contraseña de Share Rides</h2>
+          <h1>Coloca una nueva contraseña para usar la plataforma</h1>
+          <h2>Estas actualizando tu contraseña de Share Rides</h2>
         </div>
         <form className="Google__formulario-login" onSubmit={handleSubmit}>
           <div className="Google__input_box">

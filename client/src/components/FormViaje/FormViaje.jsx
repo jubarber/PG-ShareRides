@@ -1,21 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import fondo from "../../assets/fondo perfil.jpg";
 import "./FormViaje.css";
 import CheckBox from "@mui/material/Checkbox";
 import NavBar from "../NavBar/NavBar";
+import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { getVehiculos } from "../../redux/actions/actions";
+import Cookies from "universal-cookie";
 
 export default function FormViaje() {
+  const cookies = new Cookies();
+  const vehiculos = useSelector(state => state.vehiculos);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const [isChecked, setIsChecked] = useState({
     pasajero: false,
-    conductor: false,
+    conductor: false
   });
+  const cookieMail = cookies.get("email");
 
   function handleOnChange(e) {
     setIsChecked({
       ...isChecked,
-      [e.target.name]: !isChecked[e.target.name],
+      [e.target.name]: !isChecked[e.target.name]
     });
   }
 
@@ -25,12 +34,45 @@ export default function FormViaje() {
       navigate("/formpasajero");
     }
     if (isChecked.conductor === true && isChecked.pasajero === false) {
-      navigate("/formvehiculo");
+      // console.log("vehiculos", vehiculos)
+      if (vehiculos !== "No hay vehiculos") {
+        Swal.fire({
+          title: "Ya tienes un vehiculo registrado",
+          icon: "info",
+          text:
+            "Deseas continuar con tu vehiculo registrado o prefieres registrar uno nuevo?",
+          showDenyButton: true,
+          denyButtonColor: "#990099",
+          confirmButtonText: "Continuar con mi vehiculo",
+          denyButtonText: "Registrar otro vehiculo"
+        }).then(r => {
+          if (r.isConfirmed) {
+            // console.log(vehiculos[0])
+            cookies.set("patente", vehiculos[0].patente, { path: "/" });
+            cookies.set("dni", vehiculos[0].dni, { path: "/"})
+            setTimeout(() => {
+              navigate("/formconductor");
+            }, 1500)
+          } else if (r.isDenied) {
+            navigate("/formvehiculo");
+          }
+        });
+      } else {
+        navigate("/formvehiculo");
+      }
     }
+
     if (isChecked.pasajero && isChecked.conductor) {
-      alert("Debes selecionar uno solo");
+      Swal.fire({
+        title: "Debes selecionar uno solo",
+        icon: "warning"
+      });
     }
   }
+
+  useEffect(() => {
+    dispatch(getVehiculos(cookieMail));
+  }, []);
 
   return (
     <div className="contenedor_formviaje">
@@ -43,7 +85,7 @@ export default function FormViaje() {
             value="pasajero"
             name="pasajero"
             checked={isChecked.pasajero}
-            onChange={(e) => {
+            onChange={e => {
               handleOnChange(e);
             }}
             color="secondary"
@@ -58,7 +100,7 @@ export default function FormViaje() {
             value="conductor"
             name="conductor"
             checked={isChecked.conductor}
-            onChange={(e) => {
+            onChange={e => {
               handleOnChange(e);
             }}
             color="secondary"

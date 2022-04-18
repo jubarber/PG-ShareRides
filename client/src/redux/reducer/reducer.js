@@ -8,10 +8,12 @@ import {
   GET_USUARIOS,
   USUARIO_MAIL,
   FILTERTYPE,
-  MODIFICAR_PERFIL,
-  COMENTARIOS,
   GET_COMENTARIOS,
   GET_LOCALIDADES,
+  GET_COMENTARIO_BY_ID,
+  GET_COLABORACIONES,
+  GET_VIAJES_TOTAL_USUARIO,
+  GET_VEHICULOS
 } from "../actions/actions.js";
 
 const initialState = {
@@ -22,7 +24,11 @@ const initialState = {
   usuario: [],
   error: "",
   comentarios: [],
+  comentarioPorId: [],
   localidades: [],
+  colaboraciones: [],
+  viajesPorUsuario: [],
+  vehiculos: []
 };
 
 function rootReducer(state = initialState, action) {
@@ -75,7 +81,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         comentarios: action.payload,
       };
-
     case FILTERTYPE:
       const viajes_usuario = state.viajes.filter(
         (e) => e.status === action.payload
@@ -89,6 +94,27 @@ function rootReducer(state = initialState, action) {
         ...state,
         localidades: action.payload,
       };
+    case GET_COMENTARIO_BY_ID: {
+      return {
+        ...state,
+        comentarioPorId: action.payload,
+      };
+    }
+    case GET_COLABORACIONES:
+      return {
+        ...state,
+        colaboraciones: action.payload
+      }
+      case GET_VIAJES_TOTAL_USUARIO:
+        return{
+          ...state,
+          viajesPorUsuario: action.payload
+        }
+      case GET_VEHICULOS:
+        return {
+          ...state,
+          vehiculos: action.payload
+        }
     default:
       return { ...state };
   }
