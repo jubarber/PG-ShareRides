@@ -85,7 +85,7 @@ export function filtroChecks(payload, asiento) {
 
 //registro usuario nuevo
 export function registroUsuario(payload) {
-  console.log("soy payload", payload);
+  // console.log("soy payload", payload);
   return async function (dispatch) {
     try {
       const nuevoUsuario = await axios({
@@ -111,7 +111,7 @@ export function registroUsuario(payload) {
   };
 }
 export function postViajePasajero(checkboxes, viaje) {
-  console.log(viaje);
+  // console.log(viaje);
   return async function (dispatch) {
     try {
       let pasajero = await axios({
@@ -165,7 +165,7 @@ export function postVehiculo(payload) {
 }
 
 export function postViajeConductor(checkboxes, viaje) {
-  console.log(checkboxes, viaje);
+  // console.log(checkboxes, viaje);
   return async function (dispatch) {
     try {
       let conductor = await axios({
@@ -242,7 +242,7 @@ export function mailModificarPerfil(payload) {
 
 export function modificacionPerfil(payload) {
   return async function (dispatch) {
-    console.log("modificar action", payload);
+    // console.log("modificar action", payload);
     try {
       let perfilModificado = await axios({
         method: "put",
@@ -292,7 +292,7 @@ export function logout(payload) {
           email: payload,
         },
       });
-      console.log("deslogueado");
+      // console.log("deslogueado");
       return dispatch({ type: "LOGGED_OUT", payload: deslogueado.data });
     } catch (err) {
       console.log(err);
@@ -302,9 +302,9 @@ export function logout(payload) {
 
 export function searchOrigen(origen) {
   return async function (dispatch) {
-    console.log("action origen", origen);
+    // console.log("action origen", origen);
     try {
-      console.log("action origen", origen);
+      // console.log("action origen", origen);
       let search = await axios.get(
         `http://localhost:3001/api/viaje/searchorigen?origen=${origen}`
       );
@@ -316,7 +316,7 @@ export function searchOrigen(origen) {
 }
 export function searchDestino(destino) {
   return async function (dispatch) {
-    console.log("action destino", destino);
+    // console.log("action destino", destino);
     try {
       let search = await axios.get(
         `http://localhost:3001/api/viaje/searchdestino?destino=${destino}`
@@ -345,7 +345,7 @@ export function getUsuarioByEmail(email) {
 
 export function postComentarios(payload) {
   return async function (dispatch) {
-    console.log("post comentarios action", payload);
+    // console.log("post comentarios action", payload);
     try {
       let comentario = await axios({
         method: "post",
@@ -395,7 +395,7 @@ export function getComentariosById(id) {
 }
 
 export function eliminarComentarios(payload) {
-  console.log("elimianar", payload);
+  // console.log("elimianar", payload);
   return async function (dispatch) {
     try {
       let comentarioEliminado = await axios({
@@ -534,7 +534,7 @@ export function modificarViaje(payload) {
 
 export function eliminarPerfil(payload) {
   return async function (dispatch) {
-    console.log("eliminado", payload);
+    // console.log("eliminado", payload);
     try {
       const usuarioEliminado = await axios({
         method: "put",
@@ -555,7 +555,7 @@ export function eliminarPerfil(payload) {
 
 export function activarPerfil(payload) {
   return async function () {
-    console.log("activado", payload);
+    // console.log("activado", payload);
     try {
       const usuarioActivado = await axios({
         method: "put",
@@ -572,7 +572,7 @@ export function activarPerfil(payload) {
 
 export function postReporte(payload) {
   return async function (dispatch) {
-    console.log("postReporte", payload);
+    // console.log("postReporte", payload);
     try {
       const postReporte = await axios({
         method: "post",

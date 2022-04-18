@@ -14,7 +14,7 @@ router.post("/postReporte", async (req, res, next) => {
       apellido,
     });
     const reporteRecibido = await Usuario.findByPk(email);
-    console.log(reporteRecibido);
+    // console.log(reporteRecibido);
     await nuevoReporte.addUsuario(reporteRecibido);
     res.json(nuevoReporte);
   } catch (error) {

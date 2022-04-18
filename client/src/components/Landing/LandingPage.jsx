@@ -31,17 +31,17 @@ export default function LandingPage() {
       cookies.set("nombre", usuario.nombre, { path: "/" });
       cookies.set("apellido", usuario.apellido, { path: "/" });
       cookies.set("avatar", usuario.avatar, { path: "/" });
-      console.log("Bienvenidx " + cookies.get("nombre") + "!");
+      // console.log("Bienvenidx " + cookies.get("nombre") + "!");
 
       if (usuario.email) {
-        console.log("email");
+        // console.log("email");
         if (Object.values(usuarioReducer).length > 0) {
-          console.log("usuario reducer", usuarioReducer);
+          // console.log("usuario reducer", usuarioReducer);
           setTimeout(() => {
             navigate("/home");
           }, 2000);
         } else {
-          console.log("error");
+          // console.log("error");
           setTimeout(() => {
             navigate("/registrogoogle");
           }, 2000);
@@ -53,7 +53,7 @@ export default function LandingPage() {
 
   useEffect(
     () => {
-      console.log("dispatch");
+      // console.log("dispatch");
       dispatch(getUsuarioByEmail(usuario.email));
     },
     [usuario, dispatch]

@@ -52,15 +52,15 @@ export default function Login() {
     cookies.set("avatar", usuario.avatar, { path: "/" });
     cookies.set("acercaDeMi", usuario.acercaDeMi, { path: "/" });
     cookies.set("calificacion", usuario.calificacion, { path: "/" });
-    console.log(cookies.get("nombre"));
+    // console.log(cookies.get("nombre"));
   }, [usuario]);
 
   let algo = usuario.disponible;
-  console.log("usuarios", algo);
+  // console.log("usuarios", algo);
 
   useEffect(() => {
     if (inicioSesion === "usuario pausado") {
-      console.log("entre a usuarios.disponible");
+      // console.log("entre a usuarios.disponible");
       setError({ ...error, usuario: "El usuario ha sido pausado" });
       Swal.fire({
         title: "Su cuenta ha sido eliminada!",
@@ -85,9 +85,7 @@ export default function Login() {
             navigate("/home");
           });
         } else if (result.isDenied) {
-          dispatch(activarPerfil(input.email));
-          getUsuarioByEmail(input.email);
-          dispatch(login(input.email));
+          // console.log(cookies.get("email"))
           navigate("/restaurarCuenta");
         } else {
           navigate("/");

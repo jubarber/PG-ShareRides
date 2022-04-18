@@ -20,7 +20,7 @@ export default function Colaboracion() {
     []
     );
     
-    console.log(viajes)
+    // console.log(viajes)
 
   return (
     <div>

@@ -124,7 +124,7 @@ export default function FormRegistro() {
       cookies.set("nombre", input.nombre, { path: "/" });
       cookies.set("apellido", input.apellido, { path: "/" });
       cookies.set("avatar", input.avatar, { path: "/" });
-      console.log("COOKIES REGISTRO ", cookies.get("nombre"));
+      // console.log("COOKIES REGISTRO ", cookies.get("nombre"));
       dispatch(registroUsuario(input));
       let cookieNombre = cookies.get("nombre");
       swal({

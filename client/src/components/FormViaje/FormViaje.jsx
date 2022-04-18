@@ -34,7 +34,7 @@ export default function FormViaje() {
       navigate("/formpasajero");
     }
     if (isChecked.conductor === true && isChecked.pasajero === false) {
-      console.log("vehiculos", vehiculos)
+      // console.log("vehiculos", vehiculos)
       if (vehiculos !== "No hay vehiculos") {
         Swal.fire({
           title: "Ya tienes un vehiculo registrado",
@@ -47,7 +47,7 @@ export default function FormViaje() {
           denyButtonText: "Registrar otro vehiculo"
         }).then(r => {
           if (r.isConfirmed) {
-            console.log(vehiculos[0])
+            // console.log(vehiculos[0])
             cookies.set("patente", vehiculos[0].patente, { path: "/" });
             cookies.set("dni", vehiculos[0].dni, { path: "/"})
             setTimeout(() => {

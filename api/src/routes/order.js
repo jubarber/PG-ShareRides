@@ -4,7 +4,7 @@ const { Order, Order_detail } = require("../db.js");
 router.post("/", async (req, res, next) => {
   try {
     const { usuarioPagador } = req.body;
-    console.log(usuarioPagador);
+    // console.log(usuarioPagador);
     const newOrder = await Order.findOrCreate({
       where: { usuarioPagador: usuarioPagador }
     });

@@ -28,7 +28,7 @@ export default function Card({
   puntuacion,
   avatar,
 }) {
-  console.log("esto llega como avatar:", avatar);
+  // console.log("esto llega como avatar:", avatar);
   //get de usuario (nombre, apellido y valoracion). foto usuario. Provincias/localidades como llegan y si se puede mostras cada una independiente de la otra. Iniciar sesion con aut 0 y con las cuquis trabajar con la info.
   return (
     <div className="container-cardviaje">
