@@ -16,21 +16,18 @@ export default function Colaboracion() {
       dispatch(getColaboraciones(cookieMail));
       dispatch(getUsuarios())
       dispatch(getViajesTotal())
-    },
-    []
-    );
+    }, []);
     
-    // console.log(viajes)
 
   return (
+    <div>
+      { viajes.length!==0 &&
     <div>
       {colaboraciones.length !== 0
         ? colaboraciones.map(c => {
             let viaje;
             if(viajes.length!==0) viaje = viajes.find(v => v.id === c.viajeId)
-            let usuarioCobrador;
-           if(usuarios.length!==0) usuarioCobrador = usuarios.find(u => u.email === c.usuarioCobrador)
-          if(usuarioCobrador.length !==0 && viaje.length!==0){  
+            let usuarioCobrador = usuarios.find(u => u.email === c.usuarioCobrador)
             return (
               <div>
                 Monto de la colaboración: ${c.unit_price}
@@ -41,9 +38,11 @@ export default function Colaboracion() {
                 El <a href={`/detallec/${viaje.id}`}> viaje </a> fue de {viaje.origen} a {viaje.destino} el {viaje.fecha}
               </div>
             );
-          }
+          
           })
         : <h2>Aún no hay colaboraciones</h2>}
+    </div>
+}
     </div>
   );
 }

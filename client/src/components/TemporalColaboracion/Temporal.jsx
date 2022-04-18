@@ -10,6 +10,7 @@ export default function Temporal() {
 
   useEffect(
     () => {
+      console.log("temporal")
       dispatch(actualizarColaboracion(cookieMail));
       setTimeout(() => {
         window.location.href = "/home";

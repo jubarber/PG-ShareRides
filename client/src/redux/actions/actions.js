@@ -423,6 +423,7 @@ export function filterPerCard(payload) {
 }
 
 export function postOrder(usuarioPagador) {
+  console.log(usuarioPagador)
   return async function (dispatch) {
     try {
       const newOrder = await axios({
@@ -441,9 +442,9 @@ export function postOrder(usuarioPagador) {
 }
 
 export function postColaboracion(input) {
+  console.log(input)
   return async function (dispatch) {
     try {
-      console.log(input);
       await axios({
         method: "post",
         url: "http://localhost:3001/api/colaboracion/nuevaColaboracion",
@@ -464,6 +465,7 @@ export function postColaboracion(input) {
 }
 
 export function actualizarColaboracion(email) {
+  console.log("actualizacion", email)
   return async function (dispatch) {
     try {
       const colaboracion = await axios({

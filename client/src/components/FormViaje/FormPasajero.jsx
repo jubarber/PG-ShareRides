@@ -45,7 +45,7 @@ export default function FormPasajero() {
     origen: /^[a-zA-ZÀ-ÿ\s]{4,30}$/,
     destino: /^[a-zA-ZÀ-ÿ\s]{4,30}$/,
     email: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
-    asiento: /^.{1,7}$/
+    // asiento: /^.{1,7}$/
   };
   
   useEffect(()=> {
@@ -53,10 +53,10 @@ export default function FormPasajero() {
   },[])
   
   useEffect(()=> {
-    if(viajesUsuario?.length !== 0 && 
-      viaje?.fecha?.length!==0){
+    if(viajesUsuario && viajesUsuario.length !== 0 && 
+      viaje && viaje.fecha && viaje.fecha.length!==0){
       let mes;
-        switch (viaje.length!==0 && viaje.fecha?.toString().substring(4,7)) {
+        switch (viaje.length!==0 && viaje.fecha.toString().substring(4,7)) {
     case "Jan":
         mes = 1
         break
@@ -97,7 +97,7 @@ export default function FormPasajero() {
         break;
 }
       let fechaSi = []
-      {viaje.length !== 0 && (viajesUsuario.map(e => e.fecha.substring(6,10) === mes+"-"+viaje.fecha?.toString().substring(8,10)? fechaSi.push(e): console.log("no hay nada")))
+      {viaje.length !== 0 && (viajesUsuario.map(e => e.fecha.substring(6,10) === mes+"-"+viaje.fecha.toString().substring(8,10)? fechaSi.push(e): console.log("no hay nada")))
       // console.log(fechaSi, viaje.fecha)
       if(fechaSi.length !== 0){
         Swal.fire({
@@ -136,11 +136,10 @@ export default function FormPasajero() {
     } else if (!expresiones.destino.test(viaje.destino)) {
       errors.destino = "Ingrese un destino valido";
     }
-
     if (!viaje.asiento) {
-      errors.asiento = "Debes selecionar entre 1 y 7";
-    } else if (!expresiones.asiento.test(viaje.asiento)) {
       errors.asiento = "Ingrese cuantos asientos ocupará";
+    } else if (viaje.asiento>7 || viaje.asiento<1) {
+      errors.asiento = "Debes selecionar entre 1 y 7";
     }
 
     return errors;
