@@ -85,9 +85,7 @@ export default function Login() {
             navigate("/home");
           });
         } else if (result.isDenied) {
-          dispatch(activarPerfil(input.email));
-          getUsuarioByEmail(input.email);
-          dispatch(login(input.email));
+          // console.log(cookies.get("email"))
           navigate("/restaurarCuenta");
         } else {
           navigate("/");

@@ -19,9 +19,7 @@ export default function RestaurarCuenta() {
   const [statePassword, setStatePassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const cookieEmail = cookies.get("email");
-
   const [input, setInput] = useState({ password: "", confirmPassword: "" });
   const [usuario, setUsuario] = useState({
     email: "",
@@ -31,7 +29,7 @@ export default function RestaurarCuenta() {
     password: "",
     confirmPassword: "",
   });
-
+  
   function handleChange(e) {
     setUsuario({
       ...usuario,

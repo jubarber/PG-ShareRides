@@ -49,11 +49,10 @@ export const DetalleViajec = () => {
   );
 
   useEffect(() => {
-    if(viajesPorUsuario.length!==0){
-      let array = viajesPorUsuario.map(v => console.log(v.usuarios.map(u=>u.email.includes(cookieMail))));
-      if(array.map(e => e === true)) setOcultarBoton(true)
+    if(viaje.length!==0){
+      if(viaje.usuarios[0].email===cookieMail) setOcultarBoton(true)
     } 
-  }, [viajesPorUsuario])
+  }, [viaje])
 
   if (viaje.length!==0 && viaje.fecha.length!==0) {
     viaje.fecha.includes("T")
@@ -91,11 +90,9 @@ export const DetalleViajec = () => {
     email: cookieMail,
   });
 
-  const handleColaborar = async () => {
-    await dispatch(postOrder(cookieMail)).then((data) => {
-      if (data.length !== 0) {
-        setDatosMp({ ...datosMp, orderId: data.payload[0].id });
-      }
+  const handleColaborar = () => {
+     dispatch(postOrder(cookieMail)).then((data) => {
+       if(data) setDatosMp({ ...datosMp, orderId: data.payload[0].id });
     });
   };
 
@@ -103,14 +100,16 @@ export const DetalleViajec = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(postColaboracion(datosMp));
+    dispatch(postColaboracion(datosMp))
+    console.log("submit")
     if (datosMp.length !== 0) {
       axios
-        .get(
-          `http://localhost:3001/api/mercadopago/${datosMp.orderId}/${datosMp.unit_price}`
+      .get(
+        `http://localhost:3001/api/mercadopago/${datosMp.orderId}/${datosMp.unit_price}`
         )
-        .then((r) => setRedirect(r.data));
-    }
+        .then((r) => setRedirect(r.data))
+      }
+      
   }
 
   function handleChange(e) {
@@ -191,7 +190,7 @@ export const DetalleViajec = () => {
 
   return (
     <div>
-      {viaje?.length !== 0 &&
+      {viaje.length !== 0 &&
         <div className="container-detalle">
           <NavBar />
           <div className="card-detalle">
