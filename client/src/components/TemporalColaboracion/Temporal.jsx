@@ -10,12 +10,15 @@ export default function Temporal() {
   const cookieMail = cookies.get("email");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    dispatch(actualizarColaboracion(cookieMail));
-    setTimeout(() => {
-      navigate("/home");
-    }, 2500);
-  }, [cookieMail]);
+  useEffect(
+    () => {
+      dispatch(actualizarColaboracion(cookieMail));
+      setTimeout(() => {
+        window.location.href = "/home";
+      }, 2500);
+    },
+    [cookieMail]
+  );
 
   return (
     <div className="font-semibold text-2xl dark:text-gray-500">

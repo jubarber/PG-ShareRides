@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
+import Swal from "sweetalert2";
 import { postVehiculo, getVehiculos } from "../../redux/actions/actions";
 import fondo from "../../assets/fondo perfil.jpg";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,7 +13,7 @@ export default function FormVehiculo() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const vehiculos = useSelector(state => state.vehiculos)
+  const vehiculos = useSelector(state => state.vehiculos);
   const [auto, setAuto] = useState({
     patente: "",
     marca: "",
@@ -30,13 +31,9 @@ export default function FormVehiculo() {
     dni: /^(?!^0+$)[a-zA-Z0-9]{3,20}$/
   };
 
-  useEffect(()=> {
-    dispatch(getVehiculos())
-  }, [])
-
-  useEffect(()=> {
-    
-  }, [vehiculos])
+  useEffect(() => {
+    dispatch(getVehiculos(cookies.get("email")));
+  }, []);
 
   function validacion(auto) {
     let errors = {};
@@ -81,6 +78,7 @@ export default function FormVehiculo() {
     );
   }
 
+  let vehiculo = [];
   function handleSubmit(e) {
     e.preventDefault();
     if (!auto.patente) {
@@ -102,26 +100,59 @@ export default function FormVehiculo() {
         dangerMode: true
       });
     } else {
-      // swal("Registro exitoso");
-      dispatch(postVehiculo(auto));
-      swal({
-        title: "El registro ha sido exitoso!",
-        icon: "success",
-        button: "Crea tu viaje!"
-      })
-        .then(cookies.set("dni", auto.dni, { path: "/" }))
-        .then(function() {
-          navigate("/formconductor");
+      if (typeof vehiculos !== "string") {
+        vehiculos.map(v => {
+          if (v.patente === auto.patente) {
+            vehiculo.push(v);
+          }
         });
-      setAuto({
-        patente: "",
-        marca: "",
-        modelo: "",
-        dni: "",
-        email: ""
-      });
+        if (vehiculo[0]) {
+          Swal.fire({
+            title: "Ups!",
+            text:
+              "Parece que el vehiculo que intentas registrar ya existe en nuestra base de datos! Deseas continuar o registrar otro?",
+            icon: "info",
+            showDenyButton: true,
+            denyButtonColor: "#990099",
+            confirmButtonText: "Continuar con este vehiculo",
+            denyButtonText: "Registrar otro vehiculo"
+          }).then(r => {
+            if (r.isConfirmed) {
+              cookies.set("dni", auto.dni, { path: "/" });
+              cookies.set("patente", vehiculos[0].patente, { path: "/" });
+              dispatch(postVehiculo(auto));
+              setTimeout(() => {
+                navigate("/formconductor");
+              }, 1500);
+            } else if (r.isDenied) {
+              navigate("/formvehiculo");
+            }
+          });
+        }
+      }
+      if (vehiculo.length === 0) {
+        dispatch(postVehiculo(auto));
+        Swal.fire({
+          title: "El registro ha sido exitoso!",
+          icon: "success",
+          confirmButtonText: "Crea tu viaje!"
+        })
+          .then(
+            cookies.set("dni", auto.dni, { path: "/" }) &&
+              cookies.set("patente", vehiculos[0].patente, { path: "/" })
+          )
+          .then(function() {
+            navigate("/formconductor");
+          });
+        setAuto({
+          patente: "",
+          marca: "",
+          modelo: "",
+          dni: "",
+          email: ""
+        });
+      }
     }
-    //history.push('/') //quiero q me envie a la seccion completar mi perfil?
   }
 
   return (

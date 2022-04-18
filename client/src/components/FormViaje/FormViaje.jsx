@@ -40,14 +40,17 @@ export default function FormViaje() {
           title: "Ya tienes un vehiculo registrado",
           icon: "info",
           text:
-            "Deseas continuar con tu vehiculo registrado o prefieres registrar uno nuevo?",
+            "Deseas continuar con tu vehículo registrado o prefieres registrar uno nuevo?",
           showDenyButton: true,
           denyButtonColor: "#990099",
-          confirmButtonText: "Continuar con mi vehiculo",
-          denyButtonText: "Registrar otro vehiculo"
+          confirmButtonText: "Continuar con mi vehículo",
+          denyButtonText: "Registrar otro vehículo"
         }).then(r => {
-          if (r.isConfirmed) {
-            // console.log(vehiculos[0])
+          if (r.isConfirmed && vehiculos.length>1) {
+            Swal.fire({
+              title: "Por favor, elegí qué vehículo deseas utilizar"
+              
+            })
             cookies.set("patente", vehiculos[0].patente, { path: "/" });
             cookies.set("dni", vehiculos[0].dni, { path: "/"})
             setTimeout(() => {
