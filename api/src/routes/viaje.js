@@ -234,7 +234,7 @@ router.get(
 
 router.get("/searchdestino", async (req, res, next) => {
   const { destino } = req.query;
-  console.log(destino);
+  // console.log(destino);
   try {
     let filtradoDestino;
     if (destino) {
@@ -282,7 +282,7 @@ router.get("/searchorigen", async (req, res, next) => {
       });
     }
 
-    console.log(filtradoOrigen);
+    // console.log(filtradoOrigen);
     res.send(filtradoOrigen);
   } catch (err) {
     next(err);

@@ -12,7 +12,7 @@ router.post("/nuevaColaboracion", async (req, res, next) => {
       usuarioCobrador,
       viajeId
     } = req.body;
-    console.log(unit_price, orderId)
+    // console.log(unit_price, orderId)
     let nuevaColaboracion;
     if (orderId && quantity && title && usuarioPagador && unit_price) {
       let colabSinPagar = await Colaboracion.findAll({

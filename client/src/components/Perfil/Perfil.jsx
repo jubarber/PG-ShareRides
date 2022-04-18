@@ -60,8 +60,8 @@ export default function Perfil() {
     avatar: "",
   });
 
-  console.log("miUsuario", cookieEmail);
-  console.log("usuario", usuario);
+  // console.log("miUsuario", cookieEmail);
+  // console.log("usuario", usuario);
 
   let viajesUsuarios = viajes.map((e) => e.usuarios.map((e) => e.email));
 
@@ -171,7 +171,7 @@ export default function Perfil() {
   const CLOUDINARY_UPLOAD_PRESETS = "sharerides";
 
   const handleChangeUpdateImage = async (e) => {
-    console.log(e);
+    // console.log(e);
     const file = e.target.files[0];
     const data = new FormData();
     data.append("file", file);
@@ -209,7 +209,7 @@ export default function Perfil() {
   };
 
   const handleBorrarComentario = (e) => {
-    console.log(e);
+    // console.log(e);
     Swal.fire({
       title: "Estas Seguro?",
       text: "No podras revertir la decision!",

@@ -36,7 +36,7 @@ export const DetalleViajec = () => {
   const cookieMail = cookies.get("email");
   let fechaViaje = "";
   let viajesPorUsuario = useSelector(state => state.viajesPorUsuario)
-  console.log(viajesPorUsuario)
+  // console.log(viajesPorUsuario)
   const [ocultarBoton, setOcultarBoton] = useState(null)
 
   useEffect(

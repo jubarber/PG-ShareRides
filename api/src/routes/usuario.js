@@ -249,14 +249,14 @@ router.put("/modificarperfil", async (req, res, next) => {
   try {
     let usuario = await Usuario.findByPk(email);
     if (dni) {
-      console.log("entre a dni");
+      // console.log("entre a dni");
       usuario.update({
         dni: dni
       });
       usuario.save();
     }
     if (telefono) {
-      console.log("entre a telefono");
+      // console.log("entre a telefono");
       usuario.update({
         telefono: telefono
       });
@@ -285,14 +285,14 @@ router.put("/comentarios", async (req, res, next) => {
     let nuevoComentario;
     nuevoComentario = await Usuario.findByPk(email);
     if (calificacion) {
-      console.log("entre a calificacion");
+      // console.log("entre a calificacion");
       nuevoComentario.update({
         calificacion: calificacion
       });
       nuevoComentario.save();
     }
     if (comentarios) {
-      console.log("entre a comentarios");
+      // console.log("entre a comentarios");
       nuevoComentario.update({
         comentarios: comentarios
       });
