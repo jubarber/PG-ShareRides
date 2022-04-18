@@ -19,7 +19,8 @@ export const ACTUALIZAR_COLABORACION = "ACTUALIZAR_COLABORACION";
 export const GET_COLABORACIONES = "GET_COLABORACIONES";
 export const ELIMINADO = "ELIMINADO";
 export const GET_VIAJES_TOTAL_USUARIO = "GET_VIAJES_TOTAL_USUARIO";
-export const GET_VEHICULOS = "GET_VEHICULOS"
+export const GET_VEHICULOS = "GET_VEHICULOS";
+export const ACTIVAR_USUARIO = "ACTIVAR_USUARIO";
 
 
 export function getDetalleViaje(viajeId) {
@@ -560,8 +561,8 @@ export function eliminarPerfil(payload) {
 }
 
 export function activarPerfil(payload) {
-  return async function () {
-    // console.log("activado", payload);
+  return async function (dispatch) {
+    console.log("activado", payload);
     try {
       const usuarioActivado = await axios({
         method: "put",
@@ -569,7 +570,8 @@ export function activarPerfil(payload) {
         data: {
           email: payload,
         },
-      });
+      })
+      return dispatch({type:"ACTIVAR_USUARIO", payload: usuarioActivado.data})
     } catch (error) {
       console.log(error);
     }
@@ -621,15 +623,15 @@ export function getVehiculos(email){
   }
 }
 
-export function cambioPassword(payload) {
+export function cambioPassword(email, password) {
   return async function (dispatch) {
     try {
       let cambio = await axios({
         method: "put",
         url: "http://localhost:3001/api/usuario/cambiopassword",
         data: {
-          email: payload.email,
-          password: payload.password,
+          email: email,
+          password: password,
         },
       });
       return dispatch({ type: "CAMBIO_PASSWORD", payload: cambio.data });
