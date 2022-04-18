@@ -34,6 +34,10 @@ module.exports = (sequelize) => {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
       },
+      reportes: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
     },
     { timestamps: false }
   );
