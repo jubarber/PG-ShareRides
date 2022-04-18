@@ -13,22 +13,23 @@ import {
   GET_COMENTARIO_BY_ID,
   GET_COLABORACIONES,
   GET_VIAJES_TOTAL_USUARIO,
-  GET_VEHICULOS
+  GET_VEHICULOS,
+  ACTIVAR_USUARIO
 } from "../actions/actions.js";
 
 const initialState = {
-  viajePorId: [],
   viajes: [],
   viajesFiltrados: [],
+  viajePorId: [],
+  viajesPorUsuario: [],
   usuarios: [],
   usuario: [],
-  error: "",
   comentarios: [],
   comentarioPorId: [],
   localidades: [],
   colaboraciones: [],
-  viajesPorUsuario: [],
-  vehiculos: []
+  vehiculos: [],
+  error: "",
 };
 
 function rootReducer(state = initialState, action) {
@@ -70,7 +71,6 @@ function rootReducer(state = initialState, action) {
         viajesFiltrados: action.payload,
       };
     case USUARIO_MAIL:
-      // console.log(action.payload)
       if (action.payload === "error") {
         return { ...state, error: action.payload, usuario: {} };
       } else {
@@ -114,6 +114,11 @@ function rootReducer(state = initialState, action) {
         return {
           ...state,
           vehiculos: action.payload
+        }
+      case ACTIVAR_USUARIO:
+        return {
+          ...state,
+          usuario: action.payload
         }
     default:
       return { ...state };

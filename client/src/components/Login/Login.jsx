@@ -43,20 +43,18 @@ export default function Login() {
   } //fin function getUsuario
 
   useEffect(() => {
-    cookies.set("dni", usuario.dni, { path: "/" });
-    cookies.set("email", usuario.email, { path: "/" });
-    cookies.set("nombre", usuario.nombre, { path: "/" });
-    cookies.set("apellido", usuario.apellido, { path: "/" });
-    cookies.set("logueado", usuario.logueado, { path: "/" });
-    cookies.set("vehiculo", usuario.vehiculo, { path: "/" });
-    cookies.set("avatar", usuario.avatar, { path: "/" });
-    cookies.set("acercaDeMi", usuario.acercaDeMi, { path: "/" });
-    cookies.set("calificacion", usuario.calificacion, { path: "/" });
-    // console.log(cookies.get("nombre"));
+      cookies.set("dni", usuario.dni, { path: "/" });
+      cookies.set("email", input.email, { path: "/" });
+      cookies.set("nombre", usuario.nombre, { path: "/" });
+      cookies.set("apellido", usuario.apellido, { path: "/" });
+      cookies.set("logueado", usuario.logueado, { path: "/" });
+      cookies.set("vehiculo", usuario.vehiculo, { path: "/" });
+      cookies.set("avatar", usuario.avatar, { path: "/" });
+      cookies.set("acercaDeMi", usuario.acercaDeMi, { path: "/" });
+      cookies.set("calificacion", usuario.calificacion, { path: "/" });
   }, [usuario]);
 
-  let algo = usuario.disponible;
-  // console.log("usuarios", algo);
+
 
   useEffect(() => {
     if (inicioSesion === "usuario pausado") {
@@ -85,8 +83,10 @@ export default function Login() {
             navigate("/home");
           });
         } else if (result.isDenied) {
-          // console.log(cookies.get("email"))
-          navigate("/restaurarCuenta");
+          cookies.set("email", input.email, { path: "/" });
+          setTimeout(()=>{
+            navigate("/restaurarCuenta");
+          }, 1500)
         } else {
           navigate("/");
         }

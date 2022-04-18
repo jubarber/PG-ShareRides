@@ -319,12 +319,13 @@ router.put("/eliminarPerfil", async (req, res, next) => {
 
 router.put("/activarPerfil", async (req, res, next) => {
   const { email } = req.body;
+  console.log(email)
   try {
     let usuarioActivado = await Usuario.findByPk(email);
-    usuarioActivado.update({
+   if(usuarioActivado.length!==0){ usuarioActivado.update({
       disponible: true,
     });
-    usuarioActivado.save();
+    usuarioActivado.save();}
     res.send(usuarioActivado);
   } catch (error) {
     next(error);
