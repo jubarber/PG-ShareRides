@@ -28,6 +28,7 @@ export const DetalleViajep = () => {
   const { email } = useParams();
   let fechaViaje = "";
 
+
   if (viaje.length!==0 && viaje.fecha.length!==0){
     viaje.fecha.includes("T")?fechaViaje = viaje.fecha.substring(0, 10).split("-").reverse().join("-") : fechaViaje=viaje.fecha
   }
