@@ -381,7 +381,7 @@ export default function Perfil() {
                   />
                 </>
               ) : (
-                <label>{miUsuario.avatar}</label>
+                <label className="overflow-hidden">{miUsuario.avatar}</label>
               )}
             </div>
             {cookieEmail !== email ? null : (
