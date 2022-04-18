@@ -49,7 +49,7 @@ export default function FormPasajero() {
   useEffect(() => {
     dispatch(getViajesTotalUsuario(cookieMail));
   }, []);
-  // console.log(viajesUsuario)
+  
   useEffect(
     () => {
       if (viajesUsuario.length !== 0) {

@@ -22,6 +22,7 @@ export const GET_VIAJES_TOTAL_USUARIO = "GET_VIAJES_TOTAL_USUARIO";
 export const GET_VEHICULOS = "GET_VEHICULOS";
 export const ACTIVAR_USUARIO = "ACTIVAR_USUARIO";
 
+
 export function getDetalleViaje(viajeId) {
   return function (dispatch) {
     axios
@@ -396,7 +397,6 @@ export function getComentariosById(id) {
 }
 
 export function eliminarComentarios(payload) {
-  // console.log("elimianar", payload);
   return async function (dispatch) {
     try {
       let comentarioEliminado = await axios({
@@ -550,6 +550,10 @@ export function eliminarPerfil(payload) {
         type: "ELIMINAR_PERFIL",
         payload: usuarioEliminado.data,
       });
+      return dispatch({
+        type: "ELIMINAR_PERFIL",
+        payload: usuarioEliminado.data,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -631,6 +635,27 @@ export function cambioPassword(email, password) {
         },
       });
       return dispatch({ type: "CAMBIO_PASSWORD", payload: cambio.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function reportarComentarios(payload) {
+  console.log("contador", payload);
+  return async function (dispatch) {
+    try {
+      let comentarioReportado = await axios({
+        method: "put",
+        url: "http://localhost:3001/api/comentarios/reportarComentarios",
+        data: {
+          id: payload,
+        },
+      });
+      return dispatch({
+        type: "COMENTARIO_REPORTADO",
+        payload: comentarioReportado.data,
+      });
     } catch (error) {
       console.log(error);
     }

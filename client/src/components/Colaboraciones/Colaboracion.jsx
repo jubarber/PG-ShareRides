@@ -1,15 +1,21 @@
 import React, { useEffect } from "react";
+import "./Colaboracion.css";
 import { useSelector, useDispatch } from "react-redux";
 import Cookies from "universal-cookie";
-import { getColaboraciones, getUsuarios, getViajesTotal } from "../../redux/actions/actions";
+import {
+  getColaboraciones,
+  getUsuarios,
+  getViajesTotal,
+} from "../../redux/actions/actions";
 
 export default function Colaboracion() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
-  const colaboraciones = useSelector(state => state.colaboraciones);
-  const usuarios = useSelector(state => state.usuarios);
-  const viajes = useSelector(state => state.viajes);
+  const colaboraciones = useSelector((state) => state.colaboraciones);
+  const usuarios = useSelector((state) => state.usuarios);
+  const viajes = useSelector((state) => state.viajes);
   const cookieMail = cookies.get("email");
+  const mailOtroUsuario = "";
 
   useEffect(
     () => {
@@ -17,7 +23,6 @@ export default function Colaboracion() {
       dispatch(getUsuarios())
       dispatch(getViajesTotal())
     }, []);
-    
 
   return (
     <div>

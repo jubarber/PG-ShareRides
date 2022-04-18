@@ -75,6 +75,7 @@ export default function Home() {
             </label>
           </div>
           <div className="container-cards">
+            {console.log("esto es viajes", viajes)}
             {viajes.map(
               (e) =>
                 e && (

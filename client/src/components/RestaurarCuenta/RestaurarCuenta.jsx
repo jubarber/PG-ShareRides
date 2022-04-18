@@ -20,10 +20,7 @@ export default function RestaurarCuenta() {
   const [statePassword, setStatePassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const usuarioActivado = useSelector(state => state.usuario);
   const cookieMail = cookies.get("email");
-  // console.log("mail", cookieMail);
-  // console.log(usuarioActivado)
   const [input, setInput] = useState({ password: "", confirmPassword: "" });
   const [usuario, setUsuario] = useState({
     email: cookieMail,
