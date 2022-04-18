@@ -637,24 +637,6 @@ export function cambioPassword(payload) {
   };
 }
 
-export function cambioPassword(payload) {
-  return async function (dispatch) {
-    try {
-      let cambio = await axios({
-        method: "put",
-        url: "http://localhost:3001/api/usuario/cambiopassword",
-        data: {
-          email: payload.email,
-          password: payload.password,
-        },
-      });
-      return dispatch({ type: "CAMBIO_PASSWORD", payload: cambio.data });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
-
 export function reportarComentarios(payload) {
   console.log("contador", payload);
   return async function (dispatch) {
