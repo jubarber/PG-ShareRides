@@ -103,9 +103,9 @@ export default function Card({
               {fecha} - {hora} hs
             </i>
             {asientosAOcupar > 1 ? (
-              <i>{asientosAOcupar + " "}Lugares Requeridos</i>
+              <i>{asientosAOcupar + " "}Lugares Disponibles</i>
             ) : asientosAOcupar === 1 ? (
-              <i>{asientosAOcupar + " "}Lugar Requerido</i>
+              <i>{asientosAOcupar + " "}Lugar Disponible</i>
             ) : asientosAOcupar === 0 ? (
               <i>Viaje Completo</i>
             ) : null}
