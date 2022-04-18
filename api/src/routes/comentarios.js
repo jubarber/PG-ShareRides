@@ -65,4 +65,20 @@ router.put("/eliminarComentarios", async (req, res, next) => {
   }
 });
 
+router.put("/reportarComentarios", async (req, res, next) => {
+  const { id } = req.body;
+  try {
+    let comentarioReportado = await Comentarios.findByPk(id);
+
+    let numerito = comentarioReportado.dataValues.reportes;
+    comentarioReportado.update({
+      reportes: numerito + 1,
+    });
+    comentarioReportado.save();
+    res.send(comentarioReportado);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;

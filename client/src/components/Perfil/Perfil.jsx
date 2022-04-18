@@ -16,6 +16,7 @@ import {
   modificacionPerfil,
   postComentarios,
   postReporte,
+  reportarComentarios,
 } from "../../redux/actions/actions";
 import Cookies from "universal-cookie";
 import NavBar from "../NavBar/NavBar";
@@ -60,9 +61,6 @@ export default function Perfil() {
     avatar: "",
   });
 
-  console.log("miUsuario", cookieEmail);
-  console.log("usuario", usuario);
-
   let viajesUsuarios = viajes.map((e) => e.usuarios.map((e) => e.email));
 
   let viajesTotales = viajesUsuarios.map(
@@ -80,8 +78,6 @@ export default function Perfil() {
   useEffect(() => {
     dispatch(getComentarios());
   }, [reviews]);
-
-  const [NumReportes, setNumReportes] = useState(0);
 
   const [reportes, setReportes] = useState({
     justificacion: "",
@@ -171,7 +167,6 @@ export default function Perfil() {
   const CLOUDINARY_UPLOAD_PRESETS = "sharerides";
 
   const handleChangeUpdateImage = async (e) => {
-    console.log(e);
     const file = e.target.files[0];
     const data = new FormData();
     data.append("file", file);
@@ -180,7 +175,6 @@ export default function Perfil() {
     const response = await axios
       .post(CLOUDINARY_URL, data)
       .then((res) => res.data);
-    console.log(response);
 
     setUsuario({
       ...usuario,
@@ -227,6 +221,38 @@ export default function Perfil() {
           "success"
         ).then(() => {
           navigate("/home");
+        });
+      }
+    });
+  };
+
+  let [countReportes, setCountNumReportes] = useState(0);
+
+  const [numReportes, setNumReportes] = useState({
+    reportes: countReportes + 1,
+  });
+
+  console.log("comentarios", ComentariosTotales);
+
+  const handleReportarComentario = (e) => {
+    Swal.fire({
+      title: "Estas Seguro?",
+      text: "No podras revertir la decision!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Reportar!",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(reportarComentarios(e.target.value));
+        Swal.fire(
+          "Reportado!",
+          "El comentario ha sido reportado con exito!",
+          "success"
+        ).then(() => {
+          // navigate("/home");
         });
       }
     });
@@ -443,6 +469,13 @@ export default function Perfil() {
                         onClick={(e) => handleBorrarComentario(e)}
                       >
                         Eliminar
+                      </button>
+                      <button
+                        type="submit"
+                        value={e.id}
+                        onClick={(e) => handleReportarComentario(e)}
+                      >
+                        Reportar
                       </button>
 
                       <p>{e.dia}</p>

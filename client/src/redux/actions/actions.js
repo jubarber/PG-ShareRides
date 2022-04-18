@@ -604,3 +604,24 @@ export function cambioPassword(payload) {
     }
   };
 }
+
+export function reportarComentarios(payload) {
+  console.log("contador", payload);
+  return async function (dispatch) {
+    try {
+      let comentarioReportado = await axios({
+        method: "put",
+        url: "http://localhost:3001/api/comentarios/reportarComentarios",
+        data: {
+          id: payload,
+        },
+      });
+      return dispatch({
+        type: "COMENTARIO_REPORTADO",
+        payload: comentarioReportado.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
