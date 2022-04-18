@@ -6,6 +6,7 @@ import {
   cambioPassword,
   getUsuarioByEmail,
   registroUsuario,
+  activarPerfil
 } from "../../redux/actions/actions";
 import swal from "sweetalert";
 import fondo from "../../assets/fondo perfil.jpg";
@@ -19,31 +20,45 @@ export default function RestaurarCuenta() {
   const [statePassword, setStatePassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const cookieEmail = cookies.get("email");
+  const cookieMail = cookies.get("email");
   const [input, setInput] = useState({ password: "", confirmPassword: "" });
   const [usuario, setUsuario] = useState({
-    email: "",
+    email: cookieMail,
     nombre: "",
     apellido: "",
     avatar: "",
     password: "",
-    confirmPassword: "",
+    confirmPassword: ""
   });
-  
+
+  useEffect(() => {
+    dispatch(getUsuarioByEmail(cookieMail)).then(r => {
+      cookies.set("dni", r.payload.dni, { path: "/" });
+      cookies.set("nombre", r.payload.nombre, { path: "/" });
+      cookies.set("apellido", r.payload.apellido, { path: "/" });
+      cookies.set("logueado", r.payload.logueado, { path: "/" });
+      cookies.set("vehiculo", r.payload.vehiculo, { path: "/" });
+      cookies.set("avatar", r.payload.avatar, { path: "/" });
+      cookies.set("acercaDeMi", r.payload.acercaDeMi, { path: "/" });
+      cookies.set("calificacion", r.payload.calificacion, { path: "/" });
+      console.log("nombre", cookies.get("nombre"));
+    });
+  }, []);
+
   function handleChange(e) {
     setUsuario({
       ...usuario,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
     setInput({
       ...input,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   }
 
   function handleEye(e) {
     e.preventDefault();
-    setStatePassword((prevStatePassword) => !prevStatePassword);
+    setStatePassword(prevStatePassword => !prevStatePassword);
   }
 
   function handleSubmit(e) {
@@ -55,7 +70,7 @@ export default function RestaurarCuenta() {
         text: "Por favor complete todos los campos",
         icon: "warning",
         button: true,
-        dangerMode: true,
+        dangerMode: true
       });
     } else if (Object.values(input)[1] === "") {
       e.preventDefault();
@@ -64,7 +79,7 @@ export default function RestaurarCuenta() {
         text: "Por favor ingrese su contraseña",
         icon: "warning",
         button: true,
-        dangerMode: true,
+        dangerMode: true
       });
     } else if (input.password !== input.confirmPassword) {
       e.preventDefault();
@@ -73,15 +88,17 @@ export default function RestaurarCuenta() {
         text: "Las contraseñas no coinciden",
         icon: "warning",
         button: true,
-        dangerMode: true,
+        dangerMode: true
       });
     } else {
-      //   dispatch(cambioPassword());
+      dispatch(cambioPassword(cookieMail, input.password)).then(
+        dispatch(activarPerfil(cookieMail))
+      );
       swal({
         title: "Se ha cambiado exitosamente la contraseña!",
         icon: "success",
-        button: "Bienvenidx de nuevo!",
-      }).then(function () {
+        button: "Bienvenidx de nuevo!"
+      }).then(function() {
         navigate("/home");
       });
     }
@@ -111,7 +128,7 @@ export default function RestaurarCuenta() {
               value={usuario.password}
               name="password"
               placeholder="Contraseña Share Rides"
-              onChange={(e) => handleChange(e)}
+              onChange={e => handleChange(e)}
             />
             <button className="Google__ojo" onClick={handleEye}>
               {statePassword ? <BsEye /> : <BsEyeSlash />}
@@ -124,7 +141,7 @@ export default function RestaurarCuenta() {
               value={usuario.confirmPassword}
               name="confirmPassword"
               placeholder="Confirmar contraseña"
-              onChange={(e) => handleChange(e)}
+              onChange={e => handleChange(e)}
             />
             <button className="Google__ojo" onClick={handleEye}>
               {statePassword ? <BsEye /> : <BsEyeSlash />}
