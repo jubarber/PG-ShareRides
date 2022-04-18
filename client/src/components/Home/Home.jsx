@@ -7,6 +7,7 @@ import {
   login,
   filterPerCard,
   getUsuarios,
+  getViajesTotalUsuario,
 } from "../../redux/actions/actions";
 import { Filtros } from "../Filtros/Filtros";
 import CardViajeUsuarioPasajere from "../CardViaje/CardViajeUsuario/Pasajero/CardViajeUsuario";
@@ -23,31 +24,25 @@ import NavBar from "../NavBar/NavBar";
 export default function Home() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
-
   const [render, setRender] = useState("");
-  const viajes = useSelector(
-    (state) => state.viajesFiltrados //me traigo el estado de los viajes para poder mostrarlos
-  );
-  // console.log("esto es viajes!!!", viajes);
+  const viajes = useSelector((state) => state.viajesFiltrados);
+  const viajesUsuario = useSelector((state) => state.viajesPorUsuario);
   const cookieMail = cookies.get("email");
-  // console.log("mail home", cookies.get("email"));
   useEffect(() => {
-    //se monta home y despacho la accion para obtener los viajes
-    dispatch(login(cookieMail));
-    /* dispatch(getViajesTotal());*/
-    // console.log("entre en effect");
+    dispatch(getViajesTotalUsuario(cookieMail));
+  }, []);
 
+  useEffect(() => {
+    dispatch(login(cookieMail));
     dispatch(filterPerCard(render));
     dispatch(getUsuarios());
-  }, [dispatch]);
+  }, []);
+
   function handleChange(e) {
     dispatch(filterPerCard(e.target.value));
     setRender(e.target.value);
   }
 
-  function handleSubmitLimpiar(e) {
-    dispatch(getViajesTotal());
-  }
   return (
     <div>
       <NavBar />
@@ -80,7 +75,6 @@ export default function Home() {
             </label>
           </div>
           <div className="container-cards">
-            {console.log("esto es viajes", viajes)}
             {viajes.map(
               (e) =>
                 e && (
@@ -90,7 +84,15 @@ export default function Home() {
                         <CardViajeUsuarioPasajere
                           origen={e.origen}
                           destino={e.destino}
-                          fecha={e?.fecha?.includes("T")? e?.fecha?.substring(0, 10).split("-").reverse().join("-") : e.fecha}
+                          fecha={
+                            e.fecha.includes("T")
+                              ? e.fecha
+                                  .substring(0, 10)
+                                  .split("-")
+                                  .reverse()
+                                  .join("-")
+                              : e.fecha
+                          }
                           hora={e.hora}
                           asientosAOcupar={e.asientosAOcupar}
                           aceptaEquipaje={e.aceptaEquipaje}
@@ -131,7 +133,15 @@ export default function Home() {
                         <CardViajeUsuarioConductore
                           origen={e.origen}
                           destino={e.destino}
-                          fecha={  e?.fecha?.includes("T")? e?.fecha?.substring(0, 10).split("-").reverse().join("-") : e.fecha}
+                          fecha={
+                            e.fecha.includes("T")
+                              ? e.fecha
+                                  .substring(0, 10)
+                                  .split("-")
+                                  .reverse()
+                                  .join("-")
+                              : e.fecha
+                          }
                           hora={e.hora}
                           asientosAOcupar={e.asientosAOcupar}
                           aceptaEquipaje={e.aceptaEquipaje}

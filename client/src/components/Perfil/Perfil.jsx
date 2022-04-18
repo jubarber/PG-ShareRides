@@ -61,6 +61,9 @@ export default function Perfil() {
     avatar: "",
   });
 
+  // console.log("miUsuario", cookieEmail);
+  // console.log("usuario", usuario);
+
   let viajesUsuarios = viajes.map((e) => e.usuarios.map((e) => e.email));
 
   let viajesTotales = viajesUsuarios.map(
@@ -108,7 +111,7 @@ export default function Perfil() {
   const [comentariosPorPagina, setComentariosPorPagina] = useState(3);
   const ultimoComentario = pagina * comentariosPorPagina;
   const primerComentario = ultimoComentario - comentariosPorPagina;
-  const ComentariosTotales = miUsuario.comentarios?.slice(
+  const ComentariosTotales = miUsuario.comentarios.length!==0 && miUsuario.comentarios.slice(
     primerComentario,
     ultimoComentario
   );
@@ -131,7 +134,7 @@ export default function Perfil() {
       ...reviews,
       [e.target.name]: e.target.value,
     });
-    setCount(e.target.value.length);
+    setCount(e.target.value.length!==0);
   };
 
   const handleChangeReportes = (e) => {
@@ -175,7 +178,6 @@ export default function Perfil() {
     const response = await axios
       .post(CLOUDINARY_URL, data)
       .then((res) => res.data);
-
     setUsuario({
       ...usuario,
       avatar: response.url,
@@ -203,7 +205,6 @@ export default function Perfil() {
   };
 
   const handleBorrarComentario = (e) => {
-    console.log(e);
     Swal.fire({
       title: "Estas Seguro?",
       text: "No podras revertir la decision!",
@@ -478,6 +479,7 @@ export default function Perfil() {
                         Reportar
                       </button>
 
+
                       <p>{e.dia}</p>
                     </div>
                   </div>
@@ -485,13 +487,14 @@ export default function Perfil() {
               )}
           </div>
           <div className="pag">
+            {comentarios.length!==0 && 
             <PaginacionComentarios
               comentariosPorPagina={comentariosPorPagina}
-              comentarios={comentarios?.length}
+              comentarios={comentarios.length}
               paginacion={paginacion}
               pagina={pagina}
               setPagina={setPagina}
-            />
+            />}
           </div>
         </div>
       </div>

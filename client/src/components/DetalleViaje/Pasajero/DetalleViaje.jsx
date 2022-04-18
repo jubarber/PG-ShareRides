@@ -28,22 +28,22 @@ export const DetalleViajep = () => {
   const { email } = useParams();
   let fechaViaje = "";
 
-  viaje?.fecha?.includes("T")
-    ? (fechaViaje = viaje?.fecha
-        ?.substring(0, 10)
-        .split("-")
-        .reverse()
-        .join("-"))
-    : (fechaViaje = viaje.fecha);
+
+  if (viaje.length!==0 && viaje.fecha.length!==0){
+    viaje.fecha.includes("T")?fechaViaje = viaje.fecha.substring(0, 10).split("-").reverse().join("-") : fechaViaje=viaje.fecha
+  }
 
   useEffect(() => {
     dispatch(getDetalleViaje(id));
     dispatch(getUsuarioByEmail(email));
   }, [id]);
 
-  let arrayPasajeres = viaje.usuarios?.map((e) => e);
+  let arrayPasajeres;
+  if(viaje.length!==0 && viaje.usuarios.length!==0) arrayPasajeres = viaje.usuarios.map((e) => e);
 
   return (
+    <div>
+      {arrayPasajeres?.length!==0 ? 
     <div className="container-detalle">
       <NavBar />
       <div className="card-detalle">
@@ -61,7 +61,7 @@ export const DetalleViajep = () => {
                   viaje.usuarios[0].nombre + " " + viaje.usuarios[0].apellido
                 ) : (
                   <></>
-                )}
+                  )}
               </span>
               <span>
                 <div className="puntuacion">
@@ -110,7 +110,7 @@ export const DetalleViajep = () => {
                     ) : (
                       <></>
                     )
-                  ) : (
+                    ) : (
                     <></>
                   )}
                 </div>
@@ -159,12 +159,12 @@ export const DetalleViajep = () => {
               <span
                 className={`font-bold text-2xl ${
                   viaje.asientosAOcupar > 3
-                    ? "text-sky-600"
-                    : viaje.asientosAOcupar < 1
+                  ? "text-sky-600"
+                  : viaje.asientosAOcupar < 1
                     ? "text-amber-500"
                     : "text-orange-700"
-                }`}
-              >
+                  }`}
+                  >
                 {viaje.asientosAOcupar}
               </span>
             </span>
@@ -175,7 +175,7 @@ export const DetalleViajep = () => {
                   maxWidth: 360,
                 }}
               >
-                {arrayPasajeres?.map((e) => (
+                {arrayPasajeres.length!==0 && arrayPasajeres.map((e) => (
                   <ListItem
                     key={e.email}
                     disableGutters
@@ -235,6 +235,9 @@ export const DetalleViajep = () => {
       <div className="wallpaper">
         <img className="stretch" src={fondo} alt="" />
       </div>
+    </div>
+    : <div>Cargando...</div>
+  }
     </div>
   );
 };
