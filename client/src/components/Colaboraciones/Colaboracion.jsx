@@ -48,6 +48,7 @@ export default function Colaboracion() {
       ) : (
         <h2>Aún no hay colaboraciones</h2>
       )}
+
     </div>
   );
 }

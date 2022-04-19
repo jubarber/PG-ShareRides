@@ -20,7 +20,6 @@ export default function Calendario() {
   const usuarios = useSelector(state=> state.usuarios)
   const [fecha, setFecha] = useState(new Date());
   const cookieMail = cookies.get("email");
-  // console.log(cookieMail)
 
   useEffect(
     () => {
@@ -30,11 +29,6 @@ export default function Calendario() {
     [dispatch]
   );
   moment().format("dd mm yyyy");
-
-  // console.log("viajes", viajes[0]?.fecha
-  // // .split("-").reverse().join("-") + " " + viajes[0]?.hora
-  // )
-  //v.fecha.split("-").reverse().join("-") + " " + v.hora
 
   let eventos = [];
   viajes.map(v =>
@@ -47,8 +41,6 @@ export default function Calendario() {
       ])
     })
   );
-  // console.log(viajes)
-  // console.log(eventos);
 
   return (
     <div>

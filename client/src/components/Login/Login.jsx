@@ -52,12 +52,12 @@ export default function Login() {
     cookies.set("avatar", usuario.avatar, { path: "/" });
     cookies.set("acercaDeMi", usuario.acercaDeMi, { path: "/" });
     cookies.set("calificacion", usuario.calificacion, { path: "/" });
-    console.log(cookies.get("nombre"));
+    // console.log(cookies.get("nombre"));
   }, [usuario]);
 
   useEffect(() => {
     if (inicioSesion === "usuario pausado") {
-      console.log("entre a usuarios.disponible");
+      // console.log("entre a usuarios.disponible");
       setError({ ...error, usuario: "El usuario ha sido pausado" });
       Swal.fire({
         title: "Su cuenta ha sido eliminada!",

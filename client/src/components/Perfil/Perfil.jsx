@@ -61,6 +61,9 @@ export default function Perfil() {
     avatar: "",
   });
 
+  // console.log("miUsuario", cookieEmail);
+  // console.log("usuario", usuario);
+
   let viajesUsuarios = viajes.map((e) => e.usuarios.map((e) => e.email));
 
   let viajesTotales = viajesUsuarios.map(
@@ -108,10 +111,9 @@ export default function Perfil() {
   const [comentariosPorPagina, setComentariosPorPagina] = useState(3);
   const ultimoComentario = pagina * comentariosPorPagina;
   const primerComentario = ultimoComentario - comentariosPorPagina;
-  const ComentariosTotales = miUsuario.comentarios?.slice(
-    primerComentario,
-    ultimoComentario
-  );
+  const ComentariosTotales =
+    miUsuario.comentarios.length !== 0 &&
+    miUsuario.comentarios.slice(primerComentario, ultimoComentario);
 
   const paginacion = (pageNum) => {
     setPagina(pageNum);
@@ -131,7 +133,7 @@ export default function Perfil() {
       ...reviews,
       [e.target.name]: e.target.value,
     });
-    setCount(e.target.value.length);
+    setCount(e.target.value.length !== 0);
   };
 
   const handleChangeReportes = (e) => {
@@ -484,13 +486,15 @@ export default function Perfil() {
               )}
           </div>
           <div className="pag">
-            <PaginacionComentarios
-              comentariosPorPagina={comentariosPorPagina}
-              comentarios={comentarios?.length}
-              paginacion={paginacion}
-              pagina={pagina}
-              setPagina={setPagina}
-            />
+            {comentarios.length !== 0 && (
+              <PaginacionComentarios
+                comentariosPorPagina={comentariosPorPagina}
+                comentarios={comentarios.length}
+                paginacion={paginacion}
+                pagina={pagina}
+                setPagina={setPagina}
+              />
+            )}
           </div>
         </div>
       </div>
