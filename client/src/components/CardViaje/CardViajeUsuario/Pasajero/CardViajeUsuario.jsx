@@ -8,6 +8,7 @@ import { ImStarEmpty, ImStarHalf, ImStarFull } from "react-icons/im";
 import { BsPersonFill } from "react-icons/bs";
 import link from "../../Links";
 import user from "../../../../assets/user.png";
+import Cookies from "universal-cookie";
 
 export default function Card({
   origen,
@@ -28,6 +29,10 @@ export default function Card({
   puntuacion,
   avatar,
 }) {
+  const cookies = new Cookies();
+
+  const cookieMail = cookies.get("email");
+
   // console.log("esto llega como avatar:", avatar);
   //get de usuario (nombre, apellido y valoracion). foto usuario. Provincias/localidades como llegan y si se puede mostras cada una independiente de la otra. Iniciar sesion con aut 0 y con las cuquis trabajar con la info.
   return (
@@ -38,11 +43,17 @@ export default function Card({
           <div class="div1">
             <img src={avatar ? avatar : user} alt="" />
             <div className="info-personal-card">
-              <Link to={`/perfil/${email}`}>
+              {cookieMail !== "undefined" && cookieMail !== "" ? (
+                <Link to={`/perfil/${email}`}>
+                  <span>
+                    {nombre + " "} {apellido}
+                  </span>
+                </Link>
+              ) : (
                 <span>
                   {nombre + " "} {apellido}
                 </span>
-              </Link>
+              )}
               <div className="puntuacion">
                 {puntuacion === 5 ? (
                   <div>
