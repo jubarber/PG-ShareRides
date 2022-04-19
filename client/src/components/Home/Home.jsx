@@ -53,9 +53,9 @@ export default function Home() {
     dispatch(getViajesTotal());
   }
 
-  function handleBot(e) {
+  function handleBot(e){
     e.preventDefault();
-    setHabilitarBot(!habilitarBot);
+    setHabilitarBot(!habilitarBot)
   }
   let viajesDisponibles = [];
 
