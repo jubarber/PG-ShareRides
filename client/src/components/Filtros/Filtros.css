@@ -48,8 +48,7 @@
 
 .mycheckbox span {
   display: inline-block;
-  padding-left: 3rem;
-  width: 9rem;
+  padding-right: 2.5rem;
   height: 25px;
   border-radius: 25px;
   background: white;
