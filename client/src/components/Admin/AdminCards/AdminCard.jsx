@@ -9,6 +9,21 @@ export default function AdminCard(user) {
   let content = e.target.textContent?.split(" ")[0];
   console.log("conteeeeeent to name", content)
 } */
+/* async function eliminarUsuario() {
+  const usuarioDelete = await axios({
+    method: "put",
+    url: `http://localhost:3001/api/admin/delete/:email`,
+  });
+}
+
+async function eliminarComentario(){
+  const comentDelete = await axios ({
+    method: "delete",
+    url: `http://localhost:3001/api/admin/deletecomentario/:id`
+  });
+} */
+
+
   return (
     <div className={s.mainContainer}> 
         <ul className={s.ulContainer}>
@@ -25,9 +40,10 @@ export default function AdminCard(user) {
             <li><span>Vehiculo:</span> {(vehiculo || "-")}</li>
 
         </ul>
+        <button className={s.button}>
+          X</button>
         <div className={s.comentariosContainer}><h4>Comentarios Recibidos</h4>
-        //agregar key
-         <div>{comentarios?.map(com => <div><h5 >{com.nombre} {com.apellido}</h5>
+         <div>{comentarios?.map(com => <div><h5 > {com.nombre} {com.apellido}</h5>
          <p>{com.dia}</p>
          <p>{com.comentarios}</p>
          </div>)}</div>

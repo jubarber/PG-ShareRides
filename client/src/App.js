@@ -16,6 +16,7 @@ import RegistroGoogle from "./components/RegistroGoogle/RegistroGoogle";
 import Admin from "./components/Admin/AdminLogin";
 import AdminHome from "./components/Admin/AdminHome";
 import RestaurarCuenta from "./components/RestaurarCuenta/RestaurarCuenta";
+import AdminEstadisticas from "./components/Admin/AdminEstadisticas/AdminEstadisticas";
 // import Card from "./components/CardViaje/CardViajeUsuario/Conductor/CardViajeUsuario"
 import Calendario from "./components/Calendar/Calendar";
 import Temporal from "./components/TemporalColaboracion/Temporal";

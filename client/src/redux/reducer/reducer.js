@@ -14,7 +14,8 @@ import {
   GET_COLABORACIONES,
   GET_VIAJES_TOTAL_USUARIO,
   GET_VEHICULOS,
-  ACTIVAR_USUARIO
+  ACTIVAR_USUARIO,
+  VEHICULOS_TOTALES
 } from "../actions/actions.js";
 
 const initialState = {
@@ -30,6 +31,7 @@ const initialState = {
   colaboraciones: [],
   vehiculos: [],
   error: "",
+  vehiculosTotales: []
 };
 
 function rootReducer(state = initialState, action) {
@@ -119,6 +121,11 @@ function rootReducer(state = initialState, action) {
         return {
           ...state,
           usuario: action.payload
+        }
+      case VEHICULOS_TOTALES:
+        return{
+          ...state,
+          vehiculosTotales: action.payload
         }
     default:
       return { ...state };

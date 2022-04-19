@@ -21,7 +21,18 @@ export const ELIMINADO = "ELIMINADO";
 export const GET_VIAJES_TOTAL_USUARIO = "GET_VIAJES_TOTAL_USUARIO";
 export const GET_VEHICULOS = "GET_VEHICULOS";
 export const ACTIVAR_USUARIO = "ACTIVAR_USUARIO";
+export const VEHICULOS_TOTALES = "VEHICULOS_TOTALES";
 
+export function getVehiculosTotales(){
+  return function (dispatch) {
+    axios
+        .get(`/api/vehiculo/vehiculo`)
+        .then((vehiculo)=>
+        dispatch({ type: VEHICULOS_TOTALES, payload: vehiculo.data})
+        )
+        .catch((err)=> console.log(err))
+  };
+}
 
 export function getDetalleViaje(viajeId) {
   return function (dispatch) {

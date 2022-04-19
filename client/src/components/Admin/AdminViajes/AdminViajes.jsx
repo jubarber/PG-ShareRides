@@ -4,7 +4,7 @@ import s from "./AdminViajes.module.css";
 export default function AdminViajes(viaje) {
   console.log("OBJETOVIAJE", viaje);
   let {
-    usuarioEmail,
+    usuarios,
     id,
     fecha,
     hora,
@@ -29,7 +29,16 @@ export default function AdminViajes(viaje) {
     <div className={s.mainContainer}>
       <ul className={s.ulContainer}>
         <li>
-          <span>Email usuario: </span> {usuarioEmail}
+          <span>Email usuario: </span> {usuarios[0].email}
+        </li>
+        <li>
+          <span>Nombre usuario: </span> {usuarios[0].nombre}
+        </li>
+        <li>
+          <span>Apellido usuario: </span> {usuarios[0].apellido}
+        </li>
+        <li>
+          <span>Conductore? Pasajere?:</span> {status || "-"}
         </li>
         <li>
           <span>ID: </span> {id}
@@ -71,10 +80,7 @@ export default function AdminViajes(viaje) {
           <span>Viaje disponible:</span> {`${viajeDisponible}` || "-"}
         </li>
         <li>
-          <span>Estado del viaje:</span> {status || "-"}
-        </li>
-        <li>
-          <span>Detalles:</span> {detalles || "-"}
+          <span>Detalles del viaje:</span> {detalles || "-"}
         </li>
       </ul>
     </div>

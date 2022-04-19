@@ -19,6 +19,14 @@ const AdminHome = () => {
   const usuariosRedux = useSelector((state) => state.usuarios);
   const viajes = useSelector((state) => state.viajes);
 
+
+  async function eliminarViaje(){
+    const viajeDelete = await axios ({
+      method: "delete",
+      url: `http://localhost:3001/api/admin/deleteviaje/:id`
+    });
+  }
+
   useEffect(async () => {
     if (cookies.get("admin") !== "true") {
       navigate("/admin");
