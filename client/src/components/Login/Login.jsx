@@ -31,14 +31,14 @@ export default function Login() {
   function iniciarSesion(input) {
     axios({
       method: "get",
-      url: `http://localhost:3001/api/usuario/iniciarsesion/${input.email}/${input.password}`,
+      url: `/api/usuario/iniciarsesion/${input.email}/${input.password}`,
     }).then((r) => setInicioSesion(r.data));
   }
 
   function getUsuarioByEmail(email) {
     axios({
       method: "get",
-      url: `http://localhost:3001/api/usuario/usuarios/${email}`,
+      url: `/api/usuario/usuarios/${email}`,
     }).then((r) => setUsuario(r.data));
   } //fin function getUsuario
 
