@@ -292,7 +292,6 @@ export default function Home() {
                           origen={e.origen}
                           destino={e.destino}
                           fecha={
-
                             e.fecha.includes("T")
                               ? e.fecha
                                   .substring(0, 10)
@@ -323,37 +322,6 @@ export default function Home() {
                             ) : (
                               <div />
                             )
-                          }
-                        />
-                      </Link>
-                    ) : (
-                      <Link to={"/detallec/" + e.id}>
-                        <CardViajeUsuarioConductore
-                          origen={e.origen}
-                          destino={e.destino}
-                          fecha={
-                            e?.fecha?.includes("T")
-                              ? e?.fecha
-                                  ?.substring(0, 10)
-                                  .split("-")
-                                  .reverse()
-                                  .join("-")
-                              : e.fecha
-                          }
-                          hora={e.hora}
-                          asientosAOcupar={e.asientosAOcupar}
-                          aceptaEquipaje={e.aceptaEquipaje}
-                          aceptaFumador={e.aceptaFumador}
-                          aceptaMascota={e.aceptaMascota}
-                          usaBarbijo={e.usaBarbijo}
-                          viajeDisponible={e.viajeDisponible}
-                          key={e.id}
-                          id={e.id}
-                          avatar={
-                            e.usuarios.length > 0 ? e.usuarios[0].avatar : <></>
-                          }
-                          nombre={
-                            e.usuarios.length > 0 ? e.usuarios[0].nombre : <></>
                           }
                           apellido={
                             e.usuarios.length > 0 ? (
