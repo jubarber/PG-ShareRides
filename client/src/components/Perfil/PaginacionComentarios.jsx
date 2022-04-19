@@ -28,7 +28,7 @@ export default function PaginacionComentarios({
   };
 
   return (
-    <>
+    <div>
       <div className="contenedor-paginacion">
         {pageNum.length === 0 ? null : (
           <button onClick={prevPage} className="navegacion" id="prev">
@@ -49,6 +49,6 @@ export default function PaginacionComentarios({
           </button>
         )}
       </div>
-    </>
+    </div>
   );
 }

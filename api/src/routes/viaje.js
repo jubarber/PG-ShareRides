@@ -77,7 +77,6 @@ router.post("/conductor", async (req, res, next) => {
     next(error);
   }
 });
-
 router.post("/pasajero", async (req, res, next) => {
   try {
     const {
@@ -190,7 +189,6 @@ router.get("/totalviajes", async (req, res, next) => {
     next(error);
   }
 });
-
 router.get(
   "/filtro/:aceptaFumador/:aceptaMascota/:aceptaEquipaje/:usaBarbijo",
   async (req, res, next) => {
@@ -231,7 +229,6 @@ router.get(
     }
   }
 );
-
 router.get("/searchdestino", async (req, res, next) => {
   const { destino } = req.query;
   // console.log(destino);
@@ -260,7 +257,6 @@ router.get("/searchdestino", async (req, res, next) => {
     next(error);
   }
 });
-
 router.get("/searchorigen", async (req, res, next) => {
   const { origen } = req.query;
 
@@ -306,7 +302,6 @@ router.get("/:viajeId", async (req, res, next) => {
     next(err);
   }
 });
-
 router.put("/sumarse", async (req, res, next) => {
   const { email, id } = req.body;
   try {
@@ -326,8 +321,7 @@ router.put("/sumarse", async (req, res, next) => {
     next(err);
   }
 });
-
-router.put("/modificarViaje", async (req, res, next) => {
+router.put("/modificarAsiento", async (req, res, next) => {
   const { asientosAOcupar, id } = req.body;
   try {
     let asientos = await Viaje.findByPk(id);
@@ -340,4 +334,75 @@ router.put("/modificarViaje", async (req, res, next) => {
     next(err);
   }
 });
+router.put("/pausarViaje/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    let viaje = await Viaje.findByPk(id, {
+      include: [{ model: Usuario }, { model: Vehiculo }]
+    });
+    viaje.update({ viajeDisponible: false });
+    viaje.save();
+    res.send(viaje);
+  } catch (err) {
+    next(err);
+  }
+});
+router.put("/reactivararViaje/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    let viaje = await Viaje.findByPk(id, {
+      include: [{ model: Usuario }, { model: Vehiculo }]
+    });
+    viaje.update({ viajeDisponible: true });
+    viaje.save();
+    res.send(viaje);
+  } catch (err) {
+    next(err);
+  }
+});
+router.get("/modificarViaje/:id", async (req, res, next) => {
+  const { id } = req.params;
+  const {fecha, hora, origen, destino, asientosAOcupar, aceptaFumador, aceptaMascota, aceptaEquipaje, usaBarbijo } = req.body;
+  let viaje = await Viaje.findByPk(id, {
+    include: [{ model: Usuario }, { model: Vehiculo }]
+  });
+  if(fecha){
+    viaje.update({ fecha: fecha });
+    viaje.save();
+  }
+  if(hora){
+    viaje.update({ hora: hora });
+    viaje.save();
+  }
+  if(origen){
+    viaje.update({ origen: origen });
+    viaje.save();
+  }
+  if(destino){
+    viaje.update({ destino: destino });
+    viaje.save();
+  }
+  if(asientosAOcupar){
+    viaje.update({ asientosAOcupar: asientosAOcupar });
+    viaje.save();
+  }
+  if(aceptaFumador){
+    viaje.update({ aceptaFumador: aceptaFumador });
+    viaje.save();
+  }
+  if(aceptaMascota){
+    viaje.update({ aceptaMascota: aceptaMascota });
+    viaje.save();
+  }
+  if(aceptaEquipaje){
+    viaje.update({ aceptaEquipaje: aceptaEquipaje });
+    viaje.save();
+  }
+  if(usaBarbijo){
+    viaje.update({ usaBarbijo: usaBarbijo });
+    viaje.save();
+  }
+  res.send(viaje)
+});
+
 module.exports = router;
