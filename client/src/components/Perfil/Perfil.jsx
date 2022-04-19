@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import fondo from "../../assets/fondo perfil.jpg";
 import "./Perfil.css";
 import { FaEdit } from "react-icons/fa";
 import Button from "@mui/material/Button";
 import {
+  eliminarComentarios,
   eliminarPerfil,
   getComentarios,
+  getComentariosById,
   getUsuarioByEmail,
   getViajesTotal,
   logout,
   modificacionPerfil,
   postComentarios,
   postReporte,
+  reportarComentarios,
 } from "../../redux/actions/actions";
 import Cookies from "universal-cookie";
 import NavBar from "../NavBar/NavBar";
@@ -22,9 +25,11 @@ import Rating from "@mui/material/Rating";
 import PaginacionComentarios from "./PaginacionComentarios";
 import axios from "axios";
 import Swal from "sweetalert2/dist/sweetalert2.js";
+import { MdOutlineDeleteOutline } from "react-icons/md";
 
 export default function Perfil() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cookies = new Cookies();
   const cookieNombre = cookies.get("nombre");
   const cookieApellido = cookies.get("apellido");
@@ -33,6 +38,7 @@ export default function Perfil() {
   const [count, setCount] = useState(0);
   const miUsuario = useSelector((state) => state.usuario);
   const comentarios = useSelector((state) => state.comentarios);
+
   const viajes = useSelector((state) => state.viajes);
   const { email } = useParams();
 
@@ -52,8 +58,11 @@ export default function Perfil() {
     telefono: miUsuario.telefono,
     dni: miUsuario.dni,
     acercaDeMi: miUsuario.acercaDeMi,
-    avatar: cookieAvatar,
+    avatar: "",
   });
+
+  // console.log("miUsuario", cookieEmail);
+  // console.log("usuario", usuario);
 
   let viajesUsuarios = viajes.map((e) => e.usuarios.map((e) => e.email));
 
@@ -72,8 +81,6 @@ export default function Perfil() {
   useEffect(() => {
     dispatch(getComentarios());
   }, [reviews]);
-
-  const [NumReportes, setNumReportes] = useState(0);
 
   const [reportes, setReportes] = useState({
     justificacion: "",
@@ -104,7 +111,7 @@ export default function Perfil() {
   const [comentariosPorPagina, setComentariosPorPagina] = useState(3);
   const ultimoComentario = pagina * comentariosPorPagina;
   const primerComentario = ultimoComentario - comentariosPorPagina;
-  const ComentariosTotales = miUsuario.comentarios?.slice(
+  const ComentariosTotales = miUsuario.comentarios && miUsuario.comentarios.length!==0 && miUsuario.comentarios.slice(
     primerComentario,
     ultimoComentario
   );
@@ -127,7 +134,7 @@ export default function Perfil() {
       ...reviews,
       [e.target.name]: e.target.value,
     });
-    setCount(e.target.value.length);
+    setCount(e.target.value.length!==0);
   };
 
   const handleChangeReportes = (e) => {
@@ -138,11 +145,11 @@ export default function Perfil() {
   };
 
   const handleSubmitReportes = (e) => {
-    e.preventDefault();
     dispatch(postReporte(reportes));
     setReportes({
       justificacion: "",
     });
+    navigate("/home");
   };
 
   const handleSubmitComentarios = (e) => {
@@ -154,25 +161,27 @@ export default function Perfil() {
   };
 
   const handleUpdate = (e) => {
-    e.preventDefault();
     dispatch(modificacionPerfil(usuario));
-    // navigate("/home");
-    console.log("datitaaa", subiendo);
-    const data = new FormData();
-    data.append("file", subiendo);
-    data.append("upload_preset", "sharerides");
-    // setLoading(true)
-    axios
-      .post("https://api.cloudinary.com/v1_1/dvmrweg0f/image/upload", data)
-      .then((r) => {
-        setImagen(r.data.url);
-        setUsuario({ avatar: r.data.url });
-      });
+    navigate("/home");
   };
 
-  const onChangeSubiendo = (e) => {
-    e.preventDefault();
-    setSubiendo(e.target.files[0]);
+  const CLOUDINARY_URL =
+    "https://api.cloudinary.com/v1_1/dvmrweg0f/image/upload";
+  const CLOUDINARY_UPLOAD_PRESETS = "sharerides";
+
+  const handleChangeUpdateImage = async (e) => {
+    const file = e.target.files[0];
+    const data = new FormData();
+    data.append("file", file);
+    data.append("upload_preset", CLOUDINARY_UPLOAD_PRESETS);
+
+    const response = await axios
+      .post(CLOUDINARY_URL, data)
+      .then((res) => res.data);
+    setUsuario({
+      ...usuario,
+      avatar: response.url,
+    });
   };
 
   const handleEliminado = (e) => {
@@ -194,13 +203,69 @@ export default function Perfil() {
     });
   };
 
+  const handleBorrarComentario = (e) => {
+    Swal.fire({
+      title: "Estas Seguro?",
+      text: "No podras revertir la decision!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, borrarlo!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(eliminarComentarios(e.target.value));
+        Swal.fire(
+          "Borrado!",
+          "Tu Comentario ha sido eliminado con exito.",
+          "success"
+        ).then(() => {
+          navigate("/home");
+        });
+      }
+    });
+  };
+
+  let [countReportes, setCountNumReportes] = useState(0);
+
+  const [numReportes, setNumReportes] = useState({
+    reportes: countReportes + 1,
+  });
+
+  console.log("comentarios", ComentariosTotales);
+
+  const handleReportarComentario = (e) => {
+    Swal.fire({
+      title: "Estas Seguro?",
+      text: "No podras revertir la decision!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Reportar!",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(reportarComentarios(e.target.value));
+        Swal.fire(
+          "Reportado!",
+          "El comentario ha sido reportado con exito!",
+          "success"
+        ).then(() => {
+          // navigate("/home");
+        });
+
+      }
+    });
+  };
+
   return (
     <div className="perfil">
       <NavBar />
       <div className="contenedor-perfil">
         <div className="contenedor-imagen">
           <div className="img-perfil">
-            <img src={miUsuario.avatar ? miUsuario.avatar : user} alt="" />
+            <img src={miUsuario.avatar} alt="" />
           </div>
           <div className="bio-perfil">
             <h1>
@@ -308,22 +373,15 @@ export default function Perfil() {
             <div className="contenedor-input">
               <h5>Avatar</h5>
               {!habilitarAvatar ? (
-                <>
+                <div>
                   <input
                     type="file"
-                    className="input-perfil"
-                    onChange={onChangeSubiendo}
                     name="avatar"
-                    disabled={habilitarAvatar}
+                    onChange={(e) => handleChangeUpdateImage(e)}
                   />
-                  {/* <input
-                    type="submit"
-                    onClick={uploadImage}
-                    value="Cargar imagen"
-                  /> */}
-                </>
+                </div>
               ) : (
-                <label>{miUsuario.avatar}</label>
+                <label className="overflow-hidden">{miUsuario.avatar}</label>
               )}
             </div>
             {cookieEmail !== email ? null : (
@@ -388,34 +446,55 @@ export default function Perfil() {
         <div className="tableroComentarios">
           <div className="contenedor-comentarios">
             {ComentariosTotales &&
-              ComentariosTotales.map((e) => (
-                <div className="resenas-card">
-                  <div className="encabezado">
-                    <img src={e.avatar ? e.avatar : user} alt="" />
-                    <h1>
-                      {e.nombre} {e.apellido}
-                    </h1>
+              ComentariosTotales.map((e) =>
+                e.disponible === true ? (
+                  <div className="resenas-card">
+                    <div className="encabezado">
+                      <img src={e.avatar ? e.avatar : user} alt="" />
+                      <h1>
+                        {e.nombre} {e.apellido}
+                      </h1>
+                    </div>
+                    <Rating
+                      className="calificacion"
+                      value={e.calificacion}
+                      readOnly
+                    />
+                    <div className="texto">
+                      <p>{e.comentarios}</p>
+                    </div>
+                    <div className="comentarios-abajo">
+                      <button
+                        type="submit"
+                        value={e.id}
+                        onClick={(e) => handleBorrarComentario(e)}
+                      >
+                        Eliminar
+                      </button>
+                      <button
+                        type="submit"
+                        value={e.id}
+                        onClick={(e) => handleReportarComentario(e)}
+                      >
+                        Reportar
+                      </button>
+
+
+                      <p>{e.dia}</p>
+                    </div>
                   </div>
-                  <Rating
-                    className="calificacion"
-                    value={e.calificacion}
-                    readOnly
-                  />
-                  <div className="texto">
-                    <p>{e.comentarios}</p>
-                  </div>
-                  <p className="dia">{e.dia}</p>
-                </div>
-              ))}
+                ) : null
+              )}
           </div>
           <div className="pag">
+            {comentarios.length!==0 && 
             <PaginacionComentarios
               comentariosPorPagina={comentariosPorPagina}
-              comentarios={comentarios?.length}
+              comentarios={comentarios.length}
               paginacion={paginacion}
               pagina={pagina}
               setPagina={setPagina}
-            />
+            />}
           </div>
         </div>
       </div>

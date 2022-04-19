@@ -30,6 +30,14 @@ module.exports = (sequelize) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
+      disponible: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+      },
+      reportes: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
     },
     { timestamps: false }
   );

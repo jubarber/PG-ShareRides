@@ -327,9 +327,10 @@
   background-color: #555;
 }
 
-.dia {
+.comentarios-abajo {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   padding: 1rem;
   font-size: 1rem;
   font-weight: bold;

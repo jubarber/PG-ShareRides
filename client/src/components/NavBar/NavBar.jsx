@@ -62,14 +62,18 @@ export default function NavBar() {
               <FaHome />
             </button>
           </Link>
-          <Link to="/formviaje">
-            <button type="button" className="btn btn-outline-primary">
-              Crear Viaje
-            </button>
-          </Link>
+          {cookieEmail !== "undefined" && cookieEmail !== "" ? (
+            <Link to="/formviaje">
+              <button type="button" className="btn btn-outline-primary">
+                Crear Viaje
+              </button>
+            </Link>
+          ) : (
+            <></>
+          )}
         </div>
-        {cookieEmail === "undefined" ? (
-          <>
+        {cookieEmail === "undefined" || cookieEmail === "" ? (
+          <div>
             <div className="IniciarSesion-y-Registrar">
               <Link to="/login">
                 <button type="button" className="btn btn-outline-primary">
@@ -82,7 +86,7 @@ export default function NavBar() {
                 </button>
               </Link>
             </div>
-          </>
+          </div>
         ) : (
           <div className="info-usuario">
             <h3>Hola, {cookieNombre}</h3>
@@ -102,19 +106,11 @@ export default function NavBar() {
                   aria-haspopup="true"
                   aria-expanded={open ? "true" : undefined}
                 >
-                  {cookieAvatar ? (
-                    <img
-                      src={cookieAvatar === "null" ? user : cookieAvatar}
-                      alt=""
-                      style={{ width: 52, height: 52 }}
-                    />
-                  ) : (
-                    <img
-                      src={miUsuario.avatar === null ? user : miUsuario.avatar}
-                      alt=""
-                      style={{ width: 52, height: 52 }}
-                    />
-                  )}
+                  <img
+                    src={miUsuario.avatar}
+                    alt=""
+                    style={{ width: 52, height: 52 }}
+                  />
                 </IconButton>
               </Tooltip>
             </Box>
@@ -156,7 +152,7 @@ export default function NavBar() {
               <Link to={`/perfil/${cookieEmail}`}>
                 <MenuItem>
                   <img
-                    src={cookieAvatar === "null" ? user : cookieAvatar}
+                    src={miUsuario.avatar}
                     alt=""
                     style={{
                       width: 32,
