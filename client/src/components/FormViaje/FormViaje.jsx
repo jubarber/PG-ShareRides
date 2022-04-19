@@ -1,21 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import fondo from "../../assets/fondo perfil.jpg";
 import "./FormViaje.css";
 import CheckBox from "@mui/material/Checkbox";
 import NavBar from "../NavBar/NavBar";
+import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { getVehiculos } from "../../redux/actions/actions";
+import Cookies from "universal-cookie";
 
 export default function FormViaje() {
+  const cookies = new Cookies();
+  const vehiculos = useSelector(state => state.vehiculos);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const [isChecked, setIsChecked] = useState({
     pasajero: false,
-    conductor: false,
+    conductor: false
   });
+  const cookieMail = cookies.get("email");
 
   function handleOnChange(e) {
     setIsChecked({
       ...isChecked,
-      [e.target.name]: !isChecked[e.target.name],
+      [e.target.name]: !isChecked[e.target.name]
     });
   }
 
@@ -25,12 +34,68 @@ export default function FormViaje() {
       navigate("/formpasajero");
     }
     if (isChecked.conductor === true && isChecked.pasajero === false) {
-      navigate("/formvehiculo");
+      if (vehiculos !== "No hay vehiculos") {
+        Swal.fire({
+          title: "Ya tienes un vehiculo registrado",
+          icon: "info",
+          text:
+            "Deseas continuar con tu vehículo registrado o prefieres registrar uno nuevo?",
+          showDenyButton: true,
+          denyButtonColor: "#990099",
+          confirmButtonText: "Continuar con mi vehículo",
+          denyButtonText: "Registrar otro vehículo",
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          allowEnterKey: false
+        }).then(r => {
+          if (r.isConfirmed && vehiculos.length > 1) {
+            (async () => {
+              const { value: patente } = await Swal.fire({
+                title: "Por favor, elegí qué vehículo deseas utilizar",
+                input: "select",
+                inputOptions: vehiculos.map(v => v.patente),
+                inputPlaceholder: "Seleccioná un vehículo",
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                inputValue: "",
+                inputValidator: value => {
+                  if (!value) {
+                    return "Por favor elegí una opción.";
+                  }
+                }
+              });
+              if (patente) {
+                cookies.set("patente", vehiculos[patente].patente, {
+                  path: "/"
+                });
+                cookies.set("dni", vehiculos[patente].dni, { path: "/" });
+              }
+            })().then(() => {
+              setTimeout(() => {
+                navigate("/formconductor");
+              }, 1000);
+            });
+          } else if (r.isDenied) {
+            navigate("/formvehiculo");
+          }
+        });
+      } else {
+        navigate("/formvehiculo");
+      }
     }
+
     if (isChecked.pasajero && isChecked.conductor) {
-      alert("Debes selecionar uno solo");
+      Swal.fire({
+        title: "Debes selecionar uno solo",
+        icon: "warning"
+      });
     }
   }
+
+  useEffect(() => {
+    dispatch(getVehiculos(cookieMail));
+  }, []);
 
   return (
     <div className="contenedor_formviaje">
@@ -43,7 +108,7 @@ export default function FormViaje() {
             value="pasajero"
             name="pasajero"
             checked={isChecked.pasajero}
-            onChange={(e) => {
+            onChange={e => {
               handleOnChange(e);
             }}
             color="secondary"
@@ -58,7 +123,7 @@ export default function FormViaje() {
             value="conductor"
             name="conductor"
             checked={isChecked.conductor}
-            onChange={(e) => {
+            onChange={e => {
               handleOnChange(e);
             }}
             color="secondary"

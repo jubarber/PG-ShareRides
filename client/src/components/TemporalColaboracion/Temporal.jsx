@@ -2,11 +2,13 @@ import React, { useEffect } from "react";
 import { actualizarColaboracion } from "../../redux/actions/actions";
 import Cookies from "universal-cookie";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function Temporal() {
   const dispatch = useDispatch();
   const cookies = new Cookies();
   const cookieMail = cookies.get("email");
+  const navigate = useNavigate();
 
   useEffect(
     () => {

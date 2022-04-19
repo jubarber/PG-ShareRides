@@ -12,15 +12,14 @@ router.post("/nuevaColaboracion", async (req, res, next) => {
       usuarioCobrador,
       viajeId
     } = req.body;
-    console.log(unit_price, orderId)
+    // console.log(unit_price, orderId)
     let nuevaColaboracion;
-    if (orderId && quantity && title && usuarioPagador && unit_price) {
-      let colabSinPagar = await Colaboracion.findAll({
+    let colabSinPagar = await Colaboracion.findAll({
         where: { usuarioPagador: usuarioPagador, abonado: false }
       });
-      if (colabSinPagar.length!==0) res.send(colabSinPagar);
+      if (colabSinPagar.length!==0) {res.send(colabSinPagar);}
       else {
-        nuevaColaboracion = await Colaboracion?.create({
+        nuevaColaboracion = await Colaboracion.create({
           unit_price: parseInt(unit_price),
           usuarioPagador: usuarioPagador,
           title: title,
@@ -30,8 +29,7 @@ router.post("/nuevaColaboracion", async (req, res, next) => {
           viajeId: viajeId
         });
       }
-      res.send(nuevaColaboracion);
-    } //fin del else
+    res.send(nuevaColaboracion);
   } catch (err) {
     next(err);
   }
@@ -40,10 +38,10 @@ router.post("/nuevaColaboracion", async (req, res, next) => {
 router.get("/colaboraciones/:email", async (req, res, next) => {
   try {
     const { email } = req.params;
-    const colaboraciones = await Colaboracion?.findAll({
+    let colaboraciones = await Colaboracion.findAll({
       where: { usuarioPagador: email }
     });
-    res.send(colaboraciones)
+  res.send(colaboraciones)
   } catch (err) {
     next(err);
   }
@@ -52,13 +50,15 @@ router.get("/colaboraciones/:email", async (req, res, next) => {
 router.put("/:email", async (req, res, next) => {
   try {
     const { email } = req.params;
-    const colaboracion = await Colaboracion?.findOne({
+    console.log(email)
+    let colaboracion;
+     colaboracion = await Colaboracion.findOne({
       where: { usuarioPagador: email, abonado: false }
     });
-    if (colaboracion) {
-      colaboracion.update({ abonado: true });
-      colaboracion.save();
-      res.send(colaboracion);
+    if (colaboracion?.length!==0) {
+      colaboracion?.update({ abonado: true });
+      colaboracion?.save()
+      colaboracion && res.send(colaboracion);
     } else res.status(404).send("no hay colaboracion");
   } catch (err) {
     next(err);
