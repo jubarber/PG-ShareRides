@@ -1,10 +1,22 @@
+.container__table{
+    display: flex;
+    flex-direction: column;
+}
 .container__table table{
     /* border: 0.1em solid black; */
     height:auto;
     margin:0.5em;
-    width:100%
+    border-collapse: collapse;
+    width:50%;
+    align-items: center;
 }
 td, th{
-    border: 0.1em solid black;
-
+    border: 0.1em solid black;    
+}
+td{
+    width: 80%;
+}
+.resaltar{
+    background-color:black;
+    color:white;
 }
