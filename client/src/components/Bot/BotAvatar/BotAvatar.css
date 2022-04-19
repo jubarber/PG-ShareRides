@@ -1,0 +1,28 @@
+.bot-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9rem;
+  background-color: purple;
+  color: #ffff;
+  margin-right: 10px;
+}
+
+#root
+  > div
+  > div
+  > div.home-general
+  > div.bot-conteiner
+  > div
+  > div
+  > div
+  > div.react-chatbot-kit-chat-input-container
+  > form
+  > button
+  > svg {
+  margin-left: 1.5rem;
+}
+

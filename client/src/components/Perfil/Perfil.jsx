@@ -198,8 +198,7 @@ export default function Perfil() {
       if (result.isConfirmed) {
         dispatch(eliminarPerfil(cookieEmail));
         dispatch(logout(cookieEmail));
-        navigate("/");
-        Swal.fire("Borrada!", "Tu cuenta ha sido eliminada!", "success");
+         Swal.fire("Borrada!", "Tu cuenta ha sido eliminada!", "success");
       }
     });
   };
