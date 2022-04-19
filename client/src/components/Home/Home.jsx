@@ -7,7 +7,7 @@ import {
   login,
   filterPerCard,
   getUsuarios,
-  getViajesTotalUsuario
+  getViajesTotalUsuario,
 } from "../../redux/actions/actions";
 import { Filtros } from "../Filtros/Filtros";
 import CardViajeUsuarioPasajere from "../CardViaje/CardViajeUsuario/Pasajero/CardViajeUsuario";
@@ -25,10 +25,13 @@ export default function Home() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
   const [render, setRender] = useState("");
-  const viajes = useSelector(state => state.viajesFiltrados);
-  const viajesUsuario = useSelector(state => state.viajesPorUsuario);
+  const viajes = useSelector((state) => state.viajesFiltrados);
+  const viajesUsuario = useSelector((state) => state.viajesPorUsuario);
   const cookieMail = cookies.get("email");
-
+  let newDate = new Date();
+  let dia = newDate.getDate();
+  let mes = newDate.getMonth() + 1;
+  let prueba = (new Date().toLocaleString() + "").slice(11, 16);
   useEffect(() => {
     dispatch(getViajesTotalUsuario(cookieMail));
   }, []);
@@ -46,7 +49,7 @@ export default function Home() {
 
   let viajesDisponibles = [];
 
-  viajes.map(e => {
+  viajes.map((e) => {
     e.viajeDisponible === true && viajesDisponibles.push(e);
   });
   console.log("disponibles", viajesDisponibles);
@@ -74,7 +77,7 @@ export default function Home() {
                   id="demo-simple-select"
                   label="Selecciona tu puesto"
                   value={render}
-                  onChange={e => handleChange(e)}
+                  onChange={(e) => handleChange(e)}
                 >
                   <MenuItem value="conductor">Conductore</MenuItem>
                   <MenuItem value="pasajero">Pasajere</MenuItem>
@@ -83,11 +86,17 @@ export default function Home() {
             </label>
           </div>
           <div className="container-cards">
-            {viajesDisponibles.length !== 0
-              ? viajesDisponibles.map(e =>
-                  <div className="card-home">
-                    {e.status === "pasajero"
-                      ? <Link to={"/detallep/" + e.id}>
+            {viajesDisponibles.length !== 0 ? (
+              viajesDisponibles.map(
+                (e) =>
+                  e &&
+                  parseInt(e.fecha.slice(5, 7)) >= parseInt(mes) &&
+                  parseInt(e.fecha.slice(8, 10)) >= parseInt(dia) &&
+                  parseInt(e.hora.replace(":", "")) >
+                    parseInt(prueba.replace(":", "")) && (
+                    <div className="card-home">
+                      {e.status === "pasajero" ? (
+                        <Link to={"/detallep/" + e.id}>
                           <CardViajeUsuarioPasajere
                             origen={e.origen}
                             destino={e.destino}
@@ -111,33 +120,44 @@ export default function Home() {
                             key={e.id}
                             id={e.id}
                             avatar={
-                              e.usuarios.length > 0
-                                ? e.usuarios[0].avatar
-                                : <div />
+                              e.usuarios.length > 0 ? (
+                                e.usuarios[0].avatar
+                              ) : (
+                                <div />
+                              )
                             }
                             nombre={
-                              e.usuarios.length > 0
-                                ? e.usuarios[0].nombre
-                                : <div />
+                              e.usuarios.length > 0 ? (
+                                e.usuarios[0].nombre
+                              ) : (
+                                <div />
+                              )
                             }
                             apellido={
-                              e.usuarios.length > 0
-                                ? e.usuarios[0].apellido
-                                : <div />
+                              e.usuarios.length > 0 ? (
+                                e.usuarios[0].apellido
+                              ) : (
+                                <div />
+                              )
                             }
                             email={
-                              e.usuarios.length > 0
-                                ? e.usuarios[0].email
-                                : <div />
+                              e.usuarios.length > 0 ? (
+                                e.usuarios[0].email
+                              ) : (
+                                <div />
+                              )
                             }
                             puntuacion={
-                              e.usuarios.length > 0
-                                ? e.usuarios[0].puntuacion
-                                : <div />
+                              e.usuarios.length > 0 ? (
+                                e.usuarios[0].puntuacion
+                              ) : (
+                                <div />
+                              )
                             }
                           />
                         </Link>
-                      : <Link to={"/detallec/" + e.id}>
+                      ) : (
+                        <Link to={"/detallec/" + e.id}>
                           <CardViajeUsuarioConductore
                             origen={e.origen}
                             destino={e.destino}
@@ -160,35 +180,49 @@ export default function Home() {
                             key={e.id}
                             id={e.id}
                             avatar={
-                              e.usuarios.length > 0
-                                ? e.usuarios[0].avatar
-                                : <div />
+                              e.usuarios.length > 0 ? (
+                                e.usuarios[0].avatar
+                              ) : (
+                                <div />
+                              )
                             }
                             nombre={
-                              e.usuarios.length > 0
-                                ? e.usuarios[0].nombre
-                                : <div />
+                              e.usuarios.length > 0 ? (
+                                e.usuarios[0].nombre
+                              ) : (
+                                <div />
+                              )
                             }
                             apellido={
-                              e.usuarios.length > 0
-                                ? e.usuarios[0].apellido
-                                : <div />
+                              e.usuarios.length > 0 ? (
+                                e.usuarios[0].apellido
+                              ) : (
+                                <div />
+                              )
                             }
                             email={
-                              e.usuarios.length > 0
-                                ? e.usuarios[0].email
-                                : <div />
+                              e.usuarios.length > 0 ? (
+                                e.usuarios[0].email
+                              ) : (
+                                <div />
+                              )
                             }
                             puntuacion={
-                              e.usuarios.length > 0
-                                ? e.usuarios[0].puntuacion
-                                : <div />
+                              e.usuarios.length > 0 ? (
+                                e.usuarios[0].puntuacion
+                              ) : (
+                                <div />
+                              )
                             }
                           />
-                        </Link>}
-                  </div>
-                )
-              : <div>No hay viajes disponibles</div>}
+                        </Link>
+                      )}
+                    </div>
+                  )
+              )
+            ) : (
+              <div>No hay viajes disponibles</div>
+            )}
           </div>
         </div>
       </div>
