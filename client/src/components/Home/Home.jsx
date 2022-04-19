@@ -53,9 +53,9 @@ export default function Home() {
     dispatch(getViajesTotal());
   }
 
-  function handleBot(e){
+  function handleBot(e) {
     e.preventDefault();
-    setHabilitarBot(!habilitarBot)
+    setHabilitarBot(!habilitarBot);
   }
   let viajesDisponibles = [];
 
@@ -102,8 +102,10 @@ export default function Home() {
                   e &&
                   parseInt(e.fecha.slice(5, 7)) >= parseInt(mes) &&
                   parseInt(e.fecha.slice(8, 10)) >= parseInt(dia) &&
-                  parseInt(e.hora.replace(":", "")) >
-                    parseInt(prueba.replace(":", "")) && (
+                  (parseInt(e.hora.replace(":", "")) >
+                    parseInt(prueba.replace(":", "")) ||
+                    parseInt(e.fecha.slice(5, 7)) > parseInt(mes) ||
+                    parseInt(e.fecha.slice(8, 10)) > parseInt(dia)) && (
                     <div className="card-home">
                       {e.status === "pasajero" ? (
                         cookieMail !== "undefined" && cookieMail !== "" ? (
@@ -355,11 +357,10 @@ export default function Home() {
           </div>
         </div>
         <div className="bot-conteiner">
-                  
-          {
-        habilitarBot ? ( <Bot />) : (<></>)
-          }
-           <button onClick={(e) =>handleBot(e)}className="btn-bot">Ayuda </button>
+          {habilitarBot ? <Bot /> : <></>}
+          <button onClick={(e) => handleBot(e)} className="btn-bot">
+            Ayuda{" "}
+          </button>
         </div>
       </div>
 
