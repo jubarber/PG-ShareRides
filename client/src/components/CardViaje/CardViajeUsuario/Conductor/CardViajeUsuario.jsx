@@ -29,6 +29,8 @@ export default function Card({
   avatar,
 }) {
   //get de usuario (nombre, apellido y valoracion). foto usuario. Provincias/localidades como llegan y si se puede mostras cada una independiente de la otra. Iniciar sesion con aut 0 y con las cuquis trabajar con la info.
+
+  
   return (
     <div className="container-cardviaje">
       <div id="nueva-clase">
@@ -101,9 +103,9 @@ export default function Card({
               {fecha} - {hora} hs
             </i>
             {asientosAOcupar > 1 ? (
-              <i>{asientosAOcupar + " "}Lugares Requeridos</i>
+              <i>{asientosAOcupar + " "}Lugares Disponibles</i>
             ) : asientosAOcupar === 1 ? (
-              <i>{asientosAOcupar + " "}Lugar Requerido</i>
+              <i>{asientosAOcupar + " "}Lugar Disponible</i>
             ) : asientosAOcupar === 0 ? (
               <i>Viaje Completo</i>
             ) : null}

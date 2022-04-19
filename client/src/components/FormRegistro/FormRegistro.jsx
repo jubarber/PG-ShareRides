@@ -8,6 +8,7 @@ import { BsEyeSlash, BsEye } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import NavBarSinLogin from "../NavBar/NavBarSinLogin";
 import Cookies from "universal-cookie";
+import user from "../../assets/user.png";
 
 export default function FormRegistro() {
   const cookies = new Cookies();
@@ -22,7 +23,7 @@ export default function FormRegistro() {
     password: "",
     nuevo_password: "",
     terminos: "",
-    avatar: "",
+    avatar: user,
   });
 
   const [errors, setErrors] = useState({});
@@ -123,7 +124,7 @@ export default function FormRegistro() {
       cookies.set("nombre", input.nombre, { path: "/" });
       cookies.set("apellido", input.apellido, { path: "/" });
       cookies.set("avatar", input.avatar, { path: "/" });
-      console.log("COOKIES REGISTRO ", cookies.get("nombre"));
+      // console.log("COOKIES REGISTRO ", cookies.get("nombre"));
       dispatch(registroUsuario(input));
       let cookieNombre = cookies.get("nombre");
       swal({

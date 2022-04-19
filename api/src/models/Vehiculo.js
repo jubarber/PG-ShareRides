@@ -1,22 +1,26 @@
 const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
-  sequelize.define("vehiculo", {
-    patente: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      primaryKey: true
+  sequelize.define(
+    "vehiculo",
+    {
+      patente: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        primaryKey: true,
+      },
+      marca: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      modelo: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      dni: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
     },
-    marca: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    modelo: {
-      type: DataTypes.STRING,
-      allowNull: false
-    }, 
-    dni: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    }
-  });
+    { timestamps: false }
+  );
 };

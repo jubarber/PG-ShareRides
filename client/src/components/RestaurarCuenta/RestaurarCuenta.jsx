@@ -1,48 +1,64 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Cookies from "universal-cookie";
-import { registroUsuario } from "../../redux/actions/actions";
+import {
+  cambioPassword,
+  getUsuarioByEmail,
+  registroUsuario,
+  activarPerfil
+} from "../../redux/actions/actions";
 import swal from "sweetalert";
 import fondo from "../../assets/fondo perfil.jpg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
-import "./RegistroGoogle.css";
+import "./RestaurarCuenta.css";
 import NavBarSinLogin from "../NavBar/NavBarSinLogin";
 
-export default function RegistroGoogle() {
+export default function RestaurarCuenta() {
   const cookies = new Cookies();
   const [statePassword, setStatePassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  let cookieEmail = cookies.get("email");
-  let cookieNombre = cookies.get("nombre");
-  let cookieApellido = cookies.get("apellido");
-  let cookieAvatar = cookies.get("avatar");
+  const cookieMail = cookies.get("email");
   const [input, setInput] = useState({ password: "", confirmPassword: "" });
   const [usuario, setUsuario] = useState({
-    email: cookieEmail,
-    nombre: cookieNombre,
-    apellido: cookieApellido,
-    avatar: cookieAvatar,
+    email: cookieMail,
+    nombre: "",
+    apellido: "",
+    avatar: "",
     password: "",
-    confirmPassword: "",
+    confirmPassword: ""
   });
+
+  useEffect(() => {
+    dispatch(getUsuarioByEmail(cookieMail)).then(r => {
+      cookies.set("dni", r.payload.dni, { path: "/" });
+      cookies.set("nombre", r.payload.nombre, { path: "/" });
+      cookies.set("apellido", r.payload.apellido, { path: "/" });
+      cookies.set("logueado", r.payload.logueado, { path: "/" });
+      cookies.set("vehiculo", r.payload.vehiculo, { path: "/" });
+      cookies.set("avatar", r.payload.avatar, { path: "/" });
+      cookies.set("acercaDeMi", r.payload.acercaDeMi, { path: "/" });
+      cookies.set("calificacion", r.payload.calificacion, { path: "/" });
+      console.log("nombre", cookies.get("nombre"));
+    });
+  }, []);
 
   function handleChange(e) {
     setUsuario({
       ...usuario,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
     setInput({
       ...input,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   }
 
   function handleEye(e) {
     e.preventDefault();
-    setStatePassword((prevStatePassword) => !prevStatePassword);
+    setStatePassword(prevStatePassword => !prevStatePassword);
   }
 
   function handleSubmit(e) {
@@ -54,7 +70,7 @@ export default function RegistroGoogle() {
         text: "Por favor complete todos los campos",
         icon: "warning",
         button: true,
-        dangerMode: true,
+        dangerMode: true
       });
     } else if (Object.values(input)[1] === "") {
       e.preventDefault();
@@ -63,7 +79,7 @@ export default function RegistroGoogle() {
         text: "Por favor ingrese su contraseña",
         icon: "warning",
         button: true,
-        dangerMode: true,
+        dangerMode: true
       });
     } else if (input.password !== input.confirmPassword) {
       e.preventDefault();
@@ -72,15 +88,17 @@ export default function RegistroGoogle() {
         text: "Las contraseñas no coinciden",
         icon: "warning",
         button: true,
-        dangerMode: true,
+        dangerMode: true
       });
     } else {
-      dispatch(registroUsuario(usuario));
+      dispatch(cambioPassword(cookieMail, input.password)).then(
+        dispatch(activarPerfil(cookieMail))
+      );
       swal({
-        title: "El registro ha sido exitoso!",
+        title: "Se ha cambiado exitosamente la contraseña!",
         icon: "success",
-        button: "Bienvenidx!",
-      }).then(function () {
+        button: "Bienvenidx de nuevo!"
+      }).then(function() {
         navigate("/home");
       });
     }
@@ -99,8 +117,8 @@ export default function RegistroGoogle() {
       </div>
       <div>
         <div className="Google__titulos">
-          <h1>Coloca una contraseña para usar la plataforma</h1>
-          <h2>Será tu contraseña de Share Rides</h2>
+          <h1>Coloca una nueva contraseña para usar la plataforma</h1>
+          <h2>Estas actualizando tu contraseña de Share Rides</h2>
         </div>
         <form className="Google__formulario-login" onSubmit={handleSubmit}>
           <div className="Google__input_box">
@@ -110,7 +128,7 @@ export default function RegistroGoogle() {
               value={usuario.password}
               name="password"
               placeholder="Contraseña Share Rides"
-              onChange={(e) => handleChange(e)}
+              onChange={e => handleChange(e)}
             />
             <button className="Google__ojo" onClick={handleEye}>
               {statePassword ? <BsEye /> : <BsEyeSlash />}
@@ -123,7 +141,7 @@ export default function RegistroGoogle() {
               value={usuario.confirmPassword}
               name="confirmPassword"
               placeholder="Confirmar contraseña"
-              onChange={(e) => handleChange(e)}
+              onChange={e => handleChange(e)}
             />
             <button className="Google__ojo" onClick={handleEye}>
               {statePassword ? <BsEye /> : <BsEyeSlash />}

@@ -3,7 +3,7 @@ const router = Router();
 const { Usuario } = require("../db.js");
 
 router.post("/sesionadmin", async (req, res, next) => {
-    console.log(req.body.email)
+    // console.log(req.body.email)
     if (
       req.body.email === "pgsharerides@gmail.com" &&
       req.body.password === "piedra123"

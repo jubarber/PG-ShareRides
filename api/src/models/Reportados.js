@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   sequelize.define(
-    "comentarios",
+    "reportados",
     {
       id: {
         type: DataTypes.UUID,
@@ -22,21 +22,14 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      calificacion: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      comentarios: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-      },
-      disponible: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true,
-      },
       reportes: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        autoIncrement: true,
+        allowNull: false,
+      },
+      justificacion: {
+        type: DataTypes.TEXT,
+        allowNull: false,
       },
     },
     { timestamps: false }
