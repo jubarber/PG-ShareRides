@@ -17,38 +17,37 @@ export default function Colaboracion() {
   const cookieMail = cookies.get("email");
   const mailOtroUsuario = "";
 
-  useEffect(() => {
-    dispatch(getColaboraciones(cookieMail));
-    dispatch(getUsuarios());
-    dispatch(getViajesTotal());
-  }, []);
-
-  console.log(viajes);
+  useEffect(
+    () => {
+      dispatch(getColaboraciones(cookieMail));
+      dispatch(getUsuarios())
+      dispatch(getViajesTotal())
+    }, []);
 
   return (
     <div>
-      {colaboraciones.length !== 0 ? (
-        colaboraciones.map((c) => {
-          let viaje = viajes?.find((v) => v.id === c.viajeId);
-          let usuarioCobrador = usuarios?.find(
-            (u) => u.email === c.usuarioCobrador
-          );
-          return (
-            <div>
-              Monto de la colaboración: ${c.unit_price}
-              <br />
-              Persona con quien colaboraste: {usuarioCobrador?.nombre}{" "}
-              {usuarioCobrador?.apellido}
-              <br />
-              El <a href={`/detallec/${viaje?.id}`}> viaje </a> fue de{" "}
-              {viaje?.origen} a {viaje?.destino} el {viaje?.fecha}
-            </div>
-          );
-        })
-      ) : (
-        <h2>Aún no hay colaboraciones</h2>
-      )}
-
+      { viajes.length!==0 &&
+    <div>
+      {colaboraciones.length !== 0
+        ? colaboraciones.map(c => {
+            let viaje;
+            if(viajes.length!==0) viaje = viajes.find(v => v.id === c.viajeId)
+            let usuarioCobrador = usuarios.find(u => u.email === c.usuarioCobrador)
+            return (
+              <div>
+                Monto de la colaboración: ${c.unit_price}
+                <br/>
+                Persona con quien colaboraste: {usuarioCobrador.nombre} {usuarioCobrador.apellido}
+                
+                <br/>
+                El <a href={`/detallec/${viaje.id}`}> viaje </a> fue de {viaje.origen} a {viaje.destino} el {viaje.fecha}
+              </div>
+            );
+          
+          })
+        : <h2>Aún no hay colaboraciones</h2>}
+    </div>
+}
     </div>
   );
 }

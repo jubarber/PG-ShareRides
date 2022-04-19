@@ -62,14 +62,18 @@ export default function NavBar() {
               <FaHome />
             </button>
           </Link>
-          <Link to="/formviaje">
-            <button type="button" className="btn btn-outline-primary">
-              Crear Viaje
-            </button>
-          </Link>
+          {cookieEmail !== "undefined" && cookieEmail !== "" ? (
+            <Link to="/formviaje">
+              <button type="button" className="btn btn-outline-primary">
+                Crear Viaje
+              </button>
+            </Link>
+          ) : (
+            <></>
+          )}
         </div>
-        {cookieEmail === "undefined" ? (
-          <>
+        {cookieEmail === "undefined" || cookieEmail === "" ? (
+          <div>
             <div className="IniciarSesion-y-Registrar">
               <Link to="/login">
                 <button type="button" className="btn btn-outline-primary">
@@ -82,7 +86,7 @@ export default function NavBar() {
                 </button>
               </Link>
             </div>
-          </>
+          </div>
         ) : (
           <>
             <div className="info-usuario">

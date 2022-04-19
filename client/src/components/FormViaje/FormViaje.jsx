@@ -34,25 +34,48 @@ export default function FormViaje() {
       navigate("/formpasajero");
     }
     if (isChecked.conductor === true && isChecked.pasajero === false) {
-      // console.log("vehiculos", vehiculos)
       if (vehiculos !== "No hay vehiculos") {
         Swal.fire({
           title: "Ya tienes un vehiculo registrado",
           icon: "info",
           text:
-            "Deseas continuar con tu vehiculo registrado o prefieres registrar uno nuevo?",
+            "Deseas continuar con tu vehículo registrado o prefieres registrar uno nuevo?",
           showDenyButton: true,
           denyButtonColor: "#990099",
-          confirmButtonText: "Continuar con mi vehiculo",
-          denyButtonText: "Registrar otro vehiculo"
+          confirmButtonText: "Continuar con mi vehículo",
+          denyButtonText: "Registrar otro vehículo",
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          allowEnterKey: false
         }).then(r => {
-          if (r.isConfirmed) {
-            // console.log(vehiculos[0])
-            cookies.set("patente", vehiculos[0].patente, { path: "/" });
-            cookies.set("dni", vehiculos[0].dni, { path: "/"})
-            setTimeout(() => {
-              navigate("/formconductor");
-            }, 1500)
+          if (r.isConfirmed && vehiculos.length > 1) {
+            (async () => {
+              const { value: patente } = await Swal.fire({
+                title: "Por favor, elegí qué vehículo deseas utilizar",
+                input: "select",
+                inputOptions: vehiculos.map(v => v.patente),
+                inputPlaceholder: "Seleccioná un vehículo",
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                inputValue: "",
+                inputValidator: value => {
+                  if (!value) {
+                    return "Por favor elegí una opción.";
+                  }
+                }
+              });
+              if (patente) {
+                cookies.set("patente", vehiculos[patente].patente, {
+                  path: "/"
+                });
+                cookies.set("dni", vehiculos[patente].dni, { path: "/" });
+              }
+            })().then(() => {
+              setTimeout(() => {
+                navigate("/formconductor");
+              }, 1000);
+            });
           } else if (r.isDenied) {
             navigate("/formvehiculo");
           }

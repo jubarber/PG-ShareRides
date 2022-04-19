@@ -20,18 +20,24 @@ import MenuItem from "@mui/material/MenuItem";
 import { FormControl } from "@mui/material";
 import Cookies from "universal-cookie";
 import NavBar from "../NavBar/NavBar";
+import Bot from "../Bot/Chatbot";
 
 export default function Home() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
+  const [habilitarBot, setHabilitarBot] = useState(false);
   const [render, setRender] = useState("");
   const viajes = useSelector((state) => state.viajesFiltrados);
   const viajesUsuario = useSelector((state) => state.viajesPorUsuario);
   const cookieMail = cookies.get("email");
+  let newDate = new Date();
+  let dia = newDate.getDate();
+  let mes = newDate.getMonth() + 1;
+  let prueba = (new Date().toLocaleString() + "").slice(11, 16);
   useEffect(() => {
     dispatch(getViajesTotalUsuario(cookieMail));
   }, []);
-
+  console.log("viajes", viajes);
   useEffect(() => {
     dispatch(login(cookieMail));
     dispatch(filterPerCard(render));
@@ -42,6 +48,21 @@ export default function Home() {
     dispatch(filterPerCard(e.target.value));
     setRender(e.target.value);
   }
+
+  function handleSubmitLimpiar(e) {
+    dispatch(getViajesTotal());
+  }
+
+  function handleBot(e){
+    e.preventDefault();
+    setHabilitarBot(!habilitarBot)
+  }
+  let viajesDisponibles = [];
+
+  viajes.map((e) => {
+    e.viajeDisponible === true && viajesDisponibles.push(e);
+  });
+  console.log("cookieMail", cookieMail);
 
   return (
     <div>
@@ -75,16 +96,203 @@ export default function Home() {
             </label>
           </div>
           <div className="container-cards">
-            {viajes.map(
-              (e) =>
-                e && (
-                  <div className="card-home">
-                    {e.status === "pasajero" ? (
-                      <Link to={"/detallep/" + e.id}>
-                        <CardViajeUsuarioPasajere
+            {viajesDisponibles.length !== 0 ? (
+              viajesDisponibles.map(
+                (e) =>
+                  e &&
+                  parseInt(e.fecha.slice(5, 7)) >= parseInt(mes) &&
+                  parseInt(e.fecha.slice(8, 10)) >= parseInt(dia) &&
+                  parseInt(e.hora.replace(":", "")) >
+                    parseInt(prueba.replace(":", "")) && (
+                    <div className="card-home">
+                      {e.status === "pasajero" ? (
+                        cookieMail !== "undefined" && cookieMail !== "" ? (
+                          <Link to={"/detallep/" + e.id}>
+                            <CardViajeUsuarioPasajere
+                              origen={e.origen}
+                              destino={e.destino}
+                              fecha={
+                                e.fecha.includes("T")
+                                  ? e.fecha
+                                      .substring(0, 10)
+                                      .split("-")
+                                      .reverse()
+                                      .join("-")
+                                  : e.fecha
+                              }
+                              hora={e.hora}
+                              asientosAOcupar={e.asientosAOcupar}
+                              aceptaEquipaje={e.aceptaEquipaje}
+                              aceptaFumador={e.aceptaFumador}
+                              aceptaMascota={e.aceptaMascota}
+                              usaBarbijo={e.usaBarbijo}
+                              viajeDisponible={e.viajeDisponible}
+                              detalles={e.detalles}
+                              key={e.id}
+                              id={e.id}
+                              avatar={
+                                e.usuarios.length > 0 ? (
+                                  e.usuarios[0].avatar
+                                ) : (
+                                  <div />
+                                )
+                              }
+                              nombre={
+                                e.usuarios.length > 0 ? (
+                                  e.usuarios[0].nombre
+                                ) : (
+                                  <div />
+                                )
+                              }
+                              apellido={
+                                e.usuarios.length > 0 ? (
+                                  e.usuarios[0].apellido
+                                ) : (
+                                  <div />
+                                )
+                              }
+                              email={
+                                e.usuarios.length > 0 ? (
+                                  e.usuarios[0].email
+                                ) : (
+                                  <div />
+                                )
+                              }
+                              puntuacion={
+                                e.usuarios.length > 0 ? (
+                                  e.usuarios[0].puntuacion
+                                ) : (
+                                  <div />
+                                )
+                              }
+                            />
+                          </Link>
+                        ) : (
+                          <CardViajeUsuarioPasajere
+                            origen={e.origen}
+                            destino={e.destino}
+                            fecha={
+                              e.fecha.includes("T")
+                                ? e.fecha
+                                    .substring(0, 10)
+                                    .split("-")
+                                    .reverse()
+                                    .join("-")
+                                : e.fecha
+                            }
+                            hora={e.hora}
+                            asientosAOcupar={e.asientosAOcupar}
+                            aceptaEquipaje={e.aceptaEquipaje}
+                            aceptaFumador={e.aceptaFumador}
+                            aceptaMascota={e.aceptaMascota}
+                            usaBarbijo={e.usaBarbijo}
+                            viajeDisponible={e.viajeDisponible}
+                            detalles={e.detalles}
+                            key={e.id}
+                            id={e.id}
+                            avatar={
+                              e.usuarios.length > 0 ? (
+                                e.usuarios[0].avatar
+                              ) : (
+                                <div />
+                              )
+                            }
+                            nombre={
+                              e.usuarios.length > 0 ? (
+                                e.usuarios[0].nombre
+                              ) : (
+                                <div />
+                              )
+                            }
+                            apellido={
+                              e.usuarios.length > 0 ? (
+                                e.usuarios[0].apellido
+                              ) : (
+                                <div />
+                              )
+                            }
+                            email={
+                              e.usuarios.length > 0 ? (
+                                e.usuarios[0].email
+                              ) : (
+                                <div />
+                              )
+                            }
+                            puntuacion={
+                              e.usuarios.length > 0 ? (
+                                e.usuarios[0].puntuacion
+                              ) : (
+                                <div />
+                              )
+                            }
+                          />
+                        )
+                      ) : cookieMail !== "undefined" && cookieMail !== "" ? (
+                        <Link to={"/detallec/" + e.id}>
+                          <CardViajeUsuarioConductore
+                            origen={e.origen}
+                            destino={e.destino}
+                            fecha={
+                              e.fecha.includes("T")
+                                ? e.fecha
+                                    .substring(0, 10)
+                                    .split("-")
+                                    .reverse()
+                                    .join("-")
+                                : e.fecha
+                            }
+                            hora={e.hora}
+                            asientosAOcupar={e.asientosAOcupar}
+                            aceptaEquipaje={e.aceptaEquipaje}
+                            aceptaFumador={e.aceptaFumador}
+                            aceptaMascota={e.aceptaMascota}
+                            usaBarbijo={e.usaBarbijo}
+                            viajeDisponible={e.viajeDisponible}
+                            key={e.id}
+                            id={e.id}
+                            avatar={
+                              e.usuarios.length > 0 ? (
+                                e.usuarios[0].avatar
+                              ) : (
+                                <div />
+                              )
+                            }
+                            nombre={
+                              e.usuarios.length > 0 ? (
+                                e.usuarios[0].nombre
+                              ) : (
+                                <div />
+                              )
+                            }
+                            apellido={
+                              e.usuarios.length > 0 ? (
+                                e.usuarios[0].apellido
+                              ) : (
+                                <div />
+                              )
+                            }
+                            email={
+                              e.usuarios.length > 0 ? (
+                                e.usuarios[0].email
+                              ) : (
+                                <div />
+                              )
+                            }
+                            puntuacion={
+                              e.usuarios.length > 0 ? (
+                                e.usuarios[0].puntuacion
+                              ) : (
+                                <div />
+                              )
+                            }
+                          />
+                        </Link>
+                      ) : (
+                        <CardViajeUsuarioConductore
                           origen={e.origen}
                           destino={e.destino}
                           fecha={
+
                             e.fecha.includes("T")
                               ? e.fecha
                                   .substring(0, 10)
@@ -100,30 +308,20 @@ export default function Home() {
                           aceptaMascota={e.aceptaMascota}
                           usaBarbijo={e.usaBarbijo}
                           viajeDisponible={e.viajeDisponible}
-                          detalles={e.detalles}
                           key={e.id}
                           id={e.id}
                           avatar={
-                            e.usuarios.length > 0 ? e.usuarios[0].avatar : <></>
-                          }
-                          nombre={
-                            e.usuarios.length > 0 ? e.usuarios[0].nombre : <></>
-                          }
-                          apellido={
                             e.usuarios.length > 0 ? (
-                              e.usuarios[0].apellido
+                              e.usuarios[0].avatar
                             ) : (
-                              <></>
+                              <div />
                             )
                           }
-                          email={
-                            e.usuarios.length > 0 ? e.usuarios[0].email : <></>
-                          }
-                          puntuacion={
+                          nombre={
                             e.usuarios.length > 0 ? (
-                              e.usuarios[0].puntuacion
+                              e.usuarios[0].nombre
                             ) : (
-                              <></>
+                              <div />
                             )
                           }
                         />
@@ -134,9 +332,9 @@ export default function Home() {
                           origen={e.origen}
                           destino={e.destino}
                           fecha={
-                            e.fecha.includes("T")
-                              ? e.fecha
-                                  .substring(0, 10)
+                            e?.fecha?.includes("T")
+                              ? e?.fecha
+                                  ?.substring(0, 10)
                                   .split("-")
                                   .reverse()
                                   .join("-")
@@ -161,28 +359,42 @@ export default function Home() {
                             e.usuarios.length > 0 ? (
                               e.usuarios[0].apellido
                             ) : (
-                              <></>
+                              <div />
                             )
                           }
                           email={
-                            e.usuarios.length > 0 ? e.usuarios[0].email : <></>
+                            e.usuarios.length > 0 ? (
+                              e.usuarios[0].email
+                            ) : (
+                              <div />
+                            )
                           }
                           puntuacion={
                             e.usuarios.length > 0 ? (
                               e.usuarios[0].puntuacion
                             ) : (
-                              <></>
+                              <div />
                             )
                           }
                         />
-                      </Link>
-                    )}
-                  </div>
-                )
+                      )}
+                    </div>
+                  )
+              )
+            ) : (
+              <div>No hay viajes disponibles</div>
             )}
           </div>
         </div>
+        <div className="bot-conteiner">
+                  
+          {
+        habilitarBot ? ( <Bot />) : (<></>)
+          }
+           <button onClick={(e) =>handleBot(e)}className="btn-bot">Ayuda </button>
+        </div>
       </div>
+
       <div className="wallpaper">
         <img className="stretch" src={fondo} alt="" />
       </div>

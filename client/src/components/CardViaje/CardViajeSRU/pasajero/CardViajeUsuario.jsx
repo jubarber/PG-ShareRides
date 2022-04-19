@@ -55,10 +55,10 @@ export default function Card({
             <FaSuitcaseRolling />
             <MdMasks />
             <MdSmokingRooms />
-            {/* {aceptaMascota ? <MdPets /> : <></>}
+            {/* {aceptaMascota ? <MdPets /> : <div></div>}
               {aceptaFumador ? <MdSmokingRooms /> : <MdSmokeFree />}
-              {aceptaEquipaje ? <FaSuitcaseRolling /> : <></>}
-              {usaBarbijo ? <MdMasks /> : <></>} */}
+              {aceptaEquipaje ? <FaSuitcaseRolling /> : <div></div>}
+              {usaBarbijo ? <MdMasks /> : <div></div>} */}
           </div>
         </div>
       </div>

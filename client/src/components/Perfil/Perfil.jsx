@@ -111,9 +111,10 @@ export default function Perfil() {
   const [comentariosPorPagina, setComentariosPorPagina] = useState(3);
   const ultimoComentario = pagina * comentariosPorPagina;
   const primerComentario = ultimoComentario - comentariosPorPagina;
-  const ComentariosTotales =
-    miUsuario.comentarios.length !== 0 &&
-    miUsuario.comentarios.slice(primerComentario, ultimoComentario);
+  const ComentariosTotales = miUsuario.comentarios && miUsuario.comentarios.length!==0 && miUsuario.comentarios.slice(
+    primerComentario,
+    ultimoComentario
+  );
 
   const paginacion = (pageNum) => {
     setPagina(pageNum);
@@ -204,8 +205,7 @@ export default function Perfil() {
       if (result.isConfirmed) {
         dispatch(eliminarPerfil(cookieEmail));
         dispatch(logout(cookieEmail));
-        navigate("/");
-        Swal.fire("Borrada!", "Tu cuenta ha sido eliminada!", "success");
+         Swal.fire("Borrada!", "Tu cuenta ha sido eliminada!", "success");
       }
     });
   };
@@ -371,16 +371,17 @@ export default function Perfil() {
             <div className="contenedor-input">
               <h5>Avatar</h5>
               {!habilitarAvatar ? (
-                <>
-                  <progress id="img-upload-bar" value="0" max="100"></progress>{" "}
+                <div>
                   <input
                     type="file"
                     accept="image/png,image/jpeg"
                     name="avatar"
                     onChange={(e) => handleChangeUpdateImage(e)}
                   />
-                </>
-              ) : null}
+                </div>
+              ) : (
+                <label className="overflow-hidden">{miUsuario.avatar}</label>
+              )}
             </div>
             {cookieEmail !== email ? null : (
               <div className="btn-modificacion-perfil">

@@ -31,29 +31,30 @@ export default function Login() {
   function iniciarSesion(input) {
     axios({
       method: "get",
-      url: `http://localhost:3001/api/usuario/iniciarsesion/${input.email}/${input.password}`,
+      url: `/api/usuario/iniciarsesion/${input.email}/${input.password}`,
     }).then((r) => setInicioSesion(r.data));
   }
 
   function getUsuarioByEmail(email) {
     axios({
       method: "get",
-      url: `http://localhost:3001/api/usuario/usuarios/${email}`,
+      url: `/api/usuario/usuarios/${email}`,
     }).then((r) => setUsuario(r.data));
   } //fin function getUsuario
 
   useEffect(() => {
-    cookies.set("dni", usuario.dni, { path: "/" });
-    cookies.set("email", usuario.email, { path: "/" });
-    cookies.set("nombre", usuario.nombre, { path: "/" });
-    cookies.set("apellido", usuario.apellido, { path: "/" });
-    cookies.set("logueado", usuario.logueado, { path: "/" });
-    cookies.set("vehiculo", usuario.vehiculo, { path: "/" });
-    cookies.set("avatar", usuario.avatar, { path: "/" });
-    cookies.set("acercaDeMi", usuario.acercaDeMi, { path: "/" });
-    cookies.set("calificacion", usuario.calificacion, { path: "/" });
-    // console.log(cookies.get("nombre"));
+      cookies.set("dni", usuario.dni, { path: "/" });
+      cookies.set("email", input.email, { path: "/" });
+      cookies.set("nombre", usuario.nombre, { path: "/" });
+      cookies.set("apellido", usuario.apellido, { path: "/" });
+      cookies.set("logueado", usuario.logueado, { path: "/" });
+      cookies.set("vehiculo", usuario.vehiculo, { path: "/" });
+      cookies.set("avatar", usuario.avatar, { path: "/" });
+      cookies.set("acercaDeMi", usuario.acercaDeMi, { path: "/" });
+      cookies.set("calificacion", usuario.calificacion, { path: "/" });
   }, [usuario]);
+
+
 
   useEffect(() => {
     if (inicioSesion === "usuario pausado") {
@@ -82,10 +83,10 @@ export default function Login() {
             navigate("/home");
           });
         } else if (result.isDenied) {
-          dispatch(activarPerfil(input.email));
-          getUsuarioByEmail(input.email);
-          dispatch(login(input.email));
-          navigate("/restaurarCuenta");
+          cookies.set("email", input.email, { path: "/" });
+          setTimeout(()=>{
+            navigate("/restaurarCuenta");
+          }, 1500)
         } else {
           navigate("/");
         }
