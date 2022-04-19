@@ -7,11 +7,7 @@ import store from "./redux/store/store.js";
 import reportWebVitals from './reportWebVitals';
 import axios from "axios"
  
-<<<<<<< HEAD
 axios.defaults.baseURL = process.env.REACT_APP_API || "http://localhost:3001"
-=======
-axios.defaults.baseURL = process.env.REACT_APP_API
->>>>>>> develop
 
 ReactDOM.render(
 
