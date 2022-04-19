@@ -43,7 +43,7 @@ router.post("/conductor", async (req, res, next) => {
       await nuevoViaje.addUsuario(email);
       res.json(nuevoViaje);
     }
-    const sgMail = require("@sendgrid/mail");
+    /* const sgMail = require("@sendgrid/mail");
 
     sgMail.setApiKey(API_KEY);
 
@@ -71,7 +71,7 @@ router.post("/conductor", async (req, res, next) => {
     sgMail
       .send(message)
       .then((r) => console.log("mail enviado"))
-      .catch((err) => console.log(err.message));
+      .catch((err) => console.log(err.message)); */
   } catch (error) {
     next(error);
   }
@@ -116,7 +116,7 @@ router.post("/pasajero", async (req, res, next) => {
       });
       await nuevoViaje.addUsuario(email);
     }
-    const sgMail = require("@sendgrid/mail");
+    /* const sgMail = require("@sendgrid/mail");
 
     sgMail.setApiKey(API_KEY);
 
@@ -145,7 +145,7 @@ router.post("/pasajero", async (req, res, next) => {
     sgMail
       .send(message)
       .then((r) => console.log("mail enviado"))
-      .catch((err) => console.log(err.message));
+      .catch((err) => console.log(err.message)); */
     res.json(nuevoViaje);
   } catch (error) {
     next(error);

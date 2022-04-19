@@ -1,0 +1,10 @@
+.container__table table{
+    /* border: 0.1em solid black; */
+    height:auto;
+    margin:0.5em;
+    width:100%
+}
+td, th{
+    border: 0.1em solid black;
+
+}
