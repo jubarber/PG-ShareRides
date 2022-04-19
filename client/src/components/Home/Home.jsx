@@ -90,7 +90,8 @@ export default function Home() {
               viajesDisponibles.map(
                 (e) =>
                   e &&
-                  parseInt(e.fecha.slice(5, 7)) > parseInt(mes) &&
+                  parseInt(e.fecha.slice(5, 7)) >= parseInt(mes) &&
+                  parseInt(e.fecha.slice(8, 10)) >= parseInt(dia) &&
                   parseInt(e.hora.replace(":", "")) >
                     parseInt(prueba.replace(":", "")) && (
                     <div className="card-home">
