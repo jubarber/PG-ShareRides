@@ -45,48 +45,48 @@ export default function Card({
               </Link>
               <div className="puntuacion">
                 {puntuacion === 5 ? (
-                  <>
+                  <div>
                     <ImStarFull className="black" />
                     <ImStarFull className="black" />
                     <ImStarFull className="black " />
                     <ImStarFull className="black" />
                     <ImStarFull className="black " />
-                  </>
+                  </div>
                 ) : puntuacion === 4 ? (
-                  <>
+                  <div>
                     {" "}
                     <ImStarFull className="black" />
                     <ImStarFull className="black " />
                     <ImStarFull className="black" />
                     <ImStarFull className="black " />
                     <ImStarEmpty className="black" />
-                  </>
+                  </div>
                 ) : puntuacion === 3 ? (
-                  <>
+                  <div>
                     <ImStarFull className="black " />
                     <ImStarFull className="black" />
                     <ImStarFull className="black " />
                     <ImStarEmpty className="black" />
                     <ImStarEmpty className="black" />
-                  </>
+                  </div>
                 ) : puntuacion === 2 ? (
-                  <>
+                  <div>
                     <ImStarFull className="black" />
                     <ImStarFull className="black " />
                     <ImStarEmpty className="black" />
                     <ImStarEmpty className="black" />
                     <ImStarEmpty className="black" />
-                  </>
+                  </div>
                 ) : puntuacion === 1 ? (
-                  <>
+                  <div>
                     <ImStarFull className="black " />
                     <ImStarEmpty className="black" />
                     <ImStarEmpty className="black" />
                     <ImStarEmpty className="black" />
                     <ImStarEmpty className="black" />
-                  </>
+                  </div>
                 ) : (
-                  <></>
+                  <div></div>
                 )}
               </div>
             </div>
@@ -111,10 +111,10 @@ export default function Card({
             ) : null}
           </div>
           <div class="div3">
-            {aceptaMascota ? <MdPets /> : <></>}
+            {aceptaMascota ? <MdPets /> : <div></div>}
             {aceptaFumador ? <MdSmokingRooms /> : <MdSmokeFree />}
-            {aceptaEquipaje ? <FaSuitcaseRolling /> : <></>}
-            {usaBarbijo ? <MdMasks /> : <></>}
+            {aceptaEquipaje ? <FaSuitcaseRolling /> : <div></div>}
+            {usaBarbijo ? <MdMasks /> : <div></div>}
           </div>
         </div>
       </div>

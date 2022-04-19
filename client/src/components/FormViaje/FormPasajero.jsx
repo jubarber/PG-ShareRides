@@ -52,9 +52,11 @@ export default function FormPasajero() {
     dispatch(getViajesTotalUsuario(cookieMail))
   },[])
   
+  let viajesDisponiblesUsuario = [];
   useEffect(()=> {
     if(viajesUsuario && viajesUsuario.length !== 0 && 
       viaje && viaje.fecha && viaje.fecha.length!==0){
+      viajesUsuario.map(e => {(e.viajeDisponible === true) && viajesDisponiblesUsuario.push(e)})
       let mes;
         switch (viaje.length!==0 && viaje.fecha.toString().substring(4,7)) {
     case "Jan":
@@ -97,7 +99,7 @@ export default function FormPasajero() {
         break;
 }
       let fechaSi = []
-      {viaje.length !== 0 && (viajesUsuario.map(e => e.fecha.substring(6,10) === mes+"-"+viaje.fecha.toString().substring(8,10)? fechaSi.push(e): console.log("no hay nada")))
+      {viaje.length !== 0 && (viajesDisponiblesUsuario.map(e => e.fecha.substring(6,10) === mes+"-"+viaje.fecha.toString().substring(8,10)? fechaSi.push(e): console.log("no hay nada")))
 
       // console.log(fechaSi, viaje.fecha)
       if(fechaSi.length !== 0){
@@ -215,9 +217,7 @@ export default function FormPasajero() {
       }).then(function() {
         navigate("/home");
       });
-
       dispatch(postViajePasajero(isChecked, viaje));
-
       setViaje({
         fecha: null,
         hora: "",

@@ -25,6 +25,7 @@ export default function FormPasajero() {
   const viajesUsuario = useSelector(state => state.viajesPorUsuario);
   const cookieMail = cookies.get("email");
   const cookiePatente = cookies.get("patente");
+  console.log(cookiePatente);
   const [viaje, setViaje] = useState({
     nombre: cookies.get("nombre"),
     fecha: "",
@@ -50,9 +51,12 @@ export default function FormPasajero() {
     dispatch(getViajesTotalUsuario(cookieMail));
   }, []);
   
+  let viajesDisponiblesUsuario = [];
+ 
   useEffect(
     () => {
       if (viajesUsuario.length !== 0) {
+        viajesUsuario.map(e => {(e.viajeDisponible === true) && viajesDisponiblesUsuario.push(e)})
         let mes;
         switch (viaje.length !== 0 && viaje.fecha.toString().substring(4, 7)) {
           case "Jan":
@@ -97,7 +101,7 @@ export default function FormPasajero() {
 
         let fechaSi = [];
         viaje.length !== 0 &&
-          viajesUsuario.map(
+        viajesDisponiblesUsuario.map(
             e =>
               e.fecha.substring(6, 10) ===
               mes + "-" + viaje.fecha.toString().substring(8, 10)
