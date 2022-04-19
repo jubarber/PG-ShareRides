@@ -20,10 +20,12 @@ import MenuItem from "@mui/material/MenuItem";
 import { FormControl } from "@mui/material";
 import Cookies from "universal-cookie";
 import NavBar from "../NavBar/NavBar";
+import Bot from "../Bot/Chatbot";
 
 export default function Home() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
+  const [habilitarBot, setHabilitarBot] = useState(false);
   const [render, setRender] = useState("");
   const viajes = useSelector((state) => state.viajesFiltrados);
   const viajesUsuario = useSelector((state) => state.viajesPorUsuario);
@@ -47,6 +49,14 @@ export default function Home() {
     setRender(e.target.value);
   }
 
+  function handleSubmitLimpiar(e) {
+    dispatch(getViajesTotal());
+  }
+
+  function handleBot(e){
+    e.preventDefault();
+    setHabilitarBot(!habilitarBot)
+  }
   let viajesDisponibles = [];
 
   viajes.map((e) => {
@@ -344,7 +354,15 @@ export default function Home() {
             )}
           </div>
         </div>
+        <div className="bot-conteiner">
+                  
+          {
+        habilitarBot ? ( <Bot />) : (<></>)
+          }
+           <button onClick={(e) =>handleBot(e)}className="btn-bot">Ayuda </button>
+        </div>
       </div>
+
       <div className="wallpaper">
         <img className="stretch" src={fondo} alt="" />
       </div>
