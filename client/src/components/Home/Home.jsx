@@ -28,6 +28,10 @@ export default function Home() {
   const viajes = useSelector((state) => state.viajesFiltrados);
   const viajesUsuario = useSelector((state) => state.viajesPorUsuario);
   const cookieMail = cookies.get("email");
+  let newDate = new Date();
+  let dia = newDate.getDate();
+  let mes = newDate.getMonth() + 1;
+  let prueba = (new Date().toLocaleString() + "").slice(11, 16);
   useEffect(() => {
     dispatch(getViajesTotalUsuario(cookieMail));
   }, []);
@@ -75,10 +79,12 @@ export default function Home() {
             </label>
           </div>
           <div className="container-cards">
-            {console.log("esto es viajes", viajes)}
             {viajes.map(
               (e) =>
-                e && (
+                e &&
+                parseInt(e.fecha.slice(5, 7)) >= parseInt(mes) &&
+                parseInt(e.hora.replace(":", "")) >=
+                  parseInt(prueba.replace(":", "")) && (
                   <div className="card-home">
                     {e.status === "pasajero" ? (
                       <Link to={"/detallep/" + e.id}>
