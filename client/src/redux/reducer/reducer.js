@@ -12,6 +12,8 @@ import {
   GET_LOCALIDADES,
   GET_COMENTARIO_BY_ID,
   GET_COLABORACIONES,
+  GET_MENSAJES,
+  GET_MENSAJES_POR_USUARIO,
 } from "../actions/actions.js";
 
 const initialState = {
@@ -25,6 +27,8 @@ const initialState = {
   comentarioPorId: [],
   localidades: [],
   colaboraciones: [],
+  mensajes: [],
+  mensajesPorUsuario: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -101,6 +105,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         colaboraciones: action.payload,
       };
+
     default:
       return { ...state };
   }

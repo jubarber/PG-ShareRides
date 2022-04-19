@@ -55,9 +55,6 @@ export default function Login() {
     console.log(cookies.get("nombre"));
   }, [usuario]);
 
-  let algo = usuario.disponible;
-  console.log("usuarios", algo);
-
   useEffect(() => {
     if (inicioSesion === "usuario pausado") {
       console.log("entre a usuarios.disponible");

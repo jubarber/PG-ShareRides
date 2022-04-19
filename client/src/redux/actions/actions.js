@@ -18,6 +18,8 @@ export const GET_COMENTARIO_BY_ID = "GET_COMENTARIO_BY_ID";
 export const ACTUALIZAR_COLABORACION = "ACTUALIZAR_COLABORACION";
 export const GET_COLABORACIONES = "GET_COLABORACIONES";
 export const ELIMINADO = "ELIMINADO";
+export const GET_MENSAJES = "GET_MENSAJES";
+export const GET_MENSAJES_POR_USUARIO = "GET_MENSAJES_POR_USUARIO";
 
 export function getDetalleViaje(viajeId) {
   return function (dispatch) {
@@ -398,6 +400,27 @@ export function eliminarComentarios(payload) {
   };
 }
 
+export function reportarComentarios(payload) {
+  console.log("contador", payload);
+  return async function (dispatch) {
+    try {
+      let comentarioReportado = await axios({
+        method: "put",
+        url: "http://localhost:3001/api/comentarios/reportarComentarios",
+        data: {
+          id: payload,
+        },
+      });
+      return dispatch({
+        type: "COMENTARIO_REPORTADO",
+        payload: comentarioReportado.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
 export function filterPerCard(payload) {
   return {
     type: FILTERTYPE,
@@ -599,27 +622,6 @@ export function cambioPassword(payload) {
         },
       });
       return dispatch({ type: "CAMBIO_PASSWORD", payload: cambio.data });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
-
-export function reportarComentarios(payload) {
-  console.log("contador", payload);
-  return async function (dispatch) {
-    try {
-      let comentarioReportado = await axios({
-        method: "put",
-        url: "http://localhost:3001/api/comentarios/reportarComentarios",
-        data: {
-          id: payload,
-        },
-      });
-      return dispatch({
-        type: "COMENTARIO_REPORTADO",
-        payload: comentarioReportado.data,
-      });
     } catch (error) {
       console.log(error);
     }

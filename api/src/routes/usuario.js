@@ -1,6 +1,13 @@
 const { Router } = require("express");
 const router = Router();
-const { Usuario, Viaje, Comentarios, Reportados } = require("../db.js");
+const {
+  Usuario,
+  Viaje,
+  Comentarios,
+  Reportados,
+  Mensajes,
+} = require("../db.js");
+
 const { API_KEY } = process.env;
 
 router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
@@ -44,7 +51,9 @@ router.get("/usuarios", async (req, res, next) => {
 router.get("/usuarios/:email", async (req, res, next) => {
   const { email } = req.params;
   try {
-    let usuario = await Usuario.findByPk(email, { include: Comentarios });
+    let usuario = await Usuario.findByPk(email, {
+      include: Comentarios,
+    });
     if (usuario) res.send(usuario);
     else res.send("error");
   } catch (err) {

@@ -118,6 +118,8 @@ export const DetalleViajec = () => {
 
   let arrayPasajeres = viaje.usuarios?.map((e) => e);
 
+  console.log("asientos", viaje.asientosAOcupar);
+
   return (
     <div className="container-detalle">
       <NavBar />
@@ -206,7 +208,9 @@ export const DetalleViajec = () => {
             <button className="detalle-mensaje">
               <Link to="/login">Enviar mensaje</Link>
             </button>
-            {viajesTotales?.includes(true) ? null : (
+
+            {viajesTotales?.includes(true) ||
+            viaje.asientosAOcupar === 0 ? null : (
               <form onSubmit={(e) => handleSumarse(e)}>
                 <input
                   className="detalle-mensaje"

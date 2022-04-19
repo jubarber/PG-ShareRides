@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import fondo from "../../assets/fondo perfil.jpg";
@@ -159,27 +159,33 @@ export default function Perfil() {
 
   const handleUpdate = (e) => {
     dispatch(modificacionPerfil(usuario));
+    // window.location("/home");
     navigate("/home");
   };
 
-  const CLOUDINARY_URL =
-    "https://api.cloudinary.com/v1_1/dvmrweg0f/image/upload";
-  const CLOUDINARY_UPLOAD_PRESETS = "sharerides";
+  const barra = document.getElementById("img-upload-bar");
 
   const handleChangeUpdateImage = async (e) => {
     const file = e.target.files[0];
     const data = new FormData();
     data.append("file", file);
-    data.append("upload_preset", CLOUDINARY_UPLOAD_PRESETS);
+    data.append("upload_preset", "sharerides");
 
     const response = await axios
-      .post(CLOUDINARY_URL, data)
-      .then((res) => res.data);
-
-    setUsuario({
-      ...usuario,
-      avatar: response.url,
-    });
+      .post("https://api.cloudinary.com/v1_1/dvmrweg0f/image/upload", data, {
+        onUploadProgress(e) {
+          const progress = (e.loaded * 100) / e.total;
+          console.log(progress);
+          barra?.setAttribute("value", progress);
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setUsuario({
+          ...usuario,
+          avatar: res.data.url,
+        });
+      });
   };
 
   const handleEliminado = (e) => {
@@ -203,7 +209,6 @@ export default function Perfil() {
   };
 
   const handleBorrarComentario = (e) => {
-    console.log(e);
     Swal.fire({
       title: "Estas Seguro?",
       text: "No podras revertir la decision!",
@@ -225,14 +230,6 @@ export default function Perfil() {
       }
     });
   };
-
-  let [countReportes, setCountNumReportes] = useState(0);
-
-  const [numReportes, setNumReportes] = useState({
-    reportes: countReportes + 1,
-  });
-
-  console.log("comentarios", ComentariosTotales);
 
   const handleReportarComentario = (e) => {
     Swal.fire({
@@ -373,15 +370,15 @@ export default function Perfil() {
               <h5>Avatar</h5>
               {!habilitarAvatar ? (
                 <>
+                  <progress id="img-upload-bar" value="0" max="100"></progress>{" "}
                   <input
                     type="file"
+                    accept="image/png,image/jpeg"
                     name="avatar"
                     onChange={(e) => handleChangeUpdateImage(e)}
                   />
                 </>
-              ) : (
-                <label>{miUsuario.avatar}</label>
-              )}
+              ) : null}
             </div>
             {cookieEmail !== email ? null : (
               <div className="btn-modificacion-perfil">
@@ -470,13 +467,15 @@ export default function Perfil() {
                       >
                         Eliminar
                       </button>
-                      <button
-                        type="submit"
-                        value={e.id}
-                        onClick={(e) => handleReportarComentario(e)}
-                      >
-                        Reportar
-                      </button>
+                      {cookieEmail !== email ? null : (
+                        <button
+                          type="submit"
+                          value={e.id}
+                          onClick={(e) => handleReportarComentario(e)}
+                        >
+                          Reportar
+                        </button>
+                      )}
 
                       <p>{e.dia}</p>
                     </div>
