@@ -292,7 +292,6 @@ export default function Home() {
                           origen={e.origen}
                           destino={e.destino}
                           fecha={
-
                             e.fecha.includes("T")
                               ? e.fecha
                                   .substring(0, 10)
@@ -324,7 +323,6 @@ export default function Home() {
                               <div />
                             )
                           }
-                       
                           apellido={
                             e.usuarios.length > 0 ? (
                               e.usuarios[0].apellido
