@@ -19,11 +19,12 @@ import MenuItem from "@mui/material/MenuItem";
 import { FormControl } from "@mui/material";
 import Cookies from "universal-cookie";
 import NavBar from "../NavBar/NavBar";
+import Bot from "../Bot/Chatbot";
 
 export default function Home() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
-
+  const [habilitarBot, setHabilitarBot] = useState(false);
   const [render, setRender] = useState("");
   const viajes = useSelector(
     (state) => state.viajesFiltrados //me traigo el estado de los viajes para poder mostrarlos
@@ -47,6 +48,11 @@ export default function Home() {
 
   function handleSubmitLimpiar(e) {
     dispatch(getViajesTotal());
+  }
+
+  function handleBot(e){
+    e.preventDefault();
+    setHabilitarBot(!habilitarBot)
   }
   return (
     <div>
@@ -90,7 +96,15 @@ export default function Home() {
                         <CardViajeUsuarioPasajere
                           origen={e.origen}
                           destino={e.destino}
-                          fecha={e?.fecha?.includes("T")? e?.fecha?.substring(0, 10).split("-").reverse().join("-") : e.fecha}
+                          fecha={
+                            e?.fecha?.includes("T")
+                              ? e?.fecha
+                                  ?.substring(0, 10)
+                                  .split("-")
+                                  .reverse()
+                                  .join("-")
+                              : e.fecha
+                          }
                           hora={e.hora}
                           asientosAOcupar={e.asientosAOcupar}
                           aceptaEquipaje={e.aceptaEquipaje}
@@ -131,7 +145,15 @@ export default function Home() {
                         <CardViajeUsuarioConductore
                           origen={e.origen}
                           destino={e.destino}
-                          fecha={  e?.fecha?.includes("T")? e?.fecha?.substring(0, 10).split("-").reverse().join("-") : e.fecha}
+                          fecha={
+                            e?.fecha?.includes("T")
+                              ? e?.fecha
+                                  ?.substring(0, 10)
+                                  .split("-")
+                                  .reverse()
+                                  .join("-")
+                              : e.fecha
+                          }
                           hora={e.hora}
                           asientosAOcupar={e.asientosAOcupar}
                           aceptaEquipaje={e.aceptaEquipaje}
@@ -172,7 +194,15 @@ export default function Home() {
             )}
           </div>
         </div>
+        <div className="bot-conteiner">
+                  
+          {
+        habilitarBot ? ( <Bot />) : (<></>)
+          }
+           <button onClick={(e) =>handleBot(e)}className="btn-bot">Ayuda </button>
+        </div>
       </div>
+
       <div className="wallpaper">
         <img className="stretch" src={fondo} alt="" />
       </div>
