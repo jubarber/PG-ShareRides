@@ -84,7 +84,10 @@ export function filtroChecks(payload, asiento) {
     let viajes = await axios({
       method: "get",
       url: `http://localhost:3001/api/viaje/filtro/${payload[0]}/${payload[1]}/${payload[2]}/${payload[3]}?asientosAOcupar=${asiento}`,
+<<<<<<< HEAD
 
+=======
+>>>>>>> develop
     });
     return dispatch({ type: "FILTRO_CHECKS", payload: viajes.data });
   };
@@ -342,7 +345,6 @@ export function getUsuarioByEmail(email) {
       let usuario = await axios({
         method: "get",
         url: `http://localhost:3001/api/usuario/usuarios/${email}`,
-
       });
       return dispatch({ type: "USUARIO_MAIL", payload: usuario.data });
     } catch (err) {
@@ -479,7 +481,6 @@ export function actualizarColaboracion(email) {
       const colaboracion = await axios({
         method: "put",
         url: `http://localhost:3001/api/colaboracion/${email}`,
-
       });
       return dispatch({
         type: "ACTUALIZAR_COLABORACION",
@@ -532,7 +533,6 @@ export function modificarAsiento(payload) {
       const viaje = await axios({
         method: "PUT",
         url: "http://localhost:3001/api/viaje/modificarViaje",
-
         data: {
           asientosAOcupar: payload.asientosAOcupar,
           id: payload.id

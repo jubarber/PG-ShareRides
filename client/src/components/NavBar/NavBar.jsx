@@ -62,13 +62,21 @@ export default function NavBar() {
               <FaHome />
             </button>
           </Link>
-          <Link to="/formviaje">
-            <button type="button" className="btn btn-outline-primary">
-              Crear Viaje
-            </button>
-          </Link>
+          {cookieEmail !== "undefined" && cookieEmail !== "" ? (
+            <Link to="/formviaje">
+              <button type="button" className="btn btn-outline-primary">
+                Crear Viaje
+              </button>
+            </Link>
+          ) : (
+            <></>
+          )}
         </div>
+<<<<<<< HEAD
         {cookieEmail === "undefined" ? (
+=======
+        {cookieEmail === "undefined" || cookieEmail === "" ? (
+>>>>>>> develop
           <div>
             <div className="IniciarSesion-y-Registrar">
               <Link to="/login">
