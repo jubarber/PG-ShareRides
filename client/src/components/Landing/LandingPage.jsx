@@ -83,26 +83,7 @@ export default function LandingPage() {
       <div className="page">
         <div className="card">
           <div className="container">
-            <div className="menu">
-              <h3>Share Rides</h3>
-              <button onClick={handleMenu} className="btn-menu">
-                <i className="fas fa-bars" />
-              </button>
-              {menu &&
-                <nav className="desplegable">
-                  <Link to={"#"} className="login-registro">
-                    Acerca De
-                  </Link>
-                  <Link to={"#"} className="login-registro">
-                    Contacto
-                  </Link>
-                  <Link to={"#"} className="login-registro">
-                    Donacion
-                  </Link>
-                  <div className="animation start-home" />
-                </nav>}
-            </div>
-            <div className="content">
+             <div className="content">
               <div className="text">
                 <h2>Viajes compartidos inclusivos</h2>
                 <p>
@@ -112,11 +93,11 @@ export default function LandingPage() {
                   sintiéndote segura y libre de prejuicios!
                 </p>
                 <div className="btn">
-                  <button className="login-registro">
-                    <Link to="/login">Inciar Sesion</Link>
+                  <button className="login-registro" onClick={() => {navigate("/login")}}>
+                  Inciar Sesion
                   </button>
-                  <button className="login-registro">
-                    <Link to="/registro">Registrarse</Link>
+                  <button className="login-registro"  onClick={() => {navigate("/registro")}}>
+                   Registrarse
                   </button>
 
                   <GoogleLogin

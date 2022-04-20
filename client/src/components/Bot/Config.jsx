@@ -8,7 +8,7 @@ const config = {
     createChatBotMessage(`Hola! ¿En que puedo ayudarte?
 Escribe: 1) Para saber como crear un viaje. 
      2) Para saber como unirse a un viaje.  
-     3) Para saber como reportar/denunciar une usuario. 
+     3) Para saber como reportar/denunciar un usuarie. 
      4) Para saber como modificar "mi perfil". 
      5) Para saber información de costos $. 
      6) Para saber con quien viajo. 

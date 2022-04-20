@@ -35,7 +35,7 @@
   height: max-content;
 }
 .card-usuario-img-detalle img {
-  width: 10rem;
+  width: auto;
   height: 5rem;
   border-radius: 50%;
 }

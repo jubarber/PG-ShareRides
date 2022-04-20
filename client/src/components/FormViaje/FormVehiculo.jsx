@@ -12,13 +12,13 @@ export default function FormVehiculo() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const vehiculos = useSelector(state => state.vehiculos);
+  const vehiculos = useSelector((state) => state.vehiculos);
   const [auto, setAuto] = useState({
     patente: "",
     marca: "",
     modelo: "",
     dni: "",
-    email: cookies.get("email")
+    email: cookies.get("email"),
   });
   const [errors, setErrors] = useState({});
 
@@ -27,7 +27,7 @@ export default function FormVehiculo() {
     marca: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
     modelo: /^[0-9]*$/,
     email: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
-    dni: /^(?!^0+$)[a-zA-Z0-9]{3,20}$/
+    dni: /^(?!^0+$)[a-zA-Z0-9]{3,20}$/,
   };
 
   useEffect(() => {
@@ -67,12 +67,12 @@ export default function FormVehiculo() {
   function handleOnChange(e) {
     setAuto({
       ...auto,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
     setErrors(
       validacion({
         ...auto,
-        [e.target.name]: e.target.value
+        [e.target.name]: e.target.value,
       })
     );
   }
@@ -94,12 +94,10 @@ export default function FormVehiculo() {
         text: "Por favor completá todos los campos",
         icon: "warning",
         buttons: true,
-        dangerMode: true
+        dangerMode: true,
       });
     } else {
       if (typeof(vehiculos) !== "string") {
-        console.log("else")
-
         vehiculos.map(v => {
           if (v.patente === auto.patente) {
             vehiculo.push(v);
@@ -110,17 +108,14 @@ export default function FormVehiculo() {
 
           Swal.fire({
             title: "Ups!",
-            text:
-              "Parece que el vehiculo que intentas registrar ya existe en nuestra base de datos! Deseas continuar o registrar otro?",
+            text: "Parece que el vehiculo que intentas registrar ya existe en nuestra base de datos! Deseas continuar o registrar otro?",
             icon: "info",
             showDenyButton: true,
             denyButtonColor: "#990099",
             confirmButtonText: "Continuar con este vehiculo",
-            denyButtonText: "Registrar otro vehiculo"
-          }).then(r => {
+            denyButtonText: "Registrar otro vehiculo",
+          }).then((r) => {
             if (r.isConfirmed) {
-          console.log("else")
-
               cookies.set("dni", auto.dni, { path: "/" });
               cookies.set("patente", vehiculos[0].patente, { path: "/" });
               dispatch(postVehiculo(auto));
@@ -137,8 +132,6 @@ export default function FormVehiculo() {
                 navigate("/formconductor");
               });
             } else if (r.isDenied) {
-          console.log("else")
-
               Swal.fire({
                 title: "En instantes serás redirigide a la creación de tu vehículo",
                 showConfirmButton: false,
@@ -155,7 +148,6 @@ export default function FormVehiculo() {
           });
         } else {
           dispatch(postVehiculo(auto));
-          console.log("else")
           Swal.fire({
             title: "El registro ha sido exitoso!",
             icon: "success",
@@ -178,17 +170,16 @@ export default function FormVehiculo() {
         }
       } else {
         dispatch(postVehiculo(auto));
-        console.log("else")
         Swal.fire({
           title: "El registro ha sido exitoso!",
           icon: "success",
-          confirmButtonText: "Crea tu viaje!"
+          confirmButtonText: "Crea tu viaje!",
         })
           .then(
             cookies.set("dni", auto.dni, { path: "/" }) &&
               cookies.set("patente", vehiculos[0].patente, { path: "/" })
           )
-          .then(function() {
+          .then(function () {
             navigate("/formconductor");
           });
         setAuto({
@@ -196,7 +187,7 @@ export default function FormVehiculo() {
           marca: "",
           modelo: "",
           dni: "",
-          email: ""
+          email: "",
         });
       }
     }
@@ -206,9 +197,9 @@ export default function FormVehiculo() {
     <div>
       <NavBar />
       <div className="Vehiculo__nav">
-        <Link to="/formviaje">
-          <button className="Vehiculo__btn_volver">Volver</button>
-        </Link>
+        <button className="Registro__btn_volver" onClick={() => navigate(-1)}>
+          Volver
+        </button>
       </div>
       <div>
         <h1 className="Vehiculo__titulo">Registrá tu vehículo</h1>
@@ -221,12 +212,11 @@ export default function FormVehiculo() {
                 type="text"
                 name="patente"
                 value={auto.patente}
-                onChange={e => handleOnChange(e)}
+                onChange={(e) => handleOnChange(e)}
               />
-              {errors.patente &&
-                <span className="Vehiculo__error">
-                  {errors.patente}
-                </span>}
+              {errors.patente && (
+                <span className="Vehiculo__error">{errors.patente}</span>
+              )}
             </div>
             <div>
               <label className="Vehiculo__formulario_label">Marca</label>
@@ -235,12 +225,11 @@ export default function FormVehiculo() {
                 type="text"
                 name="marca"
                 value={auto.marca}
-                onChange={e => handleOnChange(e)}
+                onChange={(e) => handleOnChange(e)}
               />
-              {errors.marca &&
-                <span className="Vehiculo__error">
-                  {errors.marca}
-                </span>}
+              {errors.marca && (
+                <span className="Vehiculo__error">{errors.marca}</span>
+              )}
             </div>
             <div>
               <label className="Vehiculo__formulario_label">Modelo (año)</label>
@@ -249,12 +238,11 @@ export default function FormVehiculo() {
                 type="text"
                 name="modelo"
                 value={auto.modelo}
-                onChange={e => handleOnChange(e)}
+                onChange={(e) => handleOnChange(e)}
               />
-              {errors.modelo &&
-                <span className="Vehiculo__error">
-                  {errors.modelo}
-                </span>}
+              {errors.modelo && (
+                <span className="Vehiculo__error">{errors.modelo}</span>
+              )}
             </div>
             <div>
               <label className="Vehiculo__formulario_label">
@@ -265,12 +253,11 @@ export default function FormVehiculo() {
                 type="text"
                 name="dni"
                 value={auto.dni}
-                onChange={e => handleOnChange(e)}
+                onChange={(e) => handleOnChange(e)}
               />
-              {errors.dni &&
-                <span className="Vehiculo__error">
-                  {errors.dni}
-                </span>}
+              {errors.dni && (
+                <span className="Vehiculo__error">{errors.dni}</span>
+              )}
             </div>
             <div>
               <label className="Vehiculo__formulario_label">
@@ -281,12 +268,11 @@ export default function FormVehiculo() {
                 type="text"
                 name="email"
                 value={auto.email}
-                onChange={e => handleOnChange(e)}
+                onChange={(e) => handleOnChange(e)}
               />
-              {errors.email &&
-                <span className="Vehiculo__error">
-                  {errors.email}
-                </span>}
+              {errors.email && (
+                <span className="Vehiculo__error">{errors.email}</span>
+              )}
             </div>
           </div>
           <div className="Vehiculo__grupo_btn">
@@ -294,13 +280,15 @@ export default function FormVehiculo() {
             !errors.marca &&
             !errors.dni &&
             !errors.modelo &&
-            !errors.patente
-              ? <button type="submit" className="Vehiculo__btn_registro">
-                  Registrar vehículo
-                </button>
-              : <button type="submit" disabled className="Vehiculo__disabled">
-                  Registrar vehículo
-                </button>}
+            !errors.patente ? (
+              <button type="submit" className="Vehiculo__btn_registro">
+                Registrar vehículo
+              </button>
+            ) : (
+              <button type="submit" disabled className="Vehiculo__disabled">
+                Registrar vehículo
+              </button>
+            )}
           </div>
         </form>
       </div>

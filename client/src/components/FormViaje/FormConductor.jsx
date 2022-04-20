@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   postViajeConductor,
-  getViajesTotalUsuario
+  getViajesTotalUsuario,
 } from "../../redux/actions/actions";
 import fondo from "../../assets/fondo perfil.jpg";
 import { Link, useNavigate } from "react-router-dom";
@@ -21,7 +21,7 @@ export default function FormPasajero() {
   const navigate = useNavigate();
   const [isChecked, setIsChecked] = useState(new Array(5).fill(false));
   const [errors, setErrors] = useState({});
-  const viajesUsuario = useSelector(state => state.viajesPorUsuario);
+  const viajesUsuario = useSelector((state) => state.viajesPorUsuario);
   const cookieMail = cookies.get("email");
   const cookiePatente = cookies.get("patente");
   console.log(cookiePatente);
@@ -36,7 +36,7 @@ export default function FormPasajero() {
     formaDePago: "A coordinar",
     email: cookieMail,
     detalles: "",
-    patente: cookiePatente
+    patente: cookiePatente,
   });
   const expresiones = {
     // fecha: /^.{4,18}$/,
@@ -44,82 +44,79 @@ export default function FormPasajero() {
     asiento: /^.{1,7}$/,
     origen: /^[a-zA-ZÀ-ÿ\s]{4,30}$/,
     destino: /^[a-zA-ZÀ-ÿ\s]{4,30}$/,
-    dni: /^(?!^0+$)[a-zA-Z0-9]{3,20}$/
+    dni: /^(?!^0+$)[a-zA-Z0-9]{3,20}$/,
   };
   useEffect(() => {
     dispatch(getViajesTotalUsuario(cookieMail));
   }, []);
-  
-  let viajesDisponiblesUsuario = [];
- 
-  useEffect(
-    () => {
-      if (viajesUsuario.length !== 0) {
-        viajesUsuario.map(e => {(e.viajeDisponible === true) && viajesDisponiblesUsuario.push(e)})
-        let mes;
-        switch (viaje.length !== 0 && viaje.fecha.toString().substring(4, 7)) {
-          case "Jan":
-            mes = 1;
-            break;
-          case "Feb":
-            mes = 2;
-            break;
-          case "Mar":
-            mes = 3;
-            break;
-          case "Apr":
-            mes = 4;
-            break;
-          case "May":
-            mes = 5;
-            break;
-          case "Jun":
-            mes = 6;
-            break;
-          case "Jul":
-            mes = 7;
-            break;
-          case "Aug":
-            mes = 8;
-            break;
-          case "Sep":
-            mes = 9;
-            break;
-          case "Oct":
-            mes = 10;
-            break;
-          case "Nov":
-            mes = 11;
-            break;
-          case "Dec":
-            mes = 12;
-            break;
-          default:
-            break;
-        }
 
-        let fechaSi = [];
-        viaje.length !== 0 &&
-        viajesDisponiblesUsuario.map(
-            e =>
-              e.fecha.substring(6, 10) ===
-              mes + "-" + viaje.fecha.toString().substring(8, 10)
-                ? fechaSi.push(e)
-                : console.log("no hay nada")
-          );
-        if (fechaSi.length !== 0) {
-          Swal.fire({
-            title: "Ya tienes un viaje programado para este día",
-            icon: "warning",
-            text:
-              "No puedes programar dos viajes para el mismo día. Por favor, selecciona otra fecha.",
-            confirmButtonText: "Ok"
-          }) && setViaje({ ...viaje, fecha: "", hora: "" });
-        }
+  let viajesDisponiblesUsuario = [];
+
+  useEffect(() => {
+    if (viajesUsuario.length !== 0) {
+      viajesUsuario.map((e) => {
+        e.viajeDisponible === true && viajesDisponiblesUsuario.push(e);
+      });
+      let mes;
+      switch (viaje.length !== 0 && viaje.fecha.toString().substring(4, 7)) {
+        case "Jan":
+          mes = 1;
+          break;
+        case "Feb":
+          mes = 2;
+          break;
+        case "Mar":
+          mes = 3;
+          break;
+        case "Apr":
+          mes = 4;
+          break;
+        case "May":
+          mes = 5;
+          break;
+        case "Jun":
+          mes = 6;
+          break;
+        case "Jul":
+          mes = 7;
+          break;
+        case "Aug":
+          mes = 8;
+          break;
+        case "Sep":
+          mes = 9;
+          break;
+        case "Oct":
+          mes = 10;
+          break;
+        case "Nov":
+          mes = 11;
+          break;
+        case "Dec":
+          mes = 12;
+          break;
+        default:
+          break;
       }
-    },
-    [viaje.fecha]
-  );
+
+      let fechaSi = [];
+      viaje.length !== 0 &&
+        viajesDisponiblesUsuario.map((e) =>
+          e.fecha.substring(6, 10) ===
+          mes + "-" + viaje.fecha.toString().substring(8, 10)
+            ? fechaSi.push(e)
+            : console.log("no hay nada")
+        );
+      if (fechaSi.length !== 0) {
+        Swal.fire({
+          title: "Ya tienes un viaje programado para este día",
+          icon: "warning",
+          text: "No puedes programar dos viajes para el mismo día. Por favor, selecciona otra fecha.",
+          confirmButtonText: "Ok",
+        }) && setViaje({ ...viaje, fecha: "", hora: "" });
+      }
+    }
+  }, [viaje.fecha]);
 
   function validacion(viaje) {
     let errors = {};
@@ -144,7 +141,7 @@ export default function FormPasajero() {
     }
     if (!viaje.asiento) {
       errors.asiento = "Ingresá cuantos asientos tenés libres";
-    } else if (viaje.asiento>7 || viaje.asiento<1) {
+    } else if (viaje.asiento > 7 || viaje.asiento < 1) {
       errors.asiento = "Debes selecionar entre 1 y 7";
     }
     return errors;
@@ -152,43 +149,43 @@ export default function FormPasajero() {
   const filtrosArray = [
     {
       id: 1,
-      name: "Acepto fumador"
+      name: "Acepto fumador",
     },
     {
       id: 2,
-      name: "Acepto mascota"
+      name: "Acepto mascota",
     },
     {
       id: 3,
-      name: "Acepto equipaje"
+      name: "Acepto equipaje",
     },
     {
       id: 4,
-      name: "Uso de barbijo"
+      name: "Uso de barbijo",
     },
     {
       id: 5,
-      name: "Quiero compartir gastos"
-    }
+      name: "Quiero compartir gastos",
+    },
   ];
 
   function handleOnChange(e) {
     e.preventDefault();
     setViaje({
       ...viaje,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
     setErrors(
       validacion({
         ...viaje,
-        [e.target.name]: e.target.value
+        [e.target.name]: e.target.value,
       })
     );
   }
 
-  const handleCheckBox = position => {
-    const updatedCheckedState = isChecked.map(
-      (item, index) => (index === position ? !item : item)
+  const handleCheckBox = (position) => {
+    const updatedCheckedState = isChecked.map((item, index) =>
+      index === position ? !item : item
     );
     setIsChecked(updatedCheckedState);
   };
@@ -227,7 +224,7 @@ export default function FormPasajero() {
         asiento: "",
         formaDePago: "A coordinar",
         email: "",
-        detalles: ""
+        detalles: "",
       });
     }
   }
@@ -236,9 +233,9 @@ export default function FormPasajero() {
     <div>
       <NavBar />
       <div className="Conductore__nav">
-        <Link to="/formvehiculo">
-          <button className="Conductore__btn_volver">Volver</button>
-        </Link>
+        <button className="Registro__btn_volver" onClick={() => navigate(-1)}>
+          Volver
+        </button>
       </div>
       <form onSubmit={handleSubmit}>
         <div className="order-form">
@@ -251,16 +248,16 @@ export default function FormPasajero() {
                 dateFormat="dd-MM-yyyy"
                 selected={viaje.fecha}
                 minDate={new Date()}
-                onChange={nuevaFecha =>
+                onChange={(nuevaFecha) =>
                   setViaje({
                     ...viaje,
-                    fecha: nuevaFecha
-                  })}
+                    fecha: nuevaFecha,
+                  })
+                }
               />
-              {errors.fecha &&
-                <span className="Conductore__error">
-                  {errors.fecha}
-                </span>}
+              {errors.fecha && (
+                <span className="Conductore__error">{errors.fecha}</span>
+              )}
 
               <label className="Conductore__formulario_label">Hora</label>
               <input
@@ -268,12 +265,12 @@ export default function FormPasajero() {
                 type="text"
                 name="hora"
                 value={viaje.hora}
-                onChange={e => handleOnChange(e)}
+                placeholder="00:00 - 24:00"
+                onChange={(e) => handleOnChange(e)}
               />
-              {errors.hora &&
-                <span className="Conductore__error">
-                  {errors.hora}
-                </span>}
+              {errors.hora && (
+                <span className="Conductore__error">{errors.hora}</span>
+              )}
 
               <label className="Conductore__formulario_label">Origen</label>
               <input
@@ -281,12 +278,11 @@ export default function FormPasajero() {
                 type="text"
                 name="origen"
                 value={viaje.origen}
-                onChange={e => handleOnChange(e)}
+                onChange={(e) => handleOnChange(e)}
               />
-              {errors.origen &&
-                <span className="Conductore__error">
-                  {errors.origen}
-                </span>}
+              {errors.origen && (
+                <span className="Conductore__error">{errors.origen}</span>
+              )}
 
               <label className="Conductore__formulario_label">Destino</label>
               <input
@@ -294,12 +290,11 @@ export default function FormPasajero() {
                 type="text"
                 name="destino"
                 value={viaje.destino}
-                onChange={e => handleOnChange(e)}
+                onChange={(e) => handleOnChange(e)}
               />
-              {errors.destino &&
-                <span className="Conductore__error">
-                  {errors.destino}
-                </span>}
+              {errors.destino && (
+                <span className="Conductore__error">{errors.destino}</span>
+              )}
 
               <label className="Conductore__formulario_label">
                 Dni/Pasaporte
@@ -309,7 +304,7 @@ export default function FormPasajero() {
                 type="text"
                 name="dni"
                 value={viaje.dni}
-                onChange={e => handleOnChange(e)}
+                onChange={(e) => handleOnChange(e)}
               />
             </div>
             <div className="Conductore__input_2">
@@ -323,12 +318,11 @@ export default function FormPasajero() {
                   name="asiento"
                   placeholder="entre 1 y 7"
                   value={viaje.asiento}
-                  onChange={e => handleOnChange(e)}
+                  onChange={(e) => handleOnChange(e)}
                 />
-                {errors.asiento &&
-                  <span className="Conductore__error">
-                    {errors.asiento}
-                  </span>}
+                {errors.asiento && (
+                  <span className="Conductore__error">{errors.asiento}</span>
+                )}
               </div>
 
               {filtrosArray.map((e, index) => {
@@ -351,16 +345,17 @@ export default function FormPasajero() {
                   </div>
                 );
               })}
-              {isChecked[4] &&
+              {isChecked[4] && (
                 <select
                   name="formaDePago"
                   value={viaje.formaDePago}
-                  onChange={e => handleOnChange(e)}
+                  onChange={(e) => handleOnChange(e)}
                 >
                   <option value="A coordinar">Acordar</option>
                   <option value="Efectivo">Efectivo</option>
                   <option value="Mercado Pago">Mercado Pago</option>
-                </select>}
+                </select>
+              )}
             </div>
           </div>
 
@@ -372,7 +367,7 @@ export default function FormPasajero() {
               type="text"
               name="detalles"
               value={viaje.detalles}
-              onChange={e => handleOnChange(e)}
+              onChange={(e) => handleOnChange(e)}
               className="input-text-detalle"
             />
           </div>
@@ -382,20 +377,22 @@ export default function FormPasajero() {
           !errors.destino &&
           !errors.origen &&
           !errors.fecha &&
-          !errors.asiento
-            ? <input
-                type="submit"
-                value="Registrar viaje"
-                name="Registrar viaje"
-                className="Conductore__btn_registro"
-              />
-            : <input
-                type="submit"
-                value="Registrar viaje"
-                name="Registrar viaje"
-                disabled="disabled"
-                className="Conductore__disabled"
-              />}
+          !errors.asiento ? (
+            <input
+              type="submit"
+              value="Registrar viaje"
+              name="Registrar viaje"
+              className="Conductore__btn_registro"
+            />
+          ) : (
+            <input
+              type="submit"
+              value="Registrar viaje"
+              name="Registrar viaje"
+              disabled="disabled"
+              className="Conductore__disabled"
+            />
+          )}
         </div>
       </form>
 
