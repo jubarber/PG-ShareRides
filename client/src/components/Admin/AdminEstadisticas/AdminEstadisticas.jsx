@@ -25,7 +25,7 @@ export default function Tabla() {
   const vehiculos = useSelector((state) => state.vehiculosTotales);
   const colaboraciones = useSelector((state) => state.colaboraciones);
   const comentarios = useSelector((state) => state.comentarios);
-  console.log("me traigo los estados", vehiculos, viajes, usuarios);
+  console.log("me traigo los estados", viajes);
   return (
     <div className="container__table">
       <div className="wallpaper">
@@ -41,14 +41,14 @@ export default function Tabla() {
           <td>{usuarios.filter((u) => u.logueado).length}</td>
         </tr>
         <tr>
-          <td>Eliminados</td>
-          <td>{usuarios.filter((u) => u.reportado).length}</td>
+          <td>Reportes</td>
+          <td>{usuarios.filter((u) => u.reportados.length>0).length}</td>
         </tr>
         <tr>
-          <td>Reportados</td>
+          <td>Eliminados</td>
           <td>{usuarios.filter((u) => !u.disponible).length}</td>
         </tr>
-        <tr>
+        <tr className="resaltar">
           <td>Total usuarios</td>
           <td>{usuarios && usuarios.length}</td>
         </tr>
@@ -68,7 +68,7 @@ export default function Tabla() {
           <td>Reportados</td>
           <td>{comentarios && comentarios.filter((c) => c.reportes).length}</td>
         </tr>
-        <tr>
+        <tr className="resaltar">
           <td>Total comentarios</td>
           <td>{comentarios && comentarios.length}</td>
         </tr>
@@ -87,8 +87,22 @@ export default function Tabla() {
           <td>{viajes.filter((v) => !v.viajeDisponible).length}</td>
         </tr>
         <tr>
-          <td>Total viajes</td>
+          <td>Viajes como pasajero</td>
+          <td>{viajes && viajes.filter(e=>e.status==="pasajero").length}</td>
+        </tr>
+        <tr>
+          <td>Viajes como conductor</td>
+          <td>{viajes && viajes.filter(e=>e.status==="conductor").length}</td>
+        </tr>
+        <tr className="resaltar">
+          <td>Viajes Totales</td>
           <td>{viajes && viajes.length}</td>
+        </tr>
+        </table>
+        <table>
+        <tr>
+          <th>Vehiculos</th>
+          <th>Total</th>
         </tr>
         <tr>
           <td>Vehiculos registrados</td>
