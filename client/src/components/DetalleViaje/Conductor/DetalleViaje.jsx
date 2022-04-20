@@ -165,7 +165,6 @@ export const DetalleViajec = () => {
     let viajesFechasCoincidentes = [];
     if (viajesPorUsuario.length !== 0) {
       viajesPorUsuario.map(v => {
-
         if (
           v.fecha.substring(0, 10).split("-").reverse().join("-") ===
           viaje.fecha.substring(0, 10).split("-").reverse().join("-")
