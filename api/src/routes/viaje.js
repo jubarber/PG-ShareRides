@@ -360,7 +360,7 @@ router.put("/reactivararViaje/:id", async (req, res, next) => {
     next(err);
   }
 });
-router.get("/modificarViaje/:id", async (req, res, next) => {
+router.put("/modificarViaje/:id", async (req, res, next) => {
   const { id } = req.params;
   const {fecha, hora, origen, destino, asientosAOcupar, aceptaFumador, aceptaMascota, aceptaEquipaje, usaBarbijo } = req.body;
   let viaje = await Viaje.findByPk(id, {
