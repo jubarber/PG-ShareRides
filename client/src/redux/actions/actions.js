@@ -84,7 +84,6 @@ export function filtroChecks(payload, asiento) {
     let viajes = await axios({
       method: "get",
       url: `/api/viaje/filtro/${payload[0]}/${payload[1]}/${payload[2]}/${payload[3]}?asientosAOcupar=${asiento}`,
-
     });
     return dispatch({ type: "FILTRO_CHECKS", payload: viajes.data });
   };
@@ -342,7 +341,6 @@ export function getUsuarioByEmail(email) {
       let usuario = await axios({
         method: "get",
         url: `/api/usuario/usuarios/${email}`,
-
       });
       return dispatch({ type: "USUARIO_MAIL", payload: usuario.data });
     } catch (err) {
@@ -479,7 +477,6 @@ export function actualizarColaboracion(email) {
       const colaboracion = await axios({
         method: "put",
         url: `/api/colaboracion/${email}`,
-
       });
       return dispatch({
         type: "ACTUALIZAR_COLABORACION",
@@ -532,7 +529,6 @@ export function modificarAsiento(payload) {
       const viaje = await axios({
         method: "PUT",
         url: "/api/viaje/modificarViaje",
-
         data: {
           asientosAOcupar: payload.asientosAOcupar,
           id: payload.id
@@ -705,13 +701,30 @@ export function reactivarViaje(id) {
   };
 }
 
-export function modificarViaje(id) {
-  console.log("modificar viaje");
+export function modificarViaje(id, checkboxes, viaje) {
+  console.log("modificar viaje", id);
   return async function(dispatch) {
     try {
-      let viajePausado = await axios({
+      let viajeModificado = await axios({
         method: "put",
-        url: `/api/viaje/modificarrViaje/${id}`
+        url: `/api/viaje/modificarViaje/${id}`,
+        data: {
+          aceptaFumador: checkboxes[0],
+          aceptaMascota: checkboxes[1],
+          aceptaEquipaje: checkboxes[2],
+          usaBarbijo: checkboxes[3],
+          nombre: viaje.nombre,
+          fecha: viaje.fecha,
+          hora: viaje.hora,
+          origen: viaje.origen,
+          destino: viaje.destino,
+          asientosAOcupar: viaje.asiento,
+          email: viaje.email,
+          dni: viaje.dni,
+          detalles: viaje.detalles,
+          puntuacion: viaje.puntuacion,
+          patente: viaje.patente
+        }
       });
     } catch (err) {
       console.log(err);

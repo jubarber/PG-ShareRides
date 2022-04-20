@@ -17,7 +17,6 @@ router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
         { where: { email: email } },
         { include: Viaje }
       );
-      //console.log("soy db usuario", dbUsuario);
       if (dbUsuario) {
         if (dbUsuario.disponible === false) {
           res.send("usuario pausado");
