@@ -84,10 +84,6 @@ export function filtroChecks(payload, asiento) {
     let viajes = await axios({
       method: "get",
       url: `http://localhost:3001/api/viaje/filtro/${payload[0]}/${payload[1]}/${payload[2]}/${payload[3]}?asientosAOcupar=${asiento}`,
-<<<<<<< HEAD
-
-=======
->>>>>>> develop
     });
     return dispatch({ type: "FILTRO_CHECKS", payload: viajes.data });
   };

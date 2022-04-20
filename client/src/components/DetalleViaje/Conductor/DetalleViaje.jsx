@@ -278,7 +278,7 @@ export const DetalleViajec = () => {
         Swal.fire({
           title: "El viaje está a salvo!",
           icon: "info",
-          timer: 2000,
+           timer: 2000,
           showConfirmButton: false
         });
       }

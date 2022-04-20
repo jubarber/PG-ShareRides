@@ -30,14 +30,11 @@ export default function Home() {
   const viajes = useSelector(state => state.viajesFiltrados);
   const viajesUsuario = useSelector(state => state.viajesPorUsuario);
   const cookieMail = cookies.get("email");
-<<<<<<< HEAD
-=======
   
   let newDate = new Date();
   let dia = newDate.getDate();
   let mes = newDate.getMonth() + 1;
   let prueba = (new Date().toLocaleString() + "").slice(11, 16);
->>>>>>> develop
 
   useEffect(() => {
     dispatch(getViajesTotalUsuario(cookieMail));
@@ -54,14 +51,6 @@ export default function Home() {
     setRender(e.target.value);
   }
 
-<<<<<<< HEAD
-  let viajesDisponibles = [];
-
-  viajes.map(e => {
-    e.viajeDisponible === true && viajesDisponibles.push(e);
-  });
-  console.log("disponibles", viajesDisponibles);
-=======
   function handleSubmitLimpiar(e) {
     dispatch(getViajesTotal());
   }
@@ -76,7 +65,6 @@ export default function Home() {
     e.viajeDisponible === true && viajesDisponibles.push(e);
   });
 
->>>>>>> develop
 
   return (
     <div>
@@ -110,13 +98,6 @@ export default function Home() {
             </label>
           </div>
           <div className="container-cards">
-<<<<<<< HEAD
-            {viajesDisponibles.length !== 0
-              ? viajesDisponibles.map(e =>
-                  <div className="card-home">
-                    {e.status === "pasajero"
-                      ? <Link to={"/detallep/" + e.id}>
-=======
             {viajesDisponibles.length !== 0 ? (
               viajesDisponibles.map(
                 (e) =>
@@ -191,7 +172,6 @@ export default function Home() {
                             />
                           </Link>
                         ) : (
->>>>>>> develop
                           <CardViajeUsuarioPasajere
                             origen={e.origen}
                             destino={e.destino}
@@ -215,35 +195,6 @@ export default function Home() {
                             key={e.id}
                             id={e.id}
                             avatar={
-<<<<<<< HEAD
-                              e.usuarios.length > 0
-                                ? e.usuarios[0].avatar
-                                : <div />
-                            }
-                            nombre={
-                              e.usuarios.length > 0
-                                ? e.usuarios[0].nombre
-                                : <div />
-                            }
-                            apellido={
-                              e.usuarios.length > 0
-                                ? e.usuarios[0].apellido
-                                : <div />
-                            }
-                            email={
-                              e.usuarios.length > 0
-                                ? e.usuarios[0].email
-                                : <div />
-                            }
-                            puntuacion={
-                              e.usuarios.length > 0
-                                ? e.usuarios[0].puntuacion
-                                : <div />
-                            }
-                          />
-                        </Link>
-                      : <Link to={"/detallec/" + e.id}>
-=======
                               e.usuarios.length > 0 ? (
                                 e.usuarios[0].avatar
                               ) : (
@@ -282,7 +233,6 @@ export default function Home() {
                         )
                       ) : cookieMail !== "undefined" && cookieMail !== "" ? (
                         <Link to={"/detallec/" + e.id}>
->>>>>>> develop
                           <CardViajeUsuarioConductore
                             origen={e.origen}
                             destino={e.destino}
@@ -305,37 +255,6 @@ export default function Home() {
                             key={e.id}
                             id={e.id}
                             avatar={
-<<<<<<< HEAD
-                              e.usuarios.length > 0
-                                ? e.usuarios[0].avatar
-                                : <div />
-                            }
-                            nombre={
-                              e.usuarios.length > 0
-                                ? e.usuarios[0].nombre
-                                : <div />
-                            }
-                            apellido={
-                              e.usuarios.length > 0
-                                ? e.usuarios[0].apellido
-                                : <div />
-                            }
-                            email={
-                              e.usuarios.length > 0
-                                ? e.usuarios[0].email
-                                : <div />
-                            }
-                            puntuacion={
-                              e.usuarios.length > 0
-                                ? e.usuarios[0].puntuacion
-                                : <div />
-                            }
-                          />
-                        </Link>}
-                  </div>
-                )
-              : <div>No hay viajes disponibles</div>}
-=======
                               e.usuarios.length > 0 ? (
                                 e.usuarios[0].avatar
                               ) : (
@@ -437,7 +356,6 @@ export default function Home() {
             ) : (
               <div>No hay viajes disponibles</div>
             )}
->>>>>>> develop
           </div>
         </div>
         <div className="bot-conteiner">

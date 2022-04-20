@@ -72,11 +72,7 @@ export default function NavBar() {
             <></>
           )}
         </div>
-<<<<<<< HEAD
-        {cookieEmail === "undefined" ? (
-=======
         {cookieEmail === "undefined" || cookieEmail === "" ? (
->>>>>>> develop
           <div>
             <div className="IniciarSesion-y-Registrar">
               <Link to="/login">
