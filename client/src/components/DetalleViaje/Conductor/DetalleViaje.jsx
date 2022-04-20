@@ -40,47 +40,55 @@ export const DetalleViajec = () => {
   const [botonesPasajero, setBotonesPasajero] = useState(null);
   const [botonesPasajeroSumado, setBotonesPasajeroSumado] = useState(null);
 
+  let idViajesPorUsuario = viajesPorUsuario.map(v => v.id);
+  let mailUsuariosDelViaje;
   useEffect(
     () => {
       dispatch(getDetalleViaje(id));
       dispatch(getViajesTotalUsuario(cookieMail));
     },
     [id]
-  );
-
-  let idViajesPorUsuario = viajesPorUsuario.map(v => v.id);
-  let mailUsuariosDelViaje;
-  useEffect(
-    () => {
-      if (viaje.length !== 0 && viajesPorUsuario.length!==0) {
-        mailUsuariosDelViaje = viaje.usuarios.map(u => u.email);
-        if(viaje.asientosAOcupar === 0){
-          setBotonesPasajeroSumado(null)
-          setBotonesPasajero(null)
-        }
-        if (viaje.usuarios[0].email === cookieMail) {
-          setBotonesConductor(true);
-        }
-        if (
-          viaje.usuarios[0].email !== cookieMail &&
-          mailUsuariosDelViaje.includes(cookieMail)
-        ) {
-          setBotonesPasajeroSumado(true);
-        }
-        if (!mailUsuariosDelViaje.includes(cookieMail)) {
-          console.log("setBotonesPasajero");
-          setBotonesPasajero(true);
-        }
-        if (
-          viaje.usuarios[0].email !== cookieMail &&
-          idViajesPorUsuario.includes(id)
-        ) {
-          setBotonesPasajeroSumado(true);
-        }
+  )
+  useEffect(() => {
+    if (viaje.length !== 0 && viajesPorUsuario.length !== 0) {
+      mailUsuariosDelViaje = viaje.usuarios.map(u => u.email);
+      if (viaje.asientosAOcupar === 0) {
+        // console.log("setBotonesPasajero");
+        setBotonesPasajeroSumado(null);
+        setBotonesPasajero(null);
       }
-    },
-    [viajesPorUsuario]
-  );
+      if (
+        viaje.usuarios[0].email !== cookieMail &&
+        mailUsuariosDelViaje.includes(cookieMail)
+      ) {
+        // console.log("setBotonesPasajero");
+        setBotonesPasajeroSumado(true);
+        setBotonesPasajero(null);
+        setBotonesConductor(null);
+      }
+      if (
+        viaje.usuarios[0].email !== cookieMail &&
+        idViajesPorUsuario.includes(id)
+      ) {
+        // console.log("setBotonesPasajero");
+        setBotonesPasajeroSumado(true);
+        setBotonesPasajero(null);
+        setBotonesConductor(null);
+      }
+      if (viaje.usuarios[0].email === cookieMail) {
+        // console.log("setBotonesPasajero");
+        setBotonesConductor(true);
+        setBotonesPasajeroSumado(null);
+        setBotonesPasajero(null);
+      }
+      if (!mailUsuariosDelViaje.includes(cookieMail)) {
+        // console.log("setBotonesPasajero");
+        setBotonesPasajero(true);
+        setBotonesPasajeroSumado(null);
+        setBotonesConductor(null);
+      }
+    }
+  });
 
   if (viaje.length !== 0 && viaje.fecha.length !== 0) {
     viaje.fecha.includes("T")
@@ -400,7 +408,8 @@ export const DetalleViajec = () => {
                         Sumarme al viaje
                       </button>
                     </div>}
-                {(botonesPasajeroSumado === true || botonesPasajero === true) && botonesConductor!==true
+                {(botonesPasajeroSumado === true || botonesPasajero === true) &&
+                botonesConductor !== true
                   ? <div className="btn-detalle">
                       <button className="detalle-mensaje">
                         {/* onClick={} */}
