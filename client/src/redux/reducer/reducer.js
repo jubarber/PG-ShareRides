@@ -17,6 +17,7 @@ import {
   ACTIVAR_USUARIO,
   PAUSAR_VIAJE,
   REACTIVAR_VIAJE,
+
 } from "../actions/actions.js";
 
 const initialState = {
