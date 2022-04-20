@@ -21,6 +21,7 @@ import { FormControl } from "@mui/material";
 import Cookies from "universal-cookie";
 import NavBar from "../NavBar/NavBar";
 import Bot from "../Bot/Chatbot";
+import imagen from "../../assets/not found.png"
 
 export default function Home() {
   const cookies = new Cookies();
@@ -359,7 +360,10 @@ export default function Home() {
                     ))
               )
             ) : (
-              <div>No hay viajes disponibles</div>
+              <div>
+                <h3 className="no-disponible">No hay viajes disponibles</h3>
+                <img className="imagen" src={imagen} alt=""/>
+              </div>
             )}
           </div>
         </div>

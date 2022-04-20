@@ -175,9 +175,7 @@ export default function Login() {
         <img className="stretch" src={fondo} alt="" />
       </div>
       <div className="Login__nav">
-        <Link to="/home">
-          <button className="Login__btn_volver">Volver</button>
-        </Link>
+          <button className="Login__btn_volver" onClick={() => navigate(-1)}> Volver</button>
       </div>
       <form className="Login__formulario-login" onSubmit={handleSubmit}>
         <div className="Login__input_box">
