@@ -8,6 +8,7 @@ import { ImStarEmpty, ImStarFull } from "react-icons/im";
 import link from "../../Links";
 import { RiSteering2Fill } from "react-icons/ri";
 import user from "../../../../assets/user.png";
+import Cookies from "universal-cookie";
 
 export default function Card({
   origen,
@@ -28,9 +29,11 @@ export default function Card({
   puntuacion,
   avatar,
 }) {
-  //get de usuario (nombre, apellido y valoracion). foto usuario. Provincias/localidades como llegan y si se puede mostras cada una independiente de la otra. Iniciar sesion con aut 0 y con las cuquis trabajar con la info.
+  const cookies = new Cookies();
 
-  
+  //get de usuario (nombre, apellido y valoracion). foto usuario. Provincias/localidades como llegan y si se puede mostras cada una independiente de la otra. Iniciar sesion con aut 0 y con las cuquis trabajar con la info.
+  const cookieMail = cookies.get("email");
+
   return (
     <div className="container-cardviaje">
       <div id="nueva-clase">
@@ -39,55 +42,61 @@ export default function Card({
           <div class="div1">
             <img src={avatar ? avatar : user} alt="" />
             <div className="info-personal-card">
-              <Link to={`/perfil/${email}`}>
+              {cookieMail !== "undefined" && cookieMail !== "" ? (
+                <Link to={`/perfil/${email}`}>
+                  <span>
+                    {nombre + " "} {apellido}
+                  </span>
+                </Link>
+              ) : (
                 <span>
                   {nombre + " "} {apellido}
                 </span>
-              </Link>
+              )}
               <div className="puntuacion">
                 {puntuacion === 5 ? (
-                  <>
+                  <div>
                     <ImStarFull className="black" />
                     <ImStarFull className="black" />
                     <ImStarFull className="black " />
                     <ImStarFull className="black" />
                     <ImStarFull className="black " />
-                  </>
+                  </div>
                 ) : puntuacion === 4 ? (
-                  <>
+                  <div>
                     {" "}
                     <ImStarFull className="black" />
                     <ImStarFull className="black " />
                     <ImStarFull className="black" />
                     <ImStarFull className="black " />
                     <ImStarEmpty className="black" />
-                  </>
+                  </div>
                 ) : puntuacion === 3 ? (
-                  <>
+                  <div>
                     <ImStarFull className="black " />
                     <ImStarFull className="black" />
                     <ImStarFull className="black " />
                     <ImStarEmpty className="black" />
                     <ImStarEmpty className="black" />
-                  </>
+                  </div>
                 ) : puntuacion === 2 ? (
-                  <>
+                  <div>
                     <ImStarFull className="black" />
                     <ImStarFull className="black " />
                     <ImStarEmpty className="black" />
                     <ImStarEmpty className="black" />
                     <ImStarEmpty className="black" />
-                  </>
+                  </div>
                 ) : puntuacion === 1 ? (
-                  <>
+                  <div>
                     <ImStarFull className="black " />
                     <ImStarEmpty className="black" />
                     <ImStarEmpty className="black" />
                     <ImStarEmpty className="black" />
                     <ImStarEmpty className="black" />
-                  </>
+                  </div>
                 ) : (
-                  <></>
+                  <div></div>
                 )}
               </div>
             </div>
@@ -111,14 +120,14 @@ export default function Card({
             ) : null}
           </div>
           <div class="div3">
-            {aceptaMascota ? <MdPets className="line-through" /> : <></>}
+            {aceptaMascota ? <MdPets className="line-through" /> : <div></div>}
             {aceptaFumador ? <MdSmokingRooms /> : <MdSmokeFree />}
             {aceptaEquipaje ? (
               <FaSuitcaseRolling className="decoration-double" />
             ) : (
-              <></>
+              <div></div>
             )}
-            {usaBarbijo ? <MdMasks /> : <></>}
+            {usaBarbijo ? <MdMasks /> : <div></div>}
           </div>
         </div>
       </div>

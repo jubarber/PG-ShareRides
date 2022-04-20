@@ -1,13 +1,15 @@
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import swal from "sweetalert";
 import {
-  postViajeConductor,
+  modificarViaje,
   getViajesTotalUsuario
 } from "../../redux/actions/actions";
 import fondo from "../../assets/fondo perfil.jpg";
 import { Link, useNavigate } from "react-router-dom";
-import "./FormConductor.css";
+import "./ModificarViaje.css";
 import Cookies from "universal-cookie";
 import NavBar from "../NavBar/NavBar";
 import DatePicker, { registerLocale } from "react-datepicker";
@@ -15,50 +17,62 @@ import "react-datepicker/dist/react-datepicker.css";
 import Swal from "sweetalert2";
 import es from "date-fns/locale/es";
 registerLocale("es", es);
-
-export default function FormPasajero() {
+require("moment/locale/es.js");
+  
+export default function ModificarViaje() {
+  moment().format("dd mm yyyy");
+  const { id } = useParams()
+  console.log(id)
   const cookies = new Cookies();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isChecked, setIsChecked] = useState(new Array(5).fill(false));
+  const [isChecked, setIsChecked] = useState([
+    cookies.get("aceptaFumador"),
+    cookies.get("aceptaMascota"),
+    cookies.get("aceptaEquipaje"),
+    cookies.get("usaBarbijo")
+  ]);
   const [errors, setErrors] = useState({});
   const viajesUsuario = useSelector(state => state.viajesPorUsuario);
   const cookieMail = cookies.get("email");
   const cookiePatente = cookies.get("patente");
-  console.log(cookiePatente);
+  const cookieFecha = cookies.get("fecha").substring(0, 10).split("-").reverse().join("-");
+  const fechaViaje = ""
   const [viaje, setViaje] = useState({
     nombre: cookies.get("nombre"),
-    fecha: "",
-    hora: "",
-    origen: "",
-    destino: "",
+    fecha: new Date(cookies.get("fecha")),
+    hora: cookies.get("hora"),
+    origen: cookies.get("origen"),
+    destino: cookies.get("destino"),
     dni: cookies.get("dni"),
-    asiento: "",
-    formaDePago: "A charlar",
+    asiento: cookies.get("asientos"),
     email: cookieMail,
-    detalles: "",
+    detalles: cookies.get("detalles"),
     patente: cookiePatente
   });
+
   const expresiones = {
-    // fecha: /^.{4,18}$/,
-    hora: /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/,
+    hora: /^.{4,12}$/,
     asiento: /^.{1,7}$/,
     origen: /^[a-zA-ZÀ-ÿ\s]{4,30}$/,
     destino: /^[a-zA-ZÀ-ÿ\s]{4,30}$/,
     dni: /^(?!^0+$)[a-zA-Z0-9]{3,20}$/
   };
+
   useEffect(() => {
     dispatch(getViajesTotalUsuario(cookieMail));
   }, []);
-  
+
   let viajesDisponiblesUsuario = [];
- 
+
   useEffect(
     () => {
       if (viajesUsuario.length !== 0) {
-        viajesUsuario.map(e => {(e.viajeDisponible === true) && viajesDisponiblesUsuario.push(e)})
+        viajesUsuario.map(e => {
+          e.viajeDisponible === true && viajesDisponiblesUsuario.push(e);
+        });
         let mes;
-        switch (viaje.length !== 0 && viaje.fecha.toString().substring(4, 7)) {
+        switch (viaje?.fecha?.toString().substring(4, 7)) {
           case "Jan":
             mes = 1;
             break;
@@ -101,21 +115,26 @@ export default function FormPasajero() {
 
         let fechaSi = [];
         viaje.length !== 0 &&
-        viajesDisponiblesUsuario.map(
-            e =>
-              e.fecha.substring(6, 10) ===
-              mes + "-" + viaje.fecha.toString().substring(8, 10)
-                ? fechaSi.push(e)
-                : console.log("no hay nada")
+          viajesDisponiblesUsuario.map(
+            e =>{
+              e.fecha.includes(" ") ?
+              (e.fecha.substring(4, 7) ===
+              mes + "-" + viaje.fecha.toString().substring(8, 15)
+                ? fechaSi.push(e.fecha)
+                : console.log("no hay nada")) : fechaSi.push(e.fecha.substring(0, 10).split("-").reverse().join("-"))}
           );
-        if (fechaSi.length !== 0) {
+          
+          var fechasExcluidas = fechaSi.filter(f => f !== cookieFecha)
+          if (fechasExcluidas.length !== 0) {
+            if (fechasExcluidas[0].toString().substring(0,5) === viaje?.fecha.toString().substring(8,10)+ "-" + "0"+mes) {
           Swal.fire({
             title: "Ya tienes un viaje programado para este día",
             icon: "warning",
             text:
               "No puedes programar dos viajes para el mismo día. Por favor, selecciona otra fecha.",
             confirmButtonText: "Ok"
-          }) && setViaje({ ...viaje, fecha: "", hora: "" });
+          }) && setViaje({ ...viaje, fecha: ""});
+        }
         }
       }
     },
@@ -125,51 +144,37 @@ export default function FormPasajero() {
   function validacion(viaje) {
     let errors = {};
 
-    if (!viaje.hora) {
-      errors.hora = "Debes ingresar la hora del viaje";
-    } else if (!expresiones.hora.test(viaje.hora)) {
+    if (!expresiones.hora.test(viaje.hora)) {
       errors.hora = "Ingresa una hora valida";
     }
-    if (!viaje.fecha) {
-      errors.fecha = "Debes ingresar la fecha del viaje";
-    }
-    if (!viaje.origen) {
-      errors.origen = "Debes ingresar el origen del viaje";
-    } else if (!expresiones.origen.test(viaje.origen)) {
+    if (!expresiones.origen.test(viaje.origen)) {
       errors.origen = "Ingrese un origen valido";
     }
-    if (!viaje.destino) {
-      errors.destino = "Debes ingresar el destino del viaje";
-    } else if (!expresiones.destino.test(viaje.destino)) {
+    if (!expresiones.destino.test(viaje.destino)) {
       errors.destino = "Ingrese un destino valido";
     }
-    if (!viaje.asiento) {
-      errors.asiento = "Ingresá cuantos asientos tenés libres";
-    } else if (viaje.asiento>7 || viaje.asiento<1) {
+    if (viaje.asiento > 7 || viaje.asiento < 1) {
       errors.asiento = "Debes selecionar entre 1 y 7";
     }
     return errors;
   }
+
   const filtrosArray = [
     {
       id: 1,
-      name: "Acepto fumador"
+      name: "Acepto/soy fumador"
     },
     {
       id: 2,
-      name: "Acepto mascota"
+      name: "Acepto/llevo mascota"
     },
     {
       id: 3,
-      name: "Acepto equipaje"
+      name: "Acepto/llevo equipaje"
     },
     {
       id: 4,
       name: "Uso de barbijo"
-    },
-    {
-      id: 5,
-      name: "Quiero compartir gastos"
     }
   ];
 
@@ -196,43 +201,14 @@ export default function FormPasajero() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (
-      !viaje.fecha ||
-      !viaje.hora ||
-      !viaje.origen ||
-      !viaje.destino ||
-      !viaje.asiento
-    ) {
-      e.preventDefault();
-      swal({
-        title: "Alto!",
-        text: "Por favor completá todos los campos",
-        icon: "warning",
-        button: true,
-        dangerMode: true
-      });
-    } else {
-      swal({
-        title: "El registro ha sido exitoso!",
-        icon: "success",
-        button: "Buen viaje!"
-      }).then(function() {
-        navigate("/home");
-      });
-      dispatch(postViajeConductor(isChecked, viaje));
-
-      setViaje({
-        fecha: "",
-        hora: "",
-        origen: "",
-        destino: "",
-        dni: "",
-        asiento: "",
-        formaDePago: "A charlar",
-        email: "",
-        detalles: ""
-      });
-    }
+    swal({
+      title: "La modificación se realizó con éxito!",
+      icon: "success",
+      button: "Buen viaje!"
+    }).then(function() {
+      navigate("/home");
+    });
+    dispatch(modificarViaje(id, isChecked, viaje));
   }
 
   return (
@@ -260,11 +236,7 @@ export default function FormPasajero() {
                     fecha: nuevaFecha
                   })}
               />
-              {errors.fecha &&
-                <span className="Conductore__error">
-                  {errors.fecha}
-                </span>}
-
+              
               <label className="Conductore__formulario_label">Hora</label>
               <input
                 className="Conductore__input"
@@ -388,14 +360,14 @@ export default function FormPasajero() {
           !errors.asiento
             ? <input
                 type="submit"
-                value="Registrar viaje"
-                name="Registrar viaje"
+                value="Modificar viaje"
+                name="Modificar viaje"
                 className="Conductore__btn_registro"
               />
             : <input
                 type="submit"
-                value="Registrar viaje"
-                name="Registrar viaje"
+                value="Modificar viaje"
+                name="Modificar viaje"
                 disabled="disabled"
                 className="Conductore__disabled"
               />}

@@ -15,7 +15,10 @@ import {
   GET_VIAJES_TOTAL_USUARIO,
   GET_VEHICULOS,
   ACTIVAR_USUARIO,
-  VEHICULOS_TOTALES
+  VEHICULOS_TOTALES,
+  PAUSAR_VIAJE,
+  REACTIVAR_VIAJE,
+
 } from "../actions/actions.js";
 
 const initialState = {
@@ -23,6 +26,7 @@ const initialState = {
   viajesFiltrados: [],
   viajePorId: [],
   viajesPorUsuario: [],
+  viajesPausados: [],
   usuarios: [],
   usuario: [],
   comentarios: [],
@@ -126,6 +130,16 @@ function rootReducer(state = initialState, action) {
         return{
           ...state,
           vehiculosTotales: action.payload
+        }
+      case PAUSAR_VIAJE:
+        return{
+          ...state,
+          viajesPausados: [...state.viajesPausados, action.payload]
+        }
+      case REACTIVAR_VIAJE:
+        return {
+          ...state,
+          viajesFiltrados: [...state.viajesFiltrados, action.payload]
         }
     default:
       return { ...state };
