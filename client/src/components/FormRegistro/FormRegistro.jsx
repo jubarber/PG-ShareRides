@@ -152,9 +152,9 @@ export default function FormRegistro() {
       <NavBarSinLogin />
       <div className="contenedorRegistro">
         <div>
-          <Link to="/home">
-            <button className="Registro__btn_volver">Volver</button>
-          </Link>
+          <button className="Registro__btn_volver" onClick={() => navigate(-1)}>
+            Volver
+          </button>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="Registro__formulario">
