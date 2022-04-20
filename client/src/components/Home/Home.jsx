@@ -7,7 +7,7 @@ import {
   login,
   filterPerCard,
   getUsuarios,
-  getViajesTotalUsuario,
+  getViajesTotalUsuario
 } from "../../redux/actions/actions";
 import { Filtros } from "../Filtros/Filtros";
 import CardViajeUsuarioPasajere from "../CardViaje/CardViajeUsuario/Pasajero/CardViajeUsuario";
@@ -27,13 +27,15 @@ export default function Home() {
   const dispatch = useDispatch();
   const [habilitarBot, setHabilitarBot] = useState(false);
   const [render, setRender] = useState("");
-  const viajes = useSelector((state) => state.viajesFiltrados);
-  const viajesUsuario = useSelector((state) => state.viajesPorUsuario);
+  const viajes = useSelector(state => state.viajesFiltrados);
+  const viajesUsuario = useSelector(state => state.viajesPorUsuario);
   const cookieMail = cookies.get("email");
+  
   let newDate = new Date();
   let dia = newDate.getDate();
   let mes = newDate.getMonth() + 1;
   let prueba = (new Date().toLocaleString() + "").slice(11, 16);
+
   useEffect(() => {
     dispatch(getViajesTotalUsuario(cookieMail));
   }, []);
@@ -62,7 +64,7 @@ export default function Home() {
   viajes.map((e) => {
     e.viajeDisponible === true && viajesDisponibles.push(e);
   });
-  console.log("cookieMail", cookieMail);
+
 
   return (
     <div>
@@ -87,7 +89,7 @@ export default function Home() {
                   id="demo-simple-select"
                   label="Selecciona tu puesto"
                   value={render}
-                  onChange={(e) => handleChange(e)}
+                  onChange={e => handleChange(e)}
                 >
                   <MenuItem value="conductor">Conductore</MenuItem>
                   <MenuItem value="pasajero">Pasajere</MenuItem>

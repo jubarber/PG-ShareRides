@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
@@ -18,7 +18,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { FaUserCircle } from "react-icons/fa";
 import IconButton from "@mui/material/IconButton";
-import Swal from "sweetalert2/dist/sweetalert2";
+import Swal from "sweetalert2";
 import Cookies from "universal-cookie";
 
 export const DetalleViajep = () => {
@@ -30,6 +30,25 @@ export const DetalleViajep = () => {
   const { id } = useParams();
   const { email } = useParams();
   let fechaViaje = "";
+  const [ocultarBotonColaborar, setOcultarBotonColaborar] = useState(null);
+
+  useEffect(
+    () => {
+      dispatch(getDetalleViaje(id));
+      dispatch(getUsuarioByEmail(email));
+    },
+    [id]
+  );
+
+  useEffect(
+    () => {
+      if (viaje.length !== 0) {
+        if (viaje.usuarios[0].email === cookieMail)
+          setOcultarBotonColaborar(true);
+      }
+    },
+    [viaje]
+  );
 
   if (viaje.length !== 0 && viaje.fecha.length !== 0) {
     viaje.fecha.includes("T")
@@ -40,14 +59,6 @@ export const DetalleViajep = () => {
           .join("-"))
       : (fechaViaje = viaje.fecha);
   }
-
-  useEffect(
-    () => {
-      dispatch(getDetalleViaje(id));
-      dispatch(getUsuarioByEmail(email));
-    },
-    [id]
-  );
 
   if (viaje.length !== 0 && viaje.usuarios.length !== 0) {
     var viajeUsuarios = viaje.usuarios.map(e => e.email);
@@ -62,22 +73,53 @@ export const DetalleViajep = () => {
       text: "Estás segure de que querés continuar?",
       confirmButtonText: "Sí, quiero eliminar",
       denyButtonText: "No quiero eliminar!"
-    }).then(r=> {
-      if(r.isConfirmed){
+    }).then(r => {
+      if (r.isConfirmed) {
         dispatch(pausarViaje(id));
         Swal.fire({
-          title: "El viaje ha sido eliminado correctamente, ya no lo verás en tu inicio ni en tus viajes.",
+          title:
+            "El viaje ha sido eliminado correctamente, ya no lo verás en tu inicio ni en tus viajes.",
           icon: "success",
           timer: 1200
-        })
-      } else if(r.isDenied){
+        });
+      } else if (r.isDenied) {
         Swal.fire({
           title: "El viaje está a salvo!",
           icon: "info",
           timer: 1000
-        })
+        });
       }
-    })
+    });
+  }
+
+  function handleModificar() {
+    console.log("handle modificar");
+    cookies.set("fecha", viaje.fecha, { path: "/" });
+    cookies.set("hora", viaje.hora, { path: "/" });
+    cookies.set("origen", viaje.origen, { path: "/" });
+    cookies.set("destino", viaje.destino, { path: "/" });
+    cookies.set("asientos", viaje.asientosAOcupar, {
+      path: "/"
+    });
+    cookies.set("detalles", viaje.detalles, {
+      path: "/"
+    });
+    cookies.set("aceptaFumador", viaje.aceptaFumador, {
+      path: "/"
+    });
+    cookies.set("aceptaMascota", viaje.aceptaMascota, {
+      path: "/"
+    });
+    cookies.set("aceptaEquipaje", viaje.aceptaEquipaje, {
+      path: "/"
+    });
+    cookies.set("usaBarbijo", viaje.usaBarbijo, {
+      path: "/"
+    });
+    console.log(cookies.get("fecha"));
+    setTimeout(() => {
+      navigate(`/modificar/modificarViaje/${id}`);
+    }, 2000);
   }
 
   
@@ -174,17 +216,24 @@ export const DetalleViajep = () => {
                       </div>}
                 </div>
                 <br />
-                <div className="btn-detalle">
-                  <button
-                    className="detalle-mensaje"
-                    onClick={() => {
-                      handleEliminar();
-                    }}
-                  >
-                    Eliminar Viaje
-                  </button>
-                  <button className="detalle-mensaje">Modificar Viaje</button>
-                </div>
+                  {viajesTotales !== [] && viajesTotales.includes(true)
+                    ? <div className="btn-detalle">
+                        <button
+                          className="detalle-mensaje"
+                          onClick={() => {
+                            handleEliminar();
+                          }}
+                        >
+                          Eliminar Viaje
+                        </button>
+                        <button
+                          className="detalle-mensaje"
+                          onClick={handleModificar}
+                        >
+                          Modificar Viaje
+                        </button>
+                      </div>
+                    : null}
               </div>
               <div className="card-viaje-detalle text-xl">
                 <div className="flex flex-col justify-evenly w-full ml-4">
@@ -259,27 +308,27 @@ export const DetalleViajep = () => {
                     <MdSmokeFree className="mx-2" />
                     Soy Fumador/a:{" "}
                     <span className="font-bold">
-                      {viaje.aceptaFumador ? "sí" : "no"}
+                      {viaje.aceptaFumador ? "Sí" : "No"}
                     </span>
                   </span>
                   <span className="flex items-center">
                     <MdPets className="mx-2" />
                     Llevo Mascota(s):{" "}
                     <span className="font-bold">
-                      {viaje.aceptaMascota ? "sí" : "no"}
+                      {viaje.aceptaMascota ? "Sí" : "No"}
                     </span>
                   </span>
                   <span className="flex items-center">
                     <FaSuitcaseRolling className="mx-2" /> Tengo Equipaje:{" "}
                     <span className="font-bold">
-                      {viaje.aceptaEquipaje ? "sí" : "no"}
+                      {viaje.aceptaEquipaje ? "Sí" : "No"}
                     </span>
                   </span>
                   <span className="flex items-center">
                     <MdMasks className="mx-2" />
                     Uso Barbijo:{" "}
                     <span className="font-bold">
-                      {viaje.usaBarbijo ? "sí" : "no"}
+                      {viaje.usaBarbijo ? "Sí" : "No"}
                     </span>
                   </span>
                 </div>
