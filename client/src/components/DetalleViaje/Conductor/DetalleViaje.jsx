@@ -39,16 +39,18 @@ export const DetalleViajec = () => {
   const [botonesConductor, setBotonesConductor] = useState(null);
   const [botonesPasajero, setBotonesPasajero] = useState(null);
   const [botonesPasajeroSumado, setBotonesPasajeroSumado] = useState(null);
-
+  
   let idViajesPorUsuario = viajesPorUsuario.map(v => v.id);
   let mailUsuariosDelViaje;
+
   useEffect(
     () => {
       dispatch(getDetalleViaje(id));
       dispatch(getViajesTotalUsuario(cookieMail));
     },
     [id]
-  )
+  );
+  
   useEffect(() => {
     if (viaje.length !== 0 && viajesPorUsuario.length !== 0) {
       mailUsuariosDelViaje = viaje.usuarios.map(u => u.email);
@@ -163,6 +165,7 @@ export const DetalleViajec = () => {
     let viajesFechasCoincidentes = [];
     if (viajesPorUsuario.length !== 0) {
       viajesPorUsuario.map(v => {
+
         if (
           v.fecha.substring(0, 10).split("-").reverse().join("-") ===
           viaje.fecha.substring(0, 10).split("-").reverse().join("-")
@@ -260,6 +263,7 @@ export const DetalleViajec = () => {
       icon: "danger",
       text: "Estás segure de que querés continuar?",
       confirmButtonText: "Sí, quiero eliminar",
+      showDenyButton: true,
       denyButtonText: "No quiero eliminar!"
     }).then(r => {
       if (r.isConfirmed) {
@@ -268,13 +272,15 @@ export const DetalleViajec = () => {
           title:
             "El viaje ha sido eliminado correctamente, ya no lo verás en tu inicio ni en tus viajes.",
           icon: "success",
-          timer: 1200
-        });
+          timer: 2500,
+          showConfirmButton: false
+        }).then(() => navigate("/home"));
       } else if (r.isDenied) {
         Swal.fire({
           title: "El viaje está a salvo!",
           icon: "info",
-          timer: 1000
+           timer: 2000,
+          showConfirmButton: false
         });
       }
     });

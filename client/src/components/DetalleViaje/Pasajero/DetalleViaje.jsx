@@ -122,6 +122,7 @@ export const DetalleViajep = () => {
     }, 2000);
   }
 
+  
   return (
     <div>
       {arrayPasajeres && arrayPasajeres.length !== 0
