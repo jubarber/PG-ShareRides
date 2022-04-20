@@ -20,6 +20,7 @@ import ModificarViaje from "./components/ModificarViaje/ModificarViaje"
 import Calendario from "./components/Calendar/Calendar";
 import Temporal from "./components/TemporalColaboracion/Temporal";
 import Colaboracion from "./components/Colaboraciones/Colaboracion";
+import { Misviajes } from "./components/MisViajes/misviajes";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
           <Route exact path="/temporal" element={<Temporal />} />
           <Route exact path="/colaboraciones/:email" element={<Colaboracion />} />
           <Route exact path="/modificar/modificarViaje/:id" element={<ModificarViaje />} />
+          <Route exact path="/misviajes/:id" element={<Misviajes/>} />
         </Routes>
       </BrowserRouter>
     </div>

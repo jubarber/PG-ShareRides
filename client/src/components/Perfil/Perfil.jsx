@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import fondo from "../../assets/fondo perfil.jpg";
@@ -111,10 +112,10 @@ export default function Perfil() {
   const [comentariosPorPagina, setComentariosPorPagina] = useState(3);
   const ultimoComentario = pagina * comentariosPorPagina;
   const primerComentario = ultimoComentario - comentariosPorPagina;
-  const ComentariosTotales = miUsuario.comentarios && miUsuario.comentarios.length!==0 && miUsuario.comentarios.slice(
-    primerComentario,
-    ultimoComentario
-  );
+  const ComentariosTotales =
+    miUsuario.comentarios &&
+    miUsuario.comentarios.length !== 0 &&
+    miUsuario.comentarios.slice(primerComentario, ultimoComentario);
 
   const paginacion = (pageNum) => {
     setPagina(pageNum);
@@ -134,7 +135,7 @@ export default function Perfil() {
       ...reviews,
       [e.target.name]: e.target.value,
     });
-    setCount(e.target.value.length!==0);
+    setCount(e.target.value.length !== 0);
   };
 
   const handleChangeReportes = (e) => {
@@ -198,7 +199,7 @@ export default function Perfil() {
       if (result.isConfirmed) {
         dispatch(eliminarPerfil(cookieEmail));
         dispatch(logout(cookieEmail));
-         Swal.fire("Borrada!", "Tu cuenta ha sido eliminada!", "success");
+        Swal.fire("Borrada!", "Tu cuenta ha sido eliminada!", "success");
       }
     });
   };
@@ -254,7 +255,6 @@ export default function Perfil() {
         ).then(() => {
           // navigate("/home");
         });
-
       }
     });
   };
@@ -386,6 +386,13 @@ export default function Perfil() {
             </div>
             {cookieEmail !== email ? null : (
               <div className="btn-modificacion-perfil">
+                <div className="btn-mis-viajes">
+                  <Link to={"/misviajes/" + cookieEmail}>
+                    <button className="btn-modificacion-perfil-active">
+                      Mis Viajes
+                    </button>
+                  </Link>
+                </div>
                 {habilitarTelefono === false &&
                 habilitarDNI === false &&
                 habilitarAcercaDeMi === false &&
@@ -479,7 +486,6 @@ export default function Perfil() {
                         Reportar
                       </button>
 
-
                       <p>{e.dia}</p>
                     </div>
                   </div>
@@ -487,14 +493,15 @@ export default function Perfil() {
               )}
           </div>
           <div className="pag">
-            {comentarios.length!==0 && 
-            <PaginacionComentarios
-              comentariosPorPagina={comentariosPorPagina}
-              comentarios={comentarios.length}
-              paginacion={paginacion}
-              pagina={pagina}
-              setPagina={setPagina}
-            />}
+            {comentarios.length !== 0 && (
+              <PaginacionComentarios
+                comentariosPorPagina={comentariosPorPagina}
+                comentarios={comentarios.length}
+                paginacion={paginacion}
+                pagina={pagina}
+                setPagina={setPagina}
+              />
+            )}
           </div>
         </div>
       </div>
