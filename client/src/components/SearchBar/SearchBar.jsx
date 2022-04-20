@@ -28,6 +28,7 @@ export default function SearchBar() {
       alert("Escriba un origen");
     } else {
       dispatch(searchOrigen(origen));
+      setDestino("")
     }
   }
   function handleSubmitDestino(e) {
@@ -36,6 +37,7 @@ export default function SearchBar() {
       alert("Escriba un destino");
     } else {
       dispatch(searchDestino(destino));
+      setOrigen("")
     }
   }
   function handleSubmitLimpiar(e) {

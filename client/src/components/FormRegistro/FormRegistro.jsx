@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import fondo from "../../assets/fondo perfil.jpg";
-import { useDispatch } from "react-redux";
-import swal from "sweetalert";
-import { registroUsuario } from "../../redux/actions/actions";
+import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
+import { registroUsuario, getUsuarios } from "../../redux/actions/actions";
 import "./FormRegistro.css";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
@@ -14,6 +14,7 @@ export default function FormRegistro() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const usuarios = useSelector(state=>state.usuarios)
   const [statePassword, setStatePassword] = useState(false);
   const [input, setInput] = useState({
     nombre: "",
@@ -35,6 +36,15 @@ export default function FormRegistro() {
     /* dni: /^\d{7,8}\s/, */
     email: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
   };
+
+  useEffect(()=>{
+    dispatch(getUsuarios())
+  }, [])
+
+  let mailUsuarios;
+  useEffect(()=>{
+    mailUsuarios = usuarios.map(u => u.email)
+  })
 
   function validacion(input) {
     let errors = {};
@@ -85,7 +95,7 @@ export default function FormRegistro() {
 
   function handleConfirmar(e) {
     e.preventDefault();
-    swal(
+    Swal.fire(
       "En este documento se describen los Términos y Condiciones generales aplicables al uso de los servicios ofrecidos por ShareRide® mediante www.shareRide.com.ar/app. Cualquier persona  que desee usar o utilizar shareRide® podrá hacerlo sujetándose a los Términos y Condiciones respectivos, junto con todas las demás políticas y principios"
     );
   }
@@ -111,12 +121,41 @@ export default function FormRegistro() {
     const err = validacion(input);
     if (Object.values(err).length !== 0) {
       e.preventDefault();
-      swal({
+      Swal.fire({
         title: "Alto!",
         text: "Por favor completá todos los campos",
         icon: "warning",
-        button: true,
-        dangerMode: true,
+      });
+    } else if(mailUsuarios && mailUsuarios.includes(input.email)) {
+      Swal.fire({
+        title: "Alto",
+        icon: "error",
+        text:
+          "El email ya está registrado, por favor registrá otro email o iniciá sesión",
+        confirmButtonText: "Iniciar sesión",
+        showDenyButton: true,
+        denyButtonText: "Registrar otro email", 
+        denyButtonColor: "#990099",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        allowEnterKey: false
+      }).then(r => {
+        if (r.isConfirmed) {
+          Swal.fire({
+            title: "En instantes serás redirigide al inicio",
+            showConfirmButton: false,
+            timer: 1200,
+            timerProgressBar: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            didOpen: () => {
+              Swal.showLoading()
+            }
+          }).then(() => {
+            navigate("/login");
+          });
+        }
       });
     } else {
       cookies.set("dni", input.dni, { path: "/" });
@@ -124,14 +163,16 @@ export default function FormRegistro() {
       cookies.set("nombre", input.nombre, { path: "/" });
       cookies.set("apellido", input.apellido, { path: "/" });
       cookies.set("avatar", input.avatar, { path: "/" });
-      // console.log("COOKIES REGISTRO ", cookies.get("nombre"));
-      dispatch(registroUsuario(input));
+      dispatch(registroUsuario(input)).then(r=>console.log(r))
       let cookieNombre = cookies.get("nombre");
-      swal({
+      Swal.fire({
         title: "El registro ha sido exitoso!",
         text: `Gracias por registrarte! Bienvenide ${cookieNombre}`,
         icon: "success",
-        button: "Ingresar",
+        confirmButtonText: "Ingresar",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        allowEnterKey: false
       }).then(function () {
         navigate("/home");
       });

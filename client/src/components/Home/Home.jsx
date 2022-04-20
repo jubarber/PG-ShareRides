@@ -28,25 +28,23 @@ export default function Home() {
   const dispatch = useDispatch();
   const [habilitarBot, setHabilitarBot] = useState(false);
   const [render, setRender] = useState("");
-  const viajes = useSelector((state) => state.viajesFiltrados);
-  const viajesUsuario = useSelector((state) => state.viajesPorUsuario);
+  const viajes = useSelector(state => state.viajesFiltrados);
   const cookieMail = cookies.get("email");
 
   let newDate = new Date();
   let dia = newDate.getDate();
   let mes = newDate.getMonth() + 1;
-  let prueba = (new Date().toLocaleString() + "").slice(11, 16);
+  let hora = (new Date().toLocaleString() + "").slice(11, 16);
 
   useEffect(() => {
-    dispatch(getViajesTotalUsuario(cookieMail));
-  }, []);
-  console.log("viajes", viajes);
-  useEffect(() => {
     dispatch(login(cookieMail));
+    dispatch(getViajesTotal());
+    dispatch(getViajesTotalUsuario(cookieMail));
     dispatch(filterPerCard(render));
     dispatch(getUsuarios());
   }, []);
-
+  
+  // console.log("viajes", viajes);
   function handleChange(e) {
     dispatch(filterPerCard(e.target.value));
     setRender(e.target.value);
@@ -62,15 +60,10 @@ export default function Home() {
   }
   let viajesDisponibles = [];
 
-  viajes.map((e) => {
+  viajes?.map((e) => {
     e.viajeDisponible === true && viajesDisponibles.push(e);
   });
 
-  console.log(
-    viajesDisponibles.map(
-      (e) => parseInt(e.fecha.slice(8, 10)) >= parseInt(dia)
-    )
-  );
   return (
     <div>
       <NavBar />
@@ -106,78 +99,18 @@ export default function Home() {
             {viajesDisponibles.length !== 0 ? (
               viajesDisponibles.map(
                 (e) =>
-                  (e &&
-                    parseInt(e.fecha.slice(5, 7)) >= parseInt(mes) &&
-                    ((parseInt(e.fecha.slice(8, 10)) >= parseInt(dia)) ||
+                  e &&
+                  parseInt(e.fecha.slice(5, 7)) >= parseInt(mes) &&
+                  ((parseInt(e.fecha.slice(8, 10)) >= parseInt(dia)) ||
                   (parseInt(e.fecha.slice(5, 7)) > parseInt(mes))) &&
-                    (parseInt(e.hora.replace(":", "")) >
-                      parseInt(prueba.replace(":", "")) ||
-                      parseInt(e.fecha.slice(5, 7)) > parseInt(mes) ||
-                      parseInt(e.fecha.slice(8, 10)) > parseInt(dia)) && (
-                      <div className="card-home">
-                        {e.status === "pasajero" ? (
-                          cookieMail !== "undefined" && cookieMail !== "" ? (
-                            <Link to={"/detallep/" + e.id}>
-                              <CardViajeUsuarioPasajere
-                                origen={e.origen}
-                                destino={e.destino}
-                                fecha={
-                                  e.fecha.includes("T")
-                                    ? e.fecha
-                                        .substring(0, 10)
-                                        .split("-")
-                                        .reverse()
-                                        .join("-")
-                                    : e.fecha
-                                }
-                                hora={e.hora}
-                                asientosAOcupar={e.asientosAOcupar}
-                                aceptaEquipaje={e.aceptaEquipaje}
-                                aceptaFumador={e.aceptaFumador}
-                                aceptaMascota={e.aceptaMascota}
-                                usaBarbijo={e.usaBarbijo}
-                                viajeDisponible={e.viajeDisponible}
-                                detalles={e.detalles}
-                                key={e.id}
-                                id={e.id}
-                                avatar={
-                                  e.usuarios.length > 0 ? (
-                                    e.usuarios[0].avatar
-                                  ) : (
-                                    <div />
-                                  )
-                                }
-                                nombre={
-                                  e.usuarios.length > 0 ? (
-                                    e.usuarios[0].nombre
-                                  ) : (
-                                    <div />
-                                  )
-                                }
-                                apellido={
-                                  e.usuarios.length > 0 ? (
-                                    e.usuarios[0].apellido
-                                  ) : (
-                                    <div />
-                                  )
-                                }
-                                email={
-                                  e.usuarios.length > 0 ? (
-                                    e.usuarios[0].email
-                                  ) : (
-                                    <div />
-                                  )
-                                }
-                                puntuacion={
-                                  e.usuarios.length > 0 ? (
-                                    e.usuarios[0].puntuacion
-                                  ) : (
-                                    <div />
-                                  )
-                                }
-                              />
-                            </Link>
-                          ) : (
+                  ((parseInt(e.hora.replace(":", "")) > parseInt(hora.replace(":", "")) ||
+                    parseInt(e.fecha.slice(5, 7)) > parseInt(mes) ||
+                    parseInt(e.fecha.slice(8, 10)) > parseInt(dia))) && 
+                    (
+                    <div className="card-home">
+                      {e.status === "pasajero" ? (
+                        cookieMail !== "undefined" && cookieMail !== "" ? (
+                          <Link to={"/detallep/" + e.id}>
                             <CardViajeUsuarioPasajere
                               origen={e.origen}
                               destino={e.destino}
@@ -319,7 +252,7 @@ export default function Home() {
                             viajeDisponible={e.viajeDisponible}
                             key={e.id}
                             id={e.id}
-                            avatar={
+                            avatar={ e.usuarios &&
                               e.usuarios.length > 0 ? (
                                 e.usuarios[0].avatar
                               ) : (
@@ -374,7 +307,6 @@ export default function Home() {
           </button>
         </div>
       </div>
-
       <div className="wallpaper">
         <img className="stretch" src={fondo} alt="" />
       </div>

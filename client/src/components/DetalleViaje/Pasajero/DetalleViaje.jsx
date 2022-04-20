@@ -69,7 +69,7 @@ export const DetalleViajep = () => {
   function handleEliminar() {
     Swal.fire({
       title: "Estás a punto de eliminar este viaje",
-      icon: "danger",
+      icon: "error",
       text: "Estás segure de que querés continuar?",
       confirmButtonText: "Sí, quiero eliminar",
       denyButtonText: "No quiero eliminar!"
@@ -117,9 +117,20 @@ export const DetalleViajep = () => {
       path: "/"
     });
     console.log(cookies.get("fecha"));
-    setTimeout(() => {
+    Swal.fire({
+      title: "En instantes serás redirigide a la modificación de tu viaje",
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      allowEnterKey: false,
+      didOpen: () => {
+        Swal.showLoading()
+      }
+    }).then(() => {
       navigate(`/modificar/modificarViaje/${id}`);
-    }, 2000);
+    });
   }
 
   
