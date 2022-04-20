@@ -4,7 +4,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import swal from "sweetalert";
+import Swal from "sweetalert2";
 import { postViajePasajero, getViajesTotalUsuario } from "../../redux/actions/actions";
 import "./FormPasajero.css";
 import fondo from "../../assets/fondo perfil.jpg";
@@ -13,7 +13,6 @@ import "./FormPasajero.css";
 import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
 import DatePicker, { registerLocale } from "react-datepicker";
-import Swal from "sweetalert2"
 import "react-datepicker/dist/react-datepicker.css";
 import es from "date-fns/locale/es";
 registerLocale("es", es);
@@ -202,18 +201,16 @@ export default function FormPasajero() {
       !viaje.email
     ) {
       e.preventDefault();
-      swal({
+      Swal.fire({
         title: "Alto!",
         text: "Por favor completá todos los campos",
         icon: "warning",
-        button: true,
-        dangerMode: true
       });
     } else {
-      swal({
+      Swal.fire({
         title: "El registro ha sido exitoso!",
         icon: "success",
-        button: "Buen viaje!"
+        confirmButtonText: "Buen viaje!"
       }).then(function() {
         navigate("/home");
       });

@@ -28,24 +28,22 @@ export default function Home() {
   const [habilitarBot, setHabilitarBot] = useState(false);
   const [render, setRender] = useState("");
   const viajes = useSelector(state => state.viajesFiltrados);
-  const viajesUsuario = useSelector(state => state.viajesPorUsuario);
   const cookieMail = cookies.get("email");
   
   let newDate = new Date();
   let dia = newDate.getDate();
   let mes = newDate.getMonth() + 1;
-  let prueba = (new Date().toLocaleString() + "").slice(11, 16);
+  let hora = (new Date().toLocaleString() + "").slice(11, 16);
 
   useEffect(() => {
-    dispatch(getViajesTotalUsuario(cookieMail));
-  }, []);
-  console.log("viajes", viajes);
-  useEffect(() => {
     dispatch(login(cookieMail));
+    dispatch(getViajesTotal());
+    dispatch(getViajesTotalUsuario(cookieMail));
     dispatch(filterPerCard(render));
     dispatch(getUsuarios());
   }, []);
-
+  
+  // console.log("viajes", viajes);
   function handleChange(e) {
     dispatch(filterPerCard(e.target.value));
     setRender(e.target.value);
@@ -61,11 +59,11 @@ export default function Home() {
   }
   let viajesDisponibles = [];
 
-  viajes.map((e) => {
+  viajes?.map((e) => {
     e.viajeDisponible === true && viajesDisponibles.push(e);
   });
 
-
+  
   return (
     <div>
       <NavBar />
@@ -103,11 +101,12 @@ export default function Home() {
                 (e) =>
                   e &&
                   parseInt(e.fecha.slice(5, 7)) >= parseInt(mes) &&
-                  parseInt(e.fecha.slice(8, 10)) >= parseInt(dia) &&
-                  (parseInt(e.hora.replace(":", "")) >
-                    parseInt(prueba.replace(":", "")) ||
+                  ((parseInt(e.fecha.slice(8, 10)) >= parseInt(dia)) ||
+                  (parseInt(e.fecha.slice(5, 7)) > parseInt(mes))) &&
+                  ((parseInt(e.hora.replace(":", "")) > parseInt(hora.replace(":", "")) ||
                     parseInt(e.fecha.slice(5, 7)) > parseInt(mes) ||
-                    parseInt(e.fecha.slice(8, 10)) > parseInt(dia)) && (
+                    parseInt(e.fecha.slice(8, 10)) > parseInt(dia))) && 
+                    (
                     <div className="card-home">
                       {e.status === "pasajero" ? (
                         cookieMail !== "undefined" && cookieMail !== "" ? (
@@ -254,7 +253,7 @@ export default function Home() {
                             viajeDisponible={e.viajeDisponible}
                             key={e.id}
                             id={e.id}
-                            avatar={
+                            avatar={ e.usuarios &&
                               e.usuarios.length > 0 ? (
                                 e.usuarios[0].avatar
                               ) : (
@@ -365,7 +364,6 @@ export default function Home() {
           </button>
         </div>
       </div>
-
       <div className="wallpaper">
         <img className="stretch" src={fondo} alt="" />
       </div>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import swal from "sweetalert";
 import {
   postViajeConductor,
   getViajesTotalUsuario
@@ -34,7 +33,7 @@ export default function FormPasajero() {
     destino: "",
     dni: cookies.get("dni"),
     asiento: "",
-    formaDePago: "A charlar",
+    formaDePago: "A coordinar",
     email: cookieMail,
     detalles: "",
     patente: cookiePatente
@@ -204,18 +203,16 @@ export default function FormPasajero() {
       !viaje.asiento
     ) {
       e.preventDefault();
-      swal({
+      Swal.fire({
         title: "Alto!",
         text: "Por favor completá todos los campos",
         icon: "warning",
-        button: true,
-        dangerMode: true
       });
     } else {
-      swal({
+      Swal.fire({
         title: "El registro ha sido exitoso!",
         icon: "success",
-        button: "Buen viaje!"
+        confirmButtonText: "Buen viaje!"
       }).then(function() {
         navigate("/home");
       });
@@ -228,7 +225,7 @@ export default function FormPasajero() {
         destino: "",
         dni: "",
         asiento: "",
-        formaDePago: "A charlar",
+        formaDePago: "A coordinar",
         email: "",
         detalles: ""
       });

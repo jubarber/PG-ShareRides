@@ -6,15 +6,15 @@ module.exports = (sequelize) => {
   sequelize.define(
     "usuario",
     {
-      dni: {
-        type: DataTypes.STRING,
-        unique: true,
-      },
       email: {
         type: DataTypes.TEXT,
         unique: true,
         allowNull: false,
         primaryKey: true,
+      },
+      dni: {
+        type: DataTypes.STRING,
+        unique: true,
       },
       nombre: {
         type: DataTypes.STRING,

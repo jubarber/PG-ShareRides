@@ -6,6 +6,7 @@ import "./LandingPage.css";
 import Cookies from "universal-cookie";
 import { getUsuarioByEmail } from "../../redux/actions/actions";
 import NavBarSinLogin from "../NavBar/NavBarSinLogin";
+import Swal from "sweetalert2";
 
 export default function LandingPage() {
   const dispatch = useDispatch();
@@ -31,29 +32,43 @@ export default function LandingPage() {
       cookies.set("nombre", usuario.nombre, { path: "/" });
       cookies.set("apellido", usuario.apellido, { path: "/" });
       cookies.set("avatar", usuario.avatar, { path: "/" });
-      // console.log("Bienvenidx " + cookies.get("nombre") + "!");
 
       if (usuario.email) {
-        // console.log("email");
         if (Object.values(usuarioReducer).length > 0) {
-          // console.log("usuario reducer", usuarioReducer);
-          setTimeout(() => {
-            navigate("/home");
-          }, 2000);
+          Swal.fire({
+            title: "Bienvenide!" ,
+            text:"En instantes serás redirigide al inicio",
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            didOpen: () => {Swal.showLoading()}
+          }).then(() => {
+          navigate("/home");
+        })
         } else {
-          // console.log("error");
-          setTimeout(() => {
-            navigate("/registrogoogle");
-          }, 2000);
+          Swal.fire({
+            title: "Bienvenide!" ,
+            text:"En instantes serás redirigide a la creación de una contraseña",
+            showConfirmButton: false,
+            timer: 1000,
+            timerProgressBar: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            didOpen: () => {Swal.showLoading()}
+          }).then(() => {
+          navigate("/registrogoogle");
+        })
         }
       }
     },
-    [usuarioReducer] //fin use effect
-  ); //fin de verdad use effect
+    [usuarioReducer]); 
 
   useEffect(
     () => {
-      // console.log("dispatch");
       dispatch(getUsuarioByEmail(usuario.email));
     },
     [usuario, dispatch]

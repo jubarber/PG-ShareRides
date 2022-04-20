@@ -2,7 +2,7 @@ import axios from "axios";
 export const GET_DETALLE_VIAJE = "GET_DETALLE_VIAJE";
 export const INICIAR_SESION = "INICIAR_SESION";
 export const GET_VIAJES_TOTAL = "GET_VIAJES_TOTAL";
-export const FILTRO_CHECKS = "FILTRO_CHECKS";
+export const FILTROS = "FILTROS";
 export const REGISTRO_USUARIO = "REGISTRO_USUARIO";
 export const LOGGED = "LOGGED";
 export const SEARCHORIGEN = "SEARCHORIGEN";
@@ -24,14 +24,11 @@ export const ACTIVAR_USUARIO = "ACTIVAR_USUARIO";
 export const PAUSAR_VIAJE = "PAUSAR_VIAJE";
 export const REACTIVAR_VIAJE = "REACTIVAR_VIAJE";
 
-
-
 export function getDetalleViaje(viajeId) {
   return function(dispatch) {
     axios
       .get(`http://localhost:3001/api/viaje/${viajeId}`)
-      .then((viaje) =>
-
+      .then(viaje =>
         dispatch({ type: "GET_DETALLE_VIAJE", payload: viaje.data })
       )
       .catch(err => console.log(err));
@@ -78,20 +75,45 @@ export function getUsuarios() {
   };
 }
 
-export function filtroChecks(payload, asiento) {
-  //console.log(payload, asiento);
+export function filtros(select) {
   return async function(dispatch) {
-    let viajes = await axios({
-      method: "get",
-      url: `http://localhost:3001/api/viaje/filtro/${payload[0]}/${payload[1]}/${payload[2]}/${payload[3]}?asientosAOcupar=${asiento}`,
-    });
-    return dispatch({ type: "FILTRO_CHECKS", payload: viajes.data });
+    let viajes;
+    if (select.aceptaFumador) {
+      viajes = await axios({
+        method: "get",
+        url: `http://localhost:3001/api/viaje/filtros?aceptaFumador=${select.aceptaFumador}`
+      });
+    }
+    if (select.noAceptaFumador) {
+      console.log(select.noAceptaFumador)
+      viajes = await axios({
+        method: "get",
+        url: `http://localhost:3001/api/viaje/filtros?noAceptaFumador=${select.noAceptaFumador}`
+      });
+    }
+    if (select.aceptaMascota) {
+      viajes = await axios({
+        method: "get",
+        url: `http://localhost:3001/api/viaje/filtros?aceptaMascota=${select.aceptaMascota}`
+      });
+    }
+    if (select.aceptaEquipaje) {
+      viajes = await axios({
+        method: "get",
+        url: `http://localhost:3001/api/viaje/filtros?aceptaEquipaje=${select.aceptaEquipaje}`
+      });
+    }
+    if (select.usaBarbijo) {
+      viajes = await axios({
+        method: "get",
+        url: `http://localhost:3001/api/viaje/filtros?usaBarbijo=${select.usaBarbijo}`
+      });
+    }
+    return dispatch({ type: "FILTROS", payload: viajes?.data });
   };
 }
 
-//registro usuario nuevo
 export function registroUsuario(payload) {
-  // console.log("soy payload", payload);
   return async function(dispatch) {
     try {
       const nuevoUsuario = await axios({
@@ -107,10 +129,12 @@ export function registroUsuario(payload) {
           avatar: payload.avatar
         }
       });
-      return dispatch({
-        type: "REGISTRO_USUARIO",
-        payload: nuevoUsuario
-      });
+      if (nuevoUsuario !== "Usuario ya registrado") {
+        return dispatch({
+          type: "REGISTRO_USUARIO",
+          payload: nuevoUsuario
+        });
+      } 
     } catch (error) {
       console.log(error);
     }
@@ -308,9 +332,7 @@ export function logout(payload) {
 
 export function searchOrigen(origen) {
   return async function(dispatch) {
-    // console.log("action origen", origen);
     try {
-      // console.log("action origen", origen);
       let search = await axios.get(
         `http://localhost:3001/api/viaje/searchorigen?origen=${origen}`
       );
@@ -340,7 +362,7 @@ export function getUsuarioByEmail(email) {
     try {
       let usuario = await axios({
         method: "get",
-        url: `http://localhost:3001/api/usuario/usuarios/${email}`,
+        url: `http://localhost:3001/api/usuario/usuarios/${email}`
       });
       return dispatch({ type: "USUARIO_MAIL", payload: usuario.data });
     } catch (err) {
@@ -434,8 +456,7 @@ export function postOrder(usuarioPagador) {
       const newOrder = await axios({
         method: "post",
         url: "http://localhost:3001/api/order",
-        data: { usuarioPagador: usuarioPagador },
-
+        data: { usuarioPagador: usuarioPagador }
       });
       return dispatch({
         type: "NEW_ORDER",
@@ -476,7 +497,7 @@ export function actualizarColaboracion(email) {
     try {
       const colaboracion = await axios({
         method: "put",
-        url: `http://localhost:3001/api/colaboracion/${email}`,
+        url: `http://localhost:3001/api/colaboracion/${email}`
       });
       return dispatch({
         type: "ACTUALIZAR_COLABORACION",
@@ -528,7 +549,7 @@ export function modificarAsiento(payload) {
     try {
       const viaje = await axios({
         method: "PUT",
-        url: "http://localhost:3001/api/viaje/modificarViaje",
+        url: "http://localhost:3001/api/viaje/modificarAsiento",
         data: {
           asientosAOcupar: payload.asientosAOcupar,
           id: payload.id
@@ -567,18 +588,19 @@ export function eliminarPerfil(payload) {
 
 export function activarPerfil(payload) {
   return async function(dispatch) {
-
     console.log("activado", payload);
     try {
       const usuarioActivado = await axios({
         method: "put",
         url: "http://localhost:3001/api/usuario/activarPerfil",
         data: {
-          email: payload,
-        },
-      })
-      return dispatch({type:"ACTIVAR_USUARIO", payload: usuarioActivado.data})
-
+          email: payload
+        }
+      });
+      return dispatch({
+        type: "ACTIVAR_USUARIO",
+        payload: usuarioActivado.data
+      });
     } catch (error) {
       console.log(error);
     }
@@ -619,21 +641,21 @@ export function getReporte() {
   };
 }
 
-export function getVehiculos(email){
-  return async function (dispatch){
-    try{
-      const vehiculos = await axios.get(`http://localhost:3001/api/vehiculo/${email}`);
-      return dispatch({type: "GET_VEHICULOS", payload: vehiculos.data})
-    }catch(err){
-      console.log(err)
-
+export function getVehiculos(email) {
+  return async function(dispatch) {
+    try {
+      const vehiculos = await axios.get(
+        `http://localhost:3001/api/vehiculo/${email}`
+      );
+      return dispatch({ type: "GET_VEHICULOS", payload: vehiculos.data });
+    } catch (err) {
+      console.log(err);
     }
   };
 }
 
 export function cambioPassword(email, password) {
   return async function(dispatch) {
-
     try {
       let cambio = await axios({
         method: "put",
@@ -694,7 +716,10 @@ export function reactivarViaje(id) {
         method: "put",
         url: `http://localhost:3001/api/viaje/reactivarViaje/${id}`
       });
-      return dispatch({ type: "REACTIVAR_VIAJE", payload: viajeReactivado.data });
+      return dispatch({
+        type: "REACTIVAR_VIAJE",
+        payload: viajeReactivado.data
+      });
     } catch (err) {
       console.log(err);
     }
@@ -707,7 +732,7 @@ export function modificarViaje(id, checkboxes, viaje) {
     try {
       let viajeModificado = await axios({
         method: "put",
-        url: `http://localhost:3001http://localhost:3001/api/viaje/modificarViaje/${id}`,
+        url: `http://localhost:3001/api/viaje/modificarViaje/${id}`,
         data: {
           aceptaFumador: checkboxes[0],
           aceptaMascota: checkboxes[1],
