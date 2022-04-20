@@ -699,13 +699,30 @@ export function reactivarViaje(id) {
   };
 }
 
-export function modificarViaje(id) {
-  console.log("modificar viaje");
+export function modificarViaje(id, checkboxes, viaje) {
+  console.log("modificar viaje", id);
   return async function(dispatch) {
     try {
-      let viajePausado = await axios({
+      let viajeModificado = await axios({
         method: "put",
-        url: `http://localhost:3001/api/viaje/modificarrViaje/${id}`
+        url: `http://localhost:3001/api/viaje/modificarViaje/${id}`,
+        data: {
+          aceptaFumador: checkboxes[0],
+          aceptaMascota: checkboxes[1],
+          aceptaEquipaje: checkboxes[2],
+          usaBarbijo: checkboxes[3],
+          nombre: viaje.nombre,
+          fecha: viaje.fecha,
+          hora: viaje.hora,
+          origen: viaje.origen,
+          destino: viaje.destino,
+          asientosAOcupar: viaje.asiento,
+          email: viaje.email,
+          dni: viaje.dni,
+          detalles: viaje.detalles,
+          puntuacion: viaje.puntuacion,
+          patente: viaje.patente
+        }
       });
     } catch (err) {
       console.log(err);
