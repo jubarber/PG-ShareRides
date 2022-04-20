@@ -1,8 +1,12 @@
 import React from "react";
+import { getViajesTotal } from "../../../redux/actions/actions";
 import s from "./AdminViajes.module.css";
+import axios from "axios";
+import { useDispatch } from "react-redux";
 
 export default function AdminViajes(viaje) {
-  console.log("OBJETOVIAJE", viaje);
+  const dispatch = useDispatch();
+
   let {
     usuarios,
     id,
@@ -21,10 +25,26 @@ export default function AdminViajes(viaje) {
     status,
     detalles,
   } = viaje.viaje;
-  /* const toName = (e) =>{
-  let content = e.target.textContent?.split(" ")[0];
-  console.log("conteeeeeent to name", content)
-} */
+ 
+  async function deleteViaje(id){
+    return await axios({
+      method: "delete",
+      url: `http://localhost:3001/api/admin/deleteviaje/${id}`,
+    });
+  }
+
+  function deleteViajeHandle(){
+    console.log("ENTRA???")
+    try {
+      let eliminadi = deleteViaje(id);
+      dispatch(getViajesTotal());
+      console.log("VIAJE", eliminadi)
+    } catch (error) {
+      console.log(error)
+      
+    }
+  }
+
   return (
     <div className={s.mainContainer}>
       <ul className={s.ulContainer}>
@@ -82,6 +102,9 @@ export default function AdminViajes(viaje) {
         <li>
           <span>Detalles del viaje:</span> {detalles || "-"}
         </li>
+        <button className={s.deleteButton} onClick={deleteViajeHandle}>
+        Eliminar Viaje
+      </button>
       </ul>
     </div>
   );

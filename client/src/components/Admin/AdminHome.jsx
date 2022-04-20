@@ -72,7 +72,6 @@ const AdminHome = () => {
       {/* Contenedor principal  */}
       <div className="adminMainContainer">
         <div className="filaUsuarios">
-          USUARIOS //agregar key
           {usuario.length && usuario.map((u) => <AdminCard user={u} />)}
         </div>
       </div>

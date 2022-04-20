@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const { Usuario } = require("../db.js");
+const { Usuario, Comentarios, Viaje } = require("../db.js");
 
 router.post("/sesionadmin", async (req, res, next) => {
     // console.log(req.body.email)

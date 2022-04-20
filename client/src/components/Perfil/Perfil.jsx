@@ -111,7 +111,7 @@ export default function Perfil() {
   const [comentariosPorPagina, setComentariosPorPagina] = useState(3);
   const ultimoComentario = pagina * comentariosPorPagina;
   const primerComentario = ultimoComentario - comentariosPorPagina;
-  const ComentariosTotales = miUsuario.comentarios.length!==0 && miUsuario.comentarios.slice(
+  const ComentariosTotales = miUsuario.comentarios && miUsuario.comentarios.length!==0 && miUsuario.comentarios.slice(
     primerComentario,
     ultimoComentario
   );
