@@ -58,7 +58,7 @@ export default function Perfil() {
     telefono: miUsuario.telefono,
     dni: miUsuario.dni,
     acercaDeMi: miUsuario.acercaDeMi,
-    avatar: "",
+    avatar: miUsuario.avatar,
   });
 
   // console.log("miUsuario", cookieEmail);
