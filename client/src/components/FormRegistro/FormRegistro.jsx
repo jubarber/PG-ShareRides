@@ -14,7 +14,7 @@ export default function FormRegistro() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const usuarios = useSelector(state=>state.usuarios)
+  const usuarios = useSelector((state) => state.usuarios);
   const [statePassword, setStatePassword] = useState(false);
   const [input, setInput] = useState({
     nombre: "",
@@ -37,14 +37,14 @@ export default function FormRegistro() {
     email: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
   };
 
-  useEffect(()=>{
-    dispatch(getUsuarios())
-  }, [])
+  useEffect(() => {
+    dispatch(getUsuarios());
+  }, []);
 
   let mailUsuarios;
-  useEffect(()=>{
-    mailUsuarios = usuarios.map(u => u.email)
-  })
+  useEffect(() => {
+    mailUsuarios = usuarios && usuarios.map((u) => u.email);
+  });
 
   function validacion(input) {
     let errors = {};
@@ -126,20 +126,19 @@ export default function FormRegistro() {
         text: "Por favor completá todos los campos",
         icon: "warning",
       });
-    } else if(mailUsuarios && mailUsuarios.includes(input.email)) {
+    } else if (mailUsuarios && mailUsuarios.includes(input.email)) {
       Swal.fire({
         title: "Alto",
         icon: "error",
-        text:
-          "El email ya está registrado, por favor registrá otro email o iniciá sesión",
+        text: "El email ya está registrado, por favor registrá otro email o iniciá sesión",
         confirmButtonText: "Iniciar sesión",
         showDenyButton: true,
-        denyButtonText: "Registrar otro email", 
+        denyButtonText: "Registrar otro email",
         denyButtonColor: "#990099",
         allowOutsideClick: false,
         allowEscapeKey: false,
-        allowEnterKey: false
-      }).then(r => {
+        allowEnterKey: false,
+      }).then((r) => {
         if (r.isConfirmed) {
           Swal.fire({
             title: "En instantes serás redirigide al inicio",
@@ -150,8 +149,8 @@ export default function FormRegistro() {
             allowEscapeKey: false,
             allowEnterKey: false,
             didOpen: () => {
-              Swal.showLoading()
-            }
+              Swal.showLoading();
+            },
           }).then(() => {
             navigate("/login");
           });
@@ -163,7 +162,7 @@ export default function FormRegistro() {
       cookies.set("nombre", input.nombre, { path: "/" });
       cookies.set("apellido", input.apellido, { path: "/" });
       cookies.set("avatar", input.avatar, { path: "/" });
-      dispatch(registroUsuario(input)).then(r=>console.log(r))
+      dispatch(registroUsuario(input)).then((r) => console.log(r));
       let cookieNombre = cookies.get("nombre");
       Swal.fire({
         title: "El registro ha sido exitoso!",
@@ -172,7 +171,7 @@ export default function FormRegistro() {
         confirmButtonText: "Ingresar",
         allowOutsideClick: false,
         allowEscapeKey: false,
-        allowEnterKey: false
+        allowEnterKey: false,
       }).then(function () {
         navigate("/home");
       });

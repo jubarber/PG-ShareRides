@@ -16,7 +16,7 @@ export default function Admin() {
   async function iniciarSesion(input) {
     const response = await axios({
       method: "post",
-      url: `http://localhost:3001/api/admin/sesionadmin`,
+      url: `/api/admin/sesionadmin`,
       data: {
         email: input.email,
         password: input.password,

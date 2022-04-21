@@ -14,10 +14,16 @@ router.post("/registro", async (req, res, next) => {
     const { email, nombre, apellido, password, avatar } = req.body;
     let nuevoUsuario = [];
     if (email) {
-        nuevoUsuario = await Usuario.findOrCreate({
-          where: { email: email, nombre: nombre, apellido: apellido, password: password, avatar: avatar }
-        });
-        res.json(nuevoUsuario);
+      nuevoUsuario = await Usuario.findOrCreate({
+        where: {
+          email: email,
+          nombre: nombre,
+          apellido: apellido,
+          password: password,
+          avatar: avatar,
+        },
+      });
+      res.json(nuevoUsuario);
       // const sgMail = require("@sendgrid/mail");
 
       // sgMail.setApiKey(API_KEY);
@@ -87,22 +93,19 @@ router.post("/registro", async (req, res, next) => {
 router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
   try {
     const { email, password } = req.params;
+    //console.log("soy email" , email);
     if (email) {
       var dbUsuario = await Usuario.findOne(
-        { where: { email: email } },
+        { where: { email: email, eliminado: false } },
         { include: Viaje }
       );
       if (dbUsuario) {
-        if (dbUsuario.disponible === false) {
-          res.send("usuario pausado");
-        }
-        if (dbUsuario.password === password) {
-          res.send("ok");
-        }
         if (dbUsuario.password !== password) {
           res.send("contraseña incorrecta");
-        }
-      } else res.send("usuario no encontrado");
+        } else res.send("usuario inicia sesion");
+      } else {
+        res.send("Usuario Eliminado")
+      }
     }
   } catch (err) {
     next(err);
@@ -131,9 +134,8 @@ router.get("/usuarios/:email", async (req, res, next) => {
         { model: Comentarios },
         { model: Reportados },
         { model: Viaje },
-        { model: Vehiculo }
-      ]
-
+        { model: Vehiculo },
+      ],
     });
     if (usuario) res.send(usuario);
     else res.send("error");
@@ -141,7 +143,6 @@ router.get("/usuarios/:email", async (req, res, next) => {
     next(err);
   }
 });
-
 
 router.post("/registro", async (req, res, next) => {
   try {
@@ -381,7 +382,7 @@ router.put("/eliminarPerfil", async (req, res, next) => {
   try {
     let usuarioEliminado = await Usuario.findByPk(email);
     usuarioEliminado.update({
-      disponible: false
+      disponible: false,
     });
     usuarioEliminado.save();
     res.send(usuarioEliminado);
@@ -396,7 +397,7 @@ router.put("/activarPerfil", async (req, res, next) => {
     let usuarioActivado = await Usuario.findByPk(email);
     if (usuarioActivado.length !== 0) {
       usuarioActivado.update({
-        disponible: true
+        disponible: true,
       });
       usuarioActivado.save();
     }

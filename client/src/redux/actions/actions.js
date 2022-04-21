@@ -21,8 +21,22 @@ export const ELIMINADO = "ELIMINADO";
 export const GET_VIAJES_TOTAL_USUARIO = "GET_VIAJES_TOTAL_USUARIO";
 export const GET_VEHICULOS = "GET_VEHICULOS";
 export const ACTIVAR_USUARIO = "ACTIVAR_USUARIO";
+export const VEHICULOS_TOTALES = "VEHICULOS_TOTALES";
 export const PAUSAR_VIAJE = "PAUSAR_VIAJE";
 export const REACTIVAR_VIAJE = "REACTIVAR_VIAJE";
+export const USUARIO_REPORTADO = "USUARIO_REPORTADO";
+export const REPORTES = "REPORTES";
+
+export function getVehiculosTotales() {
+  return function (dispatch) {
+    axios
+      .get(`/api/vehiculo/vehiculo`)
+      .then((vehiculo) =>
+        dispatch({ type: VEHICULOS_TOTALES, payload: vehiculo.data })
+      )
+      .catch((err) => console.log(err));
+  };
+}
 
 export function getDetalleViaje(viajeId) {
   return function (dispatch) {
@@ -70,37 +84,37 @@ export function getUsuarios() {
 }
 
 export function filtros(select) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     let viajes;
     if (select.aceptaFumador) {
       viajes = await axios({
         method: "get",
-        url: `http://localhost:3001/api/viaje/filtros?aceptaFumador=${select.aceptaFumador}`
+        url: `/api/viaje/filtros?aceptaFumador=${select.aceptaFumador}`,
       });
     }
     if (select.noAceptaFumador) {
-      console.log(select.noAceptaFumador)
+      console.log(select.noAceptaFumador);
       viajes = await axios({
         method: "get",
-        url: `http://localhost:3001/api/viaje/filtros?noAceptaFumador=${select.noAceptaFumador}`
+        url: `/api/viaje/filtros?noAceptaFumador=${select.noAceptaFumador}`,
       });
     }
     if (select.aceptaMascota) {
       viajes = await axios({
         method: "get",
-        url: `http://localhost:3001/api/viaje/filtros?aceptaMascota=${select.aceptaMascota}`
+        url: `/api/viaje/filtros?aceptaMascota=${select.aceptaMascota}`,
       });
     }
     if (select.aceptaEquipaje) {
       viajes = await axios({
         method: "get",
-        url: `http://localhost:3001/api/viaje/filtros?aceptaEquipaje=${select.aceptaEquipaje}`
+        url: `/api/viaje/filtros?aceptaEquipaje=${select.aceptaEquipaje}`,
       });
     }
     if (select.usaBarbijo) {
       viajes = await axios({
         method: "get",
-        url: `http://localhost:3001/api/viaje/filtros?usaBarbijo=${select.usaBarbijo}`
+        url: `/api/viaje/filtros?usaBarbijo=${select.usaBarbijo}`,
       });
     }
     return dispatch({ type: "FILTROS", payload: viajes?.data });
@@ -108,7 +122,7 @@ export function filtros(select) {
 }
 
 export function registroUsuario(payload) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const nuevoUsuario = await axios({
         method: "post",
@@ -126,9 +140,9 @@ export function registroUsuario(payload) {
       if (nuevoUsuario !== "Usuario ya registrado") {
         return dispatch({
           type: "REGISTRO_USUARIO",
-          payload: nuevoUsuario
+          payload: nuevoUsuario,
         });
-      } 
+      }
     } catch (error) {
       console.log(error);
     }
@@ -158,7 +172,8 @@ export function postViajePasajero(checkboxes, viaje) {
           dni: viaje.dni,
           detalles: viaje.detalles,
           puntuacion: viaje.puntuacion,
-        },
+          telefono: viaje.telefono
+        }
       });
       return dispatch({ type: "POST_VIAJE_PASAJERO", payload: pasajero.data });
     } catch (err) {
@@ -213,7 +228,8 @@ export function postViajeConductor(checkboxes, viaje) {
           detalles: viaje.detalles,
           puntuacion: viaje.puntuacion,
           patente: viaje.patente,
-        },
+          telefono: viaje.telefono
+        }
       });
       return dispatch({
         type: "POST_VIASJE_CONDUCTOR",
@@ -325,11 +341,9 @@ export function logout(payload) {
 }
 
 export function searchOrigen(origen) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
-      let search = await axios.get(
-        `/api/viaje/searchorigen?origen=${origen}`
-      );
+      let search = await axios.get(`/api/viaje/searchorigen?origen=${origen}`);
       return dispatch({ type: "SEARCHORIGEN", payload: search.data });
     } catch (error) {
       console.log(error);
@@ -438,7 +452,7 @@ export function reportarComentarios(payload) {
     try {
       let comentarioReportado = await axios({
         method: "put",
-        url: "http://localhost:3001/api/comentarios/reportarComentarios",
+        url: "/api/comentarios/reportarComentarios",
         data: {
           id: payload,
         },
@@ -560,7 +574,7 @@ export function modificarAsiento(payload) {
     try {
       const viaje = await axios({
         method: "PUT",
-        url: "http://localhost:3001/api/viaje/modificarAsiento",
+        url: "/api/viaje/modificarAsiento",
         data: {
           asientosAOcupar: payload.asientosAOcupar,
           id: payload.id,
@@ -587,14 +601,6 @@ export function eliminarPerfil(payload) {
         type: "ELIMINAR_PERFIL",
         payload: usuarioEliminado.data,
       });
-      return dispatch({
-        type: "ELIMINAR_PERFIL",
-        payload: usuarioEliminado.data,
-      });
-      return dispatch({
-        type: "ELIMINAR_PERFIL",
-        payload: usuarioEliminado.data,
-      });
     } catch (error) {
       console.log(error);
     }
@@ -609,12 +615,12 @@ export function activarPerfil(payload) {
         method: "put",
         url: "/api/usuario/activarPerfil",
         data: {
-          email: payload
-        }
+          email: payload,
+        },
       });
       return dispatch({
         type: "ACTIVAR_USUARIO",
-        payload: usuarioActivado.data
+        payload: usuarioActivado.data,
       });
     } catch (error) {
       console.log(error);
@@ -634,6 +640,8 @@ export function postReporte(payload) {
           nombre: payload.nombre,
           apellido: payload.apellido,
           justificacion: payload.justificacion,
+          reportes: payload.reportes,
+          emailReportado: payload.emailReportado,
         },
       });
       return dispatch({ type: "POST_REPORTE", payload: postReporte.data });
@@ -654,10 +662,28 @@ export function getReporte() {
   };
 }
 
+export function getUsuarioReportado() {
+  return async function (dispatch) {
+    try {
+      const usuarioReportado = await axios(
+        "http://localhost:3001/api/reportes/usuariosReportados"
+      );
+      return dispatch({
+        type: "USUARIO_REPORTADO",
+        payload: usuarioReportado.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
 export function getVehiculos(email) {
   return async function (dispatch) {
     try {
-      const vehiculos = await axios.get(`/api/vehiculo/${email}`);
+      const vehiculos = await axios.get(
+        `http://localhost:3001/api/vehiculo/${email}`
+      );
       return dispatch({ type: "GET_VEHICULOS", payload: vehiculos.data });
     } catch (err) {
       console.log(err);
@@ -666,7 +692,7 @@ export function getVehiculos(email) {
 }
 
 export function cambioPassword(email, password) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       let cambio = await axios({
         method: "put",
@@ -710,26 +736,19 @@ export function reactivarViaje(id) {
         type: "REACTIVAR_VIAJE",
         payload: viajeReactivado.data,
       });
-
-      return dispatch({
-        type: "REACTIVAR_VIAJE",
-        payload: viajeReactivado.data
-      });
     } catch (err) {
       console.log(err);
     }
   };
 }
 
-
 export function modificarViaje(id, checkboxes, viaje) {
   console.log("modificar viaje", id);
-  return async function(dispatch) {
-
+  return async function (dispatch) {
     try {
       let viajeModificado = await axios({
         method: "put",
-        url: `http://localhost:3001/api/viaje/modificarViaje/${id}`,
+        url: `/api/viaje/modificarViaje/${id}`,
         data: {
           aceptaFumador: checkboxes[0],
           aceptaMascota: checkboxes[1],
@@ -745,8 +764,8 @@ export function modificarViaje(id, checkboxes, viaje) {
           dni: viaje.dni,
           detalles: viaje.detalles,
           puntuacion: viaje.puntuacion,
-          patente: viaje.patente
-        }
+          patente: viaje.patente,
+        },
       });
     } catch (err) {
       console.log(err);
