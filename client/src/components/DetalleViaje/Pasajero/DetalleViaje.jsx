@@ -113,10 +113,11 @@ export const DetalleViajep = () => {
     cookies.set("aceptaEquipaje", viaje.aceptaEquipaje, {
       path: "/"
     });
+
     cookies.set("usaBarbijo", viaje.usaBarbijo, {
       path: "/"
     });
-    console.log(cookies.get("fecha"));
+
     Swal.fire({
       title: "En instantes serás redirigide a la modificación de tu viaje",
       showConfirmButton: false,

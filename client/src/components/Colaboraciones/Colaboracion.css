@@ -1,0 +1,33 @@
+.Colaboraciones__titulo {
+  font-size: 3rem;
+  font-weight: bold;
+  margin: 1rem;
+}
+
+.Colaboraciones__contenedor {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+}
+
+.Colaboraciones__usuario {
+  margin: 1rem;
+  padding: 1rem;
+  border: 2px solid midnightblue;
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  background-color: rgb(252, 167, 252);
+}
+
+@media screen and (max-width: 425px) {
+  .Colaboraciones__titulo {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 1rem;
+  }
+  .Colaboraciones__contenedor {
+    display: flex;
+    flex-direction: column;
+  }
+}

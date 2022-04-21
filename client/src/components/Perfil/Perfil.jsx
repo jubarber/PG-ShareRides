@@ -395,6 +395,13 @@ export default function Perfil() {
                     </button>
                   </Link>
                 </div>
+                <div className="btn-mis-viajes">
+                  <Link to={"/colaboraciones/" + cookieEmail}>
+                    <button className="btn-modificacion-perfil-active">
+                      Mis Colaboraciones
+                    </button>
+                  </Link>
+                </div>
                 {habilitarTelefono === false &&
                 habilitarDNI === false &&
                 habilitarAcercaDeMi === false &&

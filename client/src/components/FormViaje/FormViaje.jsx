@@ -17,7 +17,7 @@ export default function FormViaje() {
   
     useEffect(() => {
       dispatch(getVehiculos(cookieMail));
-    });
+    }, []);
 
   const [isChecked, setIsChecked] = useState({
     pasajero: false,

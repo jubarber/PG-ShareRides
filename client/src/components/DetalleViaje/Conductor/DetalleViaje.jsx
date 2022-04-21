@@ -169,7 +169,6 @@ export const DetalleViajec = () => {
       console.log(viajesPorUsuario);
       console.log(viajesFechasCoincidentes);
       if (viajesFechasCoincidentes.length !== 0) {
-        console.log("if sumarse");
         Swal.fire({
           title: "Ya tienes un viaje programado para este día",
           icon: "warning",
@@ -183,7 +182,6 @@ export const DetalleViajec = () => {
           navigate("/home");
         });
       } else {
-        console.log("else sumarse");
         Swal.fire({
           title: "Estás a punto de sumarte a este viaje",
           icon: "warning",

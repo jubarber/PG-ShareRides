@@ -172,6 +172,7 @@ router.get("/totalviajes/:email", async (req, res, next) => {
     next(error);
   }
 });
+
 router.get("/totalviajes", async (req, res, next) => {
   try {
     let totalViajes = await Viaje.findAll({
@@ -298,7 +299,8 @@ router.get("/searchdestino", async (req, res, next) => {
     let filtradoDestino;
     if (destino) {
       let viajes = await Viaje.findAll(
-        { where: { viajeDisponible: true },
+        {
+          where: { viajeDisponible: true },
           include: [
             {
               model: Usuario
@@ -328,7 +330,8 @@ router.get("/searchorigen", async (req, res, next) => {
     let filtradoOrigen;
     if (origen) {
       let viajes = await Viaje.findAll(
-        { where: { viajeDisponible: true },
+        {
+          where: { viajeDisponible: true },
           include: [
             {
               model: Usuario

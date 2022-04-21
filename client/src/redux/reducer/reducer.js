@@ -44,7 +44,7 @@ function rootReducer(state = initialState, action) {
         viajePorId: action.payload,
       };
     case GET_VIAJES_TOTAL:
-      console.log(state.viajesFiltrados)
+      // console.log(state.viajesFiltrados)
       return {
         ...state,
         viajes: action.payload,

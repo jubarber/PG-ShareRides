@@ -5,26 +5,31 @@ import fondo from "../../assets/fondo perfil.jpg";
 import "./misviajes.css";
 import { useParams } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
-import CardViajeUsuarioPasajere from "../CardViaje/CardViajeUsuario/Pasajero/CardViajeUsuario";
-import CardViajeUsuarioConductore from "../CardViaje/CardViajeUsuario/Conductor/CardViajeUsuario";
+import CardConductoreMisViajes from "./CardViajeUsuarioConductor"
+import CardPasajeroMisViajes from "./CardPasajeroMisViajes"
 
 export const Misviajes = () => {
   const viajes = useSelector((state) => state.viajesPorUsuario);
   const { id } = useParams();
   const dispatch = useDispatch();
+  const viajesDisponibles = viajes.filter(v => v.viajeDisponible === true)
+  const mailUsuarioCreador = viajesDisponibles.map(v => v.usuarios)
+  // ?.map(u=>u?.usuario_viaje?.map(e=>e.usuarioEmail)));
+  console.log(mailUsuarioCreador)
+  console.log(viajes)
   useEffect(() => {
     dispatch(getViajesTotalUsuario(id));
   }, [id]);
-  console.log(viajes);
+
   return (
     <div>
       <NavBar />
       <div className="container-cards">
-        {viajes.length !== 0 ? (
-          viajes.map((e) => (
+        {viajesDisponibles.length !== 0 ? (
+          viajesDisponibles.map((e) => (
             <div className="card-home">
               {e.status === "pasajero" ? (
-                <CardViajeUsuarioPasajere
+                <CardPasajeroMisViajes
                   origen={e.origen}
                   destino={e.destino}
                   fecha={
@@ -57,7 +62,7 @@ export const Misviajes = () => {
                   }
                 />
               ) : (
-                <CardViajeUsuarioConductore
+                <CardConductoreMisViajes
                   origen={e.origen}
                   destino={e.destino}
                   fecha={
@@ -92,7 +97,7 @@ export const Misviajes = () => {
             </div>
           ))
         ) : (
-          <>"No tenes viajes"</>
+          <>"No tenes viajes disponibles"</>
         )}
       </div>
       <div className="wallpaper">

@@ -21,16 +21,9 @@ require("moment/locale/es.js");
 export default function ModificarViaje() {
   moment().format("dd mm yyyy");
   const { id } = useParams()
-  console.log(id)
   const cookies = new Cookies();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isChecked, setIsChecked] = useState([
-    cookies.get("aceptaFumador"),
-    cookies.get("aceptaMascota"),
-    cookies.get("aceptaEquipaje"),
-    cookies.get("usaBarbijo")
-  ]);
   const [errors, setErrors] = useState({});
   const viajesUsuario = useSelector(state => state.viajesPorUsuario);
   const cookieMail = cookies.get("email");
@@ -49,7 +42,6 @@ export default function ModificarViaje() {
     detalles: cookies.get("detalles"),
     patente: cookiePatente
   });
-
   const expresiones = {
     hora: /^.{4,12}$/,
     asiento: /^.{1,7}$/,
@@ -57,10 +49,41 @@ export default function ModificarViaje() {
     destino: /^[a-zA-ZÀ-ÿ\s]{4,30}$/,
     dni: /^(?!^0+$)[a-zA-Z0-9]{3,20}$/
   };
+  const [isChecked, setIsChecked] = useState([]);
+  let fumador;
+  let mascota;
+  let equipaje;
+  let barbijo;
+ useEffect(()=>{
+  dispatch(getViajesTotalUsuario(cookieMail));
 
-  useEffect(() => {
-    dispatch(getViajesTotalUsuario(cookieMail));
-  }, []);
+   if(cookies.get("aceptaFumador")==="true"){
+     fumador = true
+   }
+   if(cookies.get("aceptaFumador")==="false"){
+    fumador = false
+  }
+   if(cookies.get("aceptaMascota")==="true"){
+    mascota = true
+  }
+  if(cookies.get("aceptaMascota")==="false"){
+    mascota = false
+  }
+  if(cookies.get("aceptaEquipaje")==="true"){
+    equipaje = true
+  }
+  if(cookies.get("aceptaEquipaje")==="false"){
+    equipaje = false
+  }
+  if(cookies.get("usaBarbijo")==="true"){
+    barbijo = true
+  }
+  if(cookies.get("usaBarbijo")==="false"){
+    barbijo = false
+  }
+  setIsChecked([fumador, mascota, equipaje, barbijo])
+  console.log(isChecked)
+ }, [])
 
   let viajesDisponiblesUsuario = [];
 
@@ -214,9 +237,7 @@ export default function ModificarViaje() {
     <div>
       <NavBar />
       <div className="Conductore__nav">
-        <Link to="/formvehiculo">
-          <button className="Conductore__btn_volver">Volver</button>
-        </Link>
+          <button className="Conductore__btn_volver" onClick={() => navigate(-1)}>Volver</button>
       </div>
       <form onSubmit={handleSubmit}>
         <div className="order-form">

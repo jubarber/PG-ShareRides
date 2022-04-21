@@ -53,6 +53,7 @@ export function getViajesTotalUsuario(email) {
       let viajesTotal = await axios.get(
         `/api/viaje/totalviajes/${email}`
       );
+      // console.log(viajesTotal.data)
       return dispatch({
         type: "GET_VIAJES_TOTAL_USUARIO",
         payload: viajesTotal.data
@@ -85,7 +86,7 @@ export function filtros(select) {
       });
     }
     if (select.noAceptaFumador) {
-      console.log(select.noAceptaFumador)
+      // console.log(select.noAceptaFumador)
       viajes = await axios({
         method: "get",
         url: `http://localhost:3001/api/viaje/filtros?noAceptaFumador=${select.noAceptaFumador}`
@@ -450,7 +451,7 @@ export function filterPerCard(payload) {
 }
 
 export function postOrder(usuarioPagador) {
-  console.log(usuarioPagador);
+  // console.log(usuarioPagador);
   return async function(dispatch) {
     try {
       const newOrder = await axios({
@@ -492,7 +493,7 @@ export function postColaboracion(input) {
 }
 
 export function actualizarColaboracion(email) {
-  console.log("actualizacion", email);
+  // console.log("actualizacion", email);
   return async function(dispatch) {
     try {
       const colaboracion = await axios({
@@ -588,7 +589,7 @@ export function eliminarPerfil(payload) {
 
 export function activarPerfil(payload) {
   return async function(dispatch) {
-    console.log("activado", payload);
+    // console.log("activado", payload);
     try {
       const usuarioActivado = await axios({
         method: "put",
@@ -673,7 +674,7 @@ export function cambioPassword(email, password) {
 }
 
 export function reportarComentarios(payload) {
-  console.log("contador", payload);
+  // console.log("contador", payload);
   return async function(dispatch) {
     try {
       let comentarioReportado = await axios({
@@ -694,7 +695,7 @@ export function reportarComentarios(payload) {
 }
 
 export function pausarViaje(id) {
-  console.log("pausar viaje");
+  // console.log("pausar viaje");
   return async function(dispatch) {
     try {
       let viajePausado = await axios({
@@ -709,7 +710,7 @@ export function pausarViaje(id) {
 }
 
 export function reactivarViaje(id) {
-  console.log("reactivar viaje");
+  // console.log("reactivar viaje");
   return async function(dispatch) {
     try {
       let viajeReactivado = await axios({
@@ -727,7 +728,7 @@ export function reactivarViaje(id) {
 }
 
 export function modificarViaje(id, checkboxes, viaje) {
-  console.log("modificar viaje", id);
+  // console.log("modificar viaje", id);
   return async function(dispatch) {
     try {
       let viajeModificado = await axios({

@@ -14,7 +14,7 @@ export default function FormRegistro() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const usuarios = useSelector(state=>state.usuarios)
+  const usuarios = useSelector(state => state.usuarios);
   const [statePassword, setStatePassword] = useState(false);
   const [input, setInput] = useState({
     nombre: "",
@@ -24,7 +24,7 @@ export default function FormRegistro() {
     password: "",
     nuevo_password: "",
     terminos: "",
-    avatar: user,
+    avatar: user
   });
 
   const [errors, setErrors] = useState({});
@@ -34,17 +34,19 @@ export default function FormRegistro() {
     apellido: /^[a-zA-ZÀ-ÿ\s]{4,15}$/,
     password: /^.{4,12}$/, // acepta cualquier digito - longitud de 4 a 12 digitos.
     /* dni: /^\d{7,8}\s/, */
-    email: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
+    email: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i
   };
 
-  useEffect(()=>{
-    dispatch(getUsuarios())
-  }, [])
+  useEffect(() => {
+    dispatch(getUsuarios());
+  }, []);
 
   let mailUsuarios;
-  useEffect(()=>{
-    mailUsuarios = usuarios.map(u => u.email)
-  })
+  useEffect(
+    () => {
+      mailUsuarios = usuarios?.map(u => u.email);
+    }
+  );
 
   function validacion(input) {
     let errors = {};
@@ -77,18 +79,18 @@ export default function FormRegistro() {
 
   function handleEye(e) {
     e.preventDefault();
-    setStatePassword((prevStatePassword) => !prevStatePassword);
+    setStatePassword(prevStatePassword => !prevStatePassword);
   }
 
   function handleChange(e) {
     setInput({
       ...input,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
     setErrors(
       validacion({
         ...input,
-        [e.target.name]: e.target.value,
+        [e.target.name]: e.target.value
       })
     );
   }
@@ -104,12 +106,12 @@ export default function FormRegistro() {
     if (e.target.checked) {
       setInput({
         ...input,
-        terminos: e.target.value,
+        terminos: e.target.value
       });
       setErrors(
         validacion({
           ...input,
-          [e.target.name]: e.target.value,
+          [e.target.name]: e.target.value
         })
       );
     }
@@ -124,9 +126,9 @@ export default function FormRegistro() {
       Swal.fire({
         title: "Alto!",
         text: "Por favor completá todos los campos",
-        icon: "warning",
+        icon: "warning"
       });
-    } else if(mailUsuarios && mailUsuarios.includes(input.email)) {
+    } else if (mailUsuarios && mailUsuarios.includes(input.email)) {
       Swal.fire({
         title: "Alto",
         icon: "error",
@@ -134,7 +136,7 @@ export default function FormRegistro() {
           "El email ya está registrado, por favor registrá otro email o iniciá sesión",
         confirmButtonText: "Iniciar sesión",
         showDenyButton: true,
-        denyButtonText: "Registrar otro email", 
+        denyButtonText: "Registrar otro email",
         denyButtonColor: "#990099",
         allowOutsideClick: false,
         allowEscapeKey: false,
@@ -144,13 +146,13 @@ export default function FormRegistro() {
           Swal.fire({
             title: "En instantes serás redirigide al inicio",
             showConfirmButton: false,
-            timer: 1200,
+            timer: 1600,
             timerProgressBar: true,
             allowOutsideClick: false,
             allowEscapeKey: false,
             allowEnterKey: false,
             didOpen: () => {
-              Swal.showLoading()
+              Swal.showLoading();
             }
           }).then(() => {
             navigate("/login");
@@ -163,17 +165,22 @@ export default function FormRegistro() {
       cookies.set("nombre", input.nombre, { path: "/" });
       cookies.set("apellido", input.apellido, { path: "/" });
       cookies.set("avatar", input.avatar, { path: "/" });
-      dispatch(registroUsuario(input)).then(r=>console.log(r))
+      dispatch(registroUsuario(input)).then(r => console.log(r));
       let cookieNombre = cookies.get("nombre");
       Swal.fire({
         title: "El registro ha sido exitoso!",
         text: `Gracias por registrarte! Bienvenide ${cookieNombre}`,
         icon: "success",
         confirmButtonText: "Ingresar",
+        timer: 1600,
+        timerProgressBar: true,
         allowOutsideClick: false,
         allowEscapeKey: false,
-        allowEnterKey: false
-      }).then(function () {
+        allowEnterKey: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      }).then(() => {
         navigate("/home");
       });
       setInput({
@@ -182,7 +189,7 @@ export default function FormRegistro() {
         dni: "",
         password: "",
         nuevo_password: "",
-        terminos: "",
+        terminos: ""
       });
     }
     //history.push('/') //quiero q me envie a la seccion completar mi perfil?
@@ -202,8 +209,7 @@ export default function FormRegistro() {
             {/* grupo nombre */}
             <div>
               <label htmlFor="nombre" className="Registro__formulario_label">
-                {" "}
-                * Nombre:
+                {" "}* Nombre:
               </label>
               <div>
                 <input
@@ -215,9 +221,10 @@ export default function FormRegistro() {
                   onChange={handleChange}
                   className="Registro__input"
                 />
-                {errors.nombre && (
-                  <span className="Registro__error">{errors.nombre}</span>
-                )}
+                {errors.nombre &&
+                  <span className="Registro__error">
+                    {errors.nombre}
+                  </span>}
               </div>
             </div>
 
@@ -236,16 +243,16 @@ export default function FormRegistro() {
                   onChange={handleChange}
                   className="Registro__input"
                 />
-                {errors.apellido && (
-                  <span className="Registro__error">{errors.apellido}</span>
-                )}
+                {errors.apellido &&
+                  <span className="Registro__error">
+                    {errors.apellido}
+                  </span>}
               </div>
             </div>
             {/* grupo dni*/}
             <div>
               <label htmlFor="dni" className="Registro__formulario_label">
-                {" "}
-                DNI/Pasaporte:
+                {" "}DNI/Pasaporte:
               </label>
               <div>
                 <input
@@ -262,8 +269,7 @@ export default function FormRegistro() {
             {/* grupo email*/}
             <div>
               <label htmlFor="email" className="Registro__formulario_label">
-                {" "}
-                * E-mail:
+                {" "}* E-mail:
               </label>
               <div>
                 <input
@@ -275,9 +281,10 @@ export default function FormRegistro() {
                   onChange={handleChange}
                   className="Registro__input"
                 />
-                {errors.email && (
-                  <span className="Registro__error">{errors.email}</span>
-                )}
+                {errors.email &&
+                  <span className="Registro__error">
+                    {errors.email}
+                  </span>}
               </div>
             </div>
             {/* grupo  contraseña */}
@@ -301,9 +308,10 @@ export default function FormRegistro() {
                 <button className="Registro__ojo" onClick={handleEye}>
                   {statePassword ? <BsEye /> : <BsEyeSlash />}
                 </button>
-                {errors.password && (
-                  <span className="Registro__error">{errors.password}</span>
-                )}
+                {errors.password &&
+                  <span className="Registro__error">
+                    {errors.password}
+                  </span>}
               </div>
             </div>
             {/* grupo confirmar contraseña*/}
@@ -327,13 +335,11 @@ export default function FormRegistro() {
                 <button className="Registro__ojo" onClick={handleEye}>
                   {statePassword ? <BsEye /> : <BsEyeSlash />}
                 </button>
-                {input.password === input.nuevo_password ? (
-                  ""
-                ) : (
-                  <p className="Registro__error">
-                    No coincide con su contraseña
-                  </p>
-                )}
+                {input.password === input.nuevo_password
+                  ? ""
+                  : <p className="Registro__error">
+                      No coincide con su contraseña
+                    </p>}
               </div>
             </div>
             {/* grupo terminos y condiciones */}
@@ -349,24 +355,23 @@ export default function FormRegistro() {
                 {/* <a href="#terminosYCondiciones">ver</a> */}
                 <p onClick={handleConfirmar}>Ver mas</p>
               </label>
-              {errors.terminos && (
-                <span className="Registro__error">{errors.terminos}</span>
-              )}
+              {errors.terminos &&
+                <span className="Registro__error">
+                  {errors.terminos}
+                </span>}
             </div>
           </div>
           <div className="grupo_btn">
             {!errors.nombre &&
             !errors.apellido &&
             !errors.password &&
-            !errors.terminos ? (
-              <button type="submit" className="Registro__btn_registro">
-                Registrarme
-              </button>
-            ) : (
-              <button type="submit" disabled className="Registro__disabled">
-                Registrarme
-              </button>
-            )}
+            !errors.terminos
+              ? <button type="submit" className="Registro__btn_registro">
+                  Registrarme
+                </button>
+              : <button type="submit" disabled className="Registro__disabled">
+                  Registrarme
+                </button>}
           </div>
         </form>
       </div>
