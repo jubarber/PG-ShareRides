@@ -31,6 +31,7 @@
   .contenedor-titulo h1 {
     font-size: 3rem;
     margin-left: 10rem;
+    
   }
   
   .panel-botones {
@@ -138,3 +139,65 @@
     > img {
     border-radius: 50%;
   }
+  .filaUsuarios{
+ 
+    display: flex;
+    flex-flow: wrap;
+    width: 100%;
+    padding: 10px;
+  }
+  /* .adminMainContainer{
+    background-color: rgb(206, 211, 211);
+    padding: 4%
+  } */
+  /* -----------------------------Belen-------------------------------- */
+  .admin__navegador{
+    
+    color: black;
+    font-weight: bold;
+    border-radius: 0px 0px 5px 5px;
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    padding: 2%;
+    width: 94%;
+    margin: 0 auto
+  }
+  .admin__navegador li {
+    background-color: beige;
+    padding: 10px;
+    border-radius: 5px;
+    width: 150px;
+    text-align: center;
+  }
+  .admin__navegador li:hover{
+    filter: invert(1);
+    cursor: pointer;
+  }
+  .admin__li-active{
+    filter: invert(1);
+    font-weight: bold;
+  }
+  .admin__selectUsuarios{
+  
+    padding: 10px;
+    width: 30%;
+    display: flex;
+    justify-content: space-around;
+  }
+  .admin__selectContainer{
+  padding-left: 0.66%;
+    
+
+
+  }
+  .admin__selectContainer span {
+    background-color:  rgb(78, 206, 166);;
+    padding: 5px;
+    font-weight: bold;
+    border-radius: 5px;
+    width: 130px;
+    text-align: center;
+    cursor: pointer;
+  }
+  .noLoaded{color:white; margin: 0 auto; font-size: 30px}

@@ -98,14 +98,14 @@ export default function FormVehiculo() {
       });
     } else {
       if (typeof(vehiculos) !== "string") {
-        console.log("1")
-
         vehiculos.map(v => {
           if (v.patente === auto.patente) {
             vehiculo.push(v);
           }
         });
         if (vehiculo[0]) {
+          console.log("else")
+
           Swal.fire({
             title: "Ups!",
             text:
@@ -135,8 +135,6 @@ export default function FormVehiculo() {
                 navigate("/formconductor");
               });
             } else if (r.isDenied) {
-          console.log("3")
-
               Swal.fire({
                 title: "En instantes serás redirigide a la creación de tu vehículo",
                 showConfirmButton: false,
@@ -153,7 +151,6 @@ export default function FormVehiculo() {
           });
         } else {
           dispatch(postVehiculo(auto));
-          console.log("4")
           Swal.fire({
             title: "El registro ha sido exitoso!",
             icon: "success",

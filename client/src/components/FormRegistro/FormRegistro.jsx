@@ -14,7 +14,7 @@ export default function FormRegistro() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const usuarios = useSelector(state => state.usuarios);
+  const usuarios = useSelector((state) => state.usuarios);
   const [statePassword, setStatePassword] = useState(false);
   const [input, setInput] = useState({
     nombre: "",
@@ -126,22 +126,21 @@ export default function FormRegistro() {
       Swal.fire({
         title: "Alto!",
         text: "Por favor completá todos los campos",
-        icon: "warning"
+        icon: "warning",
       });
     } else if (mailUsuarios && mailUsuarios.includes(input.email)) {
       Swal.fire({
         title: "Alto",
         icon: "error",
-        text:
-          "El email ya está registrado, por favor registrá otro email o iniciá sesión",
+        text: "El email ya está registrado, por favor registrá otro email o iniciá sesión",
         confirmButtonText: "Iniciar sesión",
         showDenyButton: true,
         denyButtonText: "Registrar otro email",
         denyButtonColor: "#990099",
         allowOutsideClick: false,
         allowEscapeKey: false,
-        allowEnterKey: false
-      }).then(r => {
+        allowEnterKey: false,
+      }).then((r) => {
         if (r.isConfirmed) {
           Swal.fire({
             title: "En instantes serás redirigide al inicio",
@@ -153,7 +152,7 @@ export default function FormRegistro() {
             allowEnterKey: false,
             didOpen: () => {
               Swal.showLoading();
-            }
+            },
           }).then(() => {
             navigate("/login");
           });
@@ -165,7 +164,7 @@ export default function FormRegistro() {
       cookies.set("nombre", input.nombre, { path: "/" });
       cookies.set("apellido", input.apellido, { path: "/" });
       cookies.set("avatar", input.avatar, { path: "/" });
-      dispatch(registroUsuario(input)).then(r => console.log(r));
+      dispatch(registroUsuario(input)).then((r) => console.log(r));
       let cookieNombre = cookies.get("nombre");
       Swal.fire({
         title: "El registro ha sido exitoso!",

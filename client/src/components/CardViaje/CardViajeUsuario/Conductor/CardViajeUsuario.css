@@ -30,7 +30,7 @@
   width: 100%;
   height: auto;
 }
-.steering{
+.steering {
   width: 100%;
   height: 1.5em;
 }
@@ -80,7 +80,61 @@
   border-radius: 50%;
   width: 6em;
 }
-.steering{
+.steering {
   width: 100%;
   height: 1.5em;
+}
+
+@media screen and (max-width: 900px) {
+  .parent {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+  #nueva-clase > div > svg {
+    margin-left: -45%;
+  }
+  #nueva-clase > div > div.div1 > div > a {
+    font-size: 2rem;
+  }
+  #nueva-clase > div > div.div1 {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-evenly;
+  }
+  #nueva-clase > div > div.div2 {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+  }
+  #nueva-clase > div > div.div3 {
+    margin-bottom: 2rem;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .parent {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+  #nueva-clase > div > svg {
+    margin-left: -45%;
+  }
+  #nueva-clase > div > div.div1 > div > a {
+    font-size: 2rem;
+  }
+  #nueva-clase > div > div.div1 {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-evenly;
+  }
+  #nueva-clase > div > div.div2 {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+  }
+  #nueva-clase > div > div.div3 {
+    margin-bottom: 2rem;
+  }
 }

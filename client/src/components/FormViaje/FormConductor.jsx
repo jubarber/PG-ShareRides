@@ -36,7 +36,8 @@ export default function FormPasajero() {
     formaDePago: "A coordinar",
     email: cookieMail,
     detalles: "",
-    patente: cookiePatente
+    patente: cookiePatente,
+    telefono:""
   });
   const expresiones = {
     // fecha: /^.{4,18}$/,
@@ -212,8 +213,8 @@ export default function FormPasajero() {
       Swal.fire({
         title: "El registro ha sido exitoso!",
         icon: "success",
-        confirmButtonText: "Buen viaje!"
-      }).then(function() {
+        confirmButtonText: "Buen viaje!",
+      }).then(function () {
         navigate("/home");
       });
       dispatch(postViajeConductor(isChecked, viaje));
@@ -227,7 +228,8 @@ export default function FormPasajero() {
         asiento: "",
         formaDePago: "A coordinar",
         email: "",
-        detalles: ""
+        detalles: "",
+        telefono:""
       });
     }
   }
@@ -311,6 +313,16 @@ export default function FormPasajero() {
                 value={viaje.dni}
                 onChange={e => handleOnChange(e)}
               />
+               <label className="Conductore__formulario_label">
+               Numero de telefono
+              </label>
+              <input
+                className="Conductore__input"
+                type="text"
+                name="telefono"
+                value={viaje.telefono}
+                onChange={e => handleOnChange(e)}
+              />
             </div>
             <div className="Conductore__input_2">
               <div>
@@ -353,6 +365,7 @@ export default function FormPasajero() {
               })}
               {isChecked[4] &&
                 <select
+                  className="select-formaDePago"
                   name="formaDePago"
                   value={viaje.formaDePago}
                   onChange={e => handleOnChange(e)}

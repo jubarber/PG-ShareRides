@@ -20,7 +20,8 @@ router.post("/conductor", async (req, res, next) => {
       dni,
       detalles,
       email,
-      patente
+      patente,
+      telefono
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
@@ -39,7 +40,8 @@ router.post("/conductor", async (req, res, next) => {
         pagoCompartido,
         detalles,
         vehiculoPatente: patente,
-        status: "conductor"
+        status: "conductor",
+        telefono
       });
       await nuevoViaje.addUsuario(email);
       res.json(nuevoViaje);
@@ -94,7 +96,8 @@ router.post("/pasajero", async (req, res, next) => {
       email,
       dni,
       detalles,
-      nombre
+      nombre,
+      telefono
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
@@ -112,7 +115,8 @@ router.post("/pasajero", async (req, res, next) => {
         usaBarbijo,
         pagoCompartido,
         detalles,
-        status: "pasajero"
+        status: "pasajero",
+        telefono
       });
       await nuevoViaje.addUsuario(email);
     }
@@ -159,13 +163,13 @@ router.get("/totalviajes/:email", async (req, res, next) => {
         {
           model: Usuario,
           where: {
-            email
-          }
+            email,
+          },
         },
         {
-          model: Vehiculo
-        }
-      ]
+          model: Vehiculo,
+        },
+      ],
     });
     res.send(totalViajes);
   } catch (error) {
@@ -178,12 +182,12 @@ router.get("/totalviajes", async (req, res, next) => {
     let totalViajes = await Viaje.findAll({
       include: [
         {
-          model: Usuario
+          model: Usuario,
         },
         {
-          model: Vehiculo
-        }
-      ]
+          model: Vehiculo,
+        },
+      ],
     });
     res.send(totalViajes);
   } catch (error) {
@@ -198,7 +202,7 @@ router.get("/filtros", async (req, res, next) => {
     aceptaEquipaje,
     usaBarbijo,
   } = req.query;
-  console.log(noAceptaFumador)
+  console.log(noAceptaFumador);
   try {
     let viajesTotal;
     let viajesFiltrados = [];
@@ -357,13 +361,14 @@ router.get("/:viajeId", async (req, res, next) => {
     let viajeEncontrado = await Viaje.findByPk(viajeId, {
       include: [
         {
-          model: Usuario
+          model: Usuario,
         },
         {
-          model: Vehiculo
-        }
-      ]
+          model: Vehiculo,
+        },
+      ],
     });
+    console.log(viajeEncontrado)
     res.send(viajeEncontrado);
   } catch (err) {
     next(err);
@@ -375,14 +380,41 @@ router.put("/sumarse", async (req, res, next) => {
     const viajeUsuario = await Viaje.findByPk(id, {
       include: [
         {
-          model: Usuario
+          model: Usuario,
         },
         {
-          model: Vehiculo
-        }
-      ]
+          model: Vehiculo,
+        },
+      ],
     });
     await viajeUsuario.addUsuario(email);
+    // sgMail.setApiKey(API_KEY);
+
+    // const message = {
+    //   to: email,
+    //   from: "pgsharerides@gmail.com",
+
+    //   subject: "Te uniste al viaje!",
+    //   html: <html>
+    //   <head>
+    //   <h2>
+    //   Hola ${nombre}!
+    //   </h2>
+    //   </head>
+    //   <body>
+    //   <h4>
+    //   Te has unido exitosamente al viaje deseado!
+    //    En el detalle del mismo, aprentando en el boton "enviar mensaje", podras comunicarte via WhatsApp con quien lo creo.
+    //   </h4>
+    //   <h3>Buenas rutas!</h3>
+    //   </body>
+    //   </html>
+    //   ,
+    // };
+    // sgMail
+    //   .send(message)
+    //   .then((r) => console.log("mail enviado"))
+    //   .catch((err) => console.log(err.message));
     res.send(viajeUsuario);
   } catch (err) {
     next(err);
@@ -393,7 +425,7 @@ router.put("/modificarAsiento", async (req, res, next) => {
   try {
     let asientos = await Viaje.findByPk(id);
     asientos.update({
-      asientosAOcupar: asientosAOcupar - 1
+      asientosAOcupar: asientosAOcupar - 1,
     });
     asientos.save();
     res.send(asientos);
@@ -405,7 +437,7 @@ router.put("/pausarViaje/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
     let viaje = await Viaje.findByPk(id, {
-      include: [{ model: Usuario }, { model: Vehiculo }]
+      include: [{ model: Usuario }, { model: Vehiculo }],
     });
     viaje.update({ viajeDisponible: false });
     viaje.save();
@@ -418,7 +450,7 @@ router.put("/reactivararViaje/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
     let viaje = await Viaje.findByPk(id, {
-      include: [{ model: Usuario }, { model: Vehiculo }]
+      include: [{ model: Usuario }, { model: Vehiculo }],
     });
     viaje.update({ viajeDisponible: true });
     viaje.save();
@@ -441,7 +473,7 @@ router.put("/modificarViaje/:id", async (req, res, next) => {
     usaBarbijo
   } = req.body;
   let viaje = await Viaje.findByPk(id, {
-    include: [{ model: Usuario }, { model: Vehiculo }]
+    include: [{ model: Usuario }, { model: Vehiculo }],
   });
   if (fecha) {
     viaje.update({ fecha: fecha });

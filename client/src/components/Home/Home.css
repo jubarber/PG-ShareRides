@@ -56,14 +56,14 @@
   border-color: white;
 }
 
-.bot-conteiner{
+.bot-conteiner {
   position: fixed;
-  bottom: 0;
-  right: 0;
+  bottom: 1rem;
+  right: 1rem;
   margin-bottom: 1rem;
   margin-right: 1rem;
 }
-.btn-bot{
+.btn-bot {
   margin: 0.25em;
   height: auto;
   line-height: 40px;
@@ -75,11 +75,93 @@
   border-radius: 0.5em;
   cursor: pointer;
   transition: 0.1s easy all;
-  margin-left: 10rem
- 
+  margin-left: 10rem;
 }
 
-.no-disponible{
+.home-Show-Filtros {
+  display: none;
+}
+
+.home-Filtros {
+  display: none;
+}
+
+@media screen and (max-width: 900px) {
+  .home-general-filtros {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 759px) {
+  #general-card {
+    margin-top: 2rem;
+  }
+
+  .home-general {
+    margin-top: 2rem;
+  }
+
+  .home-Show-Filtros {
+    width: 100%;
+    height: 2rem;
+    background-color: midnightblue;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .home-Filtros {
+    display: block;
+  }
+  .home-general-filtros {
+    display: none;
+  }
+  .home-Show-Filtros label {
+    font-weight: bold;
+    color: white;
+  }
+  #root > div > div > button > svg {
+    color: white;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .home-general-filtros {
+    display: none;
+  }
+  .home-Filtros {
+    display: block;
+    margin-top: 2rem;
+    width: 109%;
+  }
+  .home-Show-Filtros {
+    width: 109%;
+    height: 2rem;
+    background-color: midnightblue;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .home-Show-Filtros label {
+    font-weight: bold;
+    color: white;
+  }
+  #root > div > div > button > svg {
+    color: white;
+  }
+  #general-card > div.container-cards > div > h3 {
+    display: flex;
+    font-size: 2rem;
+    margin-left: 3rem;
+  }
+  #general-card > div.container-cards > div > img {
+    display: flex;
+    margin-left: 7rem;
+  }
+}
+
+.no-disponible {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -87,12 +169,12 @@
   font-weight: bold;
   font-size: 2rem;
   color: black;
-   }
+}
 
-.imagen{
+.imagen {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-left: 42rem;
-  background: none
+  background: none;
 }

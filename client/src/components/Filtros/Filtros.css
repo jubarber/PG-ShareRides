@@ -1,6 +1,7 @@
 .font-mono {
   height: 100%;
 }
+
 .asientos {
   margin-top: 0%;
   width: 21rem;
@@ -72,6 +73,19 @@
   box-shadow: inset 0px 0px 2px rgb(37, 37, 37);
 }
 
+.select-filtros {
+  width: 14rem;
+  padding: 1rem;
+  background: midnightblue;
+  color: white;
+  border-radius: 20px;
+}
+
+.select-filtros:focus {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
 .select {
   font-size: 20px;
   margin-top: 5px;
@@ -96,4 +110,26 @@
   align-items: center;
   background-color: rgb(116, 20, 207);
   justify-content: space-around;
+}
+
+@media screen and (max-width: 759px) {
+  .contenedor-filtros {
+    width: 100%;
+  }
+  .asientos {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .contenedor-filtros {
+    width: 100%;
+  }
+  .asientos {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
 }

@@ -11,18 +11,18 @@ import Swal from "sweetalert2";
 export default function LandingPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const error = useSelector(state => state.error);
-  const usuarioReducer = useSelector(state => state.usuario);
+  const error = useSelector((state) => state.error);
+  const usuarioReducer = useSelector((state) => state.usuario);
   const [menu, SetMenu] = useState(false);
   const cookies = new Cookies();
   const [usuario, setUsuario] = useState("hola soy usuario de google");
 
-  const responseGoogle = response => {
+  const responseGoogle = (response) => {
     setUsuario({
       nombre: response.profileObj.givenName,
       apellido: response.profileObj.familyName,
       email: response.profileObj.email,
-      avatar: response.profileObj.imageUrl
+      avatar: response.profileObj.imageUrl,
     });
   };
 
@@ -83,7 +83,7 @@ export default function LandingPage() {
       <div className="page">
         <div className="card">
           <div className="container">
-             <div className="content">
+            <div className="content">
               <div className="text">
                 <h2>Viajes compartidos inclusivos</h2>
                 <p>
@@ -93,11 +93,21 @@ export default function LandingPage() {
                   sintiéndote segura y libre de prejuicios!
                 </p>
                 <div className="btn">
-                  <button className="login-registro" onClick={() => {navigate("/login")}}>
-                  Inciar Sesion
+                  <button
+                    className="login-registro"
+                    onClick={() => {
+                      navigate("/login");
+                    }}
+                  >
+                    Inciar Sesion
                   </button>
-                  <button className="login-registro"  onClick={() => {navigate("/registro")}}>
-                   Registrarse
+                  <button
+                    className="login-registro"
+                    onClick={() => {
+                      navigate("/registro");
+                    }}
+                  >
+                    Registrarse
                   </button>
 
                   <GoogleLogin

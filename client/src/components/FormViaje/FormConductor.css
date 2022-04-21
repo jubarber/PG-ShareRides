@@ -205,7 +205,6 @@
   cursor: pointer;
   box-shadow: inset 0px 0px 2px rgb(15, 15, 15);
   position: relative;
-  top: 0.3rem;
   margin-right: 5rem;
   margin-left: 1rem;
 }
@@ -220,4 +219,111 @@
   background: rgb(248, 22, 22);
   transition: 0.5s;
   box-shadow: inset 0px 0px 2px rgb(37, 37, 37);
+}
+
+@media screen and (max-width: 717px) {
+  .Conductore__form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  #root
+    > div
+    > div
+    > form
+    > div.order-form
+    > div.Conductore__form
+    > div.Conductore__input_1
+    > div
+    > div
+    > input {
+    width: 15rem;
+  }
+  .Conductore__input {
+    width: 15rem;
+  }
+  .Conductore__input_1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 80%;
+  }
+  .Conductore__input_2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 80%;
+  }
+  .Conductore__mycheckbox {
+    display: flex;
+    font-size: 1.1rem;
+  }
+  .label-detalles textarea {
+    width: 20rem;
+  }
+
+  .select-formaDePago {
+    width: 10rem;
+    margin-top: 2rem;
+    margin-left: 2rem;
+  }
+
+  .Conductore_btn .Conductore__btn_registro {
+    margin-top: 3rem;
+    width: 12rem;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .Conductore__form {
+    display: flex;
+    flex-direction: column;
+    margin-left: 5rem;
+  }
+  #root
+    > div
+    > div
+    > form
+    > div.order-form
+    > div.Conductore__form
+    > div.Conductore__input_1
+    > div
+    > div
+    > input {
+    width: 80%;
+  }
+  .Conductore__input {
+    width: 80%;
+  }
+  .Conductore__input_1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 80%;
+  }
+  .Conductore__input_2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 80%;
+  }
+  .Conductore__mycheckbox {
+    display: flex;
+    font-size: 1.1rem;
+    width: 25rem;
+  }
+  .label-detalles textarea {
+    width: 20rem;
+  }
+
+  .select-formaDePago {
+    width: 10rem;
+    margin-top: 2rem;
+    margin-left: 2rem;
+  }
+
+  .Conductore_btn .Conductore__btn_registro {
+    margin-top: 3rem;
+    width: 12rem;
+  }
 }
