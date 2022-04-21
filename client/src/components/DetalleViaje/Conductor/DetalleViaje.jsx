@@ -119,9 +119,9 @@ export const DetalleViajec = () => {
     email: cookieMail,
   });
 
-  const handleColaborar = () => {
-    dispatch(postOrder(cookieMail)).then((data) => {
-      if (data) setDatosMp({ ...datosMp, orderId: data.payload[0].id });
+  const handleColaborar = async () => {
+    await dispatch(postOrder(cookieMail)).then((data) => {
+      setDatosMp({ ...datosMp, orderId: data && data.payload[0].id });
     });
   };
 
@@ -130,11 +130,13 @@ export const DetalleViajec = () => {
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(postColaboracion(datosMp));
-    console.log("submit");
+    // console.log("submit");
     if (datosMp.length !== 0) {
       axios
         .get(
-          `http://localhost:3001/api/mercadopago/${datosMp.orderId}/${datosMp.unit_price}`
+          `/api/mercadopago/${datosMp && datosMp.orderId}/${
+            datosMp && datosMp.unit_price
+          }`
         )
         .then((r) => setRedirect(r.data));
     }
@@ -161,10 +163,10 @@ export const DetalleViajec = () => {
           viajesFechasCoincidentes.push(v);
         }
       });
-      console.log(viajesPorUsuario);
-      console.log(viajesFechasCoincidentes);
+      // console.log(viajesPorUsuario);
+      // console.log(viajesFechasCoincidentes);
       if (viajesFechasCoincidentes.length !== 0) {
-        console.log("if sumarse");
+        // console.log("if sumarse");
         Swal.fire({
           title: "Ya tienes un viaje programado para este día",
           icon: "warning",
@@ -177,7 +179,7 @@ export const DetalleViajec = () => {
           navigate("/home");
         });
       } else {
-        console.log("else sumarse");
+        // console.log("else sumarse");
         Swal.fire({
           title: "Estás a punto de sumarte a este viaje",
           icon: "warning",
@@ -210,7 +212,7 @@ export const DetalleViajec = () => {
         });
       }
     } else {
-      console.log("else sumarse");
+      // console.log("else sumarse");
       Swal.fire({
         title: "Estás a punto de sumarte a este viaje",
         icon: "warning",
@@ -275,7 +277,7 @@ export const DetalleViajec = () => {
   }
 
   function handleModificar() {
-    console.log("handle modificar");
+    // console.log("handle modificar");
     cookies.set("fecha", viaje.fecha, { path: "/" });
     cookies.set("hora", viaje.hora, { path: "/" });
     cookies.set("origen", viaje.origen, { path: "/" });
@@ -313,7 +315,7 @@ export const DetalleViajec = () => {
       navigate(`/modificar/modificarViaje/${id}`);
     });
   }
-
+  console.log("estos es viaje: ", viaje);
   return (
     <div>
       {arrayPasajeres && arrayPasajeres.length !== 0 && (
@@ -420,10 +422,16 @@ export const DetalleViajec = () => {
                 {(botonesPasajeroSumado === true || botonesPasajero === true) &&
                 botonesConductor !== true ? (
                   <div className="btn-detalle">
-                    <button className="detalle-mensaje">
-                      {/* onClick={} */}
-                      Enviar Mensaje
-                    </button>
+                    <a
+                      href={`https://api.whatsapp.com/send?phone=+549${viaje.telefono}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <button className="detalle-mensaje">
+                        {/* onClick={} */}
+                        Enviar Mensaje
+                      </button>
+                    </a>
                   </div>
                 ) : null}
               </div>

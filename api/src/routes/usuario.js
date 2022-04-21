@@ -93,22 +93,19 @@ router.post("/registro", async (req, res, next) => {
 router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
   try {
     const { email, password } = req.params;
+    //console.log("soy email" , email);
     if (email) {
       var dbUsuario = await Usuario.findOne(
-        { where: { email: email } },
+        { where: { email: email, eliminado: false } },
         { include: Viaje }
       );
       if (dbUsuario) {
-        if (dbUsuario.disponible === false) {
-          res.send("usuario pausado");
-        }
-        if (dbUsuario.password === password) {
-          res.send("ok");
-        }
         if (dbUsuario.password !== password) {
           res.send("contraseña incorrecta");
-        }
-      } else res.send("usuario no encontrado");
+        } else res.send("usuario inicia sesion");
+      } else {
+        res.send("Usuario Eliminado")
+      }
     }
   } catch (err) {
     next(err);

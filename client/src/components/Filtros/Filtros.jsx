@@ -11,7 +11,7 @@ import SearchBar from "../SearchBar/SearchBar";
 export function Filtros() {
   const dispatch = useDispatch();
   let select = {};
-
+  
   const filtrosArray = [
     {
       id: 1,

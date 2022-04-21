@@ -30,8 +30,9 @@ export default function Login() {
   function iniciarSesion(input) {
     axios({
       method: "get",
-      url: `/api/usuario/iniciarsesion/${input.email}/${input.password}`
-    }).then(r => setInicioSesion(r.data));
+      url: `/api/usuario/iniciarsesion/${input.email}/${input.password}`,
+    }).then((r) => setInicioSesion(r.data));
+
   }
 
   function getUsuarioByEmail(email) {

@@ -1,0 +1,51 @@
+.mainContainer {
+    background-color: rgb(78, 206, 166);
+    display: flex;
+    flex-flow: row wrap;
+    margin:5px 5px;
+    padding: 1%;
+    width: 30%
+    }
+    .profileAdmin{
+        width: 125px;
+    }
+    .ulContainer{
+        background-color: beige;
+        width: 100%;
+        padding: 10px;
+        
+    }
+    .imageLi{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 8px;
+    }
+    .ulContainer img{
+        border-radius: 50%;
+    }
+    .ulContainer li:not(.imageLi){
+        background-color: rgb(219, 189, 189);
+        padding: 4px;
+        margin: 1px 1px
+    }
+    .ulContainer li:not(.imageLi) span{
+    font-weight: bold;
+    }
+    .comentariosContainer{
+        background-color: rgb(216, 209, 223);
+        padding: 5px;
+        width: 100%;
+    }
+    .comentariosContainer div{
+        
+        background-color: orange;
+        margin: 0 auto
+    }
+    .comentariosContainer h4{
+        background-color: black;
+        color: #fff;
+        padding: 5px;
+        width: 100%;
+        text-align: center;
+    }
