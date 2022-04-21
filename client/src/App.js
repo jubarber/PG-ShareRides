@@ -22,7 +22,7 @@ import Temporal from "./components/TemporalColaboracion/Temporal";
 import Colaboracion from "./components/Colaboraciones/Colaboracion";
 import { Misviajes } from "./components/MisViajes/misviajes";
 
-function App() {
+export default function App() {
   return (
     <div className="App">
       <BrowserRouter>
@@ -52,4 +52,3 @@ function App() {
     </div>
   );
 }
-export default App;
