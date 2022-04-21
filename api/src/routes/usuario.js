@@ -14,10 +14,16 @@ router.post("/registro", async (req, res, next) => {
     const { email, nombre, apellido, password, avatar } = req.body;
     let nuevoUsuario = [];
     if (email) {
-        nuevoUsuario = await Usuario.findOrCreate({
-          where: { email: email, nombre: nombre, apellido: apellido, password: password, avatar: avatar }
-        });
-        res.json(nuevoUsuario);
+      nuevoUsuario = await Usuario.findOrCreate({
+        where: {
+          email: email,
+          nombre: nombre,
+          apellido: apellido,
+          password: password,
+          avatar: avatar,
+        },
+      });
+      res.json(nuevoUsuario);
       // const sgMail = require("@sendgrid/mail");
 
       // sgMail.setApiKey(API_KEY);
@@ -131,9 +137,8 @@ router.get("/usuarios/:email", async (req, res, next) => {
         { model: Comentarios },
         { model: Reportados },
         { model: Viaje },
-        { model: Vehiculo }
-      ]
-
+        { model: Vehiculo },
+      ],
     });
     if (usuario) res.send(usuario);
     else res.send("error");
@@ -141,7 +146,6 @@ router.get("/usuarios/:email", async (req, res, next) => {
     next(err);
   }
 });
-
 
 router.post("/registro", async (req, res, next) => {
   try {
@@ -381,7 +385,7 @@ router.put("/eliminarPerfil", async (req, res, next) => {
   try {
     let usuarioEliminado = await Usuario.findByPk(email);
     usuarioEliminado.update({
-      disponible: false
+      disponible: false,
     });
     usuarioEliminado.save();
     res.send(usuarioEliminado);
@@ -396,7 +400,7 @@ router.put("/activarPerfil", async (req, res, next) => {
     let usuarioActivado = await Usuario.findByPk(email);
     if (usuarioActivado.length !== 0) {
       usuarioActivado.update({
-        disponible: true
+        disponible: true,
       });
       usuarioActivado.save();
     }

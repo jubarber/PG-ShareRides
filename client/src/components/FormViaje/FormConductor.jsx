@@ -209,8 +209,8 @@ export default function FormPasajero() {
       Swal.fire({
         title: "El registro ha sido exitoso!",
         icon: "success",
-        confirmButtonText: "Buen viaje!"
-      }).then(function() {
+        confirmButtonText: "Buen viaje!",
+      }).then(function () {
         navigate("/home");
       });
       dispatch(postViajeConductor(isChecked, viaje));

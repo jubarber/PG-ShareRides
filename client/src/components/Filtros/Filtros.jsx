@@ -16,58 +16,55 @@ export function Filtros() {
     {
       id: 1,
       name: "Viajes que aceptan Fumador",
-      value: "fumador"
+      value: "fumador",
     },
     {
       id: 5,
       name: "Viajes que no aceptan Fumador",
-      value: "noFumador"
+      value: "noFumador",
     },
     {
       id: 2,
       name: "Viajes que aceptan Mascota",
-      value: "mascota"
+      value: "mascota",
     },
     {
       id: 3,
       name: "Viajes que aceptan Equipaje",
-      value: "equipaje"
+      value: "equipaje",
     },
     {
       id: 4,
       name: "Viajes que exigen uso de Barbijo",
-      value: "barbijo"
-    }
+      value: "barbijo",
+    },
   ];
 
-  useEffect(
-    () => {
-      dispatch(getViajesTotal());
-    },
-    [dispatch]
-  );
+  useEffect(() => {
+    dispatch(getViajesTotal());
+  }, [dispatch]);
 
   function handleSelect(e) {
     e.preventDefault();
     if (e.target.value === "fumador") {
       select.aceptaFumador = true;
-      dispatch(filtros(select))
+      dispatch(filtros(select));
     }
     if (e.target.value === "mascota") {
       select.aceptaMascota = true;
-      dispatch(filtros(select))
+      dispatch(filtros(select));
     }
     if (e.target.value === "equipaje") {
       select.aceptaEquipaje = true;
-      dispatch(filtros(select))
+      dispatch(filtros(select));
     }
     if (e.target.value === "barbijo") {
       select.usaBarbijo = true;
-      dispatch(filtros(select))
+      dispatch(filtros(select));
     }
     if (e.target.value === "noFumador") {
       select.noAceptaFumador = true;
-      dispatch(filtros(select))
+      dispatch(filtros(select));
     }
   }
 
@@ -78,29 +75,22 @@ export function Filtros() {
           <SearchBar />
         </div>
         <div>
-          <FormControl variant="standard" sx={{ m: 1, minWidth: 175 }}>
-            <InputLabel
-              id="demo-simple-select-standard-label"
-              sx={{ color: "white" }}
-              className="input-Select"
-            >
-              Filtrar por:
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-standard-label"
-              id="demo-simple-select-standard"
-              onChange={e => handleSelect(e)}
-              sx={{ borderColor: "white" }}
-            >
-              {filtrosArray.map(f => {
-                return (
-                  <MenuItem key={f.id} value={f.value}>
-                    {f.name}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
+          <InputLabel
+            id="demo-simple-select-standard-label"
+            sx={{ color: "white" }}
+            className="input-Select"
+          >
+            Filtrar por:
+          </InputLabel>
+          <select className="select-filtros">
+            {filtrosArray.map((f) => {
+              return (
+                <option key={f.id} value={f.value}>
+                  {f.name}
+                </option>
+              );
+            })}
+          </select>
         </div>
       </div>
     </div>

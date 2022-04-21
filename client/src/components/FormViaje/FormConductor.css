@@ -278,7 +278,7 @@
   .Conductore__form {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    margin-left: 5rem;
   }
   #root
     > div
@@ -290,10 +290,10 @@
     > div
     > div
     > input {
-    width: 15rem;
+    width: 80%;
   }
   .Conductore__input {
-    width: 15rem;
+    width: 80%;
   }
   .Conductore__input_1 {
     display: flex;
@@ -310,6 +310,7 @@
   .Conductore__mycheckbox {
     display: flex;
     font-size: 1.1rem;
+    width: 25rem;
   }
   .label-detalles textarea {
     width: 20rem;
