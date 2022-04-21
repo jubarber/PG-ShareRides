@@ -75,32 +75,32 @@ export function filtros(select) {
     if (select.aceptaFumador) {
       viajes = await axios({
         method: "get",
-        url: `http://localhost:3001/api/viaje/filtros?aceptaFumador=${select.aceptaFumador}`,
+        url: `/api/viaje/filtros?aceptaFumador=${select.aceptaFumador}`,
       });
     }
     if (select.noAceptaFumador) {
       console.log(select.noAceptaFumador);
       viajes = await axios({
         method: "get",
-        url: `http://localhost:3001/api/viaje/filtros?noAceptaFumador=${select.noAceptaFumador}`,
+        url: `/api/viaje/filtros?noAceptaFumador=${select.noAceptaFumador}`,
       });
     }
     if (select.aceptaMascota) {
       viajes = await axios({
         method: "get",
-        url: `http://localhost:3001/api/viaje/filtros?aceptaMascota=${select.aceptaMascota}`,
+        url: `/api/viaje/filtros?aceptaMascota=${select.aceptaMascota}`,
       });
     }
     if (select.aceptaEquipaje) {
       viajes = await axios({
         method: "get",
-        url: `http://localhost:3001/api/viaje/filtros?aceptaEquipaje=${select.aceptaEquipaje}`,
+        url: `/api/viaje/filtros?aceptaEquipaje=${select.aceptaEquipaje}`,
       });
     }
     if (select.usaBarbijo) {
       viajes = await axios({
         method: "get",
-        url: `http://localhost:3001/api/viaje/filtros?usaBarbijo=${select.usaBarbijo}`,
+        url: `/api/viaje/filtros?usaBarbijo=${select.usaBarbijo}`,
       });
     }
     return dispatch({ type: "FILTROS", payload: viajes?.data });
@@ -438,7 +438,7 @@ export function reportarComentarios(payload) {
     try {
       let comentarioReportado = await axios({
         method: "put",
-        url: "http://localhost:3001/api/comentarios/reportarComentarios",
+        url: "/api/comentarios/reportarComentarios",
         data: {
           id: payload,
         },
@@ -560,7 +560,7 @@ export function modificarAsiento(payload) {
     try {
       const viaje = await axios({
         method: "PUT",
-        url: "http://localhost:3001/api/viaje/modificarAsiento",
+        url: "/api/viaje/modificarAsiento",
         data: {
           asientosAOcupar: payload.asientosAOcupar,
           id: payload.id,
@@ -714,7 +714,7 @@ export function modificarViaje(id, checkboxes, viaje) {
     try {
       let viajeModificado = await axios({
         method: "put",
-        url: `http://localhost:3001/api/viaje/modificarViaje/${id}`,
+        url: `/api/viaje/modificarViaje/${id}`,
         data: {
           aceptaFumador: checkboxes[0],
           aceptaMascota: checkboxes[1],
