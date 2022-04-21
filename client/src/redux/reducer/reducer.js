@@ -1,28 +1,39 @@
 import {
   GET_DETALLE_VIAJE,
   GET_VIAJES_TOTAL,
-  FILTRO_CHECKS,
+  FILTROS,
   REGISTRO_USUARIO,
   SEARCHORIGEN,
   SEARCHDESTINO,
   GET_USUARIOS,
   USUARIO_MAIL,
   FILTERTYPE,
-  MODIFICAR_PERFIL,
-  COMENTARIOS,
   GET_COMENTARIOS,
   GET_LOCALIDADES,
+  GET_COMENTARIO_BY_ID,
+  GET_COLABORACIONES,
+  GET_VIAJES_TOTAL_USUARIO,
+  GET_VEHICULOS,
+  ACTIVAR_USUARIO,
+  PAUSAR_VIAJE,
+  REACTIVAR_VIAJE,
+
 } from "../actions/actions.js";
 
 const initialState = {
-  viajePorId: [],
   viajes: [],
-  viajesFiltrados: [],
+  viajePorId: [],
+  viajesPorUsuario: [],
+  viajesPausados: [],
   usuarios: [],
   usuario: [],
-  error: "",
   comentarios: [],
+  comentarioPorId: [],
   localidades: [],
+  colaboraciones: [],
+  vehiculos: [],
+  error: "",
+  viajesFiltrados: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -33,6 +44,7 @@ function rootReducer(state = initialState, action) {
         viajePorId: action.payload,
       };
     case GET_VIAJES_TOTAL:
+      console.log(state.viajesFiltrados)
       return {
         ...state,
         viajes: action.payload,
@@ -43,7 +55,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         usuarios: action.payload,
       };
-    case FILTRO_CHECKS:
+    case FILTROS:
       return {
         ...state,
         viajesFiltrados: action.payload,
@@ -64,7 +76,6 @@ function rootReducer(state = initialState, action) {
         viajesFiltrados: action.payload,
       };
     case USUARIO_MAIL:
-      // console.log(action.payload)
       if (action.payload === "error") {
         return { ...state, error: action.payload, usuario: {} };
       } else {
@@ -75,7 +86,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         comentarios: action.payload,
       };
-
     case FILTERTYPE:
       const viajes_usuario = state.viajes.filter(
         (e) => e.status === action.payload
@@ -89,6 +99,42 @@ function rootReducer(state = initialState, action) {
         ...state,
         localidades: action.payload,
       };
+    case GET_COMENTARIO_BY_ID: {
+      return {
+        ...state,
+        comentarioPorId: action.payload,
+      };
+    }
+    case GET_COLABORACIONES:
+      return {
+        ...state,
+        colaboraciones: action.payload
+      }
+      case GET_VIAJES_TOTAL_USUARIO:
+        return{
+          ...state,
+          viajesPorUsuario: action.payload
+        }
+      case GET_VEHICULOS:
+        return {
+          ...state,
+          vehiculos: action.payload
+        }
+      case ACTIVAR_USUARIO:
+        return {
+          ...state,
+          usuario: action.payload
+        }
+      case PAUSAR_VIAJE:
+        return{
+          ...state,
+          viajesPausados: [...state.viajesPausados, action.payload]
+        }
+      case REACTIVAR_VIAJE:
+        return {
+          ...state,
+          viajesFiltrados: [...state.viajesFiltrados, action.payload]
+        }
     default:
       return { ...state };
   }

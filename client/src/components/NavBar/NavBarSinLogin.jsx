@@ -1,5 +1,5 @@
 import React from "react";
-import "./NavBar.css";
+import "./NavBarSinLogin.css";
 import logo from "../../assets/Icono shareRides.png";
 import { Link } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
@@ -16,20 +16,20 @@ export default function NavBar() {
   };
 
   return (
-    <div className="contenedor-NavBar">
-      <div className="contenedor-titulo">
-        <div className="titulo-NavBar">
+    <div className="navBarSinLogin__contenedor-NavBar">
+      <div className="navBarSinLogin__contenedor-titulo">
+        <div className="navBarSinLogin__titulo-NavBar">
           <h1>
             <img src={logo} alt="" />
             Share Rides
           </h1>
         </div>
-        <div className="panel-botones">
-          <Link to="/home">
-            <button className="btn btn-outline-primary" type="button">
+        <div className="navBarSinLogin__panel-botones">
+          <button className="btn btn-outline-primary" type="button">
+            <Link to="/home">
               <FaHome />
-            </button>
-          </Link>
+            </Link>
+          </button>
         </div>
       </div>
     </div>

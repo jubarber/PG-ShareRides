@@ -5,8 +5,7 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import DatePicker from "react-datepicker";
 import moment from "moment";
-import swal from "sweetalert";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 import axios from "axios";
 import Cookies from "universal-cookie";
 // import "./Calendar.css"
@@ -20,7 +19,6 @@ export default function Calendario() {
   const usuarios = useSelector(state=> state.usuarios)
   const [fecha, setFecha] = useState(new Date());
   const cookieMail = cookies.get("email");
-  // console.log(cookieMail)
 
   useEffect(
     () => {
@@ -30,11 +28,6 @@ export default function Calendario() {
     [dispatch]
   );
   moment().format("dd mm yyyy");
-
-  // console.log("viajes", viajes[0]?.fecha
-  // // .split("-").reverse().join("-") + " " + viajes[0]?.hora
-  // )
-  //v.fecha.split("-").reverse().join("-") + " " + v.hora
 
   let eventos = [];
   viajes.map(v =>
@@ -47,8 +40,6 @@ export default function Calendario() {
       ])
     })
   );
-  // console.log(viajes)
-  // console.log(eventos);
 
   return (
     <div>

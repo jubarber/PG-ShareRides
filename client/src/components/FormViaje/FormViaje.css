@@ -46,3 +46,15 @@
 .btn-formviaje:hover {
   box-shadow: 3px 0px 30px rgba(163, 163, 163, 1);
 }
+
+@media screen and (max-width: 425px) {
+  .btn-formviaje {
+    width: 8rem;
+  }
+
+  .pasajero_conductor {
+    display: flex;
+    flex-direction: column;
+    padding-top: 1rem;
+  }
+}

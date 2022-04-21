@@ -1,17 +1,18 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import swal from "sweetalert";
-import { postVehiculo } from "../../redux/actions/actions";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
+import { postVehiculo, getVehiculos } from "../../redux/actions/actions";
 import fondo from "../../assets/fondo perfil.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
 import "./FormVehiculo.css";
-import Cookies from "universal-cookie"
+import Cookies from "universal-cookie";
 
 export default function FormVehiculo() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const vehiculos = useSelector((state) => state.vehiculos);
   const [auto, setAuto] = useState({
     patente: "",
     marca: "",
@@ -28,6 +29,10 @@ export default function FormVehiculo() {
     email: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
     dni: /^(?!^0+$)[a-zA-Z0-9]{3,20}$/,
   };
+
+  useEffect(() => {
+    dispatch(getVehiculos(cookies.get("email")));
+  }, []);
 
   function validacion(auto) {
     let errors = {};
@@ -71,20 +76,20 @@ export default function FormVehiculo() {
       })
     );
   }
+
+  let vehiculo = [];
   function handleSubmit(e) {
     e.preventDefault();
     if (!auto.patente) {
       e.preventDefault();
-      swal({
+      Swal.fire({
         title: "Alto!",
         text: "Por favor completá todos los campos",
         icon: "warning",
-        button: true,
-        dangerMode: true,
       });
     } else if (Object.keys(errors).length !== 0) {
       e.preventDefault();
-      swal({
+      Swal.fire({
         title: "Alto!",
         text: "Por favor completá todos los campos",
         icon: "warning",
@@ -92,35 +97,109 @@ export default function FormVehiculo() {
         dangerMode: true,
       });
     } else {
-      // swal("Registro exitoso");
-      dispatch(postVehiculo(auto));
-      swal({
-        title: "El registro ha sido exitoso!",
-        icon: "success",
-        button: "Crea tu viaje!",
-      })
-      .then(cookies.set("dni", auto.dni, { path: "/" }))
-      .then(function () {
-        navigate("/formconductor");
-      });
-      setAuto({
-        patente: "",
-        marca: "",
-        modelo: "",
-        dni: "",
-        email: "",
-      });
+      if (typeof(vehiculos) !== "string") {
+        vehiculos.map(v => {
+          if (v.patente === auto.patente) {
+            vehiculo.push(v);
+          }
+        });
+        if (vehiculo[0]) {
+          console.log("else")
+
+          Swal.fire({
+            title: "Ups!",
+            text: "Parece que el vehiculo que intentas registrar ya existe en nuestra base de datos! Deseas continuar o registrar otro?",
+            icon: "info",
+            showDenyButton: true,
+            denyButtonColor: "#990099",
+            confirmButtonText: "Continuar con este vehiculo",
+            denyButtonText: "Registrar otro vehiculo",
+          }).then((r) => {
+            if (r.isConfirmed) {
+              cookies.set("dni", auto.dni, { path: "/" });
+              cookies.set("patente", vehiculos[0].patente, { path: "/" });
+              dispatch(postVehiculo(auto));
+              Swal.fire({
+                title: "En instantes serás redirigide a la creación de tu viaje",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                didOpen: () => {Swal.showLoading()}
+              }).then(() => {
+                navigate("/formconductor");
+              });
+            } else if (r.isDenied) {
+              Swal.fire({
+                title: "En instantes serás redirigide a la creación de tu vehículo",
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                didOpen: () => {Swal.showLoading()}
+              }).then(() => {
+              navigate("/formvehiculo");
+            })
+            }
+          });
+        } else {
+          dispatch(postVehiculo(auto));
+          Swal.fire({
+            title: "El registro ha sido exitoso!",
+            icon: "success",
+            confirmButtonText: "Crea tu viaje!"
+          })
+            .then(
+              cookies.set("dni", auto.dni, { path: "/" }) &&
+                cookies.set("patente", vehiculos[0].patente, { path: "/" })
+            )
+            .then(function() {
+              navigate("/formconductor");
+            });
+          setAuto({
+            patente: "",
+            marca: "",
+            modelo: "",
+            dni: "",
+            email: ""
+          });
+        }
+      } else {
+        dispatch(postVehiculo(auto));
+        Swal.fire({
+          title: "El registro ha sido exitoso!",
+          icon: "success",
+          confirmButtonText: "Crea tu viaje!",
+        })
+          .then(
+            cookies.set("dni", auto.dni, { path: "/" }) &&
+              cookies.set("patente", vehiculos[0].patente, { path: "/" })
+          )
+          .then(function () {
+            navigate("/formconductor");
+          });
+        setAuto({
+          patente: "",
+          marca: "",
+          modelo: "",
+          dni: "",
+          email: "",
+        });
+      }
     }
-    //history.push('/') //quiero q me envie a la seccion completar mi perfil?
   }
 
   return (
     <div>
       <NavBar />
       <div className="Vehiculo__nav">
-        <Link to="/formviaje">
-          <button className="Vehiculo__btn_volver">Volver</button>
-        </Link>
+        <button className="Registro__btn_volver" onClick={() => navigate(-1)}>
+          Volver
+        </button>
       </div>
       <div>
         <h1 className="Vehiculo__titulo">Registrá tu vehículo</h1>

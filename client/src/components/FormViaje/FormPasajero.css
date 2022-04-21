@@ -12,9 +12,9 @@
   padding-top: 1rem;
   cursor: pointer;
 }
-.order-form{
-  display:flex;
-  flex-direction:column;
+.order-form {
+  display: flex;
+  flex-direction: column;
 }
 
 .input-text {
@@ -30,17 +30,17 @@
   border-radius: 58px;
   font-size: medium;
 }
-.input-text-detalle{
-    width: 27%;
-    background-color: #fff;
-    border: 3px solid;
-    height: 8em;
-    line-height: 45px;
-    padding: 0 40px 0 10px;
-    transition: 0.3s ease all;
-    border-radius: 3em;
-    font-size: medium;
-    margin-bottom: 1em
+.input-text-detalle {
+  width: 27%;
+  background-color: #fff;
+  border: 3px solid;
+  height: 8em;
+  line-height: 45px;
+  padding: 0 40px 0 10px;
+  transition: 0.3s ease all;
+  border-radius: 3em;
+  font-size: medium;
+  margin-bottom: 1em;
 }
 .form-formpasajero input:focus {
   border: 3px solid #9252ff;
@@ -63,7 +63,7 @@
   margin-bottom: 1rem;
   margin-top: 1rem;
 }
-.label-detalles{
+.label-detalles {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -113,7 +113,7 @@
 
 .Pasajere__mycheckbox {
   font-size: 20px;
-  color: white;
+  /* color: white; */
   margin-top: 3rem;
 }
 .Pasajere__mycheckbox input:checked ~ span::after {
@@ -149,4 +149,86 @@
   background: rgb(248, 22, 22);
   transition: 0.5s;
   box-shadow: inset 0px 0px 2px rgb(37, 37, 37);
+}
+
+@media screen and (max-width: 717px) {
+  .form-formpasajero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #root
+    > div
+    > div
+    > form
+    > div.order-form
+    > div.form-formpasajero
+    > div.form-parte-1
+    > div
+    > div
+    > input {
+    width: 15rem;
+  }
+  .input-text {
+    width: 15rem;
+  }
+  .form-parte-2 {
+    margin-left: 3rem;
+  }
+
+  .input-text-detalle {
+    width: 20rem;
+  }
+
+  .select-formaDePago {
+    width: 10rem;
+    margin-top: 2rem;
+    margin-left: 2rem;
+  }
+
+  .btn-registrar-formpasajero .btn-formpasajero {
+    margin-top: 3rem;
+    width: 12rem;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .form-formpasajero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #root
+    > div
+    > div
+    > form
+    > div.order-form
+    > div.form-formpasajero
+    > div.form-parte-1
+    > div
+    > div
+    > input {
+    width: 15rem;
+  }
+  .input-text {
+    width: 15rem;
+  }
+  .form-parte-2 {
+    margin-left: 3rem;
+  }
+
+  .input-text-detalle {
+    width: 20rem;
+  }
+
+  .select-formaDePago {
+    width: 10rem;
+    margin-top: 2rem;
+    margin-left: 2rem;
+  }
+
+  .btn-registrar-formpasajero .btn-formpasajero {
+    margin-top: 3rem;
+    width: 12rem;
+  }
 }
