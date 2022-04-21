@@ -8,7 +8,7 @@ import {
   sumarseAlViaje,
   modificarAsiento,
   getViajesTotalUsuario,
-  pausarViaje
+  pausarViaje,
 } from "../../../redux/actions/actions";
 import NavBar from "../../NavBar/NavBar";
 import "./DetalleViaje.css";
@@ -103,30 +103,27 @@ export const DetalleViajec = () => {
     quantity: 1,
     usuarioPagador: cookieMail,
     usuarioCobrador: "",
-    viajeId: id
+    viajeId: id,
   });
 
-  useEffect(
-    () => {
-      if (viaje.length !== 0) {
-        if (viaje.usuarios.length !== 0) {
-          setDatosMp({
-            ...datosMp,
-            usuarioCobrador: viaje.usuarios[0].email
-          });
-        }
+  useEffect(() => {
+    if (viaje.length !== 0) {
+      if (viaje.usuarios.length !== 0) {
+        setDatosMp({
+          ...datosMp,
+          usuarioCobrador: viaje.usuarios[0].email,
+        });
       }
-    },
-    [viaje]
-  );
+    }
+  }, [viaje]);
 
   const [sumarse, setSumarse] = useState({
     id: id,
-    email: cookieMail
+    email: cookieMail,
   });
 
   const handleColaborar = () => {
-    dispatch(postOrder(cookieMail)).then(data => {
+    dispatch(postOrder(cookieMail)).then((data) => {
       if (data) setDatosMp({ ...datosMp, orderId: data.payload[0].id });
     });
   };
@@ -142,7 +139,7 @@ export const DetalleViajec = () => {
         .get(
           `http://localhost:3001/api/mercadopago/${datosMp.orderId}/${datosMp.unit_price}`
         )
-        .then(r => setRedirect(r.data));
+        .then((r) => setRedirect(r.data));
     }
   }
 
@@ -150,12 +147,13 @@ export const DetalleViajec = () => {
     e.preventDefault();
     setDatosMp({
       ...datosMp,
-      unit_price: parseInt(e.target.value)
+      unit_price: parseInt(e.target.value),
     });
   }
 
   function handleSumarse(e) {
     e.preventDefault();
+
     let viajesFechasCoincidentes = [];
     if (viajesPorUsuario.length !== 0) {
       viajesPorUsuario.map(v => {
@@ -200,6 +198,7 @@ export const DetalleViajec = () => {
             dispatch(modificarAsiento(viaje));
             setBotonesPasajeroSumado(true);
             setBotonesPasajero(null);
+
             Swal.fire({
               title: "Te has sumado al viaje correctamente!",
               icon: "success",
@@ -257,8 +256,8 @@ export const DetalleViajec = () => {
       text: "Estás segure de que querés continuar?",
       confirmButtonText: "Sí, quiero eliminar",
       showDenyButton: true,
-      denyButtonText: "No quiero eliminar!"
-    }).then(r => {
+      denyButtonText: "No quiero eliminar!",
+    }).then((r) => {
       if (r.isConfirmed) {
         dispatch(pausarViaje(id));
         Swal.fire({
@@ -266,7 +265,7 @@ export const DetalleViajec = () => {
             "El viaje ha sido eliminado correctamente, ya no lo verás en tu inicio ni en tus viajes.",
           icon: "success",
           timer: 2500,
-          showConfirmButton: false
+          showConfirmButton: false,
         }).then(() => navigate("/home"));
       } else if (r.isDenied) {
         Swal.fire({
@@ -336,57 +335,64 @@ export const DetalleViajec = () => {
                 </div>
                 <div className="card-usuario-nombre-val-detalle text-xl">
                   <span className="text-white my-9">
-                    {viaje.usuarios
-                      ? viaje.usuarios[0].nombre +
-                        " " +
-                        viaje.usuarios[0].apellido
-                      : <div />}
+                    {viaje.usuarios ? (
+                      viaje.usuarios[0].nombre +
+                      " " +
+                      viaje.usuarios[0].apellido
+                    ) : (
+                      <div />
+                    )}
                   </span>
                   <span>
                     <div className="puntuacion">
-                      {viaje.usuarios
-                        ? viaje.usuarios[0].puntuacion === 5
-                          ? <div>
-                              <ImStarFull className="black" />
-                              <ImStarFull className="black" />
-                              <ImStarFull className="black " />
-                              <ImStarFull className="black" />
-                              <ImStarFull className="black " />
-                            </div>
-                          : viaje.usuarios[0].puntuacion === 4
-                            ? <div>
-                                {" "}<ImStarFull className="black" />
-                                <ImStarFull className="black " />
-                                <ImStarFull className="black" />
-                                <ImStarFull className="black " />
-                                <ImStarEmpty className="black" />
-                              </div>
-                            : viaje.usuarios[0].puntuacion === 3
-                              ? <div>
-                                  <ImStarFull className="black " />
-                                  <ImStarFull className="black" />
-                                  <ImStarFull className="black " />
-                                  <ImStarEmpty className="black" />
-                                  <ImStarEmpty className="black" />
-                                </div>
-                              : viaje.usuarios[0].puntuacion === 2
-                                ? <div>
-                                    <ImStarFull className="black" />
-                                    <ImStarFull className="black " />
-                                    <ImStarEmpty className="black" />
-                                    <ImStarEmpty className="black" />
-                                    <ImStarEmpty className="black" />
-                                  </div>
-                                : viaje.usuarios[0].puntuacion === 1
-                                  ? <div>
-                                      <ImStarFull className="black " />
-                                      <ImStarEmpty className="black" />
-                                      <ImStarEmpty className="black" />
-                                      <ImStarEmpty className="black" />
-                                      <ImStarEmpty className="black" />
-                                    </div>
-                                  : <div />
-                        : <div />}
+                      {viaje.usuarios ? (
+                        viaje.usuarios[0].puntuacion === 5 ? (
+                          <div>
+                            <ImStarFull className="black" />
+                            <ImStarFull className="black" />
+                            <ImStarFull className="black " />
+                            <ImStarFull className="black" />
+                            <ImStarFull className="black " />
+                          </div>
+                        ) : viaje.usuarios[0].puntuacion === 4 ? (
+                          <div>
+                            {" "}
+                            <ImStarFull className="black" />
+                            <ImStarFull className="black " />
+                            <ImStarFull className="black" />
+                            <ImStarFull className="black " />
+                            <ImStarEmpty className="black" />
+                          </div>
+                        ) : viaje.usuarios[0].puntuacion === 3 ? (
+                          <div>
+                            <ImStarFull className="black " />
+                            <ImStarFull className="black" />
+                            <ImStarFull className="black " />
+                            <ImStarEmpty className="black" />
+                            <ImStarEmpty className="black" />
+                          </div>
+                        ) : viaje.usuarios[0].puntuacion === 2 ? (
+                          <div>
+                            <ImStarFull className="black" />
+                            <ImStarFull className="black " />
+                            <ImStarEmpty className="black" />
+                            <ImStarEmpty className="black" />
+                            <ImStarEmpty className="black" />
+                          </div>
+                        ) : viaje.usuarios[0].puntuacion === 1 ? (
+                          <div>
+                            <ImStarFull className="black " />
+                            <ImStarEmpty className="black" />
+                            <ImStarEmpty className="black" />
+                            <ImStarEmpty className="black" />
+                            <ImStarEmpty className="black" />
+                          </div>
+                        ) : (
+                          <div />
+                        )
+                      ) : (
+                        <div />
+                      )}
                     </div>
                   </span>
                 </div>
@@ -397,11 +403,9 @@ export const DetalleViajec = () => {
                   {viaje.usuarios ? viaje.usuarios[0].acercaDeMi : <div />}
                 </span>
               </div>
-              <span>Detalles del viaje</span>
+              <span className="ml-4 text-xl">Detalles del viaje</span>
               <div className="card-usuario-resumen-detalle rounded-sm">
-                <span className="m-2">
-                  {viaje.detalles}
-                </span>
+                <span className="m-2">{viaje.detalles}</span>
               </div>
               <div className="btn-detalle">
                 {botonesConductor === true ||
@@ -480,11 +484,11 @@ export const DetalleViajec = () => {
                         placeholder="Monto a cobrar"
                         name="unit_price"
                         value={datosMp.unit_price}
-                        onChange={e => handleChange(e)}
+                        onChange={(e) => handleChange(e)}
                       />
                     </div>
                     <div class="modal-footer">
-                      <form onSubmit={e => handleSubmit(e)}>
+                      <form onSubmit={(e) => handleSubmit(e)}>
                         <button
                           type="submit"
                           class="btn btn-primary"
@@ -498,7 +502,7 @@ export const DetalleViajec = () => {
                 </div>
               </div>
               <br />
-              {redirect !== "" &&
+              {redirect !== "" && (
                 <a href={`${redirect}`}>
                   <input
                     class="btn btn-success"
@@ -506,7 +510,8 @@ export const DetalleViajec = () => {
                     value="Continuar a MercadoPago"
                     name="Continuar a MercadoPago"
                   />
-                </a>}
+                </a>
+              )}
 
               {botonesConductor === true
                 ? <div className="btn-detalle">
@@ -559,11 +564,13 @@ export const DetalleViajec = () => {
                 <span>
                   Cantidad de asientos disponibles:{" "}
                   <span
-                    className={`font-bold text-2xl ${viaje.asientosAOcupar > 3
-                      ? "text-sky-600"
-                      : viaje.asientosAOcupar < 1
+                    className={`font-bold text-2xl ${
+                      viaje.asientosAOcupar > 3
+                        ? "text-sky-600"
+                        : viaje.asientosAOcupar < 1
                         ? "text-amber-500"
-                        : "text-orange-700"}`}
+                        : "text-orange-700"
+                    }`}
                   >
                     {viaje.asientosAOcupar}
                   </span>
@@ -572,11 +579,11 @@ export const DetalleViajec = () => {
                   <List
                     sx={{
                       width: "100%",
-                      maxWidth: 360
+                      maxWidth: 360,
                     }}
                   >
                     {arrayPasajeres.length !== 0 &&
-                      arrayPasajeres.map(e =>
+                      arrayPasajeres.map((e) => (
                         <ListItem
                           key={e.email}
                           disableGutters
@@ -592,7 +599,7 @@ export const DetalleViajec = () => {
                             primary={`🔴 ${e.nombre} ${e.apellido}`}
                           />
                         </ListItem>
-                      )}
+                      ))}
                   </List>
                 </span>
                 <span>
@@ -641,7 +648,8 @@ export const DetalleViajec = () => {
           <div className="wallpaper">
             <img className="stretch" src={fondo} alt="" />
           </div>
-        </div>}
+        </div>
+      )}
     </div>
   );
 };

@@ -396,8 +396,7 @@ export default function FormPasajero() {
           </div>
           <div className="label-detalles">
             <label className="label-formpasajero">Detalles del viaje</label>
-            <input
-              type="text"
+            <textarea
               name="detalles"
               value={viaje.detalles}
               onChange={(e) => handleOnChange(e)}

@@ -65,8 +65,8 @@ Usuario.belongsToMany(Comentarios, { through: "usuario_comentarios" });
 Comentarios.belongsToMany(Usuario, { through: "usuario_comentarios" });
 Usuario.belongsToMany(Reportados, { through: "usuario_reportados" });
 Reportados.belongsToMany(Usuario, { through: "usuario_reportados" });
-Vehiculo.belongsToMany(Usuario, { through: "usuario_vehiculo"});
-Usuario.belongsToMany(Vehiculo, { through: "usuario_vehiculo"});
+Vehiculo.belongsToMany(Usuario, { through: "usuario_vehiculo" });
+Usuario.belongsToMany(Vehiculo, { through: "usuario_vehiculo" });
 Vehiculo.hasMany(Viaje);
 Viaje.belongsTo(Vehiculo);
 

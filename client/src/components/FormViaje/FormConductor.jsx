@@ -347,6 +347,7 @@ export default function FormPasajero() {
               })}
               {isChecked[4] && (
                 <select
+                  className="select-formaDePago"
                   name="formaDePago"
                   value={viaje.formaDePago}
                   onChange={(e) => handleOnChange(e)}

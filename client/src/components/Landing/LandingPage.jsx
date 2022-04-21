@@ -11,18 +11,18 @@ import Swal from "sweetalert2";
 export default function LandingPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const error = useSelector(state => state.error);
-  const usuarioReducer = useSelector(state => state.usuario);
+  const error = useSelector((state) => state.error);
+  const usuarioReducer = useSelector((state) => state.usuario);
   const [menu, SetMenu] = useState(false);
   const cookies = new Cookies();
   const [usuario, setUsuario] = useState("hola soy usuario de google");
 
-  const responseGoogle = response => {
+  const responseGoogle = (response) => {
     setUsuario({
       nombre: response.profileObj.givenName,
       apellido: response.profileObj.familyName,
       email: response.profileObj.email,
-      avatar: response.profileObj.imageUrl
+      avatar: response.profileObj.imageUrl,
     });
   };
 

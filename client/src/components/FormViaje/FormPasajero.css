@@ -150,3 +150,85 @@
   transition: 0.5s;
   box-shadow: inset 0px 0px 2px rgb(37, 37, 37);
 }
+
+@media screen and (max-width: 717px) {
+  .form-formpasajero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #root
+    > div
+    > div
+    > form
+    > div.order-form
+    > div.form-formpasajero
+    > div.form-parte-1
+    > div
+    > div
+    > input {
+    width: 15rem;
+  }
+  .input-text {
+    width: 15rem;
+  }
+  .form-parte-2 {
+    margin-left: 3rem;
+  }
+
+  .input-text-detalle {
+    width: 20rem;
+  }
+
+  .select-formaDePago {
+    width: 10rem;
+    margin-top: 2rem;
+    margin-left: 2rem;
+  }
+
+  .btn-registrar-formpasajero .btn-formpasajero {
+    margin-top: 3rem;
+    width: 12rem;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .form-formpasajero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #root
+    > div
+    > div
+    > form
+    > div.order-form
+    > div.form-formpasajero
+    > div.form-parte-1
+    > div
+    > div
+    > input {
+    width: 15rem;
+  }
+  .input-text {
+    width: 15rem;
+  }
+  .form-parte-2 {
+    margin-left: 3rem;
+  }
+
+  .input-text-detalle {
+    width: 20rem;
+  }
+
+  .select-formaDePago {
+    width: 10rem;
+    margin-top: 2rem;
+    margin-left: 2rem;
+  }
+
+  .btn-registrar-formpasajero .btn-formpasajero {
+    margin-top: 3rem;
+    width: 12rem;
+  }
+}

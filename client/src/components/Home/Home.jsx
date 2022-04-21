@@ -21,12 +21,14 @@ import { FormControl } from "@mui/material";
 import Cookies from "universal-cookie";
 import NavBar from "../NavBar/NavBar";
 import Bot from "../Bot/Chatbot";
+import { AiFillCaretDown } from "react-icons/ai";
 import imagen from "../../assets/not found.png"
 
 export default function Home() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
   const [habilitarBot, setHabilitarBot] = useState(false);
+  const [habilitarFiltros, setHabilitarFiltros] = useState(false);
   const [render, setRender] = useState("");
   const viajes = useSelector(state => state.viajesFiltrados);
   const cookieMail = cookies.get("email");
@@ -34,8 +36,8 @@ export default function Home() {
   let newDate = new Date();
   let dia = newDate.getDate();
   let mes = newDate.getMonth() + 1;
-  let hora = (new Date().toLocaleString() + "").slice(11, 16);
 
+  let hora = (new Date().toLocaleString() + "").slice(11, 16);
   useEffect(() => {
     dispatch(login(cookieMail));
     dispatch(getViajesTotal());
@@ -54,6 +56,12 @@ export default function Home() {
     dispatch(getViajesTotal());
   }
 
+
+  function handleHabilitarFiltros(e) {
+    e.preventDefault();
+    setHabilitarFiltros(!habilitarFiltros);
+  }
+
   function handleBot(e) {
     e.preventDefault();
     setHabilitarBot(!habilitarBot);
@@ -66,9 +74,22 @@ export default function Home() {
 
   return (
     <div>
-      <NavBar />
+      <NavBar />{" "}
+      <button
+        className="home-Show-Filtros"
+        onClick={(e) => handleHabilitarFiltros(e)}
+      >
+        <label>Filtros</label> <AiFillCaretDown />
+      </button>
+      {habilitarFiltros ? (
+        <div className="home-Filtros">
+          <Filtros />
+        </div>
+      ) : (
+        <div></div>
+      )}
       <div className="home-general">
-        <div>
+        <div className="home-general-filtros">
           <Filtros />
         </div>
         <div id="general-card">
@@ -301,7 +322,9 @@ export default function Home() {
           </div>
         </div>
         <div className="bot-conteiner">
+
           {habilitarBot ? <Bot /> : <div></div>}
+
           <button onClick={(e) => handleBot(e)} className="btn-bot">
             Ayuda{" "}
           </button>

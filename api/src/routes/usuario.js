@@ -5,7 +5,7 @@ const {
   Viaje,
   Comentarios,
   Reportados,
-  Vehiculo
+  Vehiculo,
 } = require("../db.js");
 const { API_KEY } = process.env;
 
@@ -115,8 +115,8 @@ router.get("/usuarios", async (req, res, next) => {
         { model: Comentarios },
         { model: Reportados },
         { model: Viaje },
-        { model: Vehiculo }
-      ]
+        { model: Vehiculo },
+      ],
     });
     res.send(usuarios);
   } catch (err) {
@@ -133,6 +133,7 @@ router.get("/usuarios/:email", async (req, res, next) => {
         { model: Viaje },
         { model: Vehiculo }
       ]
+
     });
     if (usuario) res.send(usuario);
     else res.send("error");
@@ -140,6 +141,83 @@ router.get("/usuarios/:email", async (req, res, next) => {
     next(err);
   }
 });
+
+
+router.post("/registro", async (req, res, next) => {
+  try {
+    const { email, nombre, apellido, password, avatar } = req.body;
+    let nuevoUsuario;
+    nuevoUsuario = await Usuario.findOrCreate({
+      where: { email, nombre, apellido, password, avatar },
+    });
+    res.json(nuevoUsuario);
+
+    // const sgMail = require("@sendgrid/mail");
+
+    // sgMail.setApiKey(API_KEY);
+
+    // const message = {
+    //   to: email,
+    //   from: "pgsharerides@gmail.com",
+
+    //   subject: "Bienvenide a Share Rides!",
+    //   html: `
+    //   <html>
+    //   <head>
+    //   <h2>
+    //   Hola ${nombre}!
+    //   </h2>
+    //   </head>
+    //   <body>
+    //   <h4>
+    //   Desde Share Rides queremos darte la bienvenida a nuestra plataforma! Tu registro se ha llevado a cabo con éxito.
+    //   Esperamos que te sientas segure para compartir tu viaje.
+    //   </h4>
+    //   <h3>Buenas rutas!</h3>
+    //   </body>
+    //   </html>
+    //   `,
+    // };
+    // sgMail
+    //   .send(message)
+    //   .then((r) => console.log("mail enviado"))
+    //   .catch((err) => console.log(err.message));
+
+    // const sgMail = require("@sendgrid/mail");
+
+    // sgMail.setApiKey(API_KEY);
+
+    // const message = {
+    //   to: email,
+    //   from: "pgsharerides@gmail.com",
+
+    //   subject: "Bienvenide a Share Rides!",
+    //   html: `
+    //   <html>
+    //   <head>
+    //   <h2>
+    //   Hola ${nombre}!
+    //   </h2>
+    //   </head>
+    //   <body>
+    //   <h4>
+    //   Desde Share Rides queremos darte la bienvenida a nuestra plataforma! Tu registro se ha llevado a cabo con éxito.
+    //   Esperamos que te sientas segure para compartir tu viaje.
+    //   </h4>
+    //   <h3>Buenas rutas!</h3>
+    //   </body>
+    //   </html>
+    //   `,
+    // };
+    // sgMail
+    //   .send(message)
+    //   .then((r) => console.log("mail enviado"))
+    //   .catch((err) => console.log(err.message));
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.put("/cambiopassword", async (req, res, next) => {
   const { password, email } = req.body;
   try {
@@ -248,26 +326,26 @@ router.put("/modificarperfil", async (req, res, next) => {
     if (dni) {
       // console.log("entre a dni");
       usuario.update({
-        dni: dni
+        dni: dni,
       });
       usuario.save();
     }
     if (telefono) {
       // console.log("entre a telefono");
       usuario.update({
-        telefono: telefono
+        telefono: telefono,
       });
       usuario.save();
     }
     if (avatar) {
       usuario.update({
-        avatar: avatar
+        avatar: avatar,
       });
       usuario.save();
     }
     if (acercaDeMi) {
       usuario.update({
-        acercaDeMi: acercaDeMi
+        acercaDeMi: acercaDeMi,
       });
       usuario.save();
     }
@@ -283,14 +361,14 @@ router.put("/comentarios", async (req, res, next) => {
     if (calificacion) {
       // console.log("entre a calificacion");
       nuevoComentario.update({
-        calificacion: calificacion
+        calificacion: calificacion,
       });
       nuevoComentario.save();
     }
     if (comentarios) {
       // console.log("entre a comentarios");
       nuevoComentario.update({
-        comentarios: comentarios
+        comentarios: comentarios,
       });
       nuevoComentario.save();
     }
