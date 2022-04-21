@@ -189,62 +189,126 @@ router.get("/totalviajes", async (req, res, next) => {
     next(error);
   }
 });
-router.get(
-  "/filtro/:aceptaFumador/:aceptaMascota/:aceptaEquipaje/:usaBarbijo",
-  async (req, res, next) => {
-    const {
-      aceptaFumador,
-      aceptaMascota,
-      aceptaEquipaje,
-      usaBarbijo
-    } = req.params;
-    const { asientosAOcupar } = req.query;
-    try {
-      let viajesTotal;
-      if (asientosAOcupar) {
+router.get("/filtros", async (req, res, next) => {
+  const {
+    aceptaFumador,
+    noAceptaFumador,
+    aceptaMascota,
+    aceptaEquipaje,
+    usaBarbijo,
+  } = req.query;
+  console.log(noAceptaFumador)
+  try {
+    let viajesTotal;
+    let viajesFiltrados = [];
+    if (aceptaFumador) {
+      if (viajesFiltrados.length === 0) {
+        viajesFiltrados = await Viaje.findAll({
+          where: { aceptaFumador: aceptaFumador },
+          include: [{ model: Usuario }, { model: Vehiculo }]
+        });
         viajesTotal = await Viaje.findAll({
-          where: {
-            aceptaFumador: aceptaFumador,
-            aceptaMascota: aceptaMascota,
-            aceptaEquipaje: aceptaEquipaje,
-            usaBarbijo: usaBarbijo,
-            asientosAOcupar: asientosAOcupar
-          },
-          include: Usuario
+          where: { aceptaFumador: aceptaFumador },
+          include: [{ model: Usuario }, { model: Vehiculo }]
         });
       } else {
-        viajesTotal = await Viaje.findAll({
-          where: {
-            aceptaFumador: aceptaFumador,
-            aceptaMascota: aceptaMascota,
-            aceptaEquipaje: aceptaEquipaje,
-            usaBarbijo: usaBarbijo
-          },
-          include: Usuario
-        });
+        viajesTotal = viajesFiltrados.filter(
+          v => v.aceptaFumador === aceptaFumador
+        );
+        viajesFiltrados = viajesTotal;
       }
-      res.send(viajesTotal);
-    } catch (err) {
-      next(err);
     }
+    if (noAceptaFumador) {
+      console.log("2", noAceptaFumador)
+      if (viajesFiltrados.length === 0) {
+        viajesFiltrados = await Viaje.findAll({
+          where: { aceptaFumador: !noAceptaFumador },
+          include: [{ model: Usuario }, { model: Vehiculo }]
+        });
+        viajesTotal = await Viaje.findAll({
+          where: { aceptaFumador: !noAceptaFumador },
+          include: [{ model: Usuario }, { model: Vehiculo }]
+        });
+      } else {
+        viajesTotal = await viajesFiltrados.filter(
+          v => v.aceptaFumador === !noAceptaFumador
+        );
+        viajesFiltrados = viajesTotal;
+      }
+    }
+    if (aceptaMascota) {
+      if (viajesFiltrados.length === 0) {
+        viajesFiltrados = await Viaje.findAll({
+          where: { aceptaMascota: aceptaMascota },
+          include: [{ model: Usuario }, { model: Vehiculo }]
+        });
+        viajesTotal = await Viaje.findAll({
+          where: { aceptaMascota: aceptaMascota },
+          include: [{ model: Usuario }, { model: Vehiculo }]
+        });
+      } else {
+        viajesTotal = await viajesFiltrados.filter(
+          v => v.aceptaMascota === aceptaMascota
+        );
+        viajesFiltrados = viajesTotal;
+      }
+    }
+    if (aceptaEquipaje) {
+      if (viajesFiltrados.length === 0) {
+        viajesFiltrados = await Viaje.findAll({
+          where: { aceptaEquipaje: aceptaEquipaje },
+          include: [{ model: Usuario }, { model: Vehiculo }]
+        });
+        viajesTotal = await Viaje.findAll({
+          where: { aceptaEquipaje: aceptaEquipaje },
+          include: [{ model: Usuario }, { model: Vehiculo }]
+        });
+      } else {
+        viajesTotal = await viajesFiltrados.filter(
+          v => v.aceptaEquipaje === aceptaEquipaje
+        );
+        viajesFiltrados = viajesTotal;
+      }
+    }
+    if (usaBarbijo) {
+      if (viajesFiltrados.length === 0) {
+        viajesFiltrados = await Viaje.findAll({
+          where: { usaBarbijo: usaBarbijo },
+          include: [{ model: Usuario }, { model: Vehiculo }]
+        });
+        viajesTotal = await Viaje.findAll({
+          where: { usaBarbijo: usaBarbijo },
+          include: [{ model: Usuario }, { model: Vehiculo }]
+        });
+      } else {
+        viajesTotal = await viajesFiltrados.filter(
+          v => v.usaBarbijo === usaBarbijo
+        );
+        viajesFiltrados = viajesTotal;
+      }
+    }
+    res.send(viajesTotal);
+  } catch (err) {
+    next(err);
   }
-);
+});
 router.get("/searchdestino", async (req, res, next) => {
   const { destino } = req.query;
-  // console.log(destino);
   try {
     let filtradoDestino;
     if (destino) {
-      let viajes = await Viaje.findAll({
-        include: [
-          {
-            model: Usuario
-          },
-          {
-            model: Vehiculo
-          }
-        ]
-      });
+      let viajes = await Viaje.findAll(
+        { where: { viajeDisponible: true },
+          include: [
+            {
+              model: Usuario
+            },
+            {
+              model: Vehiculo
+            }
+          ]
+        }
+      );
       filtradoDestino = await viajes.filter(e => {
         return e.dataValues.destino
           .toLowerCase()
@@ -263,22 +327,22 @@ router.get("/searchorigen", async (req, res, next) => {
   try {
     let filtradoOrigen;
     if (origen) {
-      let viajes = await Viaje.findAll({
-        include: [
-          {
-            model: Usuario
-          },
-          {
-            model: Vehiculo
-          }
-        ]
-      });
+      let viajes = await Viaje.findAll(
+        { where: { viajeDisponible: true },
+          include: [
+            {
+              model: Usuario
+            },
+            {
+              model: Vehiculo
+            }
+          ]
+        }
+      );
       filtradoOrigen = await viajes.filter(e => {
         return e.dataValues.origen.toLowerCase().includes(origen.toLowerCase());
       });
     }
-
-    // console.log(filtradoOrigen);
     res.send(filtradoOrigen);
   } catch (err) {
     next(err);
@@ -362,47 +426,57 @@ router.put("/reactivararViaje/:id", async (req, res, next) => {
 });
 router.put("/modificarViaje/:id", async (req, res, next) => {
   const { id } = req.params;
-  const {fecha, hora, origen, destino, asientosAOcupar, aceptaFumador, aceptaMascota, aceptaEquipaje, usaBarbijo } = req.body;
+  const {
+    fecha,
+    hora,
+    origen,
+    destino,
+    asientosAOcupar,
+    aceptaFumador,
+    aceptaMascota,
+    aceptaEquipaje,
+    usaBarbijo
+  } = req.body;
   let viaje = await Viaje.findByPk(id, {
     include: [{ model: Usuario }, { model: Vehiculo }]
   });
-  if(fecha){
+  if (fecha) {
     viaje.update({ fecha: fecha });
     viaje.save();
   }
-  if(hora){
+  if (hora) {
     viaje.update({ hora: hora });
     viaje.save();
   }
-  if(origen){
+  if (origen) {
     viaje.update({ origen: origen });
     viaje.save();
   }
-  if(destino){
+  if (destino) {
     viaje.update({ destino: destino });
     viaje.save();
   }
-  if(asientosAOcupar){
+  if (asientosAOcupar) {
     viaje.update({ asientosAOcupar: asientosAOcupar });
     viaje.save();
   }
-  if(aceptaFumador){
+  if (aceptaFumador) {
     viaje.update({ aceptaFumador: aceptaFumador });
     viaje.save();
   }
-  if(aceptaMascota){
+  if (aceptaMascota) {
     viaje.update({ aceptaMascota: aceptaMascota });
     viaje.save();
   }
-  if(aceptaEquipaje){
+  if (aceptaEquipaje) {
     viaje.update({ aceptaEquipaje: aceptaEquipaje });
     viaje.save();
   }
-  if(usaBarbijo){
+  if (usaBarbijo) {
     viaje.update({ usaBarbijo: usaBarbijo });
     viaje.save();
   }
-  res.send(viaje)
+  res.send(viaje);
 });
 
 module.exports = router;

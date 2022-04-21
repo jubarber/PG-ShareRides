@@ -14,12 +14,17 @@ export default function FormViaje() {
   const vehiculos = useSelector(state => state.vehiculos);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
+    useEffect(() => {
+      dispatch(getVehiculos(cookieMail));
+    });
 
   const [isChecked, setIsChecked] = useState({
     pasajero: false,
     conductor: false
   });
   const cookieMail = cookies.get("email");
+  console.log(cookieMail)
 
   function handleOnChange(e) {
     setIsChecked({
@@ -53,7 +58,7 @@ export default function FormViaje() {
               const { value: patente } = await Swal.fire({
                 title: "Por favor, elegí qué vehículo deseas utilizar",
                 input: "select",
-                inputOptions: vehiculos.map(v => v.patente),
+                inputOptions: vehiculos.map(v => v.patente.toUpperCase()),
                 inputPlaceholder: "Seleccioná un vehículo",
                 allowOutsideClick: false,
                 allowEscapeKey: false,
@@ -72,13 +77,47 @@ export default function FormViaje() {
                 cookies.set("dni", vehiculos[patente].dni, { path: "/" });
               }
             })().then(() => {
-              setTimeout(() => {
+              Swal.fire({
+                title: "En instantes serás redirigide a la creación de tu viaje",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                didOpen: () => {Swal.showLoading()}
+              }).then(() => {
                 navigate("/formconductor");
-              }, 1000);
+              });
             });
-          } else if (r.isDenied) {
+          } else if(r.isConfirmed && vehiculos.length === 1){
+            cookies.set("patente", vehiculos[0].patente, { path: "/"})
+            Swal.fire({
+              title: "En instantes serás redirigide a la creación de tu viaje",
+              showConfirmButton: false,
+              timer: 2000,
+              timerProgressBar: true,
+              allowOutsideClick: false,
+              allowEscapeKey: false,
+              allowEnterKey: false,
+              didOpen: () => {Swal.showLoading()}
+            }).then(() => {
+              navigate("/formconductor");
+            });
+          }else if (r.isDenied) {
+            Swal.fire({
+              title: "En instantes serás redirigide a la creación de tu vehículo",
+              showConfirmButton: false,
+              timer: 1500,
+              timerProgressBar: true,
+              allowOutsideClick: false,
+              allowEscapeKey: false,
+              allowEnterKey: false,
+              didOpen: () => {Swal.showLoading()}
+            }).then(() => {
             navigate("/formvehiculo");
-          }
+          })
+        }
         });
       } else {
         navigate("/formvehiculo");
@@ -92,10 +131,6 @@ export default function FormViaje() {
       });
     }
   }
-
-  useEffect(() => {
-    dispatch(getVehiculos(cookieMail));
-  }, []);
 
   return (
     <div className="contenedor_formviaje">

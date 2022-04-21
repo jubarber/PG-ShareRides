@@ -24,7 +24,6 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { FaUserCircle } from "react-icons/fa";
 import IconButton from "@mui/material/IconButton";
-import swal from "sweetalert";
 import Swal from "sweetalert2";
 
 export const DetalleViajec = () => {
@@ -55,7 +54,6 @@ export const DetalleViajec = () => {
     if (viaje.length !== 0 && viajesPorUsuario.length !== 0) {
       mailUsuariosDelViaje = viaje.usuarios.map(u => u.email);
       if (viaje.asientosAOcupar === 0) {
-        // console.log("setBotonesPasajero");
         setBotonesPasajeroSumado(null);
         setBotonesPasajero(null);
       }
@@ -63,7 +61,6 @@ export const DetalleViajec = () => {
         viaje.usuarios[0].email !== cookieMail &&
         mailUsuariosDelViaje.includes(cookieMail)
       ) {
-        // console.log("setBotonesPasajero");
         setBotonesPasajeroSumado(true);
         setBotonesPasajero(null);
         setBotonesConductor(null);
@@ -72,19 +69,16 @@ export const DetalleViajec = () => {
         viaje.usuarios[0].email !== cookieMail &&
         idViajesPorUsuario.includes(id)
       ) {
-        // console.log("setBotonesPasajero");
         setBotonesPasajeroSumado(true);
         setBotonesPasajero(null);
         setBotonesConductor(null);
       }
       if (viaje.usuarios[0].email === cookieMail) {
-        // console.log("setBotonesPasajero");
         setBotonesConductor(true);
         setBotonesPasajeroSumado(null);
         setBotonesPasajero(null);
       }
       if (!mailUsuariosDelViaje.includes(cookieMail)) {
-        // console.log("setBotonesPasajero");
         setBotonesPasajero(true);
         setBotonesPasajeroSumado(null);
         setBotonesConductor(null);
@@ -259,7 +253,7 @@ export const DetalleViajec = () => {
   function handleEliminar() {
     Swal.fire({
       title: "Estás a punto de eliminar este viaje",
-      icon: "danger",
+      icon: "error",
       text: "Estás segure de que querés continuar?",
       confirmButtonText: "Sí, quiero eliminar",
       showDenyButton: true,
@@ -309,10 +303,20 @@ export const DetalleViajec = () => {
     cookies.set("usaBarbijo", viaje.usaBarbijo, {
       path: "/"
     });
-    console.log(cookies.get("fecha"));
-    setTimeout(() => {
+    Swal.fire({
+      title: "En instantes serás redirigide a la modificación de tu viaje",
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      allowEnterKey: false,
+      didOpen: () => {
+        Swal.showLoading()
+      }
+    }).then(() => {
       navigate(`/modificar/modificarViaje/${id}`);
-    }, 2000);
+    });
   }
 
   return (
