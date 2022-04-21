@@ -5,7 +5,10 @@ import MenuItem from "@mui/material/MenuItem";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
-import { postViajePasajero, getViajesTotalUsuario } from "../../redux/actions/actions";
+import {
+  postViajePasajero,
+  getViajesTotalUsuario,
+} from "../../redux/actions/actions";
 import "./FormPasajero.css";
 import fondo from "../../assets/fondo perfil.jpg";
 import NavBar from "../NavBar/NavBar";
@@ -226,8 +229,8 @@ export default function FormPasajero() {
       Swal.fire({
         title: "El registro ha sido exitoso!",
         icon: "success",
-        confirmButtonText: "Buen viaje!"
-      }).then(function() {
+        confirmButtonText: "Buen viaje!",
+      }).then(function () {
         navigate("/home");
       });
       dispatch(postViajePasajero(isChecked, viaje));

@@ -73,6 +73,19 @@
   box-shadow: inset 0px 0px 2px rgb(37, 37, 37);
 }
 
+.select-filtros {
+  width: 14rem;
+  padding: 1rem;
+  background: midnightblue;
+  color: white;
+  border-radius: 20px;
+}
+
+.select-filtros:focus {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
 .select {
   font-size: 20px;
   margin-top: 5px;

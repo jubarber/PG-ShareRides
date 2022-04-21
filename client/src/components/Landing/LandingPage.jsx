@@ -26,53 +26,52 @@ export default function LandingPage() {
     });
   };
 
-  useEffect(
-    () => {
-      cookies.set("email", usuario.email, { path: "/" });
-      cookies.set("nombre", usuario.nombre, { path: "/" });
-      cookies.set("apellido", usuario.apellido, { path: "/" });
-      cookies.set("avatar", usuario.avatar, { path: "/" });
+  useEffect(() => {
+    cookies.set("email", usuario.email, { path: "/" });
+    cookies.set("nombre", usuario.nombre, { path: "/" });
+    cookies.set("apellido", usuario.apellido, { path: "/" });
+    cookies.set("avatar", usuario.avatar, { path: "/" });
 
-      if (usuario.email) {
-        if (Object.values(usuarioReducer).length > 0) {
-          Swal.fire({
-            title: "Bienvenide!" ,
-            text:"En instantes serás redirigide al inicio",
-            showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-            allowEnterKey: false,
-            didOpen: () => {Swal.showLoading()}
-          }).then(() => {
+    if (usuario.email) {
+      if (Object.values(usuarioReducer).length > 0) {
+        Swal.fire({
+          title: "Bienvenide!",
+          text: "En instantes serás redirigide al inicio",
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          allowEnterKey: false,
+          didOpen: () => {
+            Swal.showLoading();
+          },
+        }).then(() => {
           navigate("/home");
-        })
-        } else {
-          Swal.fire({
-            title: "Bienvenide!" ,
-            text:"En instantes serás redirigide a la creación de una contraseña",
-            showConfirmButton: false,
-            timer: 1000,
-            timerProgressBar: true,
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-            allowEnterKey: false,
-            didOpen: () => {Swal.showLoading()}
-          }).then(() => {
+        });
+      } else {
+        Swal.fire({
+          title: "Bienvenide!",
+          text: "En instantes serás redirigide a la creación de una contraseña",
+          showConfirmButton: false,
+          timer: 1000,
+          timerProgressBar: true,
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          allowEnterKey: false,
+          didOpen: () => {
+            Swal.showLoading();
+          },
+        }).then(() => {
           navigate("/registrogoogle");
-        })
-        }
+        });
       }
-    },
-    [usuarioReducer]); 
+    }
+  }, [usuarioReducer]);
 
-  useEffect(
-    () => {
-      dispatch(getUsuarioByEmail(usuario.email));
-    },
-    [usuario, dispatch]
-  );
+  useEffect(() => {
+    dispatch(getUsuarioByEmail(usuario.email));
+  }, [usuario, dispatch]);
 
   const handleMenu = () => {
     SetMenu(!menu);
@@ -83,7 +82,7 @@ export default function LandingPage() {
       <div className="page">
         <div className="card">
           <div className="container">
-             <div className="content">
+            <div className="content">
               <div className="text">
                 <h2>Viajes compartidos inclusivos</h2>
                 <p>
@@ -93,11 +92,21 @@ export default function LandingPage() {
                   sintiéndote segura y libre de prejuicios!
                 </p>
                 <div className="btn">
-                  <button className="login-registro" onClick={() => {navigate("/login")}}>
-                  Inciar Sesion
+                  <button
+                    className="login-registro"
+                    onClick={() => {
+                      navigate("/login");
+                    }}
+                  >
+                    Inciar Sesion
                   </button>
-                  <button className="login-registro"  onClick={() => {navigate("/registro")}}>
-                   Registrarse
+                  <button
+                    className="login-registro"
+                    onClick={() => {
+                      navigate("/registro");
+                    }}
+                  >
+                    Registrarse
                   </button>
 
                   <GoogleLogin

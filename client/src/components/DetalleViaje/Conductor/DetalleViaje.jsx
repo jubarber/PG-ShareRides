@@ -30,29 +30,26 @@ export const DetalleViajec = () => {
   const cookies = new Cookies();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const viaje = useSelector(state => state.viajePorId);
-  const viajesPorUsuario = useSelector(state => state.viajesPorUsuario);
+  const viaje = useSelector((state) => state.viajePorId);
+  const viajesPorUsuario = useSelector((state) => state.viajesPorUsuario);
   const { id } = useParams();
   const cookieMail = cookies.get("email");
   let fechaViaje = "";
   const [botonesConductor, setBotonesConductor] = useState(null);
   const [botonesPasajero, setBotonesPasajero] = useState(null);
   const [botonesPasajeroSumado, setBotonesPasajeroSumado] = useState(null);
-  console.log("esto es viaje: ", viaje)
-  let idViajesPorUsuario = viajesPorUsuario.map(v => v.id);
+
+  let idViajesPorUsuario = viajesPorUsuario.map((v) => v.id);
   let mailUsuariosDelViaje;
 
-  useEffect(
-    () => {
-      dispatch(getDetalleViaje(id));
-      dispatch(getViajesTotalUsuario(cookieMail));
-    },
-    [id]
-  );
-  
+  useEffect(() => {
+    dispatch(getDetalleViaje(id));
+    dispatch(getViajesTotalUsuario(cookieMail));
+  }, [id]);
+
   useEffect(() => {
     if (viaje.length !== 0 && viajesPorUsuario.length !== 0) {
-      mailUsuariosDelViaje = viaje.usuarios.map(u => u.email);
+      mailUsuariosDelViaje = viaje.usuarios.map((u) => u.email);
       if (viaje.asientosAOcupar === 0) {
         setBotonesPasajeroSumado(null);
         setBotonesPasajero(null);
@@ -156,7 +153,7 @@ export const DetalleViajec = () => {
 
     let viajesFechasCoincidentes = [];
     if (viajesPorUsuario.length !== 0) {
-      viajesPorUsuario.map(v => {
+      viajesPorUsuario.map((v) => {
         if (
           v.fecha.substring(0, 10).split("-").reverse().join("-") ===
           viaje.fecha.substring(0, 10).split("-").reverse().join("-")
@@ -171,12 +168,11 @@ export const DetalleViajec = () => {
         Swal.fire({
           title: "Ya tienes un viaje programado para este día",
           icon: "warning",
-          text:
-            "No puedes participar de dos viajes el mismo día. Serás redireccionade al inicio",
+          text: "No puedes participar de dos viajes el mismo día. Serás redireccionade al inicio",
           confirmButtonText: "Ok",
           allowOutsideClick: false,
           allowEscapeKey: false,
-          allowEnterKey: false
+          allowEnterKey: false,
         }).then(() => {
           navigate("/home");
         });
@@ -191,8 +187,8 @@ export const DetalleViajec = () => {
           cancelButtonText: "Cancelar",
           allowOutsideClick: false,
           allowEscapeKey: false,
-          allowEnterKey: false
-        }).then(r => {
+          allowEnterKey: false,
+        }).then((r) => {
           if (r.isConfirmed) {
             dispatch(sumarseAlViaje(sumarse));
             dispatch(modificarAsiento(viaje));
@@ -206,7 +202,7 @@ export const DetalleViajec = () => {
               showConfirmButton: false,
               allowOutsideClick: false,
               allowEscapeKey: false,
-              allowEnterKey: false
+              allowEnterKey: false,
             }).then(() => {
               navigate("/home");
             });
@@ -224,9 +220,9 @@ export const DetalleViajec = () => {
         cancelButtonText: "Cancelar",
         allowOutsideClick: false,
         allowEscapeKey: false,
-        allowEnterKey: false
+        allowEnterKey: false,
       })
-        .then(r => {
+        .then((r) => {
           if (r.isConfirmed) {
             dispatch(sumarseAlViaje(sumarse));
             dispatch(modificarAsiento(viaje));
@@ -237,7 +233,7 @@ export const DetalleViajec = () => {
             title: "Te has sumado al viaje correctamente!",
             icon: "success",
             timer: 1500,
-            showConfirmButton: false
+            showConfirmButton: false,
           }).then(() => {
             navigate("/home");
           });
@@ -246,7 +242,7 @@ export const DetalleViajec = () => {
   }
 
   if (viaje.length !== 0 && viaje.usuarios.length !== 0) {
-    var arrayPasajeres = viaje.usuarios.map(e => e);
+    var arrayPasajeres = viaje.usuarios.map((e) => e);
   }
 
   function handleEliminar() {
@@ -271,8 +267,8 @@ export const DetalleViajec = () => {
         Swal.fire({
           title: "El viaje está a salvo!",
           icon: "info",
-           timer: 2000,
-          showConfirmButton: false
+          timer: 2000,
+          showConfirmButton: false,
         });
       }
     });
@@ -285,22 +281,22 @@ export const DetalleViajec = () => {
     cookies.set("origen", viaje.origen, { path: "/" });
     cookies.set("destino", viaje.destino, { path: "/" });
     cookies.set("asientos", viaje.asientosAOcupar, {
-      path: "/"
+      path: "/",
     });
     cookies.set("detalles", viaje.detalles, {
-      path: "/"
+      path: "/",
     });
     cookies.set("aceptaFumador", viaje.aceptaFumador, {
-      path: "/"
+      path: "/",
     });
     cookies.set("aceptaMascota", viaje.aceptaMascota, {
-      path: "/"
+      path: "/",
     });
     cookies.set("aceptaEquipaje", viaje.aceptaEquipaje, {
-      path: "/"
+      path: "/",
     });
     cookies.set("usaBarbijo", viaje.usaBarbijo, {
-      path: "/"
+      path: "/",
     });
     Swal.fire({
       title: "En instantes serás redirigide a la modificación de tu viaje",
@@ -311,8 +307,8 @@ export const DetalleViajec = () => {
       allowEscapeKey: false,
       allowEnterKey: false,
       didOpen: () => {
-        Swal.showLoading()
-      }
+        Swal.showLoading();
+      },
     }).then(() => {
       navigate(`/modificar/modificarViaje/${id}`);
     });
@@ -320,8 +316,7 @@ export const DetalleViajec = () => {
   console.log("estos es viaje: ",viaje)
   return (
     <div>
-      {arrayPasajeres &&
-        arrayPasajeres.length !== 0 &&
+      {arrayPasajeres && arrayPasajeres.length !== 0 && (
         <div className="container-detalle">
           <NavBar />
           <div className="card-detalle">
@@ -409,18 +404,19 @@ export const DetalleViajec = () => {
               </div>
               <div className="btn-detalle">
                 {botonesConductor === true ||
-                (botonesPasajeroSumado === true && botonesPasajero !== true)
-                  ? null
-                  : <div className="btn-detalle">
-                      <button
-                        className="detalle-mensaje"
-                        onClick={e => {
-                          handleSumarse(e);
-                        }}
-                      >
-                        Sumarme al viaje
-                      </button>
-                    </div>}
+                (botonesPasajeroSumado === true &&
+                  botonesPasajero !== true) ? null : (
+                  <div className="btn-detalle">
+                    <button
+                      className="detalle-mensaje"
+                      onClick={(e) => {
+                        handleSumarse(e);
+                      }}
+                    >
+                      Sumarme al viaje
+                    </button>
+                  </div>
+                )}
                 {(botonesPasajeroSumado === true || botonesPasajero === true) &&
                 botonesConductor !== true
                   ? <div className="btn-detalle">
@@ -435,30 +431,31 @@ export const DetalleViajec = () => {
               </div>
 
               <br />
-              {botonesConductor === true || botonesPasajeroSumado !== true
-                ? null
-                : !redirect
-                  ? <button
-                      onClick={() => {
-                        handleColaborar();
-                      }}
-                      class="btn btn-success"
-                      data-bs-toggle="modal"
-                      data-bs-target="#exampleModal"
-                    >
-                      Quiero Colaborar!
-                    </button>
-                  : <button
-                      onClick={() => {
-                        handleColaborar();
-                      }}
-                      class="btn btn-success"
-                      disabled="disabled"
-                      data-bs-toggle="modal"
-                      data-bs-target="#exampleModal"
-                    >
-                      Quiero Colaborar!
-                    </button>}
+              {botonesConductor === true ||
+              botonesPasajeroSumado !== true ? null : !redirect ? (
+                <button
+                  onClick={() => {
+                    handleColaborar();
+                  }}
+                  class="btn btn-success"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                >
+                  Quiero Colaborar!
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    handleColaborar();
+                  }}
+                  class="btn btn-success"
+                  disabled="disabled"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                >
+                  Quiero Colaborar!
+                </button>
+              )}
               <div
                 class="modal fade"
                 id="exampleModal"
@@ -515,24 +512,21 @@ export const DetalleViajec = () => {
                 </a>
               )}
 
-              {botonesConductor === true
-                ? <div className="btn-detalle">
-                    <button
-                      className="detalle-mensaje"
-                      onClick={() => {
-                        handleEliminar();
-                      }}
-                    >
-                      Eliminar Viaje
-                    </button>
-                    <button
-                      className="detalle-mensaje"
-                      onClick={handleModificar}
-                    >
-                      Modificar Viaje
-                    </button>
-                  </div>
-                : null}
+              {botonesConductor === true ? (
+                <div className="btn-detalle">
+                  <button
+                    className="detalle-mensaje"
+                    onClick={() => {
+                      handleEliminar();
+                    }}
+                  >
+                    Eliminar Viaje
+                  </button>
+                  <button className="detalle-mensaje" onClick={handleModificar}>
+                    Modificar Viaje
+                  </button>
+                </div>
+              ) : null}
             </div>
             <div className="card-viaje-detalle text-xl">
               <div className="flex flex-col justify-evenly w-full ml-4">
@@ -651,6 +645,7 @@ export const DetalleViajec = () => {
             <img className="stretch" src={fondo} alt="" />
           </div>
         </div>
+      )
       }
     </div>
   );
