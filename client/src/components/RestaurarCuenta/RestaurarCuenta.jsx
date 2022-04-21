@@ -8,7 +8,7 @@ import {
   registroUsuario,
   activarPerfil
 } from "../../redux/actions/actions";
-import swal from "sweetalert";
+import Swal from "sweetalert2";
 import fondo from "../../assets/fondo perfil.jpg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
@@ -65,39 +65,33 @@ export default function RestaurarCuenta() {
     e.preventDefault();
     if (Object.values(input)[0] === "") {
       e.preventDefault();
-      swal({
+      Swal.fire({
         title: "Alto!",
         text: "Por favor complete todos los campos",
         icon: "warning",
-        button: true,
-        dangerMode: true
       });
     } else if (Object.values(input)[1] === "") {
       e.preventDefault();
-      swal({
+      Swal.fire({
         title: "Alto!",
         text: "Por favor ingrese su contraseña",
         icon: "warning",
-        button: true,
-        dangerMode: true
       });
     } else if (input.password !== input.confirmPassword) {
       e.preventDefault();
-      swal({
+      Swal.fire({
         title: "Alto!",
         text: "Las contraseñas no coinciden",
         icon: "warning",
-        button: true,
-        dangerMode: true
       });
     } else {
       dispatch(cambioPassword(cookieMail, input.password)).then(
         dispatch(activarPerfil(cookieMail))
       );
-      swal({
+      Swal.fire({
         title: "Se ha cambiado exitosamente la contraseña!",
         icon: "success",
-        button: "Bienvenidx de nuevo!"
+        confirmButtonText: "Bienvenidx de nuevo!"
       }).then(function() {
         navigate("/home");
       });

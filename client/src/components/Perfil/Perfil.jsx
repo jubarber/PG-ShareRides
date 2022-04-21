@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate, useParams } from "react-router-dom";
+
+import React, { useEffect, useRef, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import fondo from "../../assets/fondo perfil.jpg";
 import "./Perfil.css";
@@ -163,26 +163,33 @@ export default function Perfil() {
 
   const handleUpdate = (e) => {
     dispatch(modificacionPerfil(usuario));
+    // window.location("/home");
     navigate("/home");
   };
 
-  const CLOUDINARY_URL =
-    "https://api.cloudinary.com/v1_1/dvmrweg0f/image/upload";
-  const CLOUDINARY_UPLOAD_PRESETS = "sharerides";
+  const barra = document.getElementById("img-upload-bar");
 
   const handleChangeUpdateImage = async (e) => {
     const file = e.target.files[0];
     const data = new FormData();
     data.append("file", file);
-    data.append("upload_preset", CLOUDINARY_UPLOAD_PRESETS);
+    data.append("upload_preset", "sharerides");
 
     const response = await axios
-      .post(CLOUDINARY_URL, data)
-      .then((res) => res.data);
-    setUsuario({
-      ...usuario,
-      avatar: response.url,
-    });
+      .post("https://api.cloudinary.com/v1_1/dvmrweg0f/image/upload", data, {
+        onUploadProgress(e) {
+          const progress = (e.loaded * 100) / e.total;
+          console.log(progress);
+          barra?.setAttribute("value", progress);
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setUsuario({
+          ...usuario,
+          avatar: res.data.url,
+        });
+      });
   };
 
   const handleEliminado = (e) => {
@@ -199,7 +206,8 @@ export default function Perfil() {
       if (result.isConfirmed) {
         dispatch(eliminarPerfil(cookieEmail));
         dispatch(logout(cookieEmail));
-        Swal.fire("Borrada!", "Tu cuenta ha sido eliminada!", "success");
+         Swal.fire("Borrada!", "Tu cuenta ha sido eliminada!", "success");
+         navigate("/")
       }
     });
   };
@@ -226,14 +234,6 @@ export default function Perfil() {
       }
     });
   };
-
-  let [countReportes, setCountNumReportes] = useState(0);
-
-  const [numReportes, setNumReportes] = useState({
-    reportes: countReportes + 1,
-  });
-
-  console.log("comentarios", ComentariosTotales);
 
   const handleReportarComentario = (e) => {
     Swal.fire({
@@ -308,7 +308,7 @@ export default function Perfil() {
           </div>
         </div>
 
-        <div>
+        <div className="div-form">
           <form className="contenedor-form" onSubmit={(e) => handleUpdate(e)}>
             <div className="contenedor-input">
               <h5>Nombre</h5>
@@ -376,6 +376,7 @@ export default function Perfil() {
                 <div>
                   <input
                     type="file"
+                    accept="image/png,image/jpeg"
                     name="avatar"
                     onChange={(e) => handleChangeUpdateImage(e)}
                   />
@@ -384,8 +385,14 @@ export default function Perfil() {
                 <label className="overflow-hidden">{miUsuario.avatar}</label>
               )}
             </div>
+
             {cookieEmail !== email ? null : (
               <div className="btn-modificacion-perfil">
+                {" "}
+                <div>
+                  <button className="btn-modificacion-perfil-active">
+                    <Link to={`/colaboraciones/${email}`}>Colaboraciones</Link>
+                  </button>
                 <div className="btn-mis-viajes">
                   <Link to={"/misviajes/" + cookieEmail}>
                     <button className="btn-modificacion-perfil-active">
@@ -413,42 +420,43 @@ export default function Perfil() {
                 <button onClick={(e) => habilitarInputs(e)}>
                   <FaEdit />
                 </button>
-              </div>
+              </div>             
+               </div>
             )}
           </form>
         </div>
       </div>
       <div className="resenas">
         <div className="form">
-          {cookieEmail !== email && viajesTotales.includes(true) ? (
-            <form onSubmit={handleSubmitComentarios}>
-              <div className="comentarios">
-                <h1>Comentarios</h1>
-                <div className="comentarios-card">
-                  <Rating
-                    onChange={handleChangeReviews}
-                    name="calificacion"
-                    value={parseInt(reviews.calificacion)}
-                  />
-                </div>
-                <div className="comentario">
-                  <label>Deja tu comentario:</label>
-                  <textarea
-                    type="text"
-                    onChange={handleChangeReviews}
-                    name="comentarios"
-                    value={reviews.comentarios}
-                    maxLength="144"
-                  />
-                  <p>{count}/144</p>
-                </div>
-                <Button color="secondary" size="medium" type="submit">
-                  {" "}
-                  Enviar{" "}
-                </Button>
+          {/* {cookieEmail !== email && viajesTotales.includes(true) ? ( */}
+          <form onSubmit={handleSubmitComentarios}>
+            <div className="comentarios">
+              <h1>Comentarios</h1>
+              <div className="comentarios-card">
+                <Rating
+                  onChange={handleChangeReviews}
+                  name="calificacion"
+                  value={parseInt(reviews.calificacion)}
+                />
               </div>
-            </form>
-          ) : null}
+              <div className="comentario">
+                <label>Deja tu comentario:</label>
+                <textarea
+                  type="text"
+                  onChange={handleChangeReviews}
+                  name="comentarios"
+                  value={reviews.comentarios}
+                  maxLength="144"
+                />
+                <p>{count}/144</p>
+              </div>
+              <Button color="secondary" size="medium" type="submit">
+                {" "}
+                Enviar{" "}
+              </Button>
+            </div>
+          </form>
+          {/* ) : null} */}
         </div>
         <div className="tableroComentarios">
           <div className="contenedor-comentarios">
@@ -478,13 +486,15 @@ export default function Perfil() {
                       >
                         Eliminar
                       </button>
-                      <button
-                        type="submit"
-                        value={e.id}
-                        onClick={(e) => handleReportarComentario(e)}
-                      >
-                        Reportar
-                      </button>
+                      {cookieEmail !== email ? null : (
+                        <button
+                          type="submit"
+                          value={e.id}
+                          onClick={(e) => handleReportarComentario(e)}
+                        >
+                          Reportar
+                        </button>
+                      )}
 
                       <p>{e.dia}</p>
                     </div>
