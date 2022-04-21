@@ -18,7 +18,8 @@ import {
   VEHICULOS_TOTALES,
   PAUSAR_VIAJE,
   REACTIVAR_VIAJE,
-
+  USUARIO_REPORTADO,
+  REPORTES,
 } from "../actions/actions.js";
 
 const initialState = {
@@ -35,7 +36,9 @@ const initialState = {
   colaboraciones: [],
   vehiculos: [],
   error: "",
-  vehiculosTotales: []
+  vehiculosTotales: [],
+  usuariosReportados: [],
+  reportes: []
 };
 
 function rootReducer(state = initialState, action) {
@@ -140,6 +143,16 @@ function rootReducer(state = initialState, action) {
         return {
           ...state,
           viajesFiltrados: [...state.viajesFiltrados, action.payload]
+        }
+      case USUARIO_REPORTADO:
+        return{
+          ...state,
+          usuariosReportados: action.payload
+        }
+      case REPORTES:
+        return{
+          ...state,
+          reportes: action.payload
         }
     default:
       return { ...state };

@@ -36,6 +36,8 @@ router.put("/delete/:email", async (req, res, next) => {
         { where: { email: usuario.email } }
       );
       usuario.save();
+      eliminado.update({disponible: null});
+      eliminado.save();
       res.send("usuario eliminado");
     } else {
       return res.status(404).send("Usuario no encontrado");
@@ -119,7 +121,7 @@ router.delete("/deletecomentario/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
     const deletedComentario = await Comentarios.destroy({
-      where: { id },
+      where: { id: id },
     });
     // const sgMail = require("@sendgrid/mail");
 

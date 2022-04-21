@@ -9,10 +9,22 @@ import {
   getVehiculosTotales,
 } from "../../../redux/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import Cookies from "universal-cookie";
+
 import "./AdminEstadisticas.css";
-//:P
-export default function Tabla() {
+
+export default function AdminEstadisticas() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const cookies = new Cookies();
+
+  useEffect(async () => {
+    if (cookies.get("admin") !== "true") {
+      navigate("/admin");
+    }
+  }, []);
+
   useEffect(() => {
     dispatch(getViajesTotal());
     dispatch(getUsuarios());
@@ -20,12 +32,16 @@ export default function Tabla() {
     dispatch(getVehiculosTotales());
     dispatch(getColaboraciones());
   }, [dispatch]);
+
   const usuarios = useSelector((state) => state.usuarios);
   const viajes = useSelector((state) => state.viajes);
   const vehiculos = useSelector((state) => state.vehiculosTotales);
   const colaboraciones = useSelector((state) => state.colaboraciones);
   const comentarios = useSelector((state) => state.comentarios);
   console.log("me traigo los estados", viajes);
+
+  
+
   return (
     <div className="container__table">
       <div className="wallpaper">

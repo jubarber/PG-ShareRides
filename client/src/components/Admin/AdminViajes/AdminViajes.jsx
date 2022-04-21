@@ -3,6 +3,7 @@ import { getViajesTotal } from "../../../redux/actions/actions";
 import s from "./AdminViajes.module.css";
 import axios from "axios";
 import { useDispatch } from "react-redux";
+import Swal from "sweetalert2/dist/sweetalert2.js";
 
 export default function AdminViajes(viaje) {
   const dispatch = useDispatch();
@@ -34,15 +35,20 @@ export default function AdminViajes(viaje) {
   }
 
   function deleteViajeHandle(){
-    console.log("ENTRA???")
-    try {
-      let eliminadi = deleteViaje(id);
-      dispatch(getViajesTotal());
-      console.log("VIAJE", eliminadi)
-    } catch (error) {
-      console.log(error)
-      
-    }
+    Swal.fire({
+      title: "Estas Seguro?🥺",
+      text: "No podrás restaurar el viaje eliminado!",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, borrar!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+      deleteViaje(id).then(()=> dispatch(getViajesTotal()))
+      }
+    })
   }
 
   return (

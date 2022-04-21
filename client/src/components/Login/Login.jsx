@@ -57,7 +57,16 @@ export default function Login() {
 
 
   useEffect(() => {
-    if (inicioSesion === "usuario pausado") {
+    if (inicioSesion === "Usuario Eliminado"){
+      swal({
+        title: "Usuario eliminado",
+        text: "Comunicate con pgsharerides@gmail.com para información",
+        icon: "warning",
+        button: true,
+        dangerMode: true,
+      });
+    }
+    else if (inicioSesion === "usuario pausado") {
       // console.log("entre a usuarios.disponible");
       setError({ ...error, usuario: "El usuario ha sido pausado" });
       Swal.fire({

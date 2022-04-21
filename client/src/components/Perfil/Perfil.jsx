@@ -34,7 +34,6 @@ export default function Perfil() {
   const cookieNombre = cookies.get("nombre");
   const cookieApellido = cookies.get("apellido");
   const cookieEmail = cookies.get("email");
-  const cookieAvatar = cookies.get("avatar");
   const [count, setCount] = useState(0);
   const miUsuario = useSelector((state) => state.usuario);
   const comentarios = useSelector((state) => state.comentarios);
@@ -49,8 +48,6 @@ export default function Perfil() {
     dispatch(getViajesTotal());
   }, [email]);
 
-  const [subiendo, setSubiendo] = useState("");
-  const [imagen, setImagen] = useState("");
   const [usuario, setUsuario] = useState({
     nombre: "",
     apellido: "",
@@ -60,9 +57,6 @@ export default function Perfil() {
     acercaDeMi: miUsuario.acercaDeMi,
     avatar: "",
   });
-
-  // console.log("miUsuario", cookieEmail);
-  // console.log("usuario", usuario);
 
   let viajesUsuarios = viajes.map((e) => e.usuarios.map((e) => e.email));
 
@@ -84,9 +78,10 @@ export default function Perfil() {
 
   const [reportes, setReportes] = useState({
     justificacion: "",
-    email: email,
+    email: cookieEmail,
     nombre: cookieNombre,
     apellido: cookieApellido,
+    emailReportado: email,
   });
 
   //-----------------------Inputs--------------------------
@@ -111,10 +106,10 @@ export default function Perfil() {
   const [comentariosPorPagina, setComentariosPorPagina] = useState(3);
   const ultimoComentario = pagina * comentariosPorPagina;
   const primerComentario = ultimoComentario - comentariosPorPagina;
-  const ComentariosTotales = miUsuario.comentarios && miUsuario.comentarios.length!==0 && miUsuario.comentarios.slice(
-    primerComentario,
-    ultimoComentario
-  );
+  const ComentariosTotales =
+    miUsuario.comentarios &&
+    miUsuario.comentarios.length !== 0 &&
+    miUsuario.comentarios.slice(primerComentario, ultimoComentario);
 
   const paginacion = (pageNum) => {
     setPagina(pageNum);
@@ -134,7 +129,7 @@ export default function Perfil() {
       ...reviews,
       [e.target.name]: e.target.value,
     });
-    setCount(e.target.value.length!==0);
+    setCount(e.target.value.length !== 0);
   };
 
   const handleChangeReportes = (e) => {
@@ -144,10 +139,14 @@ export default function Perfil() {
     });
   };
 
-  const handleSubmitReportes = (e) => {
+  const handleSubmitReportes = () => {
     dispatch(postReporte(reportes));
     setReportes({
       justificacion: "",
+      email: cookieEmail,
+      nombre: cookieNombre,
+      apellido: cookieApellido,
+      emailReportado: email,
     });
     navigate("/home");
   };
@@ -198,7 +197,7 @@ export default function Perfil() {
       if (result.isConfirmed) {
         dispatch(eliminarPerfil(cookieEmail));
         dispatch(logout(cookieEmail));
-         Swal.fire("Borrada!", "Tu cuenta ha sido eliminada!", "success");
+        Swal.fire("Borrada!", "Tu cuenta ha sido eliminada!", "success");
       }
     });
   };
@@ -254,7 +253,6 @@ export default function Perfil() {
         ).then(() => {
           // navigate("/home");
         });
-
       }
     });
   };
@@ -479,7 +477,6 @@ export default function Perfil() {
                         Reportar
                       </button>
 
-
                       <p>{e.dia}</p>
                     </div>
                   </div>
@@ -487,14 +484,15 @@ export default function Perfil() {
               )}
           </div>
           <div className="pag">
-            {comentarios.length!==0 && 
-            <PaginacionComentarios
-              comentariosPorPagina={comentariosPorPagina}
-              comentarios={comentarios.length}
-              paginacion={paginacion}
-              pagina={pagina}
-              setPagina={setPagina}
-            />}
+            {comentarios.length !== 0 && (
+              <PaginacionComentarios
+                comentariosPorPagina={comentariosPorPagina}
+                comentarios={comentarios.length}
+                paginacion={paginacion}
+                pagina={pagina}
+                setPagina={setPagina}
+              />
+            )}
           </div>
         </div>
       </div>
