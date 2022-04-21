@@ -1,140 +1,203 @@
-.adminHome__contenedor-NavBar {
-  display: flex;
-  width: 100%;
-  height: 8rem;
-  background-color: blueviolet;
-  flex-direction: column;
-  border: 2px solid black;
-}
+.contenedor-NavBar {
+    display: flex;
+    width: 100%;
+    height: 8rem;
+    background-color: blueviolet;
+    flex-direction: column;
+    border: 2px solid black;
+  }
+  
+  .titulo-NavBar h1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: white;
+  }
+  
+  .titulo-NavBar img {
+    width: 4rem;
+    height: 4rem;
+  }
+  
+  .contenedor-titulo {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    height: 9rem;
+    margin-left: -7rem;
+    justify-content: space-between;
+  }
+  
+  .contenedor-titulo h1 {
+    font-size: 3rem;
+    margin-left: 10rem;
+    
+  }
+  
+  .panel-botones {
+    display: flex;
+    width: 15rem;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+  }
+  #root
+    > div
+    > div.contenedor-NavBar
+    > div
+    > div.panel-botones
+    > button:nth-child(1)
+    > a:hover {
+    color: white;
+  }
+  
+  #root
+    > div
+    > div.contenedor-NavBar
+    > div
+    > div.panel-botones
+    > button:nth-child(2)
+    > a:hover {
+    color: white;
+  }
+  
+  .btn-outline-primary {
+    color: white;
+    border-color: white;
+  }
+  
+  .btn:hover {
+    color: white;
+  }
+  
+  .IniciarSesion-y-Registrar {
+    display: flex;
+    justify-content: space-between;
+    width: 15rem;
+  }
+  
+  .info-usuario {
+    display: flex;
+    align-items: center;
+    padding-left: 5rem;
+  }
+  .info-usuario h3 {
+    font-size: 1.5rem;
+    color: white;
+  }
+  
+  .info-usuario img {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+  }
+  
+  #account-menu
+    > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiMenu-paper.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation0.MuiPopover-paper.css-aqqxug-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
+    left: 1060px;
+  }
+  
+  #account-menu
+    > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiMenu-paper.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation0.MuiPopover-paper.css-aqqxug-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper
+    > ul
+    > a {
+    width: 10rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  #account-menu
+    > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiMenu-paper.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation0.MuiPopover-paper.css-aqqxug-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper
+    > ul {
+    width: 10rem;
+  }
+  
+  #account-menu
+    > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiMenu-paper.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation0.MuiPopover-paper.css-aqqxug-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper
+    > ul
+    > a
+    > li {
+    width: 10rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  #account-menu
+    > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiMenu-paper.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation0.MuiPopover-paper.css-aqqxug-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper
+    > ul
+    > li:nth-child(3) {
+    width: 10rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  #account-menu
+    > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiMenu-paper.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation0.MuiPopover-paper.css-aqqxug-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper
+    > ul
+    > a
+    > li
+    > img {
+    border-radius: 50%;
+  }
+  .filaUsuarios{
+ 
+    display: flex;
+    flex-flow: wrap;
+    width: 100%;
+    padding: 10px;
+  }
+  /* .adminMainContainer{
+    background-color: rgb(206, 211, 211);
+    padding: 4%
+  } */
+  /* -----------------------------Belen-------------------------------- */
+  .admin__navegador{
+    
+    color: black;
+    font-weight: bold;
+    border-radius: 0px 0px 5px 5px;
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    padding: 2%;
+    width: 94%;
+    margin: 0 auto
+  }
+  .admin__navegador li {
+    background-color: beige;
+    padding: 10px;
+    border-radius: 5px;
+    width: 150px;
+    text-align: center;
+  }
+  .admin__navegador li:hover{
+    filter: invert(1);
+    cursor: pointer;
+  }
+  .admin__li-active{
+    filter: invert(1);
+    font-weight: bold;
+  }
+  .admin__selectUsuarios{
+  
+    padding: 10px;
+    width: 30%;
+    display: flex;
+    justify-content: space-around;
+  }
+  .admin__selectContainer{
+  padding-left: 0.66%;
+    
 
-.adminHome__titulo-NavBar h1 {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  color: white;
-}
 
-.adminHome__titulo-NavBar img {
-  width: 4rem;
-  height: 4rem;
-}
-
-.adminHome__contenedor-titulo {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  height: 9rem;
-  margin-left: -7rem;
-  justify-content: space-between;
-}
-
-.adminHome__contenedor-titulo h1 {
-  font-size: 3rem;
-  margin-left: 10rem;
-}
-
-.adminHome__panel-botones {
-  display: flex;
-  width: 15rem;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-}
-#root
-  > div
-  > div.adminHome__contenedor-NavBar
-  > div
-  > div.adminHome__panel-botones
-  > button:nth-child(1)
-  > a:hover {
-  color: white;
-}
-
-#root
-  > div
-  > div.adminHome__contenedor-NavBar
-  > div
-  > div.adminHome__panel-botones
-  > button:nth-child(2)
-  > a:hover {
-  color: white;
-}
-
-.btn-outline-primary {
-  color: white;
-  border-color: white;
-}
-
-.adminHome__btn:hover {
-  color: white;
-}
-
-.adminHome__IniciarSesion-y-Registrar {
-  display: flex;
-  justify-content: space-between;
-  width: 15rem;
-}
-
-.adminHome__info-usuario {
-  display: flex;
-  align-items: center;
-  padding-left: 5rem;
-}
-.adminHome__info-usuario h3 {
-  font-size: 1.5rem;
-  color: white;
-}
-
-.adminHome__info-usuario img {
-  width: 4rem;
-  height: 4rem;
-  border-radius: 50%;
-}
-
-#account-menu
-  > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiMenu-paper.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation0.MuiPopover-paper.css-aqqxug-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
-  left: 1060px;
-}
-
-#account-menu
-  > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiMenu-paper.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation0.MuiPopover-paper.css-aqqxug-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper
-  > ul
-  > a {
-  width: 10rem;
-  display: flex;
-  justify-content: space-between;
-}
-
-#account-menu
-  > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiMenu-paper.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation0.MuiPopover-paper.css-aqqxug-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper
-  > ul {
-  width: 10rem;
-}
-
-#account-menu
-  > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiMenu-paper.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation0.MuiPopover-paper.css-aqqxug-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper
-  > ul
-  > a
-  > li {
-  width: 10rem;
-  display: flex;
-  justify-content: space-between;
-}
-
-#account-menu
-  > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiMenu-paper.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation0.MuiPopover-paper.css-aqqxug-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper
-  > ul
-  > li:nth-child(3) {
-  width: 10rem;
-  display: flex;
-  justify-content: space-between;
-}
-
-#account-menu
-  > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiMenu-paper.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation0.MuiPopover-paper.css-aqqxug-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper
-  > ul
-  > a
-  > li
-  > img {
-  border-radius: 50%;
-}
+  }
+  .admin__selectContainer span {
+    background-color:  rgb(78, 206, 166);;
+    padding: 5px;
+    font-weight: bold;
+    border-radius: 5px;
+    width: 130px;
+    text-align: center;
+    cursor: pointer;
+  }
+  .noLoaded{color:white; margin: 0 auto; font-size: 30px}
