@@ -643,6 +643,7 @@ export const DetalleViajec = () => {
             <img className="stretch" src={fondo} alt="" />
           </div>
         </div>
+      )
       }
     </div>
   );
