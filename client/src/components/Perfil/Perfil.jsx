@@ -421,7 +421,8 @@ export default function Perfil() {
                 <button onClick={(e) => habilitarInputs(e)}>
                   <FaEdit />
                 </button>
-              </div>
+              </div>             
+               </div>
             )}
           </form>
         </div>
