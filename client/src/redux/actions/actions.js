@@ -557,10 +557,6 @@ export function eliminarPerfil(payload) {
         type: "ELIMINAR_PERFIL",
         payload: usuarioEliminado.data
       });
-      return dispatch({
-        type: "ELIMINAR_PERFIL",
-        payload: usuarioEliminado.data
-      });
     } catch (error) {
       console.log(error);
     }
