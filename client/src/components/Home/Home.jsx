@@ -21,11 +21,13 @@ import { FormControl } from "@mui/material";
 import Cookies from "universal-cookie";
 import NavBar from "../NavBar/NavBar";
 import Bot from "../Bot/Chatbot";
+import { AiFillCaretDown } from "react-icons/ai";
 
 export default function Home() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
   const [habilitarBot, setHabilitarBot] = useState(false);
+  const [habilitarFiltros, setHabilitarFiltros] = useState(false);
   const [render, setRender] = useState("");
   const viajes = useSelector((state) => state.viajesFiltrados);
   const viajesUsuario = useSelector((state) => state.viajesPorUsuario);
@@ -36,6 +38,7 @@ export default function Home() {
   let prueba = (new Date().toLocaleString() + "").slice(11, 16);
   useEffect(() => {
     dispatch(getViajesTotalUsuario(cookieMail));
+    dispatch(getViajesTotal());
   }, []);
   console.log("viajes", viajes);
   useEffect(() => {
@@ -53,9 +56,14 @@ export default function Home() {
     dispatch(getViajesTotal());
   }
 
-  function handleBot(e){
+  function handleHabilitarFiltros(e) {
     e.preventDefault();
-    setHabilitarBot(!habilitarBot)
+    setHabilitarFiltros(!habilitarFiltros);
+  }
+
+  function handleBot(e) {
+    e.preventDefault();
+    setHabilitarBot(!habilitarBot);
   }
   let viajesDisponibles = [];
 
@@ -66,9 +74,22 @@ export default function Home() {
 
   return (
     <div>
-      <NavBar />
+      <NavBar />{" "}
+      <button
+        className="home-Show-Filtros"
+        onClick={(e) => handleHabilitarFiltros(e)}
+      >
+        <label>Filtros</label> <AiFillCaretDown />
+      </button>
+      {habilitarFiltros ? (
+        <div className="home-Filtros">
+          <Filtros />
+        </div>
+      ) : (
+        <></>
+      )}
       <div className="home-general">
-        <div>
+        <div className="home-general-filtros">
           <Filtros />
         </div>
         <div id="general-card">
@@ -101,9 +122,12 @@ export default function Home() {
                 (e) =>
                   e &&
                   parseInt(e.fecha.slice(5, 7)) >= parseInt(mes) &&
-                  parseInt(e.fecha.slice(8, 10)) >= parseInt(dia) &&
-                  parseInt(e.hora.replace(":", "")) >
-                    parseInt(prueba.replace(":", "")) && (
+                  (parseInt(e.fecha.slice(8, 10)) >= parseInt(dia) ||
+                    parseInt(e.fecha.slice(5, 7)) > parseInt(mes)) &&
+                  (parseInt(e.hora.replace(":", "")) >
+                    parseInt(prueba.replace(":", "")) ||
+                    parseInt(e.fecha.slice(5, 7)) > parseInt(mes) ||
+                    parseInt(e.fecha.slice(8, 10)) > parseInt(dia)) && (
                     <div className="card-home">
                       {e.status === "pasajero" ? (
                         cookieMail !== "undefined" && cookieMail !== "" ? (
@@ -355,14 +379,12 @@ export default function Home() {
           </div>
         </div>
         <div className="bot-conteiner">
-                  
-          {
-        habilitarBot ? ( <Bot />) : (<></>)
-          }
-           <button onClick={(e) =>handleBot(e)}className="btn-bot">Ayuda </button>
+          {habilitarBot ? <Bot /> : <></>}
+          <button onClick={(e) => handleBot(e)} className="btn-bot">
+            Ayuda{" "}
+          </button>
         </div>
       </div>
-
       <div className="wallpaper">
         <img className="stretch" src={fondo} alt="" />
       </div>

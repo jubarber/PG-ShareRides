@@ -370,3 +370,69 @@
 .btn-primary {
   color: black;
 }
+
+@media screen and (max-width: 425px) {
+  .contenedor-perfil {
+    display: flex;
+    flex-direction: column;
+  }
+  .contenedor-form {
+    display: flex;
+    width: 23rem;
+    height: 40rem;
+  }
+
+  .div-form {
+    margin-right: 0;
+  }
+  .contenedor-input {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+  }
+  .btn-modificacion-perfil {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 1rem;
+  }
+  #root
+    > div
+    > div
+    > div.contenedor-perfil
+    > div.div-form
+    > form
+    > div.btn-modificacion-perfil
+    > div
+    > button {
+    margin-bottom: 1rem;
+  }
+  #root
+    > div
+    > div
+    > div.contenedor-perfil
+    > div.div-form
+    > form
+    > div.btn-modificacion-perfil
+    > input {
+    margin-bottom: 1rem;
+  }
+  .resenas {
+    display: flex;
+    flex-direction: column;
+    margin-top: 16rem;
+  }
+  .contenedor-comentarios {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+  }
+
+  .resenas-card {
+    margin-bottom: 1rem;
+  }
+  .pag {
+    margin-top: 45rem;
+  }
+}

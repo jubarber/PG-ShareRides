@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import fondo from "../../assets/fondo perfil.jpg";
 import "./Perfil.css";
@@ -111,10 +111,10 @@ export default function Perfil() {
   const [comentariosPorPagina, setComentariosPorPagina] = useState(3);
   const ultimoComentario = pagina * comentariosPorPagina;
   const primerComentario = ultimoComentario - comentariosPorPagina;
-  const ComentariosTotales = miUsuario.comentarios && miUsuario.comentarios.length!==0 && miUsuario.comentarios.slice(
-    primerComentario,
-    ultimoComentario
-  );
+  const ComentariosTotales =
+    miUsuario.comentarios &&
+    miUsuario.comentarios.length !== 0 &&
+    miUsuario.comentarios.slice(primerComentario, ultimoComentario);
 
   const paginacion = (pageNum) => {
     setPagina(pageNum);
@@ -205,7 +205,7 @@ export default function Perfil() {
       if (result.isConfirmed) {
         dispatch(eliminarPerfil(cookieEmail));
         dispatch(logout(cookieEmail));
-         Swal.fire("Borrada!", "Tu cuenta ha sido eliminada!", "success");
+        Swal.fire("Borrada!", "Tu cuenta ha sido eliminada!", "success");
       }
     });
   };
@@ -306,7 +306,7 @@ export default function Perfil() {
           </div>
         </div>
 
-        <div>
+        <div className="div-form">
           <form className="contenedor-form" onSubmit={(e) => handleUpdate(e)}>
             <div className="contenedor-input">
               <h5>Nombre</h5>
@@ -383,8 +383,15 @@ export default function Perfil() {
                 <label className="overflow-hidden">{miUsuario.avatar}</label>
               )}
             </div>
+
             {cookieEmail !== email ? null : (
               <div className="btn-modificacion-perfil">
+                {" "}
+                <div>
+                  <button className="btn-modificacion-perfil-active">
+                    <Link to={`/colaboraciones/${email}`}>Colaboraciones</Link>
+                  </button>
+                </div>
                 {habilitarTelefono === false &&
                 habilitarDNI === false &&
                 habilitarAcercaDeMi === false &&
@@ -412,35 +419,35 @@ export default function Perfil() {
       </div>
       <div className="resenas">
         <div className="form">
-          {cookieEmail !== email && viajesTotales.includes(true) ? (
-            <form onSubmit={handleSubmitComentarios}>
-              <div className="comentarios">
-                <h1>Comentarios</h1>
-                <div className="comentarios-card">
-                  <Rating
-                    onChange={handleChangeReviews}
-                    name="calificacion"
-                    value={parseInt(reviews.calificacion)}
-                  />
-                </div>
-                <div className="comentario">
-                  <label>Deja tu comentario:</label>
-                  <textarea
-                    type="text"
-                    onChange={handleChangeReviews}
-                    name="comentarios"
-                    value={reviews.comentarios}
-                    maxLength="144"
-                  />
-                  <p>{count}/144</p>
-                </div>
-                <Button color="secondary" size="medium" type="submit">
-                  {" "}
-                  Enviar{" "}
-                </Button>
+          {/* {cookieEmail !== email && viajesTotales.includes(true) ? ( */}
+          <form onSubmit={handleSubmitComentarios}>
+            <div className="comentarios">
+              <h1>Comentarios</h1>
+              <div className="comentarios-card">
+                <Rating
+                  onChange={handleChangeReviews}
+                  name="calificacion"
+                  value={parseInt(reviews.calificacion)}
+                />
               </div>
-            </form>
-          ) : null}
+              <div className="comentario">
+                <label>Deja tu comentario:</label>
+                <textarea
+                  type="text"
+                  onChange={handleChangeReviews}
+                  name="comentarios"
+                  value={reviews.comentarios}
+                  maxLength="144"
+                />
+                <p>{count}/144</p>
+              </div>
+              <Button color="secondary" size="medium" type="submit">
+                {" "}
+                Enviar{" "}
+              </Button>
+            </div>
+          </form>
+          {/* ) : null} */}
         </div>
         <div className="tableroComentarios">
           <div className="contenedor-comentarios">

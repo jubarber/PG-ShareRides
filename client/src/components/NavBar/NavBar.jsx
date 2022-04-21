@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./NavBar.css";
 import logo from "../../assets/Icono shareRides.png";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -17,6 +17,8 @@ import { BiLogOut } from "react-icons/bi";
 import user from "../../assets/user.png";
 import { getUsuarioByEmail, logout } from "../../redux/actions/actions";
 import { FaHome } from "react-icons/fa";
+import { GiHamburgerMenu } from "react-icons/gi";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 export default function NavBar() {
   const dispatch = useDispatch();
@@ -40,6 +42,16 @@ export default function NavBar() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  // -------------Menu sin login --------------------
+  const [toggle, setToggle] = React.useState(null);
+  const openToggle = Boolean(anchorEl);
+  const handleClickToggle = (event) => {
+    setToggle(event.currentTarget);
+  };
+  const handleCloseToggle = () => {
+    setToggle(null);
   };
 
   const handleLogout = () => {
@@ -73,20 +85,61 @@ export default function NavBar() {
           )}
         </div>
         {cookieEmail === "undefined" || cookieEmail === "" ? (
-          <div>
-            <div className="IniciarSesion-y-Registrar">
-              <Link to="/login">
-                <button type="button" className="btn btn-outline-primary">
-                  Iniciar Sesion
-                </button>
-              </Link>
-              <Link to="/registro">
-                <button type="button" className="btn btn-outline-primary">
-                  Registrarse
-                </button>
-              </Link>
+          <>
+            <div className="navBar-Completa">
+              <div className="IniciarSesion-y-Registrar">
+                <Link to="/login">
+                  <button type="button" className="btn btn-outline-primary">
+                    Iniciar Sesion
+                  </button>
+                </Link>
+                <Link to="/registro">
+                  <button type="button" className="btn btn-outline-primary">
+                    Registrarse
+                  </button>
+                </Link>
+              </div>
             </div>
-          </div>
+            <div className="navBar-Responsive">
+              <IconButton
+                aria-label="more"
+                id="long-button"
+                aria-controls={open ? "long-menu" : undefined}
+                aria-expanded={open ? "true" : undefined}
+                aria-haspopup="true"
+                onClick={handleClick}
+              >
+                <MoreVertIcon />
+              </IconButton>
+              <Menu
+                id="long-menu"
+                MenuListProps={{
+                  "aria-labelledby": "long-button",
+                }}
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+              >
+                <div className="IniciarSesion-y-Registrar__Responsive">
+                  <Link to="/login">
+                    <MenuItem>
+                      <button type="button" className="btn btn-outline-primary">
+                        Iniciar Sesion
+                      </button>
+                    </MenuItem>
+                  </Link>
+                  <Link to="/registro">
+                    <MenuItem>
+                      {" "}
+                      <button type="button" className="btn btn-outline-primary">
+                        Registrarse
+                      </button>
+                    </MenuItem>
+                  </Link>
+                </div>
+              </Menu>
+            </div>
+          </>
         ) : (
           <>
             <div className="info-usuario">
