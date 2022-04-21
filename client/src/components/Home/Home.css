@@ -151,3 +151,21 @@
     color: white;
   }
 }
+
+.no-disponible{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5rem;
+  font-weight: bold;
+  font-size: 2rem;
+  color: black;
+   }
+
+.imagen{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 42rem;
+  background: none
+}

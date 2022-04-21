@@ -130,7 +130,14 @@
   flex-wrap: nowrap;
   margin-right: 4rem;
 }
-
+.btn-mis-viajes {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+  margin-right: 4rem;
+  width: 60%;
+}
 .btn-modificacion-perfil-active {
   display: block;
   height: 3rem;

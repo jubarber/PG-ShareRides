@@ -5,8 +5,7 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import DatePicker from "react-datepicker";
 import moment from "moment";
-import swal from "sweetalert";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 import axios from "axios";
 import Cookies from "universal-cookie";
 // import "./Calendar.css"

@@ -24,31 +24,67 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { FaUserCircle } from "react-icons/fa";
 import IconButton from "@mui/material/IconButton";
-import swal from "sweetalert";
 import Swal from "sweetalert2";
 
 export const DetalleViajec = () => {
   const cookies = new Cookies();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const viaje = useSelector((state) => state.viajePorId);
-  const viajesUsuario = useSelector((state) => state.viajesPorUsuario);
+  const viaje = useSelector(state => state.viajePorId);
+  const viajesPorUsuario = useSelector(state => state.viajesPorUsuario);
   const { id } = useParams();
   const cookieMail = cookies.get("email");
   let fechaViaje = "";
-  const [ocultarBotonColaborar, setOcultarBotonColaborar] = useState(null);
+  const [botonesConductor, setBotonesConductor] = useState(null);
+  const [botonesPasajero, setBotonesPasajero] = useState(null);
+  const [botonesPasajeroSumado, setBotonesPasajeroSumado] = useState(null);
+  
+  let idViajesPorUsuario = viajesPorUsuario.map(v => v.id);
+  let mailUsuariosDelViaje;
 
+  useEffect(
+    () => {
+      dispatch(getDetalleViaje(id));
+      dispatch(getViajesTotalUsuario(cookieMail));
+    },
+    [id]
+  );
+  
   useEffect(() => {
-    dispatch(getDetalleViaje(id));
-    dispatch(getViajesTotalUsuario(cookieMail));
-  }, [id]);
-
-  useEffect(() => {
-    if (viaje.length !== 0) {
-      if (viaje.usuarios[0].email === cookieMail)
-        setOcultarBotonColaborar(true);
+    if (viaje.length !== 0 && viajesPorUsuario.length !== 0) {
+      mailUsuariosDelViaje = viaje.usuarios.map(u => u.email);
+      if (viaje.asientosAOcupar === 0) {
+        setBotonesPasajeroSumado(null);
+        setBotonesPasajero(null);
+      }
+      if (
+        viaje.usuarios[0].email !== cookieMail &&
+        mailUsuariosDelViaje.includes(cookieMail)
+      ) {
+        setBotonesPasajeroSumado(true);
+        setBotonesPasajero(null);
+        setBotonesConductor(null);
+      }
+      if (
+        viaje.usuarios[0].email !== cookieMail &&
+        idViajesPorUsuario.includes(id)
+      ) {
+        setBotonesPasajeroSumado(true);
+        setBotonesPasajero(null);
+        setBotonesConductor(null);
+      }
+      if (viaje.usuarios[0].email === cookieMail) {
+        setBotonesConductor(true);
+        setBotonesPasajeroSumado(null);
+        setBotonesPasajero(null);
+      }
+      if (!mailUsuariosDelViaje.includes(cookieMail)) {
+        setBotonesPasajero(true);
+        setBotonesPasajeroSumado(null);
+        setBotonesConductor(null);
+      }
     }
-  }, [viaje]);
+  });
 
   if (viaje.length !== 0 && viaje.fecha.length !== 0) {
     viaje.fecha.includes("T")
@@ -117,26 +153,35 @@ export const DetalleViajec = () => {
 
   function handleSumarse(e) {
     e.preventDefault();
-    let newArr = [];
-    if (viajesUsuario.length !== 0) {
-      viajesUsuario.map((e) => {
+
+    let viajesFechasCoincidentes = [];
+    if (viajesPorUsuario.length !== 0) {
+      viajesPorUsuario.map(v => {
         if (
-          e.fecha.substring(0, 10).split("-").reverse().join("-") ===
+          v.fecha.substring(0, 10).split("-").reverse().join("-") ===
           viaje.fecha.substring(0, 10).split("-").reverse().join("-")
         ) {
-          newArr.push(e);
+          viajesFechasCoincidentes.push(v);
         }
       });
-      if (newArr.length !== 0) {
+      console.log(viajesPorUsuario);
+      console.log(viajesFechasCoincidentes);
+      if (viajesFechasCoincidentes.length !== 0) {
+        console.log("if sumarse");
         Swal.fire({
           title: "Ya tienes un viaje programado para este día",
           icon: "warning",
-          text: "No puedes participar de dos viajes el mismo día. Serás redireccionade al inicio",
+          text:
+            "No puedes participar de dos viajes el mismo día. Serás redireccionade al inicio",
           confirmButtonText: "Ok",
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          allowEnterKey: false
         }).then(() => {
           navigate("/home");
         });
       } else {
+        console.log("else sumarse");
         Swal.fire({
           title: "Estás a punto de sumarte a este viaje",
           icon: "warning",
@@ -144,31 +189,64 @@ export const DetalleViajec = () => {
           confirmButtonText: "Sumarme!",
           showCancelButton: true,
           cancelButtonText: "Cancelar",
-        })
-          .then((r) => {
-            if (r.isConfirmed) {
-              dispatch(sumarseAlViaje(sumarse));
-              dispatch(modificarAsiento(viaje));
-            }
-          })
-          .then(() => {
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          allowEnterKey: false
+        }).then(r => {
+          if (r.isConfirmed) {
+            dispatch(sumarseAlViaje(sumarse));
+            dispatch(modificarAsiento(viaje));
+            setBotonesPasajeroSumado(true);
+            setBotonesPasajero(null);
+
             Swal.fire({
               title: "Te has sumado al viaje correctamente!",
               icon: "success",
               timer: 1500,
               showConfirmButton: false,
+              allowOutsideClick: false,
+              allowEscapeKey: false,
+              allowEnterKey: false
             }).then(() => {
               navigate("/home");
             });
-          });
+          }
+        });
       }
+    } else {
+      console.log("else sumarse");
+      Swal.fire({
+        title: "Estás a punto de sumarte a este viaje",
+        icon: "warning",
+        text: "Por favor, revisá bien todos los detalles antes de confirmar",
+        confirmButtonText: "Sumarme!",
+        showCancelButton: true,
+        cancelButtonText: "Cancelar",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        allowEnterKey: false
+      })
+        .then(r => {
+          if (r.isConfirmed) {
+            dispatch(sumarseAlViaje(sumarse));
+            dispatch(modificarAsiento(viaje));
+          }
+        })
+        .then(() => {
+          Swal.fire({
+            title: "Te has sumado al viaje correctamente!",
+            icon: "success",
+            timer: 1500,
+            showConfirmButton: false
+          }).then(() => {
+            navigate("/home");
+          });
+        });
     }
   }
 
   if (viaje.length !== 0 && viaje.usuarios.length !== 0) {
-    var viajeUsuarios = viaje.usuarios.map((e) => e.email);
-    var viajesTotales = viajeUsuarios.map((e) => e.includes(cookieMail));
-    var arrayPasajeres = viaje.usuarios.map((e) => e);
+    var arrayPasajeres = viaje.usuarios.map(e => e);
   }
 
   function handleEliminar() {
@@ -193,18 +271,57 @@ export const DetalleViajec = () => {
         Swal.fire({
           title: "El viaje está a salvo!",
           icon: "info",
-          timer: 2000,
-          showConfirmButton: false,
+           timer: 2000,
+          showConfirmButton: false
         });
       }
     });
   }
 
-  console.log("asientos", viaje.asientosAOcupar);
+  function handleModificar() {
+    console.log("handle modificar");
+    cookies.set("fecha", viaje.fecha, { path: "/" });
+    cookies.set("hora", viaje.hora, { path: "/" });
+    cookies.set("origen", viaje.origen, { path: "/" });
+    cookies.set("destino", viaje.destino, { path: "/" });
+    cookies.set("asientos", viaje.asientosAOcupar, {
+      path: "/"
+    });
+    cookies.set("detalles", viaje.detalles, {
+      path: "/"
+    });
+    cookies.set("aceptaFumador", viaje.aceptaFumador, {
+      path: "/"
+    });
+    cookies.set("aceptaMascota", viaje.aceptaMascota, {
+      path: "/"
+    });
+    cookies.set("aceptaEquipaje", viaje.aceptaEquipaje, {
+      path: "/"
+    });
+    cookies.set("usaBarbijo", viaje.usaBarbijo, {
+      path: "/"
+    });
+    Swal.fire({
+      title: "En instantes serás redirigide a la modificación de tu viaje",
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      allowEnterKey: false,
+      didOpen: () => {
+        Swal.showLoading()
+      }
+    }).then(() => {
+      navigate(`/modificar/modificarViaje/${id}`);
+    });
+  }
 
   return (
     <div>
-      {viaje.length !== 0 && (
+      {arrayPasajeres &&
+        arrayPasajeres.length !== 0 &&
         <div className="container-detalle">
           <NavBar />
           <div className="card-detalle">
@@ -291,47 +408,55 @@ export const DetalleViajec = () => {
                 <span className="m-2">{viaje.detalles}</span>
               </div>
               <div className="btn-detalle">
-                {viajesTotales !== [] && viajesTotales.includes(true) ? null : (
-                  <div className="btn-mensaje-sumarse">
-                    <form onSubmit={(e) => handleSumarse(e)}>
-                      <input
+                {botonesConductor === true ||
+                (botonesPasajeroSumado === true && botonesPasajero !== true)
+                  ? null
+                  : <div className="btn-detalle">
+                      <button
                         className="detalle-mensaje"
-                        type="submit"
-                        value="Sumarse al viaje"
-                      />
-                    </form>
-                  </div>
-                )}{" "}
-                <button className="detalle-mensaje">
-                  <Link to="/login">Enviar mensaje</Link>
-                </button>
+                        onClick={e => {
+                          handleSumarse(e);
+                        }}
+                      >
+                        Sumarme al viaje
+                      </button>
+                    </div>}
+                {(botonesPasajeroSumado === true || botonesPasajero === true) &&
+                botonesConductor !== true
+                  ? <div className="btn-detalle">
+                      <button className="detalle-mensaje">
+                        {/* onClick={} */}
+                        Enviar Mensaje
+                      </button>
+                    </div>
+                  : null}
               </div>
+
               <br />
-              {ocultarBotonColaborar !== true &&
-                (!redirect ? (
-                  <button
-                    onClick={() => {
-                      handleColaborar();
-                    }}
-                    class="btn btn-success"
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
-                  >
-                    Quiero Colaborar!
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => {
-                      handleColaborar();
-                    }}
-                    class="btn btn-success"
-                    disabled="disabled"
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
-                  >
-                    Quiero Colaborar!
-                  </button>
-                ))}
+              {botonesConductor === true || botonesPasajeroSumado !== true
+                ? null
+                : !redirect
+                  ? <button
+                      onClick={() => {
+                        handleColaborar();
+                      }}
+                      class="btn btn-success"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                    >
+                      Quiero Colaborar!
+                    </button>
+                  : <button
+                      onClick={() => {
+                        handleColaborar();
+                      }}
+                      class="btn btn-success"
+                      disabled="disabled"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                    >
+                      Quiero Colaborar!
+                    </button>}
               <div
                 class="modal fade"
                 id="exampleModal"
@@ -388,17 +513,24 @@ export const DetalleViajec = () => {
                 </a>
               )}
 
-              <div className="btn-detalle">
-                <button
-                  className="detalle-mensaje"
-                  onClick={() => {
-                    handleEliminar();
-                  }}
-                >
-                  Eliminar Viaje
-                </button>
-                <button className="detalle-mensaje">Modificar Viaje</button>
-              </div>
+              {botonesConductor === true
+                ? <div className="btn-detalle">
+                    <button
+                      className="detalle-mensaje"
+                      onClick={() => {
+                        handleEliminar();
+                      }}
+                    >
+                      Eliminar Viaje
+                    </button>
+                    <button
+                      className="detalle-mensaje"
+                      onClick={handleModificar}
+                    >
+                      Modificar Viaje
+                    </button>
+                  </div>
+                : null}
             </div>
             <div className="card-viaje-detalle text-xl">
               <div className="flex flex-col justify-evenly w-full ml-4">

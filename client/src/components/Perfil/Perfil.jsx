@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -205,7 +206,8 @@ export default function Perfil() {
       if (result.isConfirmed) {
         dispatch(eliminarPerfil(cookieEmail));
         dispatch(logout(cookieEmail));
-        Swal.fire("Borrada!", "Tu cuenta ha sido eliminada!", "success");
+         Swal.fire("Borrada!", "Tu cuenta ha sido eliminada!", "success");
+         navigate("/")
       }
     });
   };
@@ -253,6 +255,7 @@ export default function Perfil() {
         ).then(() => {
           // navigate("/home");
         });
+
       }
     });
   };
@@ -391,6 +394,12 @@ export default function Perfil() {
                   <button className="btn-modificacion-perfil-active">
                     <Link to={`/colaboraciones/${email}`}>Colaboraciones</Link>
                   </button>
+                <div className="btn-mis-viajes">
+                  <Link to={"/misviajes/" + cookieEmail}>
+                    <button className="btn-modificacion-perfil-active">
+                      Mis Viajes
+                    </button>
+                  </Link>
                 </div>
                 {habilitarTelefono === false &&
                 habilitarDNI === false &&

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import swal from "sweetalert";
 import {
   postViajeConductor,
   getViajesTotalUsuario,
@@ -34,14 +33,14 @@ export default function FormPasajero() {
     destino: "",
     dni: cookies.get("dni"),
     asiento: "",
-    formaDePago: "A charlar",
+    formaDePago: "A coordinar",
     email: cookieMail,
     detalles: "",
     patente: cookiePatente,
   });
   const expresiones = {
     // fecha: /^.{4,18}$/,
-    hora: /^.{4,12}$/,
+    hora: /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/,
     asiento: /^.{1,7}$/,
     origen: /^[a-zA-ZÀ-ÿ\s]{4,30}$/,
     destino: /^[a-zA-ZÀ-ÿ\s]{4,30}$/,
@@ -201,19 +200,17 @@ export default function FormPasajero() {
       !viaje.asiento
     ) {
       e.preventDefault();
-      swal({
+      Swal.fire({
         title: "Alto!",
         text: "Por favor completá todos los campos",
         icon: "warning",
-        button: true,
-        dangerMode: true,
       });
     } else {
-      swal({
+      Swal.fire({
         title: "El registro ha sido exitoso!",
         icon: "success",
-        button: "Buen viaje!",
-      }).then(function () {
+        confirmButtonText: "Buen viaje!"
+      }).then(function() {
         navigate("/home");
       });
       dispatch(postViajeConductor(isChecked, viaje));
@@ -225,7 +222,7 @@ export default function FormPasajero() {
         destino: "",
         dni: "",
         asiento: "",
-        formaDePago: "A charlar",
+        formaDePago: "A coordinar",
         email: "",
         detalles: "",
       });
@@ -236,9 +233,9 @@ export default function FormPasajero() {
     <div>
       <NavBar />
       <div className="Conductore__nav">
-        <Link to="/formvehiculo">
-          <button className="Conductore__btn_volver">Volver</button>
-        </Link>
+        <button className="Registro__btn_volver" onClick={() => navigate(-1)}>
+          Volver
+        </button>
       </div>
       <form onSubmit={handleSubmit}>
         <div className="order-form">
@@ -268,6 +265,7 @@ export default function FormPasajero() {
                 type="text"
                 name="hora"
                 value={viaje.hora}
+                placeholder="00:00 - 24:00"
                 onChange={(e) => handleOnChange(e)}
               />
               {errors.hora && (
