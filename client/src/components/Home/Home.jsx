@@ -382,6 +382,7 @@ export default function Home() {
         </div>
         <div className="bot-conteiner">
           {habilitarBot ? <Bot /> : <div></div>}
+
           <button onClick={(e) => handleBot(e)} className="btn-bot">
             Ayuda{" "}
           </button>

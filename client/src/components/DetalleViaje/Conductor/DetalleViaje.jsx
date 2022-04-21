@@ -242,8 +242,6 @@ export const DetalleViajec = () => {
   }
 
   if (viaje.length !== 0 && viaje.usuarios.length !== 0) {
-    var viajeUsuarios = viaje.usuarios.map((e) => e.email);
-    var viajesTotales = viajeUsuarios.map((e) => e.includes(cookieMail));
     var arrayPasajeres = viaje.usuarios.map((e) => e);
   }
 

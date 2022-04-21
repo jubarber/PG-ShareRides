@@ -232,18 +232,6 @@ export default function FormPasajero() {
       }).then(function () {
         navigate("/home");
       });
-      dispatch(postViajePasajero(isChecked, viaje));
-      setViaje({
-        fecha: null,
-        hora: "",
-        origen: "",
-        destino: "",
-        email: "",
-        dni: "",
-        asiento: "",
-        formaDePago: "A coordinar",
-        detalles: "",
-      });
     }
   }
 
