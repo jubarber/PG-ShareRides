@@ -134,7 +134,7 @@ export default function Perfil() {
       ...reviews,
       [e.target.name]: e.target.value,
     });
-    setCount(e.target.value.length !== 0);
+    setCount(e.target.value.length - 1);
   };
 
   const handleChangeReportes = (e) => {
@@ -206,6 +206,7 @@ export default function Perfil() {
         dispatch(eliminarPerfil(cookieEmail));
         dispatch(logout(cookieEmail));
         Swal.fire("Borrada!", "Tu cuenta ha sido eliminada!", "success");
+        navigate("/");
       }
     });
   };
@@ -387,31 +388,38 @@ export default function Perfil() {
             {cookieEmail !== email ? null : (
               <div className="btn-modificacion-perfil">
                 {" "}
-                <div>
+                <div className="btn-group-perfil">
                   <button className="btn-modificacion-perfil-active">
                     <Link to={`/colaboraciones/${email}`}>Colaboraciones</Link>
                   </button>
+
+                  <Link to={"/misviajes/" + cookieEmail}>
+                    <button className="btn-modificacion-perfil-active">
+                      Mis Viajes
+                    </button>
+                  </Link>
+
+                  {habilitarTelefono === false &&
+                  habilitarDNI === false &&
+                  habilitarAcercaDeMi === false &&
+                  habilitarAvatar === false ? (
+                    <input
+                      type="submit"
+                      value="Guardar Cambios"
+                      className="btn-modificacion-perfil-active"
+                    ></input>
+                  ) : (
+                    <input
+                      type="button"
+                      value="Guardar Cambios"
+                      disabled
+                      className="btn-modificacion-perfil-disabled"
+                    />
+                  )}
+                  <button onClick={(e) => habilitarInputs(e)}>
+                    <FaEdit />
+                  </button>
                 </div>
-                {habilitarTelefono === false &&
-                habilitarDNI === false &&
-                habilitarAcercaDeMi === false &&
-                habilitarAvatar === false ? (
-                  <input
-                    type="submit"
-                    value="Guardar Cambios"
-                    className="btn-modificacion-perfil-active"
-                  ></input>
-                ) : (
-                  <input
-                    type="button"
-                    value="Guardar Cambios"
-                    disabled
-                    className="btn-modificacion-perfil-disabled"
-                  />
-                )}
-                <button onClick={(e) => habilitarInputs(e)}>
-                  <FaEdit />
-                </button>
               </div>
             )}
           </form>
@@ -419,35 +427,35 @@ export default function Perfil() {
       </div>
       <div className="resenas">
         <div className="form">
-          {/* {cookieEmail !== email && viajesTotales.includes(true) ? ( */}
-          <form onSubmit={handleSubmitComentarios}>
-            <div className="comentarios">
-              <h1>Comentarios</h1>
-              <div className="comentarios-card">
-                <Rating
-                  onChange={handleChangeReviews}
-                  name="calificacion"
-                  value={parseInt(reviews.calificacion)}
-                />
+          {cookieEmail !== email && viajesTotales.includes(true) ? (
+            <form onSubmit={handleSubmitComentarios}>
+              <div className="comentarios">
+                <h1>Comentarios</h1>
+                <div className="comentarios-card">
+                  <Rating
+                    onChange={handleChangeReviews}
+                    name="calificacion"
+                    value={parseInt(reviews.calificacion)}
+                  />
+                </div>
+                <div className="comentario">
+                  <label>Deja tu comentario:</label>
+                  <textarea
+                    type="text"
+                    onChange={handleChangeReviews}
+                    name="comentarios"
+                    value={reviews.comentarios}
+                    maxLength="144"
+                  />
+                  <p>{count}/144</p>
+                </div>
+                <Button color="secondary" size="medium" type="submit">
+                  {" "}
+                  Enviar{" "}
+                </Button>
               </div>
-              <div className="comentario">
-                <label>Deja tu comentario:</label>
-                <textarea
-                  type="text"
-                  onChange={handleChangeReviews}
-                  name="comentarios"
-                  value={reviews.comentarios}
-                  maxLength="144"
-                />
-                <p>{count}/144</p>
-              </div>
-              <Button color="secondary" size="medium" type="submit">
-                {" "}
-                Enviar{" "}
-              </Button>
-            </div>
-          </form>
-          {/* ) : null} */}
+            </form>
+          ) : null}
         </div>
         <div className="tableroComentarios">
           <div className="contenedor-comentarios">
@@ -470,13 +478,6 @@ export default function Perfil() {
                       <p>{e.comentarios}</p>
                     </div>
                     <div className="comentarios-abajo">
-                      <button
-                        type="submit"
-                        value={e.id}
-                        onClick={(e) => handleBorrarComentario(e)}
-                      >
-                        Eliminar
-                      </button>
                       {cookieEmail !== email ? null : (
                         <button
                           type="submit"

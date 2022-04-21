@@ -76,7 +76,7 @@ class ActionProvider {
   }
   handleContacto() {
     const message = this.createChatBotMessage(
-      "Via mail a pgsharerides@gmail.com" 
+      "Via e-mail a pgsharerides@gmail.com" 
     );
 
     this.setState((prev) => ({

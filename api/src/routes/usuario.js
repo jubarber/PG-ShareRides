@@ -9,6 +9,87 @@ const {
 } = require("../db.js");
 const { API_KEY } = process.env;
 
+router.post("/registro", async (req, res, next) => {
+  try {
+    const { email, nombre, apellido, password, avatar } = req.body;
+    let nuevoUsuario = [];
+    if (email) {
+      nuevoUsuario = await Usuario.findOrCreate({
+        where: {
+          email: email,
+          nombre: nombre,
+          apellido: apellido,
+          password: password,
+          avatar: avatar,
+        },
+      });
+      res.json(nuevoUsuario);
+      // const sgMail = require("@sendgrid/mail");
+
+      // sgMail.setApiKey(API_KEY);
+
+      // const message = {
+      //   to: email,
+      //   from: "pgsharerides@gmail.com",
+
+      //   subject: "Bienvenide a Share Rides!",
+      //   html: `
+      //   <html>
+      //   <head>
+      //   <h2>
+      //   Hola ${nombre}!
+      //   </h2>
+      //   </head>
+      //   <body>
+      //   <h4>
+      //   Desde Share Rides queremos darte la bienvenida a nuestra plataforma! Tu registro se ha llevado a cabo con éxito.
+      //   Esperamos que te sientas segure para compartir tu viaje.
+      //   </h4>
+      //   <h3>Buenas rutas!</h3>
+      //   </body>
+      //   </html>
+      //   `,
+      // };
+      // sgMail
+      //   .send(message)
+      //   .then((r) => console.log("mail enviado"))
+      //   .catch((err) => console.log(err.message));
+
+      // const sgMail = require("@sendgrid/mail");
+
+      // sgMail.setApiKey(API_KEY);
+
+      // const message = {
+      //   to: email,
+      //   from: "pgsharerides@gmail.com",
+
+      //   subject: "Bienvenide a Share Rides!",
+      //   html: `
+      //   <html>
+      //   <head>
+      //   <h2>
+      //   Hola ${nombre}!
+      //   </h2>
+      //   </head>
+      //   <body>
+      //   <h4>
+      //   Desde Share Rides queremos darte la bienvenida a nuestra plataforma! Tu registro se ha llevado a cabo con éxito.
+      //   Esperamos que te sientas segure para compartir tu viaje.
+      //   </h4>
+      //   <h3>Buenas rutas!</h3>
+      //   </body>
+      //   </html>
+      //   `,
+      // };
+      // sgMail
+      //   .send(message)
+      //   .then((r) => console.log("mail enviado"))
+      //   .catch((err) => console.log(err.message));
+    }
+  } catch (err) {
+    next(err);
+  }
+});
 router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
   try {
     const { email, password } = req.params;
@@ -17,7 +98,6 @@ router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
         { where: { email: email } },
         { include: Viaje }
       );
-      //console.log("soy db usuario", dbUsuario);
       if (dbUsuario) {
         if (dbUsuario.disponible === false) {
           res.send("usuario pausado");
@@ -34,7 +114,6 @@ router.get("/iniciarsesion/:email/:password", async (req, res, next) => {
     next(err);
   }
 });
-
 router.get("/usuarios", async (req, res, next) => {
   try {
     let usuarios = await Usuario.findAll({
@@ -50,7 +129,6 @@ router.get("/usuarios", async (req, res, next) => {
     next(err);
   }
 });
-
 router.get("/usuarios/:email", async (req, res, next) => {
   const { email } = req.params;
   try {
@@ -155,7 +233,6 @@ router.put("/cambiopassword", async (req, res, next) => {
     next(err);
   }
 });
-
 router.post("/mailnuevapassword", async (req, res, next) => {
   const { nombre, email } = req.body;
   try {
@@ -188,7 +265,6 @@ router.post("/mailnuevapassword", async (req, res, next) => {
     next(error);
   }
 });
-
 router.post("/emailmodificarperfil", async (req, res, next) => {
   const { nombre, email } = req.body;
   try {
@@ -221,19 +297,21 @@ router.post("/emailmodificarperfil", async (req, res, next) => {
     next(err);
   }
 });
-
 router.put("/logueado", async (req, res, next) => {
   const { email } = req.body;
   try {
     let usuario = await Usuario.findByPk(email);
-    usuario.update({ logueado: true });
-    usuario.save();
-    res.send("usuario logueado");
+    if (usuario) {
+      usuario.update({ logueado: true });
+      usuario.save();
+      res.send("usuario logueado");
+    } else {
+      res.send("ERROR");
+    }
   } catch (err) {
     next(err);
   }
 });
-
 router.put("/deslogueado", async (req, res, next) => {
   const { email } = req.body;
   try {
@@ -245,7 +323,6 @@ router.put("/deslogueado", async (req, res, next) => {
     next(err);
   }
 });
-
 router.put("/modificarperfil", async (req, res, next) => {
   const { email, acercaDeMi, telefono, avatar, dni } = req.body;
   try {
@@ -280,7 +357,6 @@ router.put("/modificarperfil", async (req, res, next) => {
     next(err);
   }
 });
-
 router.put("/comentarios", async (req, res, next) => {
   const { email, calificacion, comentarios } = req.body;
   try {
@@ -304,7 +380,6 @@ router.put("/comentarios", async (req, res, next) => {
     next(err);
   }
 });
-
 router.put("/eliminarPerfil", async (req, res, next) => {
   const { email } = req.body;
   try {
@@ -318,16 +393,17 @@ router.put("/eliminarPerfil", async (req, res, next) => {
     next(error);
   }
 });
-
 router.put("/activarPerfil", async (req, res, next) => {
   const { email } = req.body;
-  console.log(email)
+  console.log(email);
   try {
     let usuarioActivado = await Usuario.findByPk(email);
-   if(usuarioActivado.length!==0){ usuarioActivado.update({
-      disponible: true,
-    });
-    usuarioActivado.save();}
+    if (usuarioActivado.length !== 0) {
+      usuarioActivado.update({
+        disponible: true,
+      });
+      usuarioActivado.save();
+    }
     res.send(usuarioActivado);
   } catch (error) {
     next(error);

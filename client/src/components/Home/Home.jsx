@@ -22,6 +22,7 @@ import Cookies from "universal-cookie";
 import NavBar from "../NavBar/NavBar";
 import Bot from "../Bot/Chatbot";
 import { AiFillCaretDown } from "react-icons/ai";
+import imagen from "../../assets/not found.png";
 
 export default function Home() {
   const cookies = new Cookies();
@@ -30,23 +31,22 @@ export default function Home() {
   const [habilitarFiltros, setHabilitarFiltros] = useState(false);
   const [render, setRender] = useState("");
   const viajes = useSelector((state) => state.viajesFiltrados);
-  const viajesUsuario = useSelector((state) => state.viajesPorUsuario);
   const cookieMail = cookies.get("email");
+
   let newDate = new Date();
   let dia = newDate.getDate();
   let mes = newDate.getMonth() + 1;
-  let prueba = (new Date().toLocaleString() + "").slice(11, 16);
-  useEffect(() => {
-    dispatch(getViajesTotalUsuario(cookieMail));
-    dispatch(getViajesTotal());
-  }, []);
-  console.log("viajes", viajes);
+
+  let hora = (new Date().toLocaleString() + "").slice(11, 16);
   useEffect(() => {
     dispatch(login(cookieMail));
+    dispatch(getViajesTotal());
+    dispatch(getViajesTotalUsuario(cookieMail));
     dispatch(filterPerCard(render));
     dispatch(getUsuarios());
   }, []);
 
+  // console.log("viajes", viajes);
   function handleChange(e) {
     dispatch(filterPerCard(e.target.value));
     setRender(e.target.value);
@@ -67,10 +67,9 @@ export default function Home() {
   }
   let viajesDisponibles = [];
 
-  viajes.map((e) => {
+  viajes?.map((e) => {
     e.viajeDisponible === true && viajesDisponibles.push(e);
   });
-  console.log("cookieMail", cookieMail);
 
   return (
     <div>
@@ -86,7 +85,7 @@ export default function Home() {
           <Filtros />
         </div>
       ) : (
-        <></>
+        <div></div>
       )}
       <div className="home-general">
         <div className="home-general-filtros">
@@ -125,7 +124,7 @@ export default function Home() {
                   (parseInt(e.fecha.slice(8, 10)) >= parseInt(dia) ||
                     parseInt(e.fecha.slice(5, 7)) > parseInt(mes)) &&
                   (parseInt(e.hora.replace(":", "")) >
-                    parseInt(prueba.replace(":", "")) ||
+                    parseInt(hora.replace(":", "")) ||
                     parseInt(e.fecha.slice(5, 7)) > parseInt(mes) ||
                     parseInt(e.fecha.slice(8, 10)) > parseInt(dia)) && (
                     <div className="card-home">
@@ -374,12 +373,15 @@ export default function Home() {
                   )
               )
             ) : (
-              <div>No hay viajes disponibles</div>
+              <div>
+                <h3 className="no-disponible">No hay viajes disponibles</h3>
+                <img className="imagen" src={imagen} alt="" />
+              </div>
             )}
           </div>
         </div>
         <div className="bot-conteiner">
-          {habilitarBot ? <Bot /> : <></>}
+          {habilitarBot ? <Bot /> : <div></div>}
           <button onClick={(e) => handleBot(e)} className="btn-bot">
             Ayuda{" "}
           </button>

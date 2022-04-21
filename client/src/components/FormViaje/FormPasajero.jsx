@@ -4,7 +4,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import swal from "sweetalert";
+import Swal from "sweetalert2";
 import {
   postViajePasajero,
   getViajesTotalUsuario,
@@ -16,7 +16,6 @@ import "./FormPasajero.css";
 import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
 import DatePicker, { registerLocale } from "react-datepicker";
-import Swal from "sweetalert2";
 import "react-datepicker/dist/react-datepicker.css";
 import es from "date-fns/locale/es";
 registerLocale("es", es);
@@ -44,7 +43,7 @@ export default function FormPasajero() {
 
   const expresiones = {
     // fecha: /^.{4,18}$/,
-    hora: /^.{4,12}$/,
+    hora: /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/,
     origen: /^[a-zA-ZÀ-ÿ\s]{4,30}$/,
     destino: /^[a-zA-ZÀ-ÿ\s]{4,30}$/,
     email: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
@@ -220,18 +219,16 @@ export default function FormPasajero() {
       !viaje.email
     ) {
       e.preventDefault();
-      swal({
+      Swal.fire({
         title: "Alto!",
         text: "Por favor completá todos los campos",
         icon: "warning",
-        button: true,
-        dangerMode: true,
       });
     } else {
-      swal({
+      Swal.fire({
         title: "El registro ha sido exitoso!",
         icon: "success",
-        button: "Buen viaje!",
+        confirmButtonText: "Buen viaje!",
       }).then(function () {
         navigate("/home");
       });
@@ -286,6 +283,7 @@ export default function FormPasajero() {
                 type="text"
                 name="hora"
                 value={viaje.hora}
+                placeholder="00:00 - 24:00"
                 onChange={(e) => handleOnChange(e)}
                 className="input-text"
               />

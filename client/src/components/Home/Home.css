@@ -150,4 +150,31 @@
   #root > div > div > button > svg {
     color: white;
   }
+  #general-card > div.container-cards > div > h3 {
+    display: flex;
+    font-size: 2rem;
+    margin-left: 3rem;
+  }
+  #general-card > div.container-cards > div > img {
+    display: flex;
+    margin-left: 7rem;
+  }
+}
+
+.no-disponible {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5rem;
+  font-weight: bold;
+  font-size: 2rem;
+  color: black;
+}
+
+.imagen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 42rem;
+  background: none;
 }
