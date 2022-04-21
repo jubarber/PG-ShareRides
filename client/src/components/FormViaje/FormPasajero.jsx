@@ -36,7 +36,8 @@ export default function FormPasajero() {
     dni: "",
     asiento: "",
     formaDePago: "A coordinar",
-    detalles: ""
+    detalles: "",
+    telefono:""
   });
 
   const expresiones = {
@@ -227,7 +228,8 @@ export default function FormPasajero() {
         dni: "",
         asiento: "",
         formaDePago: "A coordinar",
-        detalles: ""
+        detalles: "",
+        numero:""
       });
     }
   }
@@ -318,6 +320,16 @@ export default function FormPasajero() {
                 value={viaje.dni}
                 onChange={e => handleOnChange(e)}
                 className="input-text"
+              />
+              <label className="label-formpasajero">
+               Numero de telefono
+              </label>
+              <input
+                className="input-text"
+                type="text"
+                name="telefono"
+                value={viaje.telefono}
+                onChange={e => handleOnChange(e)}
               />
             </div>
             <div className="form-parte-2">

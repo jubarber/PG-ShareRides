@@ -39,7 +39,7 @@ export default function Home() {
   useEffect(() => {
     dispatch(getViajesTotalUsuario(cookieMail));
   }, []);
-  console.log("viajes", viajes);
+  // console.log("viajes", viajes);
   useEffect(() => {
     dispatch(login(cookieMail));
     dispatch(filterPerCard(render));
@@ -65,11 +65,12 @@ export default function Home() {
     e.viajeDisponible === true && viajesDisponibles.push(e);
   });
 
-  console.log(
-    viajesDisponibles.map(
-      (e) => parseInt(e.fecha.slice(8, 10)) >= parseInt(dia)
-    )
-  );
+  // console.log(
+  //   viajesDisponibles.map(
+  //     (e) => parseInt(e.fecha.slice(8, 10)) >= parseInt(dia)
+  //   )
+  // );
+  console.log("viajes disponibles de Home: ", viajesDisponibles)
   return (
     <div>
       <NavBar />

@@ -39,7 +39,7 @@ export const DetalleViajec = () => {
   const [botonesConductor, setBotonesConductor] = useState(null);
   const [botonesPasajero, setBotonesPasajero] = useState(null);
   const [botonesPasajeroSumado, setBotonesPasajeroSumado] = useState(null);
-  
+  console.log("esto es viaje: ", viaje)
   let idViajesPorUsuario = viajesPorUsuario.map(v => v.id);
   let mailUsuariosDelViaje;
 
@@ -142,7 +142,7 @@ export const DetalleViajec = () => {
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(postColaboracion(datosMp));
-    console.log("submit");
+    // console.log("submit");
     if (datosMp.length !== 0) {
       axios
         .get(
@@ -172,10 +172,10 @@ export const DetalleViajec = () => {
           viajesFechasCoincidentes.push(v);
         }
       });
-      console.log(viajesPorUsuario);
-      console.log(viajesFechasCoincidentes);
+      // console.log(viajesPorUsuario);
+      // console.log(viajesFechasCoincidentes);
       if (viajesFechasCoincidentes.length !== 0) {
-        console.log("if sumarse");
+        // console.log("if sumarse");
         Swal.fire({
           title: "Ya tienes un viaje programado para este día",
           icon: "warning",
@@ -189,7 +189,7 @@ export const DetalleViajec = () => {
           navigate("/home");
         });
       } else {
-        console.log("else sumarse");
+        // console.log("else sumarse");
         Swal.fire({
           title: "Estás a punto de sumarte a este viaje",
           icon: "warning",
@@ -221,7 +221,7 @@ export const DetalleViajec = () => {
         });
       }
     } else {
-      console.log("else sumarse");
+      // console.log("else sumarse");
       Swal.fire({
         title: "Estás a punto de sumarte a este viaje",
         icon: "warning",
@@ -286,7 +286,7 @@ export const DetalleViajec = () => {
   }
 
   function handleModificar() {
-    console.log("handle modificar");
+    // console.log("handle modificar");
     cookies.set("fecha", viaje.fecha, { path: "/" });
     cookies.set("hora", viaje.hora, { path: "/" });
     cookies.set("origen", viaje.origen, { path: "/" });
@@ -309,12 +309,12 @@ export const DetalleViajec = () => {
     cookies.set("usaBarbijo", viaje.usaBarbijo, {
       path: "/"
     });
-    console.log(cookies.get("fecha"));
+    // console.log(cookies.get("fecha"));
     setTimeout(() => {
       navigate(`/modificar/modificarViaje/${id}`);
     }, 2000);
   }
-
+  console.log("estos es viaje: ",viaje)
   return (
     <div>
       {arrayPasajeres &&
@@ -416,10 +416,12 @@ export const DetalleViajec = () => {
                 {(botonesPasajeroSumado === true || botonesPasajero === true) &&
                 botonesConductor !== true
                   ? <div className="btn-detalle">
-                      <button className="detalle-mensaje">
+                    <a href={`https://api.whatsapp.com/send?phone=+549${viaje.telefono}`} target="_blank" rel="noopener noreferrer">
+                      <button className="detalle-mensaje" >
                         {/* onClick={} */}
                         Enviar Mensaje
                       </button>
+                      </a>
                     </div>
                   : null}
               </div>

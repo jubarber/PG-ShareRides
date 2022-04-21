@@ -139,7 +139,8 @@ export function postViajePasajero(checkboxes, viaje) {
           email: viaje.email,
           dni: viaje.dni,
           detalles: viaje.detalles,
-          puntuacion: viaje.puntuacion
+          puntuacion: viaje.puntuacion,
+          telefono: viaje.telefono
         }
       });
       return dispatch({ type: "POST_VIAJE_PASAJERO", payload: pasajero.data });
@@ -194,7 +195,8 @@ export function postViajeConductor(checkboxes, viaje) {
           dni: viaje.dni,
           detalles: viaje.detalles,
           puntuacion: viaje.puntuacion,
-          patente: viaje.patente
+          patente: viaje.patente,
+          telefono: viaje.telefono
         }
       });
       return dispatch({
@@ -509,7 +511,7 @@ export function sumarseAlViaje(payload) {
   return async function(dispatch) {
     try {
       const sumarse = await axios({
-        method: "PUT",
+        method: "put",
         url: "/api/viaje/sumarse",
         data: {
           id: payload.id,
@@ -527,8 +529,8 @@ export function modificarAsiento(payload) {
   return async function() {
     try {
       const viaje = await axios({
-        method: "PUT",
-        url: "/api/viaje/modificarViaje",
+        method: "put",
+        url: "/api/viaje/modificarAsiento",
         data: {
           asientosAOcupar: payload.asientosAOcupar,
           id: payload.id
