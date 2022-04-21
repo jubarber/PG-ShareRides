@@ -158,7 +158,8 @@ export function postViajePasajero(checkboxes, viaje) {
           dni: viaje.dni,
           detalles: viaje.detalles,
           puntuacion: viaje.puntuacion,
-        },
+          telefono: viaje.telefono
+        }
       });
       return dispatch({ type: "POST_VIAJE_PASAJERO", payload: pasajero.data });
     } catch (err) {
@@ -213,7 +214,8 @@ export function postViajeConductor(checkboxes, viaje) {
           detalles: viaje.detalles,
           puntuacion: viaje.puntuacion,
           patente: viaje.patente,
-        },
+          telefono: viaje.telefono
+        }
       });
       return dispatch({
         type: "POST_VIASJE_CONDUCTOR",

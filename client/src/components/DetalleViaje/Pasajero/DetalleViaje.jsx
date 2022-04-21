@@ -221,9 +221,12 @@ export const DetalleViajep = () => {
                   {viajesTotales !== [] && viajesTotales.includes(true)
                     ? null
                     : <div>
-                        <button className="detalle-mensaje">
-                          <Link to="/login">Enviar mensaje</Link>
-                        </button>
+                         <a href={`https://api.whatsapp.com/send?phone=+549${viaje.telefono}`} target="_blank" rel="noopener noreferrer">
+                      <button className="detalle-mensaje" >
+                        {/* onClick={} */}
+                        Enviar Mensaje
+                      </button>
+                      </a>
                       </div>}
                 </div>
                 <br />

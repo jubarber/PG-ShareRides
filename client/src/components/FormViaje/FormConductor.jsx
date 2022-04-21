@@ -37,6 +37,7 @@ export default function FormPasajero() {
     email: cookieMail,
     detalles: "",
     patente: cookiePatente,
+    telefono:""
   });
   const expresiones = {
     // fecha: /^.{4,18}$/,
@@ -225,6 +226,7 @@ export default function FormPasajero() {
         formaDePago: "A coordinar",
         email: "",
         detalles: "",
+        telefono:""
       });
     }
   }
@@ -305,6 +307,16 @@ export default function FormPasajero() {
                 name="dni"
                 value={viaje.dni}
                 onChange={(e) => handleOnChange(e)}
+              />
+               <label className="Conductore__formulario_label">
+               Numero de telefono
+              </label>
+              <input
+                className="Conductore__input"
+                type="text"
+                name="telefono"
+                value={viaje.telefono}
+                onChange={e => handleOnChange(e)}
               />
             </div>
             <div className="Conductore__input_2">

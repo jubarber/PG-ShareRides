@@ -21,6 +21,7 @@ router.post("/conductor", async (req, res, next) => {
       detalles,
       email,
       patente,
+      telefono
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
@@ -40,6 +41,7 @@ router.post("/conductor", async (req, res, next) => {
         detalles,
         vehiculoPatente: patente,
         status: "conductor",
+        telefono
       });
       await nuevoViaje.addUsuario(email);
       res.json(nuevoViaje);
@@ -95,6 +97,7 @@ router.post("/pasajero", async (req, res, next) => {
       dni,
       detalles,
       nombre,
+      telefono
     } = req.body;
     let nuevoViaje;
     if (fecha && origen && destino) {
@@ -113,6 +116,7 @@ router.post("/pasajero", async (req, res, next) => {
         pagoCompartido,
         detalles,
         status: "pasajero",
+        telefono
       });
       await nuevoViaje.addUsuario(email);
     }
@@ -359,6 +363,7 @@ router.get("/:viajeId", async (req, res, next) => {
         },
       ],
     });
+    console.log(viajeEncontrado)
     res.send(viajeEncontrado);
   } catch (err) {
     next(err);
