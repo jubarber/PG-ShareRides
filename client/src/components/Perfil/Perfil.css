@@ -125,12 +125,24 @@
 
 .btn-modificacion-perfil {
   display: flex;
+  flex-direction: row;
   justify-content: flex-end;
   align-items: center;
   flex-wrap: nowrap;
   margin-right: 4rem;
 }
 
+.btn-group-perfil {
+  display: flex;
+}
+.btn-mis-viajes {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+  margin-right: 4rem;
+  width: 10rem;
+}
 .btn-modificacion-perfil-active {
   display: block;
   height: 3rem;
@@ -369,4 +381,90 @@
 
 .btn-primary {
   color: black;
+}
+
+@media screen and (max-width: 425px) {
+  .contenedor-perfil {
+    display: flex;
+    flex-direction: column;
+  }
+  .contenedor-form {
+    display: flex;
+    width: 26rem;
+    height: 40rem;
+  }
+
+  .div-form {
+    margin-right: 0;
+  }
+  .contenedor-input {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    margin-left: -1rem;
+  }
+
+  .btn-modificacion-perfil {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .btn-group-perfil {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #root
+    > div
+    > div
+    > div.contenedor-perfil
+    > div.div-form
+    > form
+    > div.btn-modificacion-perfil
+    > div
+    > button {
+    margin-bottom: 1rem;
+  }
+  #root
+    > div
+    > div
+    > div.contenedor-perfil
+    > div.div-form
+    > form
+    > div.btn-modificacion-perfil
+    > div
+    > a {
+    margin-bottom: 1rem;
+  }
+  #root
+    > div
+    > div
+    > div.contenedor-perfil
+    > div.div-form
+    > form
+    > div.btn-modificacion-perfil
+    > div
+    > input {
+    margin-bottom: 1rem;
+  }
+  .resenas {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+  .contenedor-comentarios {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+  }
+
+  .resenas-card {
+    margin-bottom: 1rem;
+  }
+  .pag {
+    margin-top: 45rem;
+  }
 }

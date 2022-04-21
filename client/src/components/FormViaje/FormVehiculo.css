@@ -157,3 +157,18 @@
     opacity: 1;
   }
 }
+
+@media screen and (max-width: 425px) {
+  .Vehiculo__btn_volver {
+    margin-top: 1rem;
+  }
+  .Vehiculo__titulo {
+    margin-top: 3rem;
+  }
+  .Vehiculo__input {
+    width: 20rem;
+  }
+  .Vehiculo__btn_registro {
+    width: 14rem;
+  }
+}

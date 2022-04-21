@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import swal from "sweetalert";
+import Swal from "sweetalert2";
 import fondo from "../../assets/fondo perfil.jpg";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
 import "./Admin.css";
@@ -16,7 +16,7 @@ export default function Admin() {
   async function iniciarSesion(input) {
     const response = await axios({
       method: "post",
-      url: `http://localhost:3001/api/admin/sesionadmin`,
+      url: `/api/admin/sesionadmin`,
       data: {
         email: input.email,
         password: input.password,
@@ -27,12 +27,10 @@ export default function Admin() {
       cookies.set("admin", "true");
 
     } else {
-      swal({
+      Swal.fire({
         title: "Alto!",
         text: response.data,
         icon: "warning",
-        button: true,
-        dangerMode: true,
       });
     }
     console.log(response);
@@ -47,21 +45,17 @@ export default function Admin() {
     e.preventDefault();
     if (Object.values(input)[0] === "") {
       e.preventDefault();
-      swal({
+      Swal.fire({
         title: "Alto!",
         text: "Campo vacío o email incorrecto",
         icon: "warning",
-        button: true,
-        dangerMode: true,
       });
     } else if (Object.values(input)[1] === "") {
       e.preventDefault();
-      swal({
+      Swal.fire({
         title: "Alto!",
         text: "Por favor ingrese correctamente la contraseña",
         icon: "warning",
-        button: true,
-        dangerMode: true,
       });
     } else {
       iniciarSesion(input);

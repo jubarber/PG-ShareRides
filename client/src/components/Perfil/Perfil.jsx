@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import fondo from "../../assets/fondo perfil.jpg";
 import "./Perfil.css";
@@ -129,7 +129,7 @@ export default function Perfil() {
       ...reviews,
       [e.target.name]: e.target.value,
     });
-    setCount(e.target.value.length !== 0);
+    setCount(e.target.value.length - 1);
   };
 
   const handleChangeReportes = (e) => {
@@ -161,26 +161,33 @@ export default function Perfil() {
 
   const handleUpdate = (e) => {
     dispatch(modificacionPerfil(usuario));
+    // window.location("/home");
     navigate("/home");
   };
 
-  const CLOUDINARY_URL =
-    "https://api.cloudinary.com/v1_1/dvmrweg0f/image/upload";
-  const CLOUDINARY_UPLOAD_PRESETS = "sharerides";
+  const barra = document.getElementById("img-upload-bar");
 
   const handleChangeUpdateImage = async (e) => {
     const file = e.target.files[0];
     const data = new FormData();
     data.append("file", file);
-    data.append("upload_preset", CLOUDINARY_UPLOAD_PRESETS);
+    data.append("upload_preset", "sharerides");
 
     const response = await axios
-      .post(CLOUDINARY_URL, data)
-      .then((res) => res.data);
-    setUsuario({
-      ...usuario,
-      avatar: response.url,
-    });
+      .post("https://api.cloudinary.com/v1_1/dvmrweg0f/image/upload", data, {
+        onUploadProgress(e) {
+          const progress = (e.loaded * 100) / e.total;
+          console.log(progress);
+          barra?.setAttribute("value", progress);
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setUsuario({
+          ...usuario,
+          avatar: res.data.url,
+        });
+      });
   };
 
   const handleEliminado = (e) => {
@@ -198,6 +205,7 @@ export default function Perfil() {
         dispatch(eliminarPerfil(cookieEmail));
         dispatch(logout(cookieEmail));
         Swal.fire("Borrada!", "Tu cuenta ha sido eliminada!", "success");
+        navigate("/");
       }
     });
   };
@@ -224,14 +232,6 @@ export default function Perfil() {
       }
     });
   };
-
-  let [countReportes, setCountNumReportes] = useState(0);
-
-  const [numReportes, setNumReportes] = useState({
-    reportes: countReportes + 1,
-  });
-
-  console.log("comentarios", ComentariosTotales);
 
   const handleReportarComentario = (e) => {
     Swal.fire({
@@ -306,7 +306,7 @@ export default function Perfil() {
           </div>
         </div>
 
-        <div>
+        <div className="div-form">
           <form className="contenedor-form" onSubmit={(e) => handleUpdate(e)}>
             <div className="contenedor-input">
               <h5>Nombre</h5>
@@ -374,6 +374,7 @@ export default function Perfil() {
                 <div>
                   <input
                     type="file"
+                    accept="image/png,image/jpeg"
                     name="avatar"
                     onChange={(e) => handleChangeUpdateImage(e)}
                   />
@@ -382,28 +383,42 @@ export default function Perfil() {
                 <label className="overflow-hidden">{miUsuario.avatar}</label>
               )}
             </div>
+
             {cookieEmail !== email ? null : (
               <div className="btn-modificacion-perfil">
-                {habilitarTelefono === false &&
-                habilitarDNI === false &&
-                habilitarAcercaDeMi === false &&
-                habilitarAvatar === false ? (
-                  <input
-                    type="submit"
-                    value="Guardar Cambios"
-                    className="btn-modificacion-perfil-active"
-                  ></input>
-                ) : (
-                  <input
-                    type="button"
-                    value="Guardar Cambios"
-                    disabled
-                    className="btn-modificacion-perfil-disabled"
-                  />
-                )}
-                <button onClick={(e) => habilitarInputs(e)}>
-                  <FaEdit />
-                </button>
+                {" "}
+                <div className="btn-group-perfil">
+                  <button className="btn-modificacion-perfil-active">
+                    <Link to={`/colaboraciones/${email}`}>Colaboraciones</Link>
+                  </button>
+
+                  <Link to={"/misviajes/" + cookieEmail}>
+                    <button className="btn-modificacion-perfil-active">
+                      Mis Viajes
+                    </button>
+                  </Link>
+
+                  {habilitarTelefono === false &&
+                  habilitarDNI === false &&
+                  habilitarAcercaDeMi === false &&
+                  habilitarAvatar === false ? (
+                    <input
+                      type="submit"
+                      value="Guardar Cambios"
+                      className="btn-modificacion-perfil-active"
+                    ></input>
+                  ) : (
+                    <input
+                      type="button"
+                      value="Guardar Cambios"
+                      disabled
+                      className="btn-modificacion-perfil-disabled"
+                    />
+                  )}
+                  <button onClick={(e) => habilitarInputs(e)}>
+                    <FaEdit />
+                  </button>
+                </div>
               </div>
             )}
           </form>
@@ -462,20 +477,15 @@ export default function Perfil() {
                       <p>{e.comentarios}</p>
                     </div>
                     <div className="comentarios-abajo">
-                      <button
-                        type="submit"
-                        value={e.id}
-                        onClick={(e) => handleBorrarComentario(e)}
-                      >
-                        Eliminar
-                      </button>
-                      <button
-                        type="submit"
-                        value={e.id}
-                        onClick={(e) => handleReportarComentario(e)}
-                      >
-                        Reportar
-                      </button>
+                      {cookieEmail !== email ? null : (
+                        <button
+                          type="submit"
+                          value={e.id}
+                          onClick={(e) => handleReportarComentario(e)}
+                        >
+                          Reportar
+                        </button>
+                      )}
 
                       <p>{e.dia}</p>
                     </div>

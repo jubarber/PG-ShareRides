@@ -2,8 +2,8 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Cookies from "universal-cookie";
-import { registroUsuario } from "../../redux/actions/actions";
-import swal from "sweetalert";
+import { registroUsuario, login } from "../../redux/actions/actions";
+import Swal from "sweetalert2";
 import fondo from "../../assets/fondo perfil.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
@@ -49,37 +49,32 @@ export default function RegistroGoogle() {
     e.preventDefault();
     if (Object.values(input)[0] === "") {
       e.preventDefault();
-      swal({
+      Swal.fire({
         title: "Alto!",
         text: "Por favor complete todos los campos",
         icon: "warning",
-        button: true,
-        dangerMode: true,
       });
     } else if (Object.values(input)[1] === "") {
       e.preventDefault();
-      swal({
+      Swal.fire({
         title: "Alto!",
         text: "Por favor ingrese su contraseña",
         icon: "warning",
-        button: true,
-        dangerMode: true,
       });
     } else if (input.password !== input.confirmPassword) {
       e.preventDefault();
-      swal({
+      Swal.fire({
         title: "Alto!",
         text: "Las contraseñas no coinciden",
         icon: "warning",
-        button: true,
-        dangerMode: true,
       });
     } else {
       dispatch(registroUsuario(usuario));
-      swal({
+      dispatch(login(cookieEmail))
+      Swal.fire({
         title: "El registro ha sido exitoso!",
         icon: "success",
-        button: "Bienvenidx!",
+        confirmButtonText: "Bienvenidx!",
       }).then(function () {
         navigate("/home");
       });

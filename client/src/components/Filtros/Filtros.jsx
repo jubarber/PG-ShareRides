@@ -1,38 +1,42 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getViajesTotal, filtroChecks } from "../../redux/actions/actions";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getViajesTotal, filtros } from "../../redux/actions/actions";
 import "./Filtros.css";
-import Button from "@mui/material/Button";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { FormControl } from "@mui/material";
-import { deepPurple } from "@mui/material/colors";
 import SearchBar from "../SearchBar/SearchBar";
 
 export function Filtros() {
   const dispatch = useDispatch();
-  const viajesFiltrados = useSelector((state) => state.viajesFiltrados.length!==0 && state.viajesFiltrados.flat());
-  const viajesTotal = useSelector((state) => state.viajes);
-  const [isChecked, setIsChecked] = useState(new Array(4).fill(false));
-  const [asiento, setAsiento] = useState("");
-
+  let select = {};
+  
   const filtrosArray = [
     {
       id: 1,
       name: "Viajes que aceptan Fumador",
+      value: "fumador",
+    },
+    {
+      id: 5,
+      name: "Viajes que no aceptan Fumador",
+      value: "noFumador",
     },
     {
       id: 2,
       name: "Viajes que aceptan Mascota",
+      value: "mascota",
     },
     {
       id: 3,
       name: "Viajes que aceptan Equipaje",
+      value: "equipaje",
     },
     {
       id: 4,
       name: "Viajes que exigen uso de Barbijo",
+      value: "barbijo",
     },
   ];
 
@@ -40,107 +44,53 @@ export function Filtros() {
     dispatch(getViajesTotal());
   }, [dispatch]);
 
-  useEffect(() => {}, [viajesTotal, viajesFiltrados]);
-
-  const handleOnChange = (position) => {
-    const updatedCheckedState = isChecked.map((item, index) =>
-      index === position ? !item : item
-    );
-    setIsChecked(updatedCheckedState);
-  };
-
-  function handleSelectAsientos(e) {
+  function handleSelect(e) {
     e.preventDefault();
-    setAsiento(e.target.value);
+    if (e.target.value === "fumador") {
+      select.aceptaFumador = true;
+      dispatch(filtros(select));
+    }
+    if (e.target.value === "mascota") {
+      select.aceptaMascota = true;
+      dispatch(filtros(select));
+    }
+    if (e.target.value === "equipaje") {
+      select.aceptaEquipaje = true;
+      dispatch(filtros(select));
+    }
+    if (e.target.value === "barbijo") {
+      select.usaBarbijo = true;
+      dispatch(filtros(select));
+    }
+    if (e.target.value === "noFumador") {
+      select.noAceptaFumador = true;
+      dispatch(filtros(select));
+    }
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    dispatch(filtroChecks(isChecked, asiento));
-  }
-
-  function handleLimpiarFiltros(e) {
-    e.preventDefault();
-    dispatch(getViajesTotal());
-    let estadoLimpio = [false, false, false, false];
-    setIsChecked(estadoLimpio);
-    setAsiento("");
-  }
   return (
     <div className="contenedor-filtros">
       <div className="asientos">
         <div>
           <SearchBar />
         </div>
-
-        <FormControl variant="standard" sx={{ m: 1, minWidth: 175 }}>
+        <div>
           <InputLabel
             id="demo-simple-select-standard-label"
             sx={{ color: "white" }}
             className="input-Select"
           >
-            Asientos disponibles
+            Filtrar por:
           </InputLabel>
-          <Select
-            labelId="demo-simple-select-standard-label"
-            id="demo-simple-select-standard"
-            onChange={(e) => handleSelectAsientos(e)}
-            sx={{ borderColor: "white" }}
-          >
-            <MenuItem value="1">1 </MenuItem>
-            <MenuItem value="2">2 </MenuItem>
-            <MenuItem value="3">3 </MenuItem>
-            <MenuItem value="4">4 </MenuItem>
-            <MenuItem value="5">5 </MenuItem>
-            <MenuItem value="6">6 </MenuItem>
-            <MenuItem value="7">7 </MenuItem>
-          </Select>
-        </FormControl>
-        <div className="checkboxes">
-          {filtrosArray.map((e, index) => {
-            return (
-              <div key={e.id}>
-                <label className="mycheckbox">
-                  {e.name}
-                  <input
-                    type="checkbox"
-                    key={e.id}
-                    name={e.name}
-                    value={e.name}
-                    checked={isChecked[index]}
-                    onChange={() => {
-                      handleOnChange(index);
-                    }}
-                  />
-                  <span></span>
-                </label>
-              </div>
-            );
-          })}
-        </div>
-        <div className="aplicar-limpiar">
-          <Button
-            variant="contained"
-            color="secondary"
-            size="small"
-            type="submit"
-            value="Aplicar filtros"
-            name="Aplicar filtros"
-            onClick={handleSubmit}
-          >
-            Aplicar filtros
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            size="small"
-            type="submit"
-            value="Limpiar filtros"
-            name="Limpiar filtros"
-            onClick={handleLimpiarFiltros}
-          >
-            Limpiar filtros
-          </Button>
+          <select className="select-filtros">
+            {filtrosArray.map((f) => {
+              return (
+                <option key={f.id} value={f.value}>
+                  {f.name}
+                </option>
+              );
+            })}
+          </select>
         </div>
       </div>
     </div>

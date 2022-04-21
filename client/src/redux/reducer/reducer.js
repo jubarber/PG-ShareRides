@@ -1,7 +1,7 @@
 import {
   GET_DETALLE_VIAJE,
   GET_VIAJES_TOTAL,
-  FILTRO_CHECKS,
+  FILTROS,
   REGISTRO_USUARIO,
   SEARCHORIGEN,
   SEARCHDESTINO,
@@ -24,7 +24,6 @@ import {
 
 const initialState = {
   viajes: [],
-  viajesFiltrados: [],
   viajePorId: [],
   viajesPorUsuario: [],
   viajesPausados: [],
@@ -38,7 +37,8 @@ const initialState = {
   error: "",
   vehiculosTotales: [],
   usuariosReportados: [],
-  reportes: []
+  reportes: [],
+  viajesFiltrados: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -49,6 +49,7 @@ function rootReducer(state = initialState, action) {
         viajePorId: action.payload,
       };
     case GET_VIAJES_TOTAL:
+      console.log(state.viajesFiltrados)
       return {
         ...state,
         viajes: action.payload,
@@ -59,7 +60,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         usuarios: action.payload,
       };
-    case FILTRO_CHECKS:
+    case FILTROS:
       return {
         ...state,
         viajesFiltrados: action.payload,

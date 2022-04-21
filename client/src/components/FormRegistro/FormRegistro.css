@@ -167,3 +167,10 @@
   display: flex;
   justify-content: center;
 }
+
+@media screen and (max-width: 425px) {
+  #root > div > div > div.contenedorRegistro > form > div.Registro__formulario {
+    display: flex;
+    flex-direction: column;
+  }
+}

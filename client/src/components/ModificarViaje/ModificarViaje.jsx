@@ -2,7 +2,6 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import swal from "sweetalert";
 import {
   modificarViaje,
   getViajesTotalUsuario
@@ -201,10 +200,10 @@ export default function ModificarViaje() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    swal({
+    Swal.fire({
       title: "La modificación se realizó con éxito!",
       icon: "success",
-      button: "Buen viaje!"
+      confirmButtonText: "Buen viaje!"
     }).then(function() {
       navigate("/home");
     });

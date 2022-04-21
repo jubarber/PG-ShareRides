@@ -81,7 +81,7 @@ const AdminHome = () => {
               Share Rides
             </h1>
           </div>
-          <div className="panel-botones">
+          <div className="adminHome__panel-botones">
             <Link to="/home">
               <button className="btn btn-outline-primary" type="button">
                 <FaHome />
@@ -91,7 +91,7 @@ const AdminHome = () => {
               LogOut
             </button>
           </div>
-          <div className="info-usuario">
+          <div className="adminHome__info-usuario">
             <h3>Hola, Admin</h3>
           </div>
         </div>

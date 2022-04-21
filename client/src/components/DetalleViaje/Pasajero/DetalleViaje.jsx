@@ -50,6 +50,13 @@ export const DetalleViajep = () => {
     [viaje]
   );
 
+  const handleColaborar = async () => {
+    await dispatch(postOrder(cookieMail)).then((data) => {
+      // console.log(data.payload[0])
+      setDatosMp({ ...datosMp, orderId: data&&data.payload[0].id});
+    });
+  };
+
   if (viaje.length !== 0 && viaje.fecha.length !== 0) {
     viaje.fecha.includes("T")
       ? (fechaViaje = viaje.fecha
@@ -64,12 +71,20 @@ export const DetalleViajep = () => {
     var viajeUsuarios = viaje.usuarios.map(e => e.email);
     var viajesTotales = viajeUsuarios.map(e => e.includes(cookieMail));
     var arrayPasajeres = viaje.usuarios.map(e => e);
+  function handleSubmit(e) {
+    e.preventDefault()(
+      axios
+        .get(
+          `/api/mercadopago/${datosMp&&datosMp.orderId}/${datosMp&&datosMp.unit_price}`
+        )
+        .then((r) => setRedirect(r.data))
+    );
   }
 
   function handleEliminar() {
     Swal.fire({
       title: "Estás a punto de eliminar este viaje",
-      icon: "danger",
+      icon: "error",
       text: "Estás segure de que querés continuar?",
       confirmButtonText: "Sí, quiero eliminar",
       denyButtonText: "No quiero eliminar!"
@@ -117,12 +132,22 @@ export const DetalleViajep = () => {
       path: "/"
     });
     console.log(cookies.get("fecha"));
-    setTimeout(() => {
+    Swal.fire({
+      title: "En instantes serás redirigide a la modificación de tu viaje",
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      allowEnterKey: false,
+      didOpen: () => {
+        Swal.showLoading()
+      }
+    }).then(() => {
       navigate(`/modificar/modificarViaje/${id}`);
-    }, 2000);
+    });
   }
-
-  
+    
   return (
     <div>
       {arrayPasajeres && arrayPasajeres.length !== 0
@@ -210,9 +235,12 @@ export const DetalleViajep = () => {
                   {viajesTotales !== [] && viajesTotales.includes(true)
                     ? null
                     : <div>
-                        <button className="detalle-mensaje">
-                          <Link to="/login">Enviar mensaje</Link>
-                        </button>
+                         <a href={`https://api.whatsapp.com/send?phone=+549${viaje.telefono}`} target="_blank" rel="noopener noreferrer">
+                      <button className="detalle-mensaje" >
+                        {/* onClick={} */}
+                        Enviar Mensaje
+                      </button>
+                      </a>
                       </div>}
                 </div>
                 <br />
@@ -339,6 +367,7 @@ export const DetalleViajep = () => {
             </div>
           </div>
         : <div>Cargando...</div>}
+
     </div>
   );
 };
