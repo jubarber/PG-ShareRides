@@ -82,7 +82,7 @@ export function Filtros() {
           >
             Filtrar por:
           </InputLabel>
-          <select className="select-filtros">
+          <select className="select-filtros" onChange={handleSelect}>
             {filtrosArray.map((f) => {
               return (
                 <option key={f.id} value={f.value}>

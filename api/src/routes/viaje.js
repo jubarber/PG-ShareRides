@@ -46,35 +46,35 @@ router.post("/conductor", async (req, res, next) => {
       await nuevoViaje.addUsuario(email);
       res.json(nuevoViaje);
     }
-    // const sgMail = require("@sendgrid/mail");
+    const sgMail = require("@sendgrid/mail");
 
-    // sgMail.setApiKey(API_KEY);
+    sgMail.setApiKey(API_KEY);
 
-    // const message = {
-    //   to: email,
-    //   from: "pgsharerides@gmail.com",
+    const message = {
+      to: email,
+      from: "pgsharerides@gmail.com",
 
-    //   subject: "Viaje creado",
-    //   html: `<html>
-    //   <head>
-    //   <h2>
-    //   Hola ${nombre}!
-    //   </h2>
-    //   </head>
-    //   <body>
-    //   <h4>
-    //   Te agradecemos por crear tu viaje. Esperamos que tengas una buena experiencia.
-    //   Recorda, que vas a tener la posibilidad de hacer una reseña sobre tu conductore/pasajere.
-    //   </h4>
-    //   <h3>Buenas rutas!</h3>
-    //   </body>
-    //   </html>
-    //   `,
-    // };
-    // sgMail
-    //   .send(message)
-    //   .then((r) => console.log("mail enviado"))
-    //   .catch((err) => console.log(err.message));
+      subject: "Viaje creado",
+      html: `<html>
+      <head>
+      <h2>
+      Hola ${nombre}!
+      </h2>
+      </head>
+      <body>
+      <h4>
+      Te agradecemos por crear tu viaje. Esperamos que tengas una buena experiencia.
+      Recorda, que vas a tener la posibilidad de hacer una reseña sobre tu conductore/pasajere.
+      </h4>
+      <h3>Buenas rutas!</h3>
+      </body>
+      </html>
+      `,
+    };
+    sgMail
+      .send(message)
+      .then((r) => console.log("mail enviado"))
+      .catch((err) => console.log(err.message));
   } catch (error) {
     next(error);
   }
@@ -120,36 +120,36 @@ router.post("/pasajero", async (req, res, next) => {
       });
       await nuevoViaje.addUsuario(email);
     }
-    // const sgMail = require("@sendgrid/mail");
+    const sgMail = require("@sendgrid/mail");
 
-    // sgMail.setApiKey(API_KEY);
+    sgMail.setApiKey(API_KEY);
 
-    // const message = {
-    //   to: email,
-    //   from: "pgsharerides@gmail.com",
+    const message = {
+      to: email,
+      from: "pgsharerides@gmail.com",
 
-    //   subject: "Viaje creado",
-    //   html: `<html>
-    //   <head>
-    //   <h2>
-    //   Hola ${nombre}!
-    //   </h2>
-    //   </head>
-    //   <body>
-    //   <h4>
-    //   Te agradecemos por crear tu viaje. Esperamos que tengas una buena experiencia.
-    //   Recorda, que vas a tener la posibilidad de hacer una reseña sobre tu conductore/pasajere.
-    //   </h4>
-    //   <h3>Buenas rutas!</h3>
-    //   </body>
-    //   </html>
-    //   `,
-    // };
+      subject: "Viaje creado",
+      html: `<html>
+      <head>
+      <h2>
+      Hola ${nombre}!
+      </h2>
+      </head>
+      <body>
+      <h4>
+      Te agradecemos por crear tu viaje. Esperamos que tengas una buena experiencia.
+      Recorda, que vas a tener la posibilidad de hacer una reseña sobre tu conductore/pasajere.
+      </h4>
+      <h3>Buenas rutas!</h3>
+      </body>
+      </html>
+      `,
+    };
 
-    // sgMail
-    //   .send(message)
-    //   .then((r) => console.log("mail enviado"))
-    //   .catch((err) => console.log(err.message));
+    sgMail
+      .send(message)
+      .then((r) => console.log("mail enviado"))
+      .catch((err) => console.log(err.message));
     res.json(nuevoViaje);
   } catch (error) {
     next(error);

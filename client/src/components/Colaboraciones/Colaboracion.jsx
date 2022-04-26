@@ -45,6 +45,7 @@ export default function Colaboracion() {
               let usuarioCobrador = usuarios.find(
                 (u) => u.email === c.usuarioCobrador
               );
+              let fechaViaje = viaje.fecha.toString().substring(0, 10).split("-").reverse().join("-")
               return (
                 <div className="Colaboraciones__usuario">
                   Monto de la colaboración: ${c.unit_price}
@@ -53,7 +54,7 @@ export default function Colaboracion() {
                   {usuarioCobrador.apellido}
                   <br />
                   El <a href={`/detallec/${viaje.id}`}> viaje </a> fue de{" "}
-                  {viaje.origen} a {viaje.destino} el {viaje.fecha}
+                  {viaje.origen} a {viaje.destino} el {fechaViaje}
                 </div>
               );
             })
