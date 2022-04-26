@@ -161,7 +161,7 @@ export default function NavBar() {
                     aria-expanded={open ? "true" : undefined}
                   >
                     <img
-                      src={miUsuario.avatar}
+                      src={cookieAvatar}
                       alt=""
                       style={{ width: 52, height: 52 }}
                     />
@@ -206,7 +206,7 @@ export default function NavBar() {
                 <Link to={`/perfil/${cookieEmail}`}>
                   <MenuItem>
                     <img
-                      src={miUsuario.avatar}
+                      src={cookieAvatar?cookieAvatar:miUsuario.avatar}
                       alt=""
                       style={{
                         width: 32,

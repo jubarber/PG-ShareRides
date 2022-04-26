@@ -26,6 +26,15 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.get("/vehiculo", async (req, res, next) => {
+  try {
+    const autos = await Vehiculo.findAll()
+    res.send(autos) 
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get("/:email", async (req, res, next) => {
   try {
     const { email } = req.params;
@@ -46,5 +55,7 @@ router.get("/:email", async (req, res, next) => {
     next(err);
   }
 });
+
+
 
 module.exports = router;
