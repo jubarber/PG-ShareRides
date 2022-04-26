@@ -50,6 +50,13 @@ export const DetalleViajep = () => {
     [viaje]
   );
 
+  const handleColaborar = async () => {
+    await dispatch(postOrder(cookieMail)).then((data) => {
+      // console.log(data.payload[0])
+      setDatosMp({ ...datosMp, orderId: data&&data.payload[0].id});
+    });
+  };
+
   if (viaje.length !== 0 && viaje.fecha.length !== 0) {
     viaje.fecha.includes("T")
       ? (fechaViaje = viaje.fecha
@@ -64,6 +71,14 @@ export const DetalleViajep = () => {
     var viajeUsuarios = viaje.usuarios.map(e => e.email);
     var viajesTotales = viajeUsuarios.map(e => e.includes(cookieMail));
     var arrayPasajeres = viaje.usuarios.map(e => e);
+  function handleSubmit(e) {
+    e.preventDefault()(
+      axios
+        .get(
+          `/api/mercadopago/${datosMp&&datosMp.orderId}/${datosMp&&datosMp.unit_price}`
+        )
+        .then((r) => setRedirect(r.data))
+    );
   }
 
   function handleEliminar() {
@@ -132,8 +147,7 @@ export const DetalleViajep = () => {
       navigate(`/modificar/modificarViaje/${id}`);
     });
   }
-
-  
+    
   return (
     <div>
       {arrayPasajeres && arrayPasajeres.length !== 0
@@ -353,6 +367,7 @@ export const DetalleViajep = () => {
             </div>
           </div>
         : <div>Cargando...</div>}
+
     </div>
   );
 };
