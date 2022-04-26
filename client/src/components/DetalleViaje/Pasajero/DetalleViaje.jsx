@@ -50,13 +50,6 @@ export const DetalleViajep = () => {
     [viaje]
   );
 
-  const handleColaborar = async () => {
-    await dispatch(postOrder(cookieMail)).then((data) => {
-      // console.log(data.payload[0])
-      setDatosMp({ ...datosMp, orderId: data&&data.payload[0].id});
-    });
-  };
-
   if (viaje.length !== 0 && viaje.fecha.length !== 0) {
     viaje.fecha.includes("T")
       ? (fechaViaje = viaje.fecha
@@ -71,14 +64,6 @@ export const DetalleViajep = () => {
     var viajeUsuarios = viaje.usuarios.map(e => e.email);
     var viajesTotales = viajeUsuarios.map(e => e.includes(cookieMail));
     var arrayPasajeres = viaje.usuarios.map(e => e);
-  function handleSubmit(e) {
-    e.preventDefault()(
-      axios
-        .get(
-          `/api/mercadopago/${datosMp&&datosMp.orderId}/${datosMp&&datosMp.unit_price}`
-        )
-        .then((r) => setRedirect(r.data))
-    );
   }
 
   function handleEliminar() {
@@ -128,10 +113,11 @@ export const DetalleViajep = () => {
     cookies.set("aceptaEquipaje", viaje.aceptaEquipaje, {
       path: "/"
     });
+
     cookies.set("usaBarbijo", viaje.usaBarbijo, {
       path: "/"
     });
-    console.log(cookies.get("fecha"));
+
     Swal.fire({
       title: "En instantes serás redirigide a la modificación de tu viaje",
       showConfirmButton: false,
@@ -147,7 +133,8 @@ export const DetalleViajep = () => {
       navigate(`/modificar/modificarViaje/${id}`);
     });
   }
-    
+
+  
   return (
     <div>
       {arrayPasajeres && arrayPasajeres.length !== 0
@@ -235,12 +222,9 @@ export const DetalleViajep = () => {
                   {viajesTotales !== [] && viajesTotales.includes(true)
                     ? null
                     : <div>
-                         <a href={`https://api.whatsapp.com/send?phone=+549${viaje.telefono}`} target="_blank" rel="noopener noreferrer">
-                      <button className="detalle-mensaje" >
-                        {/* onClick={} */}
-                        Enviar Mensaje
-                      </button>
-                      </a>
+                        <button className="detalle-mensaje">
+                          <Link to="/login">Enviar mensaje</Link>
+                        </button>
                       </div>}
                 </div>
                 <br />
@@ -367,7 +351,6 @@ export const DetalleViajep = () => {
             </div>
           </div>
         : <div>Cargando...</div>}
-
     </div>
   );
 };
