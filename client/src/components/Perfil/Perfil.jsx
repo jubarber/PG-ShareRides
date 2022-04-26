@@ -84,9 +84,10 @@ export default function Perfil() {
 
   const [reportes, setReportes] = useState({
     justificacion: "",
-    email: email,
+    email: cookieEmail,
     nombre: cookieNombre,
     apellido: cookieApellido,
+    emailReportado: email,
   });
 
   //-----------------------Inputs--------------------------
@@ -144,10 +145,14 @@ export default function Perfil() {
     });
   };
 
-  const handleSubmitReportes = (e) => {
+  const handleSubmitReportes = () => {
     dispatch(postReporte(reportes));
     setReportes({
       justificacion: "",
+      email: cookieEmail,
+      nombre: cookieNombre,
+      apellido: cookieApellido,
+      emailReportado: email,
     });
     navigate("/home");
   };
