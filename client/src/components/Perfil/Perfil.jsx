@@ -34,7 +34,6 @@ export default function Perfil() {
   const cookieNombre = cookies.get("nombre");
   const cookieApellido = cookies.get("apellido");
   const cookieEmail = cookies.get("email");
-  const cookieAvatar = cookies.get("avatar");
   const [count, setCount] = useState(0);
   const miUsuario = useSelector((state) => state.usuario);
   const comentarios = useSelector((state) => state.comentarios);
@@ -49,8 +48,6 @@ export default function Perfil() {
     dispatch(getViajesTotal());
   }, [email]);
 
-  const [subiendo, setSubiendo] = useState("");
-  const [imagen, setImagen] = useState("");
   const [usuario, setUsuario] = useState({
     nombre: "",
     apellido: "",
@@ -60,9 +57,6 @@ export default function Perfil() {
     acercaDeMi: miUsuario.acercaDeMi,
     avatar: "",
   });
-
-  // console.log("miUsuario", cookieEmail);
-  // console.log("usuario", usuario);
 
   let viajesUsuarios = viajes.map((e) => e.usuarios.map((e) => e.email));
 

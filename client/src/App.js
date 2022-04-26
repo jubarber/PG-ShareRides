@@ -16,13 +16,15 @@ import RegistroGoogle from "./components/RegistroGoogle/RegistroGoogle";
 import Admin from "./components/Admin/AdminLogin";
 import AdminHome from "./components/Admin/AdminHome";
 import RestaurarCuenta from "./components/RestaurarCuenta/RestaurarCuenta";
+import AdminEstadisticas from "./components/Admin/AdminEstadisticas/AdminEstadisticas";
+// import Card from "./components/CardViaje/CardViajeUsuario/Conductor/CardViajeUsuario"
 import ModificarViaje from "./components/ModificarViaje/ModificarViaje"
 import Calendario from "./components/Calendar/Calendar";
 import Temporal from "./components/TemporalColaboracion/Temporal";
 import Colaboracion from "./components/Colaboraciones/Colaboracion";
 import { Misviajes } from "./components/MisViajes/misviajes";
 
-function App() {
+export default function App() {
   return (
     <div className="App">
       <BrowserRouter>
@@ -42,6 +44,7 @@ function App() {
           <Route exact path="/admin" element={<Admin />} />
           <Route exact path="/adminhome" element={<AdminHome />} />
           <Route exact path="/calendario" element={<Calendario />} />
+          <Route exact path="/adminestadisticas" element={<AdminEstadisticas />} />
           <Route exact path="/restaurarCuenta" element={<RestaurarCuenta />} />
           <Route exact path="/temporal" element={<Temporal />} />
           <Route exact path="/colaboraciones/:email" element={<Colaboracion />} />
@@ -52,4 +55,3 @@ function App() {
     </div>
   );
 }
-export default App;

@@ -119,9 +119,9 @@ export const DetalleViajec = () => {
     email: cookieMail,
   });
 
-  const handleColaborar = () => {
-    dispatch(postOrder(cookieMail)).then((data) => {
-      if (data) setDatosMp({ ...datosMp, orderId: data.payload[0].id });
+  const handleColaborar = async () => {
+    await dispatch(postOrder(cookieMail)).then((data) => {
+      setDatosMp({ ...datosMp, orderId: data&&data.payload[0].id });
     });
   };
 
@@ -134,7 +134,8 @@ export const DetalleViajec = () => {
     if (datosMp.length !== 0) {
       axios
         .get(
-          `http://localhost:3001/api/mercadopago/${datosMp.orderId}/${datosMp.unit_price}`
+          `/api/mercadopago/${datosMp&&datosMp.orderId}/${datosMp&&datosMp.unit_price}`
+
         )
         .then((r) => setRedirect(r.data));
     }
